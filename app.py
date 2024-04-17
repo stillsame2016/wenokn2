@@ -31,6 +31,7 @@ in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/
 config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
 m.add_csv(in_csv, layer_name="hex_data", config=config)
 
+m.to_streamlit()
 
 # "## Create a heat map"
 # with st.echo():
