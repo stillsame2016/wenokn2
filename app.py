@@ -16,7 +16,7 @@ st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 import streamlit as st
 import leafmap.kepler as leafmap
 
-m = leafmap.Map(center=[40.4173, -82.9071], zoom=6)
+m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
 # in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_data.csv'
 # config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
