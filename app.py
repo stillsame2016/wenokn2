@@ -24,14 +24,9 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
 m.to_streamlit()
 
-time.sleep(20)
-st.markdown("Test")
+st.markdown(m.config)
 
-in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_data.csv'
-config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
-m.add_csv(in_csv, layer_name="hex_data", config=config)
 
-m.to_streamlit()
 
 # "## Create a heat map"
 # with st.echo():
