@@ -10,7 +10,7 @@ st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 # st.markdown('Source code: <https://github.com/giswqs/leafmap-streamlit/blob/master/app.py>')
 
 "## Create a 3D map using Kepler.gl"
-with st.echo():
+# with st.echo():
     import streamlit as st
     import leafmap.kepler as leafmap
 
