@@ -36,15 +36,15 @@ with st.echo():
 #     m.add_geojson(in_geojson, layer_name="Cable lines")
 #     m.to_streamlit()
 
-"## Add a colorbar"
-with st.echo():
-    m = leafmap.Map()
-    m.add_basemap('USGS 3DEP Elevation')
-    colors = ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5']
-    vmin = 0
-    vmax = 4000
-    m.add_colorbar(colors=colors, vmin=vmin, vmax=vmax)
-    m.to_streamlit()
+# "## Add a colorbar"
+# with st.echo():
+#     m = leafmap.Map()
+#     m.add_basemap('USGS 3DEP Elevation')
+#     colors = ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5']
+#     vmin = 0
+#     vmax = 4000
+#     m.add_colorbar(colors=colors, vmin=vmin, vmax=vmax)
+#     m.to_streamlit()
 
 "## Change basemaps"
 with st.echo():
