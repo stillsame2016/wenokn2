@@ -29,12 +29,12 @@ with st.echo():
 #     m.add_heatmap(filepath, latitude="latitude", longitude='longitude', value="pop_max", name="Heat map", radius=20)
 #     m.to_streamlit(width=700, height=500, add_layer_control=True)
 
-"## Load a GeoJSON file"
-with st.echo():
-    m = leafmap.Map(center=[0, 0], zoom=2)
-    in_geojson = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/cable-geo.geojson'
-    m.add_geojson(in_geojson, layer_name="Cable lines")
-    m.to_streamlit()
+# "## Load a GeoJSON file"
+# with st.echo():
+#     m = leafmap.Map(center=[0, 0], zoom=2)
+#     in_geojson = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/cable-geo.geojson'
+#     m.add_geojson(in_geojson, layer_name="Cable lines")
+#     m.to_streamlit()
 
 "## Add a colorbar"
 with st.echo():
