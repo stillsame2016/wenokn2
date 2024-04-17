@@ -46,9 +46,9 @@ with st.echo():
 #     m.add_colorbar(colors=colors, vmin=vmin, vmax=vmax)
 #     m.to_streamlit()
 
-"## Change basemaps"
-with st.echo():
-    m = leafmap.Map()
-    m.add_basemap("Esri.NatGeoWorldMap")
-    m.to_streamlit()
+# "## Change basemaps"
+# with st.echo():
+#     m = leafmap.Map()
+#     m.add_basemap("Esri.NatGeoWorldMap")
+#     m.to_streamlit()
 
