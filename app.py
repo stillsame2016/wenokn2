@@ -23,7 +23,6 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 # m.add_csv(in_csv, layer_name="hex_data", config=config)
 
 m.to_streamlit()
-
 st.markdown(m.config)
 
 
