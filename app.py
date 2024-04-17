@@ -4,6 +4,8 @@ import streamlit as st
 
 # st.set_page_config(layout="wide")
 
+st.markdown("### WEN-OKN: Dive into Data, Never Easier")
+
 "# leafmap streamlit demo"
 st.markdown('Source code: <https://github.com/giswqs/leafmap-streamlit/blob/master/app.py>')
 
