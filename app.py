@@ -1,6 +1,7 @@
 """Run 'streamlit run app.py' in the terminal to start the app.
 """
 import streamlit as st
+import time
 
 # st.set_page_config(layout="wide")
 
@@ -22,6 +23,9 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6)
 # m.add_csv(in_csv, layer_name="hex_data", config=config)
 
 m.to_streamlit()
+
+time.sleep(20)
+st.markdown("Test")
 
 # "## Create a heat map"
 # with st.echo():
