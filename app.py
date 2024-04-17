@@ -27,7 +27,6 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
 m.to_streamlit()
 st.markdown(m.config)
-st.markdown(dir(m))
 
 
 # "## Create a heat map"
