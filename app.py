@@ -17,7 +17,7 @@ st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 import streamlit as st
 import leafmap.kepler as leafmap
 
-from leafmap.common import st_map_bounds
+from leafmap.common import get_center
 
 m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
@@ -27,7 +27,7 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
 m.to_streamlit()
 st.markdown(m.config)
-
+st.markdown(m.get_center())
 
 
 # "## Create a heat map"
