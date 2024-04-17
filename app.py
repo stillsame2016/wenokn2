@@ -2,7 +2,7 @@
 """
 import streamlit as st
 import time
-
+import streamlit.components.v1 as components
 
 # st.set_page_config(layout="wide")
 
@@ -28,6 +28,8 @@ m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 m.to_streamlit()
 st.markdown(m.config)
 
+iframe_src = "https://open.spotify.com/embed/track/59BweHnnNQc5Y55WO30JuK?utm_source=generator"
+components.iframe(iframe_src)
 
 # "## Create a heat map"
 # with st.echo():
