@@ -27,6 +27,11 @@ m.to_streamlit()
 time.sleep(20)
 st.markdown("Test")
 
+in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_data.csv'
+config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
+m.add_csv(in_csv, layer_name="hex_data", config=config)
+
+
 # "## Create a heat map"
 # with st.echo():
 #     import leafmap.foliumap as leafmap
