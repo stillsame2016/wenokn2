@@ -3,6 +3,7 @@
 import streamlit as st
 import time
 
+
 # st.set_page_config(layout="wide")
 
 st.markdown("### WEN-OKN: Dive into Data, Never Easier")
@@ -15,6 +16,8 @@ st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 
 import streamlit as st
 import leafmap.kepler as leafmap
+
+from leafmap.common import st_map_bounds
 
 m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=400)
 
