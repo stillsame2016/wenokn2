@@ -11,14 +11,14 @@ st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 
 "## Create a 3D map using Kepler.gl"
 # with st.echo():
-    import streamlit as st
-    import leafmap.kepler as leafmap
+import streamlit as st
+import leafmap.kepler as leafmap
 
-    m = leafmap.Map(center=[37.7621, -122.4143], zoom=12)
-    in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_data.csv'
-    config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
-    m.add_csv(in_csv, layer_name="hex_data", config=config)
-    m.to_streamlit()
+m = leafmap.Map(center=[37.7621, -122.4143], zoom=12)
+in_csv = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_data.csv'
+config = 'https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/hex_config.json'
+m.add_csv(in_csv, layer_name="hex_data", config=config)
+m.to_streamlit()
 
 # "## Create a heat map"
 # with st.echo():
