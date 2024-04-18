@@ -1,6 +1,5 @@
 import streamlit as st
-from streamlit_keplergl import keplergl_static
-from keplergl import KeplerGl
+import streamlit.components.v1 as components
 
 react_app_url = "https://sparcal.sdsc.edu/build/"
 
