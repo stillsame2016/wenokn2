@@ -9,7 +9,7 @@ from leafmap.common import get_center
 
 
 # st.set_page_config(layout="wide")
-st.markdown("### WEN-OKN: Dive into Data, Never Easier")
+st.markdown("### WEN-OKN: Test")
 
 m = leafmap.Map(center=[40.4173, -82.9071], zoom=6, height=300)
 
