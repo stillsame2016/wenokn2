@@ -1,4 +1,2 @@
 streamlit
-leafmap
-keplergl
 streamlit-keplergl
