@@ -15,4 +15,5 @@ m.to_streamlit(width=600, height=400)
 polygons = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_states.json"
 m.add_geojson(polygons, layer_name="Countries")
 st.markdown("Okay")
+st.rerun()
 
