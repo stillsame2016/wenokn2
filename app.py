@@ -12,7 +12,6 @@ import geemap.kepler as geemap
 import time
 
 m = geemap.Map(center=[40, -100], zoom=2, height=600, widescreen=False)
-m.to_streamlit(width=600, height=400)
 
 df = pd.DataFrame(
     {
@@ -26,5 +25,6 @@ m.add_data(
     data=df, name="cities"
 ) 
 
+m.to_streamlit(width=600, height=400)
 
 
