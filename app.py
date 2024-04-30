@@ -15,4 +15,6 @@ map_config = my_component("""
       }
    ]
 """)
-st.code(json.dumps(json.loads(map_config), indent=4))
+
+if map_config:
+   st.code(json.dumps(json.loads(map_config), indent=4))
