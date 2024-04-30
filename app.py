@@ -1,30 +1,18 @@
 import streamlit as st
 import pandas as pd
 
-# import streamlit.components.v1 as components
+from Kepler import my_component
 
-# react_app_url = "https://sparcal.sdsc.edu/build/"
+st.subheader("Kepler Bi-Direction Connection Dev")
 
-# # Embed the React app in an iframe
-# components.iframe(react_app_url, height=400)
-
-import geemap.kepler as geemap
-import time
-
-m = geemap.Map(center=[40, -100], zoom=2, height=600, widescreen=False)
-
-df = pd.DataFrame(
-    {
-        "City": ["San Francisco", "San Jose", "Palo Alto"],
-        "Latitude": [37.77, 37.33, 37.44],
-        "Longitude": [-122.43, -121.89, -122.14],
-    }
-)
-
-m.add_data(
-    data=df, name="cities"
-) 
-
-m.to_streamlit(width=600, height=400)
-
-
+# Create an instance of our component with a constant `name` arg, and
+# print its output value.
+num_clicks = my_component("""
+   [ 
+      { 
+         info: {label: 'Bart Stops Geo', id: 'bart-stops-geo'}, 
+         data: { test: 123 }
+      }
+   ]
+""")
+st.markdown(num_clicks)
