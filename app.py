@@ -15,4 +15,4 @@ num_clicks = my_component("""
       }
    ]
 """)
-st.markdown(num_clicks)
+st.code(num_clicks)
