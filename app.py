@@ -5,7 +5,7 @@ import pandas as pd
 
 from Kepler import my_component
 
-st.subheader("Kepler Bi-Direction Connection Demo")
+st.subheader("Kepler Bidirectional Connection Demo")
 
 map_config = my_component("""
    [ 
