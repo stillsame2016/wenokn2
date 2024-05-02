@@ -16,7 +16,7 @@ map_config = my_component(json.dumps(st.session_state.datasets), height=400, key
 time.sleep(1)
 session_data_ids = []
 
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1, 1, 1, 1])
 
 with col1: 
     san_diego_button_clicked = st.button('Add San Diego Dataset', disabled=("san-diego" in session_data_ids))
