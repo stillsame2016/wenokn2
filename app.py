@@ -16,7 +16,7 @@ datasets.append({
     "data": data
 })
 
-map_config = my_component(json.dumps(datasets), key="map1")
+map_config = my_component(json.dumps(datasets), height=400, key="map1")
 
 if map_config:
    st.code(json.dumps(json.loads(map_config), indent=4))
