@@ -17,19 +17,19 @@ if map_config:
     st.code(json.dumps(map_config_json, indent=4))
 
     map_data_ids = [layer["dataId"] for layer in map_config_json["layers"]]
-    st.markdown(f"map_data_ids: {map_data_ids}")
+    # st.markdown(f"map_data_ids: {map_data_ids}")
 
     session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
-    st.markdown(f"session_data_ids: {session_data_ids}")
+    # st.markdown(f"session_data_ids: {session_data_ids}")
 
     indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if
                          not dataset['info']['id'] in map_data_ids]
-    st.markdown(f"indices_to_remove: {indices_to_remove}")
+    # st.markdown(f"indices_to_remove: {indices_to_remove}")
 
     for i in reversed(indices_to_remove):
         del st.session_state.datasets[i]
 
-    st.markdown(f"final: {len(st.session_state.datasets)}")
+    # st.markdown(f"final: {len(st.session_state.datasets)}")
 
 button_value = st.button('Add Dataset')
 if button_value and len(st.session_state.datasets) == 0:
@@ -38,9 +38,4 @@ if button_value and len(st.session_state.datasets) == 0:
         "data": data
     })
     st.rerun()
-elif button_value :
-    st.markdown(f"***button clicked***: {len(st.session_state.datasets)}")
-
-for dataset in st.session_state.datasets:
-    st.markdown(f"***dataset***: {dataset['info']['id']}")
 
