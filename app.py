@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 
 from Kepler import my_component
-from sample_data import data
+from bart import data
 
 st.subheader("Kepler Bidirectional Communication Demo")
 
