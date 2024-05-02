@@ -17,7 +17,6 @@ time.sleep(1)
 session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
-    st.code(json.dumps(map_config_json, indent=4))
 
     map_data_ids = [layer["dataId"] for layer in map_config_json["layers"]]
     # st.markdown(f"map_data_ids: {map_data_ids}")
@@ -52,6 +51,9 @@ with col2:
             "data": data
         })
         st.rerun()
+
+if map_config:
+    st.code(json.dumps(map_config_json, indent=4))
 
 
 
