@@ -15,6 +15,23 @@ if "datasets" not in st.session_state:
 map_config = my_component(json.dumps(st.session_state.datasets), height=400, key="map1")
 time.sleep(1)
 session_data_ids = []
+
+san_diego_button_clicked = st.button('Add San Diego Dataset', disabled=("san-diego" in session_data_ids))
+if san_diego_button_clicked:
+    st.session_state.datasets.append({
+        "info": {"label": "San Diego", "id": "san-diego"},
+        "data": san_diego
+    })
+    st.rerun()
+
+bart_button_clicked = st.button('Add Bart Dataset', disabled=("bart-stops" in session_data_ids))
+if bart_button_clicked:
+    st.session_state.datasets.append({
+        "info": {"label": "Bart Stops", "id": "bart-stops"},
+        "data": data
+    })
+    st.rerun()
+
 if map_config:
     map_config_json = json.loads(map_config)
     st.code(json.dumps(map_config_json, indent=4))
@@ -34,19 +51,5 @@ if map_config:
 
     session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
 
-san_diego_button_clicked = st.button('Add San Diego Dataset', disabled=("san-diego" in session_data_ids))
-if san_diego_button_clicked:
-    st.session_state.datasets.append({
-        "info": {"label": "San Diego", "id": "san-diego"},
-        "data": san_diego
-    })
-    st.rerun()
 
-bart_button_clicked = st.button('Add Bart Dataset', disabled=("bart-stops" in session_data_ids))
-if bart_button_clicked:
-    st.session_state.datasets.append({
-        "info": {"label": "Bart Stops", "id": "bart-stops"},
-        "data": data
-    })
-    st.rerun()
 
