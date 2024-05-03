@@ -18,7 +18,7 @@ session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
 
-    map_data_ids = [layer["dataId"] for layer in map_config_json["layers"]]
+    map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
     # st.markdown(f"map_data_ids: {map_data_ids}")
 
     session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
