@@ -13,7 +13,7 @@ if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
 map_config = my_component(json.dumps(st.session_state.datasets), height=400, key="map1")
-time.sleep(1)
+time.sleep(1.5)
 session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
