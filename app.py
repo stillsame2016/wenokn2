@@ -1,7 +1,6 @@
 import time
 import json
 import streamlit as st
-import pandas as pd
 
 from Kepler import my_component
 from bart import data
