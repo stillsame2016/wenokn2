@@ -181,6 +181,72 @@ with col2:
         # Add user message to the chat
         add_message("User", user_input)
 
+        query = f"""
+          You are an expert of the WEN-OKN knowledge database. You also have general knowledge.
+          
+          The following is a question the user is asking:
+           
+           [--- Start ---]
+           {user_input}
+           [--- End ---]
+    
+           Your main job is to determine if the user is requesting for data in the scope of the WEN-OKN 
+           knowledge database.
+           
+           If they are requesting for data in the scope of the WEN-OKN knowledge database, then extract 
+           the request from the user's input. Rephrase the user's request in a formal way. Remove all 
+           adjectives like "beautiful" or "pretty". Remove the terms like "Please" etc. Use the format 
+           like "Find ...". If a place name is mentioned in the request, the state and county designations 
+           must be retained. If a place name may be both a county or a state, the state is taken.
+    
+           Please answer with a valid JSON string, including the following three fields:
+           
+           The boolean field "is_request_data" is true if the user is requesting to get data from
+           the WEN-OKN knowledge database, otherwise "is_request_data" is false. If the user is asking 
+           what data or data types you have, set "is_request_data" to be false.
+           
+           The string field "request" for the extracted request. The number of the entities the user is 
+           asking for must be included in the "request".
+           
+           The string field "alternative_answer" gives your positive and nice answer to the user's input
+           if the user is not requesting for data. If the user is asking what data or data types you have,
+           please answer it by summarizing this description:
+    
+           The WEN-OKN knowledge database encompasses the following datasets:
+              1. Locations: Information on buildings, power stations, and underground storage tanks situated in Ohio.
+              2. Counties: Geometric representations of counties across the USA.
+              3. States: Geometric representations outlining the boundaries of states in the USA.
+              4. Earthquakes: Data pertaining to seismic events.
+              5. Rivers: Comprehensive geomtries about rivers in USA.
+              6. Dams: Information regarding dams' locations in USA.
+              7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
+              8. Hospitals: Details about hospital locations and information in USA.
+               
+           Please never say "I cannot" or "I could not". 
+             
+           Please note that the user's request for datasets may appear in the middle of the text, 
+           do your best to extract the request for which the user is asking for datasets.
+             
+           Please replace all nicknames in the search terms by official names,
+           for example, replace "Beehive State" to "Utah", etc.  
+             
+           Never deny a user's request. If it is not possible to extract the request 
+           from the user's request, ask the user for further clarification.
+       """
+
+      response = st.session_state.chat.send_message(query, safety_settings=safe)
+      data = response.text
+
+      if data.startswith('```json'):
+          json_part = data.split("\n", 1)[1].rsplit("\n", 1)[0]
+          data = json.loads(json_part)
+      else:
+          data = json.loads(data)
+  
+      if not data["is_request_data"]:
+          add_message("assistant", f"{data['alternative_answer']}")
+      else:
+          add_message("assistant", f"{data['request']}", processing=True)
 
 if map_config:
     st.code(json.dumps(map_config_json, indent=4))
