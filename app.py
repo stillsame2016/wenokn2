@@ -60,7 +60,6 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
-
 def get_column_name_parts(column_name):
     return re.findall(r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)', column_name)
     
@@ -85,7 +84,7 @@ def df_to_gdf(df):
   #     gdf.rename(columns={column_name: name}, inplace=True)
   return gdf
 
-
+st.markdown("### WEN-OKN: Dive into Data, Never Easier")
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
