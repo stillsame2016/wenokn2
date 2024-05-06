@@ -61,7 +61,7 @@ def df_to_gdf(df):
   column_name_parts.pop()
   gdf.attrs['data_name'] = " ".join(column_name_parts).capitalize()
   gdf.label = gdf.attrs['data_name']
-  gdf.id = uuid.uuid4()[:8]
+  gdf.id = uuid.uuid4()
   
   for column_name in column_names:
     tmp_column_name_parts = get_column_name_parts(column_name)
