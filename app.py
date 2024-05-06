@@ -15,7 +15,7 @@ from shapely import wkt
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 # Setup the title
-st.markdown("### WEN-OKN: Dive into Data, Never Easier")
+st.markdown("###    WEN-OKN: Dive into Data, Never Easier")
 
 # Setup the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
