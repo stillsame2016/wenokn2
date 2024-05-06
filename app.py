@@ -6,7 +6,7 @@ from keplergl import keplergl
 
 import pandas as pd
 import geopandas as gpd
-
+import sparql_dataframe
 import google.generativeai as genai
 
 # Set the wide layout of the web page
