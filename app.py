@@ -234,19 +234,19 @@ with col2:
            from the user's request, ask the user for further clarification.
        """
 
-      response = st.session_state.chat.send_message(query, safety_settings=safe)
-      data = response.text
-
-      if data.startswith('```json'):
-          json_part = data.split("\n", 1)[1].rsplit("\n", 1)[0]
-          data = json.loads(json_part)
-      else:
-          data = json.loads(data)
+        response = st.session_state.chat.send_message(query, safety_settings=safe)
+        data = response.text
   
-      if not data["is_request_data"]:
-          add_message("assistant", f"{data['alternative_answer']}")
-      else:
-          add_message("assistant", f"{data['request']}", processing=True)
+        if data.startswith('```json'):
+            json_part = data.split("\n", 1)[1].rsplit("\n", 1)[0]
+            data = json.loads(json_part)
+        else:
+            data = json.loads(data)
+    
+        if not data["is_request_data"]:
+            add_message("assistant", f"{data['alternative_answer']}")
+        else:
+            add_message("assistant", f"{data['request']}", processing=True)
 
 if map_config:
     st.code(json.dumps(map_config_json, indent=4))
