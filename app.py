@@ -79,7 +79,7 @@ with info_container:
 with col1:  
   # Setup the map
   options = {"keepExistingConfig": True}
-  map_config = keplergl(st.session_state.datasets, options=options, config=None, height=400)
+  map_config = keplergl(st.session_state.datasets, options=options, config=None, height=420)
   time.sleep(0.5)
   
   # Sync datasets and the map
