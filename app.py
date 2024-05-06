@@ -8,6 +8,8 @@ import geopandas as gpd
 
 import google.generativeai as genai
 
+st.set_page_config(layout="wide", page_title="WEN-OKN")
+
 # Setup the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
