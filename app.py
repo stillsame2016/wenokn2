@@ -1,7 +1,6 @@
 import time
 import json
 import streamlit as st
-import pandas as pd
 
 from Kepler import my_component
 from bart import data
@@ -13,12 +12,12 @@ if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
 map_config = my_component(json.dumps(st.session_state.datasets), height=400, key="map1")
-time.sleep(1)
+time.sleep(1.5)
 session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
 
-    map_data_ids = [layer["dataId"] for layer in map_config_json["layers"]]
+    map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
     # st.markdown(f"map_data_ids: {map_data_ids}")
 
     session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
