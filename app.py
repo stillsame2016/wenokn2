@@ -8,6 +8,7 @@ import geopandas as gpd
 
 import google.generativeai as genai
 
+# Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 # Setup the datasets in the session for geodataframes
@@ -59,8 +60,6 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
-def wide_space_default():
-  st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 def get_column_name_parts(column_name):
     return re.findall(r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)', column_name)
