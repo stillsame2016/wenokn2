@@ -37,6 +37,14 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
+# The safty setting for Gemini-Pro 
+safe = [
+    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+]
+
 # Add a Chat history object to Streamlit session state
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
@@ -49,7 +57,34 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
+def wide_space_default():
+  st.set_page_config(layout="wide", page_title="WEN-OKN")
 
+def get_column_name_parts(column_name):
+    return re.findall(r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)', column_name)
+    
+def df_to_gdf(df):
+  column_names = df.columns.tolist()
+  geometry_column_names = [ x for x in column_names if x.endswith('Geometry')]
+  df['geometry'] = df[geometry_column_names[0]].apply(wkt.loads)
+  gdf = gpd.GeoDataFrame(df, geometry='geometry')
+  gdf.drop(columns=[geometry_column_names[0]], inplace=True)
+  
+  column_name_parts = get_column_name_parts(column_names[0])
+  column_name_parts.pop()
+  gdf.attrs['data_name'] = " ".join(column_name_parts).capitalize()
+  
+  for column_name in column_names:
+    tmp_column_name_parts = get_column_name_parts(column_name)
+    tmp_name = tmp_column_name_parts.pop()  
+    tmp_data_name = " ".join(column_name_parts).capitalize()
+    if gdf.attrs['data_name'] == tmp_data_name:
+      gdf.rename(columns={column_name: tmp_name}, inplace=True)
+  # if tmp_data_name == gdf.attrs['data_name']:
+  #     gdf.rename(columns={column_name: name}, inplace=True)
+  return gdf
+
+wide_space_default()
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
