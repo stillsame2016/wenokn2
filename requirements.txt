@@ -1,3 +1,5 @@
 streamlit
 pandas
 geopandas
+google-generativeai
+sparql_dataframe
