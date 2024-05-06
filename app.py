@@ -177,6 +177,10 @@ with col2:
     # Get user input
     user_input = st.chat_input("What can I help you with?")
 
+    if user_input:
+        # Add user message to the chat
+        add_message("User", user_input)
+
 
 if map_config:
     st.code(json.dumps(map_config_json, indent=4))
