@@ -4,47 +4,17 @@ from keplergl import keplergl
 
 import pandas as pd
 import geopandas as gpd
-# from sample_geojson_config import sampleGeojsonConfig
 
-# load sf_zip_geo geojson and setup the metadata
-sf_zip_geo_gdf = gpd.read_file("data/sf_zip_geo.geojson")
-sf_zip_geo_gdf.label = "SF Zip Geo"
-sf_zip_geo_gdf.id = "sf-zip-geo"
-
-# print("=" * 70)
-# print(sf_zip_geo_gdf)
-# print(sf_zip_geo_gdf.id)
-# print(sf_zip_geo_gdf.label)
-
-# load bart_stops_geo geojson and setup the metadata
-bart_stops_geo_gdf = gpd.read_file("data/bart_stops_geo.geojson")
-bart_stops_geo_gdf.label = "Bart Stops Geo"
-bart_stops_geo_gdf.id = "bart-stops-geo"
-
-# print("=" * 70)
-# print(bart_stops_geo_gdf)
-# print(bart_stops_geo_gdf.id)
-# print(bart_stops_geo_gdf.label)
-
-# load sampleH3Data from csv and setup the metadata
-h3_hex_id_df = pd.read_csv("data/h3_data.csv")
-h3_hex_id_df.label = "H3 Hexagons V2"
-h3_hex_id_df.id = "h3-hex-id"
-
-# print("=" * 70)
-# print(h3_hex_id_df)
-# print(h3_hex_id_df.id)
-# print(h3_hex_id_df.label)
-
-st.subheader("Kepler Bidirectional Communication Demo")
-
+# Setup the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
+# Setup the map
 options = {"keepExistingConfig": True}
-
 map_config = keplergl(st.session_state.datasets, options=options, config=None, height=400)
-# time.sleep(0.5)
+time.sleep(0.5)
+
+# Sync datasets and the map
 session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
@@ -52,8 +22,7 @@ if map_config:
     # check if any datasets were deleted
     map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
     session_data_ids = [dataset.id for dataset in st.session_state.datasets]
-    indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if
-                         not dataset.id in map_data_ids]
+    indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
     for i in reversed(indices_to_remove):
         del st.session_state.datasets[i]
 
