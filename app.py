@@ -6,6 +6,8 @@ from keplergl import keplergl
 import pandas as pd
 import geopandas as gpd
 
+import google.generativeai as genai
+
 # Setup the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
@@ -29,6 +31,9 @@ if map_config:
 
     session_data_ids = [dataset.id for dataset in st.session_state.datasets]
     # st.markdown(session_data_ids)
+
+
+
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
