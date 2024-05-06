@@ -100,7 +100,7 @@ with col1:
 with col2:
     
     # Create a container for the chat messages
-    chat_container = st.container(height=340)
+    chat_container = st.container(height=355)
     
     # Get user input
     user_input = st.chat_input("What can I help you with?")
