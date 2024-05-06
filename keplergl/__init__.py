@@ -1,4 +1,7 @@
+import json
 import os
+import pandas as pd
+import geopandas as gpd
 import streamlit.components.v1 as components
 
 # Create a _RELEASE constant. We'll set this to False while we're developing
@@ -25,7 +28,7 @@ if not _RELEASE:
         # We give the component a simple, descriptive name ("my_component"
         # does not fit this bill, so please choose something better for your
         # own component :)
-        "my_component",
+        "keplergl",
         # Pass `url` here to tell Streamlit that the component will be served
         # by the local dev server that you run via `npm run start`.
         # (This is useful while your component is in development.)
@@ -37,7 +40,7 @@ else:
     # build directory:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
-    _component_func = components.declare_component("my_component", path=build_dir)
+    _component_func = components.declare_component("keplergl", path=build_dir)
 
 
 # Create a wrapper function for the component. This is an optional
@@ -45,7 +48,10 @@ else:
 # `declare_component` and call it done. The wrapper allows us to customize
 # our component's API: we can pre-process its input args, post-process its
 # output value, and add a docstring for users.
-def my_component(name, height=400, key=None):
+def keplergl(name,
+             options={"keepExistingConfig": True},
+             config=None,
+             height=400, key="map1"):
     """Create a new instance of "my_component".
 
     Parameters
@@ -53,6 +59,8 @@ def my_component(name, height=400, key=None):
     name: str
         The name of the thing we're saying hello to. The component will display
         the text "Hello, {name}!"
+    option: str
+    config: str
     key: str or None
         An optional key that uniquely identifies this component. If this is
         None, and the component's arguments are changed, the component will
@@ -72,7 +80,24 @@ def my_component(name, height=400, key=None):
     #
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
-    component_value = _component_func(name=name, height=height, key=key, default=0)
+
+    datasets = []
+    for dataset in name:
+        if isinstance(dataset, gpd.GeoDataFrame):
+            datasets.append({
+                "info": {"label": dataset.label, "id": dataset.id},
+                "data": json.loads(dataset.to_json())
+            })
+        elif isinstance(dataset, pd.DataFrame):
+            datasets.append({
+                "info": {"label": dataset.label, "id": dataset.id},
+                "data": dataset.to_csv(index=False)
+            })
+
+    component_value = _component_func(name=json.dumps(datasets),
+                                      options=json.dumps(options),
+                                      config=json.dumps(config),
+                                      height=height, key=key, default=0)
 
     # We could modify the value returned from the component if we wanted.
     # There's no need to do this in our simple example - but it's an option.
