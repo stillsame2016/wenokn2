@@ -1,58 +1,87 @@
-import time
 import json
 import streamlit as st
+from keplergl import keplergl
 
-from Kepler import my_component
-from bart import data
-from san_diego import san_diego
+import pandas as pd
+import geopandas as gpd
+# from sample_geojson_config import sampleGeojsonConfig
+
+# load sf_zip_geo geojson and setup the metadata
+sf_zip_geo_gdf = gpd.read_file("data/sf_zip_geo.geojson")
+sf_zip_geo_gdf.label = "SF Zip Geo"
+sf_zip_geo_gdf.id = "sf-zip-geo"
+
+# print("=" * 70)
+# print(sf_zip_geo_gdf)
+# print(sf_zip_geo_gdf.id)
+# print(sf_zip_geo_gdf.label)
+
+# load bart_stops_geo geojson and setup the metadata
+bart_stops_geo_gdf = gpd.read_file("data/bart_stops_geo.geojson")
+bart_stops_geo_gdf.label = "Bart Stops Geo"
+bart_stops_geo_gdf.id = "bart-stops-geo"
+
+# print("=" * 70)
+# print(bart_stops_geo_gdf)
+# print(bart_stops_geo_gdf.id)
+# print(bart_stops_geo_gdf.label)
+
+# load sampleH3Data from csv and setup the metadata
+h3_hex_id_df = pd.read_csv("data/h3_data.csv")
+h3_hex_id_df.label = "H3 Hexagons V2"
+h3_hex_id_df.id = "h3-hex-id"
+
+# print("=" * 70)
+# print(h3_hex_id_df)
+# print(h3_hex_id_df.id)
+# print(h3_hex_id_df.label)
 
 st.subheader("Kepler Bidirectional Communication Demo")
 
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
-map_config = my_component(json.dumps(st.session_state.datasets), height=400, key="map1")
-time.sleep(1.5)
+options = {"keepExistingConfig": True}
+
+map_config = keplergl(st.session_state.datasets, options=options, config=None, height=400)
+# time.sleep(0.5)
 session_data_ids = []
 if map_config:
     map_config_json = json.loads(map_config)
 
+    # check if any datasets were deleted
     map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
-    # st.markdown(f"map_data_ids: {map_data_ids}")
-
-    session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
-    # st.markdown(f"session_data_ids: {session_data_ids}")
-
+    session_data_ids = [dataset.id for dataset in st.session_state.datasets]
     indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if
-                         not dataset['info']['id'] in map_data_ids]
-    # st.markdown(f"indices_to_remove: {indices_to_remove}")
-
+                         not dataset.id in map_data_ids]
     for i in reversed(indices_to_remove):
         del st.session_state.datasets[i]
 
-    session_data_ids = [dataset['info']['id'] for dataset in st.session_state.datasets]
+    session_data_ids = [dataset.id for dataset in st.session_state.datasets]
+    # st.markdown(session_data_ids)
 
-col1, col2 = st.columns([1, 1])
-with col1: 
-    san_diego_button_clicked = st.button('Add San Diego Dataset', disabled=("san-diego" in session_data_ids))
+col1, col2, col3 = st.columns([1, 1, 1])
+with col1:
+    san_diego_button_clicked = st.button('Add Bart Stops Geo', disabled=("bart-stops-geo" in session_data_ids))
     if san_diego_button_clicked:
-        st.session_state.datasets.append({
-            "info": {"label": "San Diego", "id": "san-diego"},
-            "data": san_diego
-        })
+        st.session_state.datasets.append(bart_stops_geo_gdf)
         st.rerun()
 
-with col2: 
-    bart_button_clicked = st.button('Add Bart Dataset', disabled=("bart-stops" in session_data_ids))
+with col2:
+    bart_button_clicked = st.button('Add SF Zip Geo', disabled=("sf-zip-geo" in session_data_ids))
     if bart_button_clicked:
-        st.session_state.datasets.append({
-            "info": {"label": "Bart Stops", "id": "bart-stops"},
-            "data": data
-        })
+        st.session_state.datasets.append(sf_zip_geo_gdf)
+        st.rerun()
+
+with col3:
+    h3_button_clicked = st.button('Add H3 Hexagons V2', disabled=("h3-hex-id" in session_data_ids))
+    if h3_button_clicked:
+        st.session_state.datasets.append(h3_hex_id_df)
         st.rerun()
 
 if map_config:
     st.code(json.dumps(map_config_json, indent=4))
+
 
 
 
