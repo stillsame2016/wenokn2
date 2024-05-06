@@ -11,6 +11,9 @@ import google.generativeai as genai
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
+# Setup the title
+st.markdown("### WEN-OKN: Dive into Data, Never Easier")
+
 # Setup the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
@@ -84,7 +87,7 @@ def df_to_gdf(df):
   #     gdf.rename(columns={column_name: name}, inplace=True)
   return gdf
 
-st.markdown("### WEN-OKN: Dive into Data, Never Easier")
+
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
