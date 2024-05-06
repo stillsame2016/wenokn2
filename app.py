@@ -11,6 +11,8 @@ import sparql_dataframe
 import google.generativeai as genai
 from shapely import wkt
 
+import traceback
+
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
