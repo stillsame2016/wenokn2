@@ -132,7 +132,7 @@ def add_message(sender, message, processing=False):
                   tried = max_tries + 10
                   st.session_state.requests.append(message)
                   st.session_state.sparqls.append(sparql_query)
-                  st.session_state.wen_datasets.append(gdf)  
+                  st.session_state.datasets.append(gdf)  
                   st.rerun()
               except Exception as e:
                 st.markdown(f"Encounter an error: {str(e)}. Try again...")
