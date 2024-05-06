@@ -60,6 +60,8 @@ def df_to_gdf(df):
   column_name_parts = get_column_name_parts(column_names[0])
   column_name_parts.pop()
   gdf.attrs['data_name'] = " ".join(column_name_parts).capitalize()
+  gdf.label = gdf.attrs['data_name']
+  gdf.id = uuid.uuid4()[:8]
   
   for column_name in column_names:
     tmp_column_name_parts = get_column_name_parts(column_name)
@@ -67,8 +69,8 @@ def df_to_gdf(df):
     tmp_data_name = " ".join(column_name_parts).capitalize()
     if gdf.attrs['data_name'] == tmp_data_name:
       gdf.rename(columns={column_name: tmp_name}, inplace=True)
-  # if tmp_data_name == gdf.attrs['data_name']:
-  #     gdf.rename(columns={column_name: name}, inplace=True)
+      # if tmp_data_name == gdf.attrs['data_name']:
+      #     gdf.rename(columns={column_name: name}, inplace=True)
   return gdf
 
 # Function to add a new message to the chat
