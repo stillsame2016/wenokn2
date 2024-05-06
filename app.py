@@ -78,24 +78,24 @@ with info_container:
 
 with col1:  
   # Setup the map
-options = {"keepExistingConfig": True}
-map_config = keplergl(st.session_state.datasets, options=options, config=None, height=400)
-time.sleep(0.5)
-
-# Sync datasets and the map
-session_data_ids = []
-if map_config:
-    map_config_json = json.loads(map_config)
-
-    # check if any datasets were deleted
-    map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
-    session_data_ids = [dataset.id for dataset in st.session_state.datasets]
-    indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
-    for i in reversed(indices_to_remove):
-        del st.session_state.datasets[i]
-
-    session_data_ids = [dataset.id for dataset in st.session_state.datasets]
-    # st.markdown(session_data_ids)
+  options = {"keepExistingConfig": True}
+  map_config = keplergl(st.session_state.datasets, options=options, config=None, height=400)
+  time.sleep(0.5)
+  
+  # Sync datasets and the map
+  session_data_ids = []
+  if map_config:
+      map_config_json = json.loads(map_config)
+  
+      # check if any datasets were deleted
+      map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
+      session_data_ids = [dataset.id for dataset in st.session_state.datasets]
+      indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
+      for i in reversed(indices_to_remove):
+          del st.session_state.datasets[i]
+  
+      session_data_ids = [dataset.id for dataset in st.session_state.datasets]
+      # st.markdown(session_data_ids)
 
 with col2:
     
