@@ -8,6 +8,7 @@ import pandas as pd
 import geopandas as gpd
 import sparql_dataframe
 import google.generativeai as genai
+from shapely import wkt
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
