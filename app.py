@@ -67,6 +67,78 @@ def df_to_gdf(df):
   #     gdf.rename(columns={column_name: name}, inplace=True)
   return gdf
 
+# Function to add a new message to the chat
+def add_message(sender, message, processing=False):
+    with chat_container:
+      if processing:
+        with st.chat_message("assistant"):
+          with st.spinner(f"""We're currently processing your request:
+                                    **{message}{'' if message.endswith('.') else '.'}**
+                              Depending on the complexity of the query and the volume of data, 
+                              this may take a moment. We appreciate your patience."""):
+            max_tries = 5
+            tried = 0
+            gdf_empty = False
+            while tried < max_tries:
+              try:
+                  response = requests.get(f"https://sparcal.sdsc.edu/staging-api/v1/Utility/wenokn_llama3?query_text={message}")
+                  data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
+                  if data.startswith("\"```sparql"):
+                    start_index = data.find("```sparql") + len("```sparql")
+                    end_index = data.find("```", start_index)
+                    sparql_query = data[start_index:end_index].strip()
+                  elif data.startswith("\"```code"):
+                    start_index = data.find("```code") + len("```code")
+                    end_index = data.find("```", start_index)
+                    sparql_query = data[start_index:end_index].strip()
+                  elif data.startswith("\"```"):
+                    start_index = data.find("```") + len("```")
+                    end_index = data.find("```", start_index)
+                    sparql_query = data[start_index:end_index].strip()
+                  elif data.startswith('"') and data.endswith('"'):
+                    # Remove leading and trailing double quotes
+                    sparql_query = data[1:-1]
+                  else:
+                    sparql_query = data
+                  sparql_query = sparql_query.replace("\n\n\n", "\n\n")
+                  
+                  st.markdown(
+                      """
+                      <style>
+                      .st-code > pre {
+                          font-size: 0.4em; 
+                      }
+                      </style>
+                      """,
+                      unsafe_allow_html=True
+                    )
+                  st.code(sparql_query)
+                  
+                  endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
+                  df = sparql_dataframe.get(endpoint, sparql_query)   
+                  
+                  gdf = df_to_gdf(df)
+                  if gdf.shape[0] == 0:
+                    # double check
+                    if not gdf_empty:
+                      gdf_empty = True
+                      tried += 1
+                      continue
+
+                  tried = max_tries + 10
+                  st.session_state.requests.append(message)
+                  st.session_state.sparqls.append(sparql_query)
+                  st.session_state.wen_datasets.append(gdf)  
+                  st.rerun()
+              except Exception as e:
+                st.markdown(f"Encounter an error: {str(e)}. Try again...")
+                traceback.print_exc()
+                tried += 1               
+            if tried == max_tries:
+              st.markdown("We are not able to process your request at this moment. You can try it again now or later.") 
+      else: 
+         st.chat_message(sender).write(message)
+
 
 col1, col2 = st.columns([6, 4])
 
