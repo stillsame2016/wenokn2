@@ -32,6 +32,10 @@ if map_config:
     session_data_ids = [dataset.id for dataset in st.session_state.datasets]
     # st.markdown(session_data_ids)
 
+# Setup LLM model
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+genai.configure(api_key=GOOGLE_API_KEY)
+model = genai.GenerativeModel('gemini-pro')
 
 
 
