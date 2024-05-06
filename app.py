@@ -84,7 +84,7 @@ def df_to_gdf(df):
   #     gdf.rename(columns={column_name: name}, inplace=True)
   return gdf
 
-wide_space_default()
+st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
