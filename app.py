@@ -37,6 +37,18 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
+# Add a Chat history object to Streamlit session state
+if "chat" not in st.session_state:
+    st.session_state.chat = model.start_chat(history=[])
+
+if "wen_datasets" not in st.session_state:
+    st.session_state.wen_datasets = []
+
+# Add all generated sparqls to Streamlit session state
+if "sparqls" not in st.session_state:
+    st.session_state.requests = []
+    st.session_state.sparqls = []
+
 
 
 col1, col2, col3 = st.columns([1, 1, 1])
