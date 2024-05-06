@@ -99,8 +99,11 @@ with col1:
 
 with col2:
     
-  # Create a container for the chat messages
-  chat_container = st.container(height=350)
+    # Create a container for the chat messages
+    chat_container = st.container(height=350)
+    
+    # Get user input
+    user_input = st.chat_input("What can I help you with?")
 
 
 if map_config:
