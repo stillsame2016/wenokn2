@@ -143,7 +143,7 @@ def add_message(sender, message, processing=False):
                             st.rerun()
                         except Exception as e:
                             st.markdown(f"Encounter an error: {str(e)}. Try again...")
-                            traceback.print_exc()
+                            # traceback.print_exc()
                             tried += 1
                     if tried == max_tries:
                         st.markdown(
