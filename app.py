@@ -269,8 +269,6 @@ with col2:
            from the user's request, ask the user for further clarification.
        """
 
-        response = st.session_state.chat.send_message(query, safety_settings=safe)
-
         max_tries = 5
         current_try = 0
         while current_try < max_tries:
