@@ -270,6 +270,18 @@ with col2:
        """
 
         response = st.session_state.chat.send_message(query, safety_settings=safe)
+
+        max_tries = 5
+        current_try = 0
+        while current_try < max_tries:
+            try:
+                response = st.session_state.chat.send_message(query, safety_settings=safe)
+                break
+            except Exception as e:
+                print(e)
+                time.sleep(1)
+                current_try += 1
+
         data = response.text
 
         if data.startswith('```json'):
