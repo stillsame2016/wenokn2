@@ -92,7 +92,7 @@ def add_message(sender, message, processing=False):
                     while tried < max_tries:
                         try:
                             response = requests.get(
-                                f"https://sparcal.sdsc.edu/staging-api/v1/Utility/wenokn_llama3?query_text={message}")
+                                f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={message}")
                             data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
                             if data.startswith("\"```sparql"):
                                 start_index = data.find("```sparql") + len("```sparql")
