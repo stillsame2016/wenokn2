@@ -11,14 +11,18 @@ import sparql_dataframe
 import google.generativeai as genai
 from shapely import wkt
 
+import threading
+from streamlit.runtime.scriptrunner import add_script_run_ctx
+from streamlit_modal import Modal
+
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
-# Setup the title
+# Set up the title
 st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
 
-# Setup the datasets in the session for geodataframes
+# Set up the datasets in the session for geodataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
@@ -76,6 +80,183 @@ def df_to_gdf(df, dataset_name):
     return gdf
 
 
+# Function to add a new message to the chat
+def add_message(sender, message, processing, chat_container):
+    with chat_container:
+        if processing:
+            with st.chat_message("assistant"):
+                with st.spinner(f"""We're currently processing your request:
+                                    **{message}{'' if message.endswith('.') else '.'}**
+                              Depending on the complexity of the query and the volume of data, 
+                              this may take a moment. We appreciate your patience."""):
+                    max_tries = 5
+                    tried = 0
+                    gdf_empty = False
+                    while tried < max_tries:
+                        try:
+                            response = requests.get(
+                                f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={message}")
+                            data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
+                            if data.startswith("\"```sparql"):
+                                start_index = data.find("```sparql") + len("```sparql")
+                                end_index = data.find("```", start_index)
+                                sparql_query = data[start_index:end_index].strip()
+                            elif data.startswith("\"```code"):
+                                start_index = data.find("```code") + len("```code")
+                                end_index = data.find("```", start_index)
+                                sparql_query = data[start_index:end_index].strip()
+                            elif data.startswith("\"```"):
+                                start_index = data.find("```") + len("```")
+                                end_index = data.find("```", start_index)
+                                sparql_query = data[start_index:end_index].strip()
+                            elif data.startswith('"') and data.endswith('"'):
+                                # Remove leading and trailing double quotes
+                                sparql_query = data[1:-1]
+                            else:
+                                sparql_query = data
+                            sparql_query = sparql_query.replace("\n\n\n", "\n\n")
+
+                            st.session_state.processing = "sparql"
+
+                            print("=" * 70, "sparql_query")
+                            print(sparql_query)
+
+                            st.markdown(
+                                """
+                                <style>
+                                .st-code > pre {
+                                    font-size: 0.4em;
+                                }
+                                </style>
+                                """,
+                                unsafe_allow_html=True
+                            )
+                            st.code(sparql_query)
+
+                            endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
+                            df = sparql_dataframe.get(endpoint, sparql_query)
+
+                            st.session_state.processing = "queried"
+                            print("=" * 70, "query result")
+                            print(df.shape)
+
+                            gdf = df_to_gdf(df, message)
+                            if gdf.shape[0] == 0:
+                                # double check
+                                if not gdf_empty:
+                                    gdf_empty = True
+                                    tried += 1
+                                    continue
+
+                            tried = max_tries + 10
+                            st.session_state.requests.append(message)
+                            st.session_state.sparqls.append(sparql_query)
+                            st.session_state.datasets.append(gdf)
+                            st.rerun()
+                        except Exception as e:
+                            st.markdown(f"Encounter an error: {str(e)}. Try again...")
+                            # traceback.print_exc()
+                            tried += 1
+                    if tried == max_tries:
+                        st.markdown(
+                            "We are not able to process your request at this moment. You can try it again now or "
+                            "later.")
+        else:
+            st.chat_message(sender).write(message)
+
+    if "processing" in st.session_state:
+        del st.session_state['processing']
+        print("delete st.session_state.processing")
+        st.session_state.job["is_done"] = True
+        st.rerun()
+
+
+def add_message_2(message, processing):
+    if processing:
+        with st.spinner(f"""We're currently processing your request:
+                            **{message}{'' if message.endswith('.') else '.'}**
+                      Depending on the complexity of the query and the volume of data, 
+                      this may take a moment. We appreciate your patience."""):
+            max_tries = 5
+            tried = 0
+            gdf_empty = False
+            while tried < max_tries:
+                try:
+                    response = requests.get(
+                        f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={message}")
+                    data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
+                    if data.startswith("\"```sparql"):
+                        start_index = data.find("```sparql") + len("```sparql")
+                        end_index = data.find("```", start_index)
+                        sparql_query = data[start_index:end_index].strip()
+                    elif data.startswith("\"```code"):
+                        start_index = data.find("```code") + len("```code")
+                        end_index = data.find("```", start_index)
+                        sparql_query = data[start_index:end_index].strip()
+                    elif data.startswith("\"```"):
+                        start_index = data.find("```") + len("```")
+                        end_index = data.find("```", start_index)
+                        sparql_query = data[start_index:end_index].strip()
+                    elif data.startswith('"') and data.endswith('"'):
+                        # Remove leading and trailing double quotes
+                        sparql_query = data[1:-1]
+                    else:
+                        sparql_query = data
+                    sparql_query = sparql_query.replace("\n\n\n", "\n\n")
+
+                    st.session_state.processing = "sparql"
+
+                    print("=" * 70, "sparql_query")
+                    print(sparql_query)
+
+                    st.markdown(
+                        """
+                        <style>
+                        .st-code > pre {
+                            font-size: 0.4em;
+                        }
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    st.code(sparql_query)
+
+                    endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
+                    df = sparql_dataframe.get(endpoint, sparql_query)
+
+                    st.session_state.processing = "queried"
+                    print("=" * 70, "query result")
+                    print(df.shape)
+
+                    gdf = df_to_gdf(df, message)
+                    if gdf.shape[0] == 0:
+                        # double check
+                        if not gdf_empty:
+                            gdf_empty = True
+                            tried += 1
+                            continue
+
+                    tried = max_tries + 10
+                    st.session_state.requests.append(message)
+                    st.session_state.sparqls.append(sparql_query)
+                    st.session_state.datasets.append(gdf)
+                    st.rerun()
+                except Exception as e:
+                    st.markdown(f"Encounter an error: {str(e)}. Try again...")
+                    # traceback.print_exc()
+                    tried += 1
+            if tried == max_tries:
+                st.markdown(
+                    "We are not able to process your request at this moment. You can try it again now or "
+                    "later.")
+
+    if "processing" in st.session_state:
+        del st.session_state['processing']
+        print("delete st.session_state.processing")
+        st.session_state.job["is_done"] = True
+        st.rerun()
+
+
 col1, col2 = st.columns([6, 4])
 
 info_container = st.container(height=350)
@@ -85,7 +266,7 @@ with info_container:
         st.code(sparql)
 
 with col1:
-    # Setup the map
+    # Set up the map
     options = {"keepExistingConfig": True}
     map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
     time.sleep(0.5)
@@ -109,86 +290,6 @@ with col2:
     # Create a container for the chat messages
     chat_container = st.container(height=355)
 
-    # Function to add a new message to the chat
-    def add_message(sender, message, processing):
-        with chat_container:
-            if processing:
-                with st.chat_message("assistant"):
-                    with st.spinner(f"""We're currently processing your request:
-                                        **{message}{'' if message.endswith('.') else '.'}**
-                                  Depending on the complexity of the query and the volume of data, 
-                                  this may take a moment. We appreciate your patience."""):
-                        max_tries = 5
-                        tried = 0
-                        gdf_empty = False
-                        while tried < max_tries:
-                            try:
-                                response = requests.get(
-                                    f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={message}")
-                                data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
-                                if data.startswith("\"```sparql"):
-                                    start_index = data.find("```sparql") + len("```sparql")
-                                    end_index = data.find("```", start_index)
-                                    sparql_query = data[start_index:end_index].strip()
-                                elif data.startswith("\"```code"):
-                                    start_index = data.find("```code") + len("```code")
-                                    end_index = data.find("```", start_index)
-                                    sparql_query = data[start_index:end_index].strip()
-                                elif data.startswith("\"```"):
-                                    start_index = data.find("```") + len("```")
-                                    end_index = data.find("```", start_index)
-                                    sparql_query = data[start_index:end_index].strip()
-                                elif data.startswith('"') and data.endswith('"'):
-                                    # Remove leading and trailing double quotes
-                                    sparql_query = data[1:-1]
-                                else:
-                                    sparql_query = data
-                                sparql_query = sparql_query.replace("\n\n\n", "\n\n")
-
-                                print("=" * 70, "sparql_query")
-                                print(sparql_query)
-
-                                st.markdown(
-                                    """
-                                    <style>
-                                    .st-code > pre {
-                                        font-size: 0.4em; 
-                                    }
-                                    </style>
-                                    """,
-                                    unsafe_allow_html=True
-                                )
-                                st.code(sparql_query)
-
-                                endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
-                                df = sparql_dataframe.get(endpoint, sparql_query)
-
-                                print("=" * 70, "query result")
-                                print(df.shape)
-
-                                gdf = df_to_gdf(df, message)
-                                if gdf.shape[0] == 0:
-                                    # double check
-                                    if not gdf_empty:
-                                        gdf_empty = True
-                                        tried += 1
-                                        continue
-
-                                tried = max_tries + 10
-                                st.session_state.requests.append(message)
-                                st.session_state.sparqls.append(sparql_query)
-                                st.session_state.datasets.append(gdf)
-                                st.rerun()
-                            except Exception as e:
-                                st.markdown(f"Encounter an error: {str(e)}. Try again...")
-                                # traceback.print_exc()
-                                tried += 1
-                        if tried == max_tries:
-                            st.markdown(
-                                "We are not able to process your request at this moment. You can try it again now or later.")
-            else:
-                st.chat_message(sender).write(message)
-
     for message in st.session_state.chat.history:
         with chat_container:
             with st.chat_message("assistant" if message.role == "model" else message.role):
@@ -209,16 +310,55 @@ with col2:
                     if isinstance(data, dict):
                         if not data["is_request_data"]:
                             assistant_response = data["alternative_answer"]
-                        else:
+                            st.markdown(assistant_response)
+                        elif message is not st.session_state.chat.history[-1]:
                             assistant_response = "Your request has been processed."
-                        st.markdown(assistant_response)
+                            st.markdown(assistant_response)
+                        else:
+                            if "job" in st.session_state and not st.session_state.job['is_done']:
+                                # a job is running
+                                assistant_response = json.dumps(st.session_state.job, indent=4)
+                                with st.spinner(f"""
+                                        We're currently processing your request: 
+                                        **{st.session_state.job['request']}{'' if st.session_state.job['request'].endswith('.') else '.'}** 
+                                        Depending on the complexity of the query and the volume of data, this may take 
+                                        a moment. We appreciate your patience.
+                                        """):
+                                    # wait until the job is done
+                                    while "job" in st.session_state and not st.session_state.job['is_done']:
+                                        time.sleep(2)
+                                    # refresh the page when the job is done
+                                    st.rerun()
+                            elif "job" in st.session_state and not st.session_state.job['is_thread_started']:
+                                assistant_response = "OOPS, the thread is not started."
+                                st.markdown(assistant_response)
+                            else:
+                                assistant_response = "Your request has been processed."
+                                if "job" not in st.session_state or \
+                                        ("job" in st.session_state and st.session_state.job['request'] != data['request']):
+
+                                    # assistant_response += "the thread did start \n\n" + json.dumps(st.session_state.job)
+
+                                    st.session_state.job = {
+                                        "request": f"{data['request']}",
+                                        "is_thread_started": True,
+                                        "is_done": False
+                                    }
+
+                                    thread = threading.Thread(target=add_message_2, args=(f"{data['request']}", True))
+                                    add_script_run_ctx(thread)
+                                    thread.start()
+                                    thread.join()
+
+                                st.markdown(assistant_response)
+                        # st.markdown(assistant_response)
 
     # Get user input
     user_input = st.chat_input("What can I help you with?")
 
     if user_input:
         # Add user message to the chat
-        add_message("User", user_input, processing=False)
+        add_message("User", message=user_input, processing=False, chat_container=chat_container)
 
         query = f"""
           You are an expert of the WEN-OKN knowledge database. You also have general knowledge.
@@ -292,14 +432,41 @@ with col2:
         else:
             data = json.loads(data)
 
-        print("="*70, "first answer")
+        print("=" * 70, "first answer")
         print(json.dumps(data, indent=4))
 
-        if not data["is_request_data"]:
-            add_message("assistant", f"{data['alternative_answer']}", processing=False)
-        else:
-            add_message("assistant", f"{data['request']}", processing=True)
+        st.session_state.job = {
+            "user_input": user_input,
+            "request": f"{data['request']}",
+            "is_thread_started": False,
+            "is_done": False
+        }
 
-print("="*70, "oops")
-time.sleep(1)
+        if not data["is_request_data"]:
+            add_message("assistant", f"{data['alternative_answer']}", processing=False, chat_container=chat_container)
+        else:
+            # add_message("assistant", f"{data['request']}", processing=True)
+            if "processing" not in st.session_state:
+                print("thread started")
+                st.session_state.job["is_thread_started"] = True
+                thread = threading.Thread(target=add_message,
+                                          args=("assistant", f"{data['request']}", True, chat_container))
+                add_script_run_ctx(thread)
+                thread.start()
+                thread.join()
+            else:
+                print("oops, thread can't start")
+
+# if map_config:
+#     st.code(json.dumps(map_config_json, indent=4))
+
+if "job" not in st.session_state:
+    st.markdown("no job")
+else:
+    st.code(json.dumps(st.session_state.job, indent=4))
+
+    if not st.session_state.job["is_done"]:
+        time.sleep(2)
+        st.rerun()
+
 
