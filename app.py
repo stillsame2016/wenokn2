@@ -13,7 +13,6 @@ from shapely import wkt
 
 import threading
 from streamlit.runtime.scriptrunner import add_script_run_ctx
-from streamlit_modal import Modal
 
 
 # Set the wide layout of the web page
