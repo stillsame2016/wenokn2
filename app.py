@@ -456,14 +456,16 @@ with col2:
             else:
                 print("oops, thread can't start")
 
-# if map_config:
-#     st.code(json.dumps(map_config_json, indent=4))
+if map_config:
+    map_config_container = st.container(height=355)
+    with map_config_container:
+        st.code(json.dumps(map_config_json, indent=4))
 
 if "job" not in st.session_state:
-    st.markdown("no job")
+    # st.markdown("no job")
+    pass
 else:
-    st.code(json.dumps(st.session_state.job, indent=4))
-
+    # st.code(json.dumps(st.session_state.job, indent=4))
     if not st.session_state.job["is_done"]:
         time.sleep(2)
         st.rerun()
