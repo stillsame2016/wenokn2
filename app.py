@@ -434,16 +434,17 @@ with col2:
         print("=" * 70, "first answer")
         print(json.dumps(data, indent=4))
 
-        st.session_state.job = {
-            "user_input": user_input,
-            "request": f"{data['request']}",
-            "is_thread_started": False,
-            "is_done": False
-        }
-
         if not data["is_request_data"]:
             add_message("assistant", f"{data['alternative_answer']}", processing=False, chat_container=chat_container)
+            del st.session_state['job']
         else:
+            st.session_state.job = {
+                "user_input": user_input,
+                "request": f"{data['request']}",
+                "is_thread_started": False,
+                "is_done": False
+            }
+            
             # add_message("assistant", f"{data['request']}", processing=True)
             if "processing" not in st.session_state:
                 print("thread started")
@@ -461,13 +462,8 @@ if map_config:
     with map_config_container:
         st.code(json.dumps(map_config_json, indent=4))
 
-if "job" not in st.session_state:
-    # st.markdown("no job")
-    pass
-else:
-    # st.code(json.dumps(st.session_state.job, indent=4))
-    if not st.session_state.job["is_done"]:
-        time.sleep(2)
-        st.rerun()
+if "job" in st.session_state and not st.session_state.job["is_done"]:
+    time.sleep(2)
+    st.rerun()
 
 
