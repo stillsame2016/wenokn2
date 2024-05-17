@@ -26,7 +26,7 @@ if "datasets" not in st.session_state:
     st.session_state.datasets = []
 
 # Setup LLM model
-GOOGLE_API_KEY = "AIzaSyBNV2diiKiaD8b6akD5T4UJtFfycaGYWyY"
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
