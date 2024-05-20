@@ -217,7 +217,7 @@ def process_off_topic_request(llm, user_input, chat_container):
             It plays a critical role in preventing water pollution and maintaining the integrity of the nation's water 
             resources.
 
-            Based on the provided context, use easy understanding language to answer the question politely.
+            Based on the provided context, use easy understanding language to answer the question.
             
             Question:{question}?
 
