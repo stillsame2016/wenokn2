@@ -7,8 +7,8 @@ from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
 
-Groq_KEY = "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"
-Groq_KEY_2 = "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"
+Groq_KEY = st.secrets["Groq_KEY"]
+Groq_KEY_2 = st.secrets["Groq_KEY_2"]
 
 llm = ChatGroq(temperature=0, model_name="Llama3-8b-8192", api_key=Groq_KEY)
 llm2 = ChatGroq(temperature=0, model_name="Llama3-8b-8192", api_key=Groq_KEY_2)
