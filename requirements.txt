@@ -3,3 +3,6 @@ pandas
 geopandas
 google-generativeai
 sparql_dataframe
+langchain
+langchain_groq
+groq
