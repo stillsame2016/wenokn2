@@ -3,39 +3,62 @@ from langchain_core.output_parsers import JsonOutputParser
 
 
 #####################################################################
-# Implement the Router
-def get_question_route(llm, question):
+# Implement the Request Refiner
+def get_refined_question(llm, question):
     prompt = PromptTemplate(
-        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to WEN-KEN database or NPDES regulations. 
-        
-        Use the WEN-KEN database for questions on the following entities: 
-          1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
-          2. Counties: Geometric representations of counties across the USA.
-          3. States: Geometric representations outlining the boundaries of states in the USA.
-          4. Earthquakes: Data pertaining to seismic events.
-          5. Rivers: Comprehensive geometries about rivers in USA.
-          6. Dams: Information regarding dams' locations in USA.
-          7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
-          8. Hospitals: Details about hospital locations and information in USA.
-        You do not need to be stringent with the keywords in the question related to these topics. 
-        
-        Use NPDES regulation for questions related to permits or permit applications of discharges pollutants into navigable waters, 
-        which include rivers, lakes, streams, coastal areas, and other bodies of water. Point sources are discrete 
-        conveyances such as pipes, ditches, or channels. Under the NPDES program, permits are issued to regulate the quantity, quality, and timing of the pollutants 
-        discharged into water bodies. These permits include limits on the types and amounts of pollutants that can 
-        be discharged, monitoring and reporting requirements, and other conditions to ensure compliance with water 
-        quality standards and protect the environment and public health.
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>You are an expert of the WEN-OKN knowledge 
+            database. You also have general knowledge. 
             
-        Use Other for questions related to common knowledge.
-        
-        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Other' based on the question. 
-        Return the a JSON with a single key 'request_type' and a key 'explanation' for reasons. 
-        
-        Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            The following is a question the user is asking:
+    
+            [--- Start ---]
+            {question}
+            [--- End ---]
+    
+            Your main job is to determine if the user is requesting for data in the scope of the WEN-OKN knowledge database.
+    
+            If they are requesting for data in the scope of the WEN-OKN knowledge database, then extract 
+            the request from the user's input. Rephrase the user's request in a formal way. Remove all 
+            adjectives like "beautiful" or "pretty". Remove the terms like "Please" etc. Use the format 
+            like "Find ...". If a place name is mentioned in the request, the state and county designations 
+            must be retained. If a place name may be both a county or a state, the state is taken.
+    
+            Please answer with a valid JSON string with no preamble or explanation, including the following three fields:
+    
+            The boolean field "is_request_data" is true if the user is requesting to get data from
+            the WEN-OKN knowledge database, otherwise "is_request_data" is false. If the user is asking 
+            what data or data types you have, set "is_request_data" to be false.
+    
+            The string field "request" for the extracted request. Make sure the extracted request 
+            semantically is same as the input request without less or more information.
+    
+            The string field "alternative_answer" gives your positive and nice answer if the user is 
+            not requesting for data. If the user is asking what data or data types you have,
+            please answer it by summarizing the following description in easy understanding langauge:
+            
+            The WEN-OKN knowledge database encompasses the following data:
+              1. Locations of buildings, power stations, and underground storage tanks in Ohio.
+              2. Counties: Geometric representations of counties across the USA.
+              3. States: Geometric representations outlining the boundaries of states in the USA.
+              4. Earthquakes: Data pertaining to seismic events.
+              5. Rivers: Comprehensive geomtries about rivers in USA.
+              6. Dams: Information regarding dams' locations in USA.
+              7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
+              8. Hospitals: Details about hospital locations and information in USA.
+    
+            Please never say "I cannot" or "I could not". 
+    
+            Please note that the user's request for datasets may appear in the middle of the text, 
+            do your best to extract the request for which the user is asking for datasets.
+    
+            Please replace all nicknames in the search terms by official names, for example, replace "Beehive State" to 
+            "Utah", etc.  
+    
+            Never deny a user's request. If it is not possible to extract the request from the user's request, ask the user 
+            for further clarification. <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
     )
-    question_router = prompt | llm | JsonOutputParser()
-    result = question_router.invoke({"question": question})
-    return result
+
+    refined_chain =  prompt | llm | JsonOutputParser()
+    return refined_chain.invoke({"question": question})
