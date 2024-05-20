@@ -21,7 +21,8 @@ def get_refined_question(llm, question):
             the request from the user's input. Rephrase the user's request in a formal way. Remove all 
             adjectives like "beautiful" or "pretty". Remove the terms like "Please" etc. Use the format 
             like "Find ...". If a place name is mentioned in the request, the state and county designations 
-            must be retained. If a place name may be both a county or a state, the state is taken.
+            must be retained. If a place name may be both a county or a state, the state is taken. Keep the
+            the number of user requested entities.
     
             Please answer with a valid JSON string with no preamble or explanation, including the following three fields:
     
