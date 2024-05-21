@@ -89,10 +89,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
-                st.code(refined_request)
                 if refined_request['is_request_data']:
                     process_data_request(f"{refined_request['request']}", chat_container)
                 else:
