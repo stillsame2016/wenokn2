@@ -34,8 +34,9 @@ def get_refined_question(llm, question):
             semantically is same as the input request without less or more information.
     
             The string field "alternative_answer" gives your positive and nice answer if the user is 
-            not requesting for data. If the user is asking what data or data types you have,
-            please answer it by summarizing the following description in easy understanding langauge:
+            not requesting for data, otherwise set "alternative_answer" as "". If the user is asking 
+            what data or data types you have, please answer it by summarizing the following description 
+            in easy understanding langauge.
             
             The WEN-OKN knowledge database encompasses the following data:
               1. Locations of buildings, power stations, and underground storage tanks in Ohio.
