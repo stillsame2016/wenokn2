@@ -110,9 +110,9 @@ def process_data_request(message, chat_container):
                         # traceback.print_exc()
                         tried += 1
                 if tried == max_tries:
-                    st.markdown(
-                        "We are not able to process your request at this moment. You can try it again now or "
-                        "later.")
+                    message =  "We are not able to process your request at this moment. You can refine your request or try it again now or later."
+                    st.markdown(message)
+                    st.session_state.chat.append({"role": "assistant", "content": message})
 
 
 def process_regulation_request(llm, user_input, chat_container):
