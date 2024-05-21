@@ -113,6 +113,7 @@ def process_data_request(message, chat_container):
                     message =  "We are not able to process your request at this moment. You can refine your request or try it again now or later."
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
+                    st.rerun()
 
 
 def process_regulation_request(llm, user_input, chat_container):
