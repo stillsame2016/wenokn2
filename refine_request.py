@@ -24,7 +24,8 @@ def get_refined_question(llm, question):
             must be retained. If a place name may be both a county or a state, the state is taken. Keep the
             the number of user requested entities.
     
-            Please answer with a valid JSON string with no preamble or explanation, including the following three fields:
+            Please answer with a valid JSON string only without any preamble or explanation, including the 
+            following three fields:
     
             The boolean field "is_request_data" is true if the user is requesting to get data from
             the WEN-OKN knowledge database, otherwise "is_request_data" is false. If the user is asking 
