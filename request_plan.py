@@ -28,7 +28,7 @@ def get_request_plan(llm, question):
             
             Please return your answer in JSON with a list for those atomic request under a key "request" 
             without preamble or explanation<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-    """,
+        """,
         input_variables=["question"],
     )
     question_planer = prompt | llm | JsonOutputParser()
