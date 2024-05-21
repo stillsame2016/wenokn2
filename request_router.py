@@ -20,17 +20,18 @@ def get_question_route(llm, question):
           8. Hospitals: Details about hospital locations and information in USA.
         You do not need to be stringent with the keywords in the question related to these topics. 
         
-        Use NPDES regulation for questions related to permits or permit applications of discharges pollutants into navigable waters, 
-        which include rivers, lakes, streams, coastal areas, and other bodies of water. Point sources are discrete 
-        conveyances such as pipes, ditches, or channels. Under the NPDES program, permits are issued to regulate the quantity, quality, and timing of the pollutants 
-        discharged into water bodies. These permits include limits on the types and amounts of pollutants that can 
-        be discharged, monitoring and reporting requirements, and other conditions to ensure compliance with water 
-        quality standards and protect the environment and public health.
+        Use NPDES regulation for questions related to permits or permit applications of discharges pollutants into 
+        navigable waters, which include rivers, lakes, streams, coastal areas, and other bodies of water. Point 
+        sources are discrete conveyances such as pipes, ditches, or channels. Under the NPDES program, permits are 
+        issued to regulate the quantity, quality, and timing of the pollutants discharged into water bodies. These 
+        permits include limits on the types and amounts of pollutants that can be discharged, monitoring and 
+        reporting requirements, and other conditions to ensure compliance with water quality standards and protect 
+        the environment and public health.
             
         Use Other for questions related to common knowledge.
         
-        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Other' based on the question. 
-        Return the a JSON with a single key 'request_type' and a key 'explanation' for reasons. 
+        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Other' based on the question. Return a JSON with 
+        a single key 'request_type' and a key 'explanation' for reasons. 
         
         Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
