@@ -5,7 +5,8 @@ from langchain_core.output_parsers import JsonOutputParser
 #####################################################################
 # Implement the Request Planer
 def get_request_plan(llm, question):
-    template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are the export of WEN-OKN knowledge 
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are the export of WEN-OKN knowledge 
             system which answer one question or return data for one entity type at a time. For example, we can return 
             dams or return earthquakes. You need to extract a list of atomic requests from the user's question and 
             also make each atomic request can be executed independent to other atomic requests. 
