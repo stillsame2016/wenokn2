@@ -10,10 +10,16 @@ def get_request_plan(llm, question):
             system which answer one question or return data for one entity type at a time. For example, we can return 
             dams or return earthquakes. You need to extract a list of atomic requests from the user's question and 
             also make each atomic request can be executed independent to other atomic requests. 
-            
+
             [Example 1]
-            First find Scioto River, then find all dams on this river. Also find all counties these 
-            dams locate. 
+            First find Scioto River and all dams on it. 
+            
+            This question can be divided into the following atomic requests:
+               Find Scioto River
+               Find all dams on Scioto River
+            
+            [Example 2]
+            First find Scioto River, then find all dams on this river. Also find all counties these dams locate. 
             
             This question can be divided into the following atomic requests:
                Find Scioto River
