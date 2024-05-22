@@ -34,7 +34,7 @@ def get_request_plan(llm, question):
             request same as it is in the original question. Note that each atomic request should be able to handle
             independently, so any pronouns (for example, "it") in it must be replaced by real name.
             
-            Please return your answer in JSON with a list for those atomic request under a key "request" 
+            Please return your answer in JSON with a list for those atomic request under a key "requests" 
             without preamble or explanation<|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
