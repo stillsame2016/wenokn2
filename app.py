@@ -94,7 +94,7 @@ with col2:
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
-                    st.code(json.dumps(plan, indent=4))
+                    # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
                         process_data_request(request, chat_container)
                     st.session_state.chat.append({"role": "assistant",
