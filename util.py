@@ -110,8 +110,7 @@ def process_data_request(message, chat_container):
                         tried += 1
                 if tried == max_tries:
                     error_info =  f"""We are not able to process your request **{message}** 
-                                      at this moment. You can refine your request or try it again now 
-                                      or later."""
+                                      at this moment. You can refine your request or try it."""
                     st.markdown(error_info)
                     st.session_state.chat.append({"role": "assistant", "content": error_info})
                     st.rerun()
