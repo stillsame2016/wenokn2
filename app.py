@@ -95,7 +95,9 @@ with col2:
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
                     st.code(plan)
-                    process_data_request(f"{refined_request['request']}", chat_container)
+                    for request in plan['requests']:
+                        process_data_request(request, chat_container)
+                    # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
                     message = refined_request['alternative_answer']
                     st.chat_message("assistant").markdown(message)
