@@ -101,9 +101,8 @@ def process_data_request(message, chat_container):
                         st.session_state.requests.append(message)
                         st.session_state.sparqls.append(sparql_query)
                         st.session_state.datasets.append(gdf)
-                        st.session_state.chat.append({"role": "assistant",
-                                                      "content": "Your request has been processed."})
-
+                        # st.session_state.chat.append({"role": "assistant",
+                        #                               "content": "Your request has been processed."})
                         # st.rerun()
                     except Exception as e:
                         st.markdown(f"Encounter an error: {str(e)}. Try again...")
