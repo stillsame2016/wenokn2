@@ -109,8 +109,7 @@ def process_data_request(message, chat_container):
                         # traceback.print_exc()
                         tried += 1
                 if tried == max_tries:
-                    error_info =  f"""We are not able to process your request 
-                                      **{message}{'' if message.endswith('.') else '.'}** 
+                    error_info =  f"""We are not able to process your request **{message}** 
                                       at this moment. You can refine your request or try it again now 
                                       or later."""
                     st.markdown(error_info)
