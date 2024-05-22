@@ -109,9 +109,12 @@ def process_data_request(message, chat_container):
                         # traceback.print_exc()
                         tried += 1
                 if tried == max_tries:
-                    message =  "We are not able to process your request at this moment. You can refine your request or try it again now or later."
-                    st.markdown(message)
-                    st.session_state.chat.append({"role": "assistant", "content": message})
+                    error_info =  f"""We are not able to process your request 
+                                      **{message}{'' if message.endswith('.') else '.'}** 
+                                      at this moment. You can refine your request or try it again now 
+                                      or later."""
+                    st.markdown(error_info)
+                    st.session_state.chat.append({"role": "assistant", "content": error_info})
                     st.rerun()
 
 
