@@ -97,6 +97,7 @@ with col2:
                     st.code(plan)
                     for request in plan['request']:
                         process_data_request(request, chat_container)
+                    st.rerun()
                     # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
                     message = refined_request['alternative_answer']
