@@ -95,7 +95,7 @@ with col2:
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
                     st.code(plan)
-                    for request in plan['requests']:
+                    for request in plan['request']:
                         process_data_request(request, chat_container)
                     # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
