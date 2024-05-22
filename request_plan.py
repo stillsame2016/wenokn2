@@ -31,7 +31,8 @@ def get_request_plan(llm, question):
             {question}
             
             Think step by step and divide this question into atomic requests. Keep the atomic 
-            request same as it is in the original question.
+            request same as it is in the original question. Note that each atomic request should be able to handle
+            independently, so any pronouns (for example, "it") in it must be replaced by real name.
             
             Please return your answer in JSON with a list for those atomic request under a key "request" 
             without preamble or explanation<|eot_id|><|start_header_id|>assistant<|end_header_id|>
