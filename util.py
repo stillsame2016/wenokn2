@@ -105,7 +105,8 @@ def process_data_request(message, chat_container):
                         #                               "content": "Your request has been processed."})
                         # st.rerun()
                     except Exception as e:
-                        st.markdown(f"Encounter an error: {str(e)}. Try again...")
+                        st.markdown(f"Encounter an error: {str(e)}.")
+                        st.markdown("Try again...")
                         # traceback.print_exc()
                         tried += 1
                 if tried == max_tries:
