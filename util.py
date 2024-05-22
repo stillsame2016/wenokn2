@@ -104,7 +104,7 @@ def process_data_request(message, chat_container):
                         st.session_state.chat.append({"role": "assistant",
                                                       "content": "Your request has been processed."})
 
-                        st.rerun()
+                        # st.rerun()
                     except Exception as e:
                         st.markdown(f"Encounter an error: {str(e)}. Try again...")
                         # traceback.print_exc()
