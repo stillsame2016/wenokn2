@@ -97,6 +97,8 @@ with col2:
                     st.code(plan)
                     for request in plan['request']:
                         process_data_request(request, chat_container)
+                    st.session_state.chat.append({"role": "assistant",
+                                                  "content": "Your request has been processed."})
                     st.rerun()
                     # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
