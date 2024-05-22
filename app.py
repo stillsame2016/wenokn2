@@ -95,7 +95,7 @@ with col2:
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
                     st.code(plan)
-                    for request in plan['request']:
+                    for request in plan['requests']:
                         process_data_request(request, chat_container)
                     st.session_state.chat.append({"role": "assistant",
                                                   "content": "Your request has been processed."})
