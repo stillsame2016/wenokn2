@@ -48,7 +48,7 @@ def get_request_plan(llm, question):
             The following is the question from the user:
             {question}
             
-            Think step by step and divide this question into atomic requests. Keep the atomic 
+            Based on the entity types requseted in the question, divide this question into atomic requests. Keep the atomic 
             request same as it is in the original question. Note that each atomic request should not contain any
             pronoun like "it" or "its" in order to handling each atomic request independently.
             
