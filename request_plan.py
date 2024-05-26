@@ -14,14 +14,16 @@ def get_request_plan(llm, question):
             [Example 1]
             First find Scioto River and all dams on it. 
             
-            This question can be divided into the following atomic requests:
+            This question requests to find a river entity and some dam entities. So it can be divided into the following two 
+            atomic requests:
                Find Scioto River
                Find all dams on Scioto River
             
             [Example 2]
             First find Scioto River, then find all dams on this river. Also find all counties these dams locate. 
             
-            This question can be divided into the following atomic requests:
+            This question requests to find a river entity and some dam entities and some county entities. So it can be divided 
+            into the following three atomic requests:
                Find Scioto River
                Find all dams on Scioto River
                Find all counties where dams on Scioto River are located
@@ -29,8 +31,7 @@ def get_request_plan(llm, question):
             [Example 3]
             Find all counties Scioto River flows through
             
-            This question is already atomic request because it only requests for counties satisfying
-            some conditions.
+            This question requests to find some county entities. So it is already an atomic request.
 
             [Question]
             The following is the question from the user:
