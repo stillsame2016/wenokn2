@@ -26,6 +26,12 @@ def get_request_plan(llm, question):
                Find all dams on Scioto River
                Find all counties where dams on Scioto River are located
 
+            [Example 3]
+            Find all counties Scioto River flows through
+            
+            This question is already atomic request because it only requests for counties satisfying
+            some conditions.
+
             [Question]
             The following is the question from the user:
             {question}
