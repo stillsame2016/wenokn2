@@ -6,8 +6,8 @@ from langchain_core.output_parsers import JsonOutputParser
 # Implement the Request Refiner
 def get_refined_question(llm, question):
     prompt = PromptTemplate(
-        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>You are an expert of the WEN-OKN knowledge 
-            database. You also have general knowledge. 
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>You are an expert of the 
+            WEN-OKN knowledge database. You also have general knowledge. 
             
             The following is a question the user is asking:
     
@@ -15,14 +15,15 @@ def get_refined_question(llm, question):
             {question}
             [--- End ---]
     
-            Your main job is to determine if the user is requesting for data in the scope of the WEN-OKN knowledge database.
+            Your main job is to determine if the user is requesting for data in the scope of the WEN-OKN 
+            knowledge database.
     
             If they are requesting for data in the scope of the WEN-OKN knowledge database, then extract 
             the request from the user's input. Rephrase the user's request in a formal way. Remove all 
             adjectives like "beautiful" or "pretty". Remove the terms like "Please" etc. Use the format 
             like "Find ...". The place name must be retained if it is mentioned in the request. If a place 
-            name may be both a county or a state, for example, Ohio, then use Ohio State. Keep the the number of user requested 
-            entities.
+            name may be both a county or a state, for example, Ohio, then use Ohio State. Keep the the 
+            number of user requested entities.
     
             Please answer with a valid JSON string only without any preamble or explanation, including the 
             following three fields:
