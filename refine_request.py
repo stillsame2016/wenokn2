@@ -55,11 +55,11 @@ def get_refined_question(llm, question):
             Please note that the user's request for datasets may appear in the middle of the text, 
             do your best to extract the request for which the user is asking for datasets.
     
-            Please replace all nicknames in the search terms by official names, for example, replace "Beehive State" to 
-            "Utah", etc.  
+            Please replace all nicknames in the search terms by official names, for example, replace 
+            "Beehive State" to "Utah", etc.  
     
-            Never deny a user's request. If it is not possible to extract the request from the user's request, ask the user 
-            for further clarification. <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            Never deny a user's request. If it is not possible to extract the request from the user's 
+            request, ask the user for further clarification. <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
     )
