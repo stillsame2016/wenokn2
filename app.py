@@ -66,7 +66,7 @@ def add_map():
 if st.session_state.wen_datasets:
     for dataset in st.session_state.wen_datasets:
         with st.container():   
-            st.divider()
+            # st.divider()
             st.markdown("""
                             <style>
                             .stDataFrame div {
