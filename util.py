@@ -123,6 +123,82 @@ def process_data_request(message, chat_container):
                     st.session_state.chat.append({"role": "assistant", "content": error_info})
                     st.rerun()
 
+def process_data_commons_request(llm, user_input, chat_container):
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+        
+        In Data Commons, fips is used as index to access data. A fips has the following format, 
+        for example, "geoid/39" is the fips for the Ohio State and "geoid/06" is the fips for the
+        California State. 
+        
+        We have the following functions to get fips from a state/county name:
+            get_fips_from_state_name(state_name)
+            get_fips_from_county_name(county_name) 
+        
+        Data Commons has the following statistical variables available for a particular place:
+            Count_Person
+            Count_FireEvent
+            Count_FlashFloodEvent
+            Count_FloodEvent
+            Count_HailEvent
+            Count_HeatTemperatureEvent
+            Count_HeatWaveEvent
+            Count_HeavyRainEvent
+              
+        The following code can fetch some variables data for some fips from Data Commons:
+                
+            import datacommons_pandas as dc
+            
+            def get_time_series_dataframe_for_fips(fips_list, variable_name):
+                _df = dc.build_time_series_dataframe(fips_list, variable_name)
+                _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
+                _df['Name'] = _df['Name'].str[0]
+                return _df
+                
+            [Example 1] 
+            Find the populations for all counties in Ohio, we can run the following code:
+            
+                # Get fips for all counties in Ohio
+                ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
+                
+                # Get Count_Person (i.e., population) for all counties in Ohio
+                df = get_time_series_dataframe_for_fips(ohio_county_fips, ["Count_Person"])
+                    
+            [Example 2]
+            Find the population for the Ross county and Pike county in Ohio, we can run the 
+            following code:
+            
+                ross_pike_fips = ['geoId/39131', 'geoId/39141']
+                df = get_time_series_dataframe_for_fips(ross_pike_fips, ["Count_Person"])
+                     
+            [Example 3]
+            Find the populations of Ross county and Scioto county
+            
+                ross_scioto_fips = [ get_fips_from_county_name('Ross County'), get_fips_from_county_name('Scioto County') ]
+                df = get_time_series_dataframe_for_fips(ross_scioto_fips, ["Count_Person"])
+                 
+            [Example 4]   
+            Given a geodataframe gdf containing all counties Scioto River passes through with a column
+            "name" for county names. Find the populations of all counties where Scioto River flows through.
+            
+                scioto_river_fips = [ get_fips_from_county_name(county_name) for county_name in gdf['name']]
+                df = get_time_series_dataframe_for_fips(scioto_river_fips, ["Count_Person"])   
+                     
+            [ Question ]
+            The following is the question from the user:
+            {question}
+            
+            Please return only the complete Python code to implement the user's request without preamble or 
+            explanation. Don't include any print statement and triple quotes. 
+    
+            <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question"],
+    )
+    start = time.time()
+    df_code_chain = prompt | llm | StrOutputParser()
+    return df_code_chain.invoke({"question": question})
+    
 
 def process_regulation_request(llm, user_input, chat_container):
     VDB_URL = "https://sparcal.sdsc.edu/api/v1/Utility/regulations"
