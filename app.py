@@ -139,6 +139,10 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, chat_container)
+                exec(code)
+                df.id = user_input
+                st.session_state.wen_datasets.append(df)
+                
                 # ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
                 # df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
@@ -146,8 +150,10 @@ with col2:
                 # df.id = user_input
                 # st.session_state.wen_datasets.append(df)
                 
-                # message = "process_data_commons"
-                message = code
+                message = f"""
+                            Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                            found and displayed.
+                            """
                 st.chat_message("assistant").markdown(message)
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
