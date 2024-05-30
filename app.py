@@ -7,6 +7,8 @@ from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
+
+import datacommons_pandas as dc
 from data_commons import get_variables_for_fips
 
 Groq_KEY = st.secrets["Groq_KEY"]
@@ -113,6 +115,10 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
+
+                ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
+                df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
+                
                 message = "process_data_commons"
                 st.chat_message("assistant").markdown(message)
                 st.session_state.chat.append({"role": "assistant", "content": message})
