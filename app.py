@@ -63,22 +63,17 @@ def add_map():
     return _map_config
 
 if st.session_state.wen_datasets:
-    # Custom CSS to add padding
-    st.markdown("""
-        <style>
-        .dataframe-container {
-            padding: 20px;
-            background-color: pink;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    st.markdown("<div class='dataframe-container'>", unsafe_allow_html=True)
+   st.write("""
+            <style>
+            table {
+                margin-left: 20px; /* Adjust this value to increase or decrease the padding */
+            }
+            </style>
+            """, unsafe_allow_html=True)
     
     st.markdown(f"###### {st.session_state.wen_datasets[0].id}")
     st.dataframe(st.session_state.wen_datasets[0], width=1200)
 
-    # Close the div
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
