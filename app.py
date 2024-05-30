@@ -64,7 +64,7 @@ def add_map():
 
 
 if st.session_state.wen_datasets:
-    for dataset in st.session_state.wen_datasets:
+    for index, dataset in enumerate(st.session_state.wen_datasets):
         with st.container():   
             st.markdown("""
                             <style>
@@ -82,7 +82,7 @@ if st.session_state.wen_datasets:
                             </style>
                         """, unsafe_allow_html=True)
        
-            st.write(f"<div class='tableTitle'>Table: {dataset.id}</div>", unsafe_allow_html=True)
+            st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
             st.dataframe(dataset, width=1000)
         
 
