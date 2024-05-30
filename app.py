@@ -71,8 +71,8 @@ if st.session_state.wen_datasets:
             background-color: pink;
         }
         </style>
-        <div class="dataframe-container">
     """, unsafe_allow_html=True)
+    st.markdown("<div class='dataframe-container'>", unsafe_allow_html=True)
     
     st.markdown(f"###### {st.session_state.wen_datasets[0].id}")
     st.dataframe(st.session_state.wen_datasets[0], width=1200)
