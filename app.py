@@ -71,6 +71,8 @@ if st.session_state.wen_datasets:
                             .tableTitle {
                                 border-color: #222222;
                                 font-family: "Source Sans Pro", sans-serif;
+                                font-size: 20pt;
+                                font-weight: bold;
                             }
                             
                             .stDataFrame {
