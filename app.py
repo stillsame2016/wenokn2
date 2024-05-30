@@ -63,6 +63,7 @@ def add_map():
     return _map_config
 
 if st.session_state.wen_datasets:
+    st.markdown(f"*** st.session_state.wen_datasets[0].id ***")
     st.dataframe(st.session_state.wen_datasets[0], width=1200)
 
 # Show all requests and generated SPARQL queries
@@ -120,6 +121,7 @@ with col2:
 
                 ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
+                df.id = user_input
                 st.session_state.wen_datasets.append(df)
                 
                 message = "process_data_commons"
