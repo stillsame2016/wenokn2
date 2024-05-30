@@ -67,14 +67,17 @@ if st.session_state.wen_datasets:
     with st.container():       
         st.markdown("""
                         <style>
-                        .big-font {
-                            margin:50px !important;
-                            background-color: pink;
-                        }
+.stDataFrame div {
+    border-color: #222222;
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+.stDataFrame {
+    border: 5px solid #1f2229;
+}
                         </style>
                     """, unsafe_allow_html=True)
-        st.markdown(f'<p class="big-font">{st.session_state.wen_datasets[0].id}</p>', unsafe_allow_html=True)
-        
+   
         st.markdown(f"***Table***: {st.session_state.wen_datasets[0].id}")
         st.dataframe(st.session_state.wen_datasets[0], width=1200)
         
