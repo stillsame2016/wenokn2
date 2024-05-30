@@ -197,7 +197,7 @@ def process_data_commons_request(llm, user_input, chat_container):
         input_variables=["question"],
     )
     df_code_chain = prompt | llm | StrOutputParser()
-    return df_code_chain.invoke({"question": question})
+    return df_code_chain.invoke({"question": user_input})
     
 
 def process_regulation_request(llm, user_input, chat_container):
