@@ -66,7 +66,7 @@ if st.session_state.wen_datasets:
    st.write("""
             <style>
             table {
-                margin-left: 20px; /* Adjust this value to increase or decrease the padding */
+                margin-left: 20px; 
             }
             </style>
             """, unsafe_allow_html=True)
