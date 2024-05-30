@@ -63,7 +63,7 @@ def add_map():
     return _map_config
 
 if st.session_state.wen_datasets:
-    st.markdown("***Test***")
+    st.markdown(f"**{st.session_state.wen_datasets[0].id}**")
     st.dataframe(st.session_state.wen_datasets[0], width=1200)
 
 # Show all requests and generated SPARQL queries
