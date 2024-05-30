@@ -6,3 +6,5 @@ sparql_dataframe
 langchain
 langchain_groq
 groq
+datacommons_panda
+datacommons
