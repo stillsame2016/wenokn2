@@ -2,7 +2,7 @@ import time
 import json
 import streamlit as st
 from keplergl import keplergl
-from util import process_data_request, process_regulation_request, process_off_topic_request
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request
 from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
@@ -138,15 +138,16 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
-
-                ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
+                code = process_data_commons_request(llm, user_input, chat_container)
+                # ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
                 # df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
-                df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_FloodEvent")
-                df.id = user_input
-                st.session_state.wen_datasets.append(df)
+                # df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_FloodEvent")
+                # df.id = user_input
+                # st.session_state.wen_datasets.append(df)
                 
-                message = "process_data_commons"
+                # message = "process_data_commons"
+                message = code
                 st.chat_message("assistant").markdown(message)
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
