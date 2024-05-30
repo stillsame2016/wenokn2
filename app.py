@@ -65,7 +65,8 @@ def add_map():
 
 if st.session_state.wen_datasets:
     with st.container():       
-        st.markdown(f"***Table***: {st.session_state.wen_datasets[0].id}")
+        # st.markdown(f"***Table***: {st.session_state.wen_datasets[0].id}")
+        st.header(f"Table: {st.session_state.wen_datasets[0].id}", divider='gray')
         st.dataframe(st.session_state.wen_datasets[0], width=1200)
         
 
