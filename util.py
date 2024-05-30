@@ -98,9 +98,16 @@ def process_data_request(message, chat_container):
                                 continue
 
                         tried = max_tries + 10
-                        st.session_state.requests.append(message)
-                        st.session_state.sparqls.append(sparql_query)
-                        st.session_state.datasets.append(gdf)
+                        if gdf.shape[0] > 0:
+                            st.session_state.requests.append(message)
+                            st.session_state.sparqls.append(sparql_query)
+                            st.session_state.datasets.append(gdf)
+                        else:
+                            error_info = f"""No data has been loaded for your request **{message}**.
+                                             Please refine your request and try it again."""
+                            st.markdown(error_info)
+                            st.session_state.chat.append({"role": "assistant", "content": error_info})
+                            st.rerun()
                         # st.session_state.chat.append({"role": "assistant",
                         #                               "content": "Your request has been processed."})
                         # st.rerun()
@@ -110,8 +117,8 @@ def process_data_request(message, chat_container):
                         # traceback.print_exc()
                         tried += 1
                 if tried == max_tries:
-                    error_info =  f"""We are not able to process your request **{message}** 
-                                      at this moment. Please refine your request and try it again."""
+                    error_info = f"""We are not able to process your request **{message}** 
+                                     at this moment. Please refine your request and try it again."""
                     st.markdown(error_info)
                     st.session_state.chat.append({"role": "assistant", "content": error_info})
                     st.rerun()
