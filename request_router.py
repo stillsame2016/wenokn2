@@ -28,9 +28,12 @@ def get_question_route(llm, question):
         reporting requirements, and other conditions to ensure compliance with water quality standards and protect 
         the environment and public health.
 
-        Use Data Commons for questions related to populations or floor event counts for counties or states.
+        Use Data Commons for questions related to populations or floor event counts for counties or states. 
         
-        Use Other for questions related to common knowledge.
+        Use Other for questions related to common knowledge. For example, to find the populations of all counties 
+        where Muskingum River flows through, we need to use the WEN-KEN database to find all counties Muskingum River
+        flows through, then use Data Commons to find the populations for those counties. In this case, just use 
+        "Other" for this request.
         
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'Other' based on the question. 
         Return a JSON with a single key 'request_type' and a key 'explanation' for reasons. 
