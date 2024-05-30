@@ -139,6 +139,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, chat_container)
+                st.code(code)
                 exec(code)
                 df.id = user_input
                 st.session_state.wen_datasets.append(df)
