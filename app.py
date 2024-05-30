@@ -9,7 +9,7 @@ from request_router import get_question_route
 from request_plan import get_request_plan
 
 import datacommons_pandas as dc
-from data_commons import get_variables_for_fips
+from data_commons import get_variables_for_fips, get_time_series_dataframe_for_fips
 
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
