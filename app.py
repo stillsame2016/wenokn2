@@ -66,7 +66,6 @@ def add_map():
 if st.session_state.wen_datasets:
     for dataset in st.session_state.wen_datasets:
         with st.container():   
-            # st.divider()
             st.markdown("""
                             <style>
                             .stDataFrame div {
@@ -80,7 +79,7 @@ if st.session_state.wen_datasets:
                             </style>
                         """, unsafe_allow_html=True)
        
-            st.markdown(f"***Table***: {dataset.id}")
+            st.write(f"<div>Table: {dataset.id}</div>", unsafe_allow_html=True)
             st.dataframe(dataset, width=1000)
         
 
