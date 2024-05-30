@@ -34,6 +34,8 @@ if "chat" not in st.session_state:
 # Add datasets created by queries to the session and display by the map
 if "wen_datasets" not in st.session_state:
     st.session_state.wen_datasets = []
+    st.session_state.wen_tables = []
+    
 
 # Add all generated SPARQL queries with the requests to Streamlit session state
 if "sparqls" not in st.session_state:
@@ -65,6 +67,7 @@ def add_map():
 
 if st.session_state.wen_datasets:
     for index, dataset in enumerate(st.session_state.wen_datasets):
+        table = st.session_state.wen_datasets[index]
         with st.container():   
             st.markdown("""
                             <style>
@@ -83,7 +86,7 @@ if st.session_state.wen_datasets:
                         """, unsafe_allow_html=True)
        
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
-            st.dataframe(dataset, width=1100, hide_index=True)
+            st.dataframe(table, width=1100, hide_index=True)
         
 
 # Show all requests and generated SPARQL queries
@@ -143,6 +146,7 @@ with col2:
                 exec(code)
                 df.id = user_input
                 st.session_state.wen_datasets.append(df)
+                st.session_state.wen_tables.append(df.copy())
                 
                 # ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
