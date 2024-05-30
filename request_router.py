@@ -7,7 +7,7 @@ from langchain_core.output_parsers import JsonOutputParser
 def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to WEN-KEN database or NPDES regulations. 
+        user question to WEN-KEN database or NPDES regulations or Data Commons. 
         
         Use the WEN-KEN database for questions on the following entities: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
@@ -27,11 +27,13 @@ def get_question_route(llm, question):
         permits include limits on the types and amounts of pollutants that can be discharged, monitoring and 
         reporting requirements, and other conditions to ensure compliance with water quality standards and protect 
         the environment and public health.
-            
+
+        Use Data Commons for questions related to populations and floor event counts for counties or states.
+        
         Use Other for questions related to common knowledge.
         
-        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Other' based on the question. Return a JSON with 
-        a single key 'request_type' and a key 'explanation' for reasons. 
+        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'Other' based on the question. 
+        Return a JSON with a single key 'request_type' and a key 'explanation' for reasons. 
         
         Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
