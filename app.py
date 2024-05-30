@@ -68,6 +68,7 @@ if st.session_state.wen_datasets:
         <style>
         .dataframe-container {
             padding: 20px;
+            background-color: pink;
         }
         </style>
         <div class="dataframe-container">
