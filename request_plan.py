@@ -44,8 +44,8 @@ def get_request_plan(llm, question):
                     Task
                     Divide the user's question into atomic requests based on the entity types 
                     mentioned. Each atomic request should be in its original form from the 
-                    question and should not contain any pronouns like "it" or "its" to ensure 
-                    independent handling.
+                    question and should not contain any pronouns like "it" or "its" or "this" or
+                    "these" or "those" to ensure independent handling.
                     
                     Input
                     User Question:
