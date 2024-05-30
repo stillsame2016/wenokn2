@@ -83,7 +83,7 @@ if st.session_state.wen_datasets:
                         """, unsafe_allow_html=True)
        
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
-            st.dataframe(dataset, width=1000, hide_index=True)
+            st.dataframe(dataset, width=1100, hide_index=True)
         
 
 # Show all requests and generated SPARQL queries
