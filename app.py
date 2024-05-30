@@ -79,7 +79,7 @@ if st.session_state.wen_datasets:
                     """, unsafe_allow_html=True)
    
         st.markdown(f"***Table***: {st.session_state.wen_datasets[0].id}")
-        st.dataframe(st.session_state.wen_datasets[0], width=1200)
+        st.dataframe(st.session_state.wen_datasets[0], width=800)
         
 
 # Show all requests and generated SPARQL queries
