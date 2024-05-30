@@ -63,12 +63,6 @@ def add_map():
     return _map_config
 
 
-st.write("text outside the container")
-with st.container():
-    st.write("text inside the container")
-
-st.write("More text outside the container")
-
 st.markdown(
     """
 <style>
@@ -79,6 +73,13 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+st.write("text outside the container")
+with st.container():
+    st.write("text inside the container")
+
+st.write("More text outside the container")
+
 
 if st.session_state.wen_datasets:
     with st.container():
