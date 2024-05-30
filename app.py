@@ -63,9 +63,9 @@ def add_map():
     return _map_config
 
 if st.session_state.wen_datasets:
-    st.write("""<style>table {margin-left: 20px; }</style>""", unsafe_allow_html=True)
-    st.markdown(f"###### {st.session_state.wen_datasets[0].id}")
-    st.dataframe(st.session_state.wen_datasets[0], width=1200)
+    with st.container():
+        st.markdown(f"###### {st.session_state.wen_datasets[0].id}")
+        st.dataframe(st.session_state.wen_datasets[0], width=1200)
 
 
 # Show all requests and generated SPARQL queries
