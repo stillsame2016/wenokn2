@@ -28,7 +28,7 @@ def get_question_route(llm, question):
         reporting requirements, and other conditions to ensure compliance with water quality standards and protect 
         the environment and public health.
 
-        Use Data Commons for questions related to populations and floor event counts for counties or states.
+        Use Data Commons for questions related to populations or floor event counts for counties or states.
         
         Use Other for questions related to common knowledge.
         
