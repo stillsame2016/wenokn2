@@ -190,7 +190,7 @@ def process_data_commons_request(llm, user_input, chat_container):
             {question}
             
             Please return only the complete Python code to implement the user's request without preamble or 
-            explanation. Don't include any print statement and triple quotes. 
+            explanation. Don't include any print statement. Don't add ``` around the code. 
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
