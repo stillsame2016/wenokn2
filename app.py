@@ -140,7 +140,8 @@ with col2:
             elif route['request_type'] == 'Data Commons':
 
                 ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
-                df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
+                # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
+                df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
                 df.id = user_input
                 st.session_state.wen_datasets.append(df)
                 
