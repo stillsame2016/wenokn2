@@ -69,9 +69,10 @@ if st.session_state.wen_datasets:
             st.markdown("""
                             <style>
                             .tableTitle {
+                                font-family: "Source Sans Pro", sans-serif;
+                                font-weight: 600;
+                                color: rgb(49, 51, 63);
                                 padding: 0px 0px 10px 10px;
-                                font-size: 16pt;
-                                font-weight: bold;
                             }
                             
                             .stDataFrame {
