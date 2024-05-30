@@ -68,7 +68,7 @@ if st.session_state.wen_datasets:
         with st.container():   
             st.markdown("""
                             <style>
-                            .stDataFrame div {
+                            .tableTitle div {
                                 border-color: #222222;
                                 font-family: "Source Sans Pro", sans-serif;
                             }
@@ -79,7 +79,7 @@ if st.session_state.wen_datasets:
                             </style>
                         """, unsafe_allow_html=True)
        
-            st.write(f"<div>Table: {dataset.id}</div>", unsafe_allow_html=True)
+            st.write(f"<div class='tableTitle'>Table: {dataset.id}</div>", unsafe_allow_html=True)
             st.dataframe(dataset, width=1000)
         
 
