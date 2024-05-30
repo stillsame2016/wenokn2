@@ -63,31 +63,9 @@ def add_map():
     return _map_config
 
 
-st.markdown(
-    """
-<style>
-    div[data-testid="stVerticalBlock"] div[style*="flex-direction: column;"] div[data-testid="stVerticalBlock"] {
-        border: 1px solid red;
-    }
-</style>
-""",
-    unsafe_allow_html=True,
-)
-
-st.write("text outside the container")
-with st.container():
-    st.write("text inside the container")
-
-st.write("More text outside the container")
-
-
 if st.session_state.wen_datasets:
-    with st.container():
-        st.markdown("<p style='padding-left:100px'>", unsafe_allow_html=True)
-        st.markdown("Test")
-        st.markdown("</p>", unsafe_allow_html=True)
-        
-        st.markdown(f"###### {st.session_state.wen_datasets[0].id}")
+    with st.container():       
+        st.markdown(f"***Table***: ###### {st.session_state.wen_datasets[0].id}")
         st.dataframe(st.session_state.wen_datasets[0], width=1200)
         
 
