@@ -67,14 +67,14 @@ if st.session_state.wen_datasets:
     with st.container():       
         st.markdown("""
                         <style>
-.stDataFrame div {
-    border-color: #222222;
-    font-family: "Source Sans Pro", sans-serif;
-}
-
-.stDataFrame {
-    border: 5px solid #1f2229;
-}
+                        .stDataFrame div {
+                            border-color: #222222;
+                            font-family: "Source Sans Pro", sans-serif;
+                        }
+                        
+                        .stDataFrame {
+                            margin: 30px;
+                        }
                         </style>
                     """, unsafe_allow_html=True)
    
