@@ -7,6 +7,7 @@ from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
+from data_commons import get_variables_for_fips
 
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
