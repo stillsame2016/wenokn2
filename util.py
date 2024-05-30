@@ -123,6 +123,7 @@ def process_data_request(message, chat_container):
                     st.session_state.chat.append({"role": "assistant", "content": error_info})
                     st.rerun()
 
+
 def process_data_commons_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
@@ -195,7 +196,6 @@ def process_data_commons_request(llm, user_input, chat_container):
         """,
         input_variables=["question"],
     )
-    start = time.time()
     df_code_chain = prompt | llm | StrOutputParser()
     return df_code_chain.invoke({"question": question})
     
