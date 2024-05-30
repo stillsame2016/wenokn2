@@ -64,23 +64,24 @@ def add_map():
 
 
 if st.session_state.wen_datasets:
-    with st.container():   
-        st.divider()
-        st.markdown("""
-                        <style>
-                        .stDataFrame div {
-                            border-color: #222222;
-                            font-family: "Source Sans Pro", sans-serif;
-                        }
-                        
-                        .stDataFrame {
-                            margin: 0px 30px 0px 10px;
-                        }
-                        </style>
-                    """, unsafe_allow_html=True)
-   
-        st.markdown(f"***Table***: {st.session_state.wen_datasets[0].id}")
-        st.dataframe(st.session_state.wen_datasets[0], width=1000)
+    for dataset in st.session_state.wen_datasets:
+        with st.container():   
+            st.divider()
+            st.markdown("""
+                            <style>
+                            .stDataFrame div {
+                                border-color: #222222;
+                                font-family: "Source Sans Pro", sans-serif;
+                            }
+                            
+                            .stDataFrame {
+                                margin: 0px 30px 0px 10px;
+                            }
+                            </style>
+                        """, unsafe_allow_html=True)
+       
+            st.markdown(f"***Table***: {dataset.id}")
+            st.dataframe(dataset, width=1000)
         
 
 # Show all requests and generated SPARQL queries
