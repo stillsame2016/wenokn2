@@ -69,7 +69,7 @@ if st.session_state.wen_datasets:
             st.markdown("""
                             <style>
                             .tableTitle {
-                                padding-left: 10px;
+                                padding: 0px 0px 10px 10px;
                                 font-size: 16pt;
                                 font-weight: bold;
                             }
