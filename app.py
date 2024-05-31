@@ -127,8 +127,6 @@ if st.session_state.wen_datasets:
 
             with col4:
                 ''
-                ''
-                ''
                 st.dataframe(pivot_table, hide_index=True, use_container_width=True)
                 # st.dataframe(table, width=1100, hide_index=True)
 
