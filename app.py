@@ -108,7 +108,7 @@ if st.session_state.wen_datasets:
                 'Year',
                 'Count_Person',
             )
-            pivot_table['Year'] = pd.to_numeric(gdp_df['Year'])
+            pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
             # st.dataframe(pivot_table, width=1100, hide_index=True)
 
             # Filter the data
