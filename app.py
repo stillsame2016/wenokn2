@@ -74,7 +74,6 @@ if st.session_state.wen_datasets:
             st.markdown("""
                             <style>
                             .tableTitle {
-                                
                                 font-size: 18pt;
                                 font-weight: 600;
                                 color: rgb(49, 51, 63);
