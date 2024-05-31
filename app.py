@@ -101,6 +101,14 @@ if st.session_state.wen_datasets:
             ''
             st.dataframe(table, width=1100, hide_index=True)
 
+            pivot_table = table.melt(
+                ['Name'],
+                [str(x) for x in range(MIN_YEAR, MAX_YEAR + 1)],
+                'Year',
+                'Count_Person',
+            )
+            st.dataframe(pivot_table, width=1100)
+
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
