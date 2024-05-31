@@ -121,7 +121,7 @@ if st.session_state.wen_datasets:
                 filtered_gdp_df,
                 x='Year',
                 y='Count_Person',
-                # color='County Name',
+                color='Name',
              )
 
 
