@@ -96,7 +96,7 @@ if st.session_state.wen_datasets:
 
             selected_countries = st.multiselect(
                                     'Which countries would you like to view?',
-                                    countries,
+                                    dataset['Name'],
                                     ['DEU', 'FRA', 'GBR', 'BRA', 'MEX', 'JPN'])
 
             st.dataframe(table, width=1100, hide_index=True)
