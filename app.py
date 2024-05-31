@@ -11,6 +11,8 @@ from request_plan import get_request_plan
 import pandas as pd
 import datacommons_pandas as dc
 from data_commons import get_variables_for_fips, get_time_series_dataframe_for_fips
+from streamlit_extras.chart_container import chart_container
+
 
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
@@ -121,6 +123,10 @@ if st.session_state.wen_datasets:
                 color='Name',
             )
 
+            with chart_container(chart_data):
+                st.write("Here's a cool chart")
+                st.line_chart(filtered_gdp_df)
+            
             st.dataframe(pivot_table, width=1100, hide_index=True)
             # st.dataframe(table, width=1100, hide_index=True)
 
