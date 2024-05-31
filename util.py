@@ -145,6 +145,9 @@ def process_data_commons_request(llm, user_input, chat_container):
             Count_HeatTemperatureEvent
             Count_HeatWaveEvent
             Count_HeavyRainEvent
+            Max_Rainfall
+            Max_Snowfall
+            Max_Temperature
               
         The following code can fetch some variables data for some fips from Data Commons:
                 
