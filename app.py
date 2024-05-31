@@ -80,24 +80,24 @@ if st.session_state.wen_datasets:
                                 padding: 0px 0px 10px 10px;
                             }
                             
-                            .stDataFrame {
-                                margin: 0px 30px 0px 10px;
-                            }
-
                             .stSlider [data-baseweb=slider]{
                                 width: 92%;
                                 margin: 0px 50px 0px 50px;
                             }
-
                             </style>
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
 
             min_value, max_value = 1970, 2022
-            from_year, to_year = st.slider( "",
+            from_year, to_year = st.slider("Select a time ranger",
                                     min_value=min_value,
                                     max_value=max_value,
                                     value=[min_value, max_value])
+
+            selected_countries = st.multiselect(
+                                    'Which countries would you like to view?',
+                                    countries,
+                                    ['DEU', 'FRA', 'GBR', 'BRA', 'MEX', 'JPN'])
 
             st.dataframe(table, width=1100, hide_index=True)
 
