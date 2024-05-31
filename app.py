@@ -70,7 +70,7 @@ if st.session_state.wen_datasets:
     for index, dataset in enumerate(st.session_state.wen_datasets):
         table = st.session_state.wen_datasets[index]
         with st.container(): 
-            st.write("<hr/>", unsafe_allow_html=True)
+            ''
             st.markdown("""
                             <style>
                             .tableTitle {
