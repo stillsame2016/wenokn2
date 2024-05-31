@@ -97,6 +97,7 @@ if st.session_state.wen_datasets:
                 'Year',
                 dataset.variable_name,
             )
+            pivot_table = pivot_table.dropna()
             # pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
             col3, col4 = st.columns([3, 2])
