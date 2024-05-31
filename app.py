@@ -98,7 +98,7 @@ if st.session_state.wen_datasets:
             )
             pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
-            col3, col4 = st.columns([1, 1])
+            col3, col4 = st.columns([3, 2])
 
             with col3:
                 min_value, max_value = 1970, 2022
