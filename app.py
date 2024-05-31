@@ -77,7 +77,7 @@ if st.session_state.wen_datasets:
                                 font-size: 16pt;
                                 font-weight: 600;
                                 color: rgb(49, 51, 63);
-                                padding: 0px 0px 10px 10px;
+                                padding: 0px 0px 10px 0px;
                             }
                             
                             .stSlider [data-baseweb=slider]{
