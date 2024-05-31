@@ -97,7 +97,7 @@ if st.session_state.wen_datasets:
             selected_countries = st.multiselect(
                                     'Which countries would you like to view?',
                                     dataset['Name'],
-                                    ['DEU', 'FRA', 'GBR', 'BRA', 'MEX', 'JPN'])
+                                    ['Pike County', 'Ross County'])
 
             st.dataframe(table, width=1100, hide_index=True)
 
