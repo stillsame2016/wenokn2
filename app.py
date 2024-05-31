@@ -86,11 +86,9 @@ if st.session_state.wen_datasets:
 
                             .stSlider [data-baseweb=slider]{
                                 width: 25%;
+                                 margin: 0px 50px 0px 20px;
                             }
 
-                            .stSlider {
-                                margin: 0px 50px 0px 20px;
-                            }
                             </style>
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
