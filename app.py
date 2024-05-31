@@ -107,7 +107,20 @@ if st.session_state.wen_datasets:
                 'Year',
                 'Count_Person',
             )
-            st.dataframe(pivot_table, width=1100, hide_index=True)
+            # st.dataframe(pivot_table, width=1100, hide_index=True)
+
+            # Filter the data
+            filtered_gdp_df = pivot_table[
+                (pivot_table['Name'].isin(selected_counties))
+                & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
+            ]
+
+            st.line_chart(
+                filtered_gdp_df,
+                x='Year',
+                y='Count_Person',
+                color='County Name',
+             )
 
 
 # Show all requests and generated SPARQL queries
