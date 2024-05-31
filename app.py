@@ -94,16 +94,7 @@ if st.session_state.wen_datasets:
                                     max_value=max_value,
                                     value=[min_value, max_value])
 
-            
             st.dataframe(table, width=1100, hide_index=True)
-
-        chat_plh_style = """<style>
-                                div[data-testid='stVerticalBlock']:has(div#tableTitle) {
-                                    background-color: #E4F2EC
-                                };
-                            </style>
-                         """
-        st.markdown(chat_plh_style, unsafe_allow_html=True)    
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
