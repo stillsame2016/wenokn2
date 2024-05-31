@@ -84,6 +84,10 @@ if st.session_state.wen_datasets:
                                 margin: 0px 30px 0px 10px;
                             }
 
+                            .stSlider [data-baseweb=slider]{
+                                width: 25%;
+                            }
+
                             .stSlider {
                                 margin: 0px 50px 0px 20px;
                             }
