@@ -88,13 +88,13 @@ if st.session_state.wen_datasets:
                             }
                             </style>
                         """, unsafe_allow_html=True)
-            st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
+            st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.title}</div>", unsafe_allow_html=True)
             ''
             pivot_table = table.melt(
                 ['Name'],
                 [str(x) for x in range(1970, 2023)],
                 'Year',
-                'Count_Person',
+                dataset.variable_name,
             )
             # pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
