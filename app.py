@@ -107,7 +107,7 @@ if st.session_state.wen_datasets:
                 'Year',
                 'Count_Person',
             )
-            st.dataframe(pivot_table, width=1100)
+            st.dataframe(pivot_table, width=1100, hide_index=True)
 
 
 # Show all requests and generated SPARQL queries
