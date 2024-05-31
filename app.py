@@ -132,7 +132,7 @@ if st.session_state.wen_datasets:
                     color='Name',
                 )
             
-            st.dataframe(pivot_table, width=1100, hide_index=True)
+            # st.dataframe(pivot_table, width=1100, hide_index=True)
             # st.dataframe(table, width=1100, hide_index=True)
 
 
