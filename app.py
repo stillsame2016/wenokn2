@@ -95,7 +95,7 @@ if st.session_state.wen_datasets:
                                     value=[min_value, max_value])
 
             selected_countries = st.multiselect(
-                                    'Which countries would you like to view?',
+                                    'Which counties would you like to view?',
                                     dataset['Name'],
                                     ['Pike County', 'Ross County'])
 
