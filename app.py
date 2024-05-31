@@ -98,33 +98,37 @@ if st.session_state.wen_datasets:
             )
             pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
-            min_value, max_value = 1970, 2022
-            from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
-                                    min_value=min_value,
-                                    max_value=max_value,
-                                    value=[min_value, max_value])
+            col3, col4 = st.columns([1, 1])
 
-            selected_counties = st.multiselect(
-                                    'Which counties would you like to view?',
-                                    dataset['Name'],
-                                    ['Pike County', 'Ross County'])
-            # Filter the data
-            filtered_gdp_df = pivot_table[
-                (pivot_table['Name'].isin(selected_counties))
-                & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
-            ]
-            
-            # st.dataframe(pivot_table, width=1100, hide_index=True)
-
-            st.line_chart(
-                filtered_gdp_df,
-                x='Year',
-                y='Count_Person',
-                color='Name',
-            )
+            with col3:
+                min_value, max_value = 1970, 2022
+                from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
+                                        min_value=min_value,
+                                        max_value=max_value,
+                                        value=[min_value, max_value])
     
-            st.dataframe(pivot_table, width=500, hide_index=True)
-            # st.dataframe(table, width=1100, hide_index=True)
+                selected_counties = st.multiselect(
+                                        'Which counties would you like to view?',
+                                        dataset['Name'],
+                                        ['Pike County', 'Ross County'])
+                # Filter the data
+                filtered_gdp_df = pivot_table[
+                    (pivot_table['Name'].isin(selected_counties))
+                    & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
+                ]
+                
+                # st.dataframe(pivot_table, width=1100, hide_index=True)
+    
+                st.line_chart(
+                    filtered_gdp_df,
+                    x='Year',
+                    y='Count_Person',
+                    color='Name',
+                )
+
+            with col4:
+                st.dataframe(pivot_table, width=500, hide_index=True)
+                # st.dataframe(table, width=1100, hide_index=True)
 
 
 # Show all requests and generated SPARQL queries
