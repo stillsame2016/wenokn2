@@ -164,33 +164,38 @@ def process_data_commons_request(llm, user_input, chat_container):
                 
                 # Get Count_Person (i.e., population) for all counties in Ohio
                 df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
+                df.title = "The Populations for All Counties in Ohio"
                     
             [Example 2]
-            Find the population for the Ross county and Pike county in Ohio, we can run the 
+            Find the populations for the Ross county and Pike county in Ohio, we can run the 
             following code:
             
                 ross_pike_fips = ['geoId/39131', 'geoId/39141']
                 df = get_time_series_dataframe_for_fips(ross_pike_fips, "Count_Person")
+                df.title = "The Populations for the Ross county and Pike county in Ohio"
                      
             [Example 3]
             Find the populations of Ross county and Scioto county
             
                 ross_scioto_fips = [ get_fips_from_county_name('Ross County'), get_fips_from_county_name('Scioto County') ]
                 df = get_time_series_dataframe_for_fips(ross_scioto_fips, "Count_Person")
+                df.title = "The Populations for the Ross county and Scioto county in Ohio"
                  
             [Example 4]   
             Given a geodataframe gdf containing all counties Scioto River passes through with a column
             "name" for county names. Find the populations of all counties where Scioto River flows through.
             
                 scioto_river_fips = [ get_fips_from_county_name(county_name) for county_name in gdf['name']]
-                df = get_time_series_dataframe_for_fips(scioto_river_fips, "Count_Person")   
+                df = get_time_series_dataframe_for_fips(scioto_river_fips, "Count_Person")  
+                df.title = "The Populations for All Counties where Scioto River Flows Through"
                      
             [ Question ]
             The following is the question from the user:
             {question}
             
             Please return only the complete Python code to implement the user's request without preamble or 
-            explanation. Don't include any print statement. Don't add ``` around the code. 
+            explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
+            save the title in df.title.
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
