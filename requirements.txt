@@ -1,5 +1,4 @@
 streamlit
-streamlit-extras
 pandas
 geopandas
 google-generativeai
