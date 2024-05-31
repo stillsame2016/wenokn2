@@ -93,7 +93,7 @@ if st.session_state.wen_datasets:
 
             min_value, max_value = 1970, 2022
             from_year, to_year = st.slider(
-                                    'Which years are you interested in?',
+                                    width = 1100,
                                     min_value=min_value,
                                     max_value=max_value,
                                     value=[min_value, max_value])
