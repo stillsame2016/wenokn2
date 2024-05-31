@@ -94,11 +94,11 @@ if st.session_state.wen_datasets:
                                     max_value=max_value,
                                     value=[min_value, max_value])
 
-            selected_countries = st.multiselect(
+            selected_counties = st.multiselect(
                                     'Which counties would you like to view?',
                                     dataset['Name'],
                                     ['Pike County', 'Ross County'])
-
+            ''
             st.dataframe(table, width=1100, hide_index=True)
 
 
