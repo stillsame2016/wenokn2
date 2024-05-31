@@ -38,6 +38,8 @@ def get_question_route(llm, question):
             Count_HeatTemperatureEvent
             Count_HeatWaveEvent
             Count_HeavyRainEvent
+            Max_Rainfall
+            Max_Snowfall
         
         For example, to find the populations of all counties where Muskingum River flows through, we need to find 
         the populations for some counties. In this case, this request uses "Data Commons".
