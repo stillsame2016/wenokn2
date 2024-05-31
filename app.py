@@ -70,7 +70,6 @@ if st.session_state.wen_datasets:
         table = st.session_state.wen_datasets[index]
 
         with st.container():  
-            st.write("<div style='background-color:pink'>", unsafe_allow_html=True)
             st.markdown("""
                             <style>
                             .tableTitle {
@@ -96,7 +95,7 @@ if st.session_state.wen_datasets:
                                     value=[min_value, max_value])
 
             st.dataframe(table, width=1100, hide_index=True)
-            st.write("</div>", unsafe_allow_html=True)
+
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
