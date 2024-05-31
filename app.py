@@ -116,13 +116,13 @@ if st.session_state.wen_datasets:
                 ]
                 
                 ''
-                st.line_chart(
-                    filtered_gdp_df,
-                    x='Year',
-                    y='Count_Person',
-                    color='Name',
-                    height=450
-                )
+                # st.line_chart(
+                #     filtered_gdp_df,
+                #     x='Year',
+                #     y='Count_Person',
+                #     color='Name',
+                #     height=450
+                # )
 
             with col4:
                 ''
