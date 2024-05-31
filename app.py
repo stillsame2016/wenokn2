@@ -107,7 +107,7 @@ if st.session_state.wen_datasets:
                 #                         max_value=max_value,
                 #                         value=[min_value, max_value])
     
-                selected_counties = ['Pike County', 'Ross County']
+                selected_counties = ['Pike County', 'Ross County', 'Adams County', 'Allen County', 'Ashland County', 'Ashtabula County', 'Athens County', 'Auglaize County', 'Belmont County', 'Brown County', 'Butler County', 'Carroll County' ]
                 # Filter the data
                 filtered_gdp_df = pivot_table[
                     (pivot_table['Name'].isin(selected_counties))
