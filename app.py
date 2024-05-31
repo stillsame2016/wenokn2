@@ -82,7 +82,7 @@ if st.session_state.wen_datasets:
                             
                             .stSlider [data-baseweb=slider]{
                                 width: 92%;
-                                margin: 0px 50px 0px 50px;
+                                margin: 0px 50px 0px 10px;
                             }
                             </style>
                         """, unsafe_allow_html=True)
