@@ -64,7 +64,7 @@ def add_map():
 
     return _map_config
 
-
+# Process tables
 if st.session_state.wen_datasets:
     for index, dataset in enumerate(st.session_state.wen_datasets):
         table = st.session_state.wen_datasets[index]
@@ -84,8 +84,16 @@ if st.session_state.wen_datasets:
                             }
                             </style>
                         """, unsafe_allow_html=True)
-       
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
+
+            min_value, max_value = 1970, 2022
+            from_year, to_year = st.slider(
+                                    'Which years are you interested in?',
+                                    min_value=min_value,
+                                    max_value=max_value,
+                                    value=[min_value, max_value])
+
+            
             st.dataframe(table, width=1100, hide_index=True)
         
 
