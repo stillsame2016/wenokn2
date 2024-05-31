@@ -125,7 +125,12 @@ if st.session_state.wen_datasets:
 
             with chart_container(filtered_gdp_df):
                 st.write("Here's a cool chart")
-                st.line_chart(filtered_gdp_df)
+                st.line_chart(
+                    filtered_gdp_df,
+                    x='Year',
+                    y='Count_Person',
+                    color='Name',
+                )
             
             st.dataframe(pivot_table, width=1100, hide_index=True)
             # st.dataframe(table, width=1100, hide_index=True)
