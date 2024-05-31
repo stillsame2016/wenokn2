@@ -100,7 +100,7 @@ if st.session_state.wen_datasets:
                                     dataset['Name'],
                                     ['Pike County', 'Ross County'])
             ''
-                        pivot_table = table.melt(
+            pivot_table = table.melt(
                 ['Name'],
                 [str(x) for x in range(1970, 2023)],
                 'Year',
@@ -120,9 +120,7 @@ if st.session_state.wen_datasets:
                 x='Year',
                 y='Count_Person',
                 color='Name',
-             )
-
-            
+            )
             st.dataframe(table, width=1100, hide_index=True)
 
 
