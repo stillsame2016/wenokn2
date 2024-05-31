@@ -123,7 +123,7 @@ if st.session_state.wen_datasets:
                 color='Name',
             )
 
-            with chart_container(chart_data):
+            with chart_container(filtered_gdp_df):
                 st.write("Here's a cool chart")
                 st.line_chart(filtered_gdp_df)
             
