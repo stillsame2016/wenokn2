@@ -114,8 +114,7 @@ if st.session_state.wen_datasets:
                 & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
             ]
             
-            
-            st.dataframe(pivot_table, width=1100, hide_index=True)
+            # st.dataframe(pivot_table, width=1100, hide_index=True)
 
             st.line_chart(
                 filtered_gdp_df,
