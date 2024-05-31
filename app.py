@@ -103,7 +103,7 @@ if st.session_state.wen_datasets:
 
             pivot_table = table.melt(
                 ['Name'],
-                [str(x) for x in range(MIN_YEAR, MAX_YEAR + 1)],
+                [str(x) for x in range(1970, 2023)],
                 'Year',
                 'Count_Person',
             )
