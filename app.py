@@ -85,7 +85,7 @@ if st.session_state.wen_datasets:
                             }
 
                             .stSlider {
-                                margin: 0px 30px 0px 10px;
+                                margin: 0px 30px 0px 30px;
                             }
                             </style>
                         """, unsafe_allow_html=True)
