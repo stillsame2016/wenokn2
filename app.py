@@ -90,7 +90,8 @@ if st.session_state.wen_datasets:
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.title}</div>", unsafe_allow_html=True)
             ''
-            columns = dataset.columns.remove('Name')
+            columns = dataset.columns
+            columns.remove('Name')
             pivot_table = table.melt(
                 ['Name'],
                 columns,
