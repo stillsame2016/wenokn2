@@ -85,7 +85,7 @@ if st.session_state.wen_datasets:
                             }
                             </style>
                         """, unsafe_allow_html=True)
-            st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
+            st.write(f"<div id='tableTitle'>Table {index+1}: {dataset.id}</div>", unsafe_allow_html=True)
 
             min_value, max_value = 1970, 2022
             from_year, to_year = st.slider(
@@ -96,7 +96,14 @@ if st.session_state.wen_datasets:
 
             
             st.dataframe(table, width=1100, hide_index=True)
-        
+
+        chat_plh_style = """<style>
+                                div[data-testid='stVerticalBlock']:has(div#tableTitle):not(:has(div#chat_outer)) {
+                                    background-color: #E4F2EC
+                                };
+                            </style>
+                         """
+        st.markdown(chat_plh_style, unsafe_allow_html=True)    
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
