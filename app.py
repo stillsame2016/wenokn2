@@ -120,7 +120,7 @@ if st.session_state.wen_datasets:
                     x='Year',
                     y='Count_Person',
                     color='Name',
-                    height=500
+                    height=450
                 )
 
             with col4:
