@@ -121,7 +121,9 @@ if st.session_state.wen_datasets:
                 y='Count_Person',
                 color='Name',
             )
-            st.dataframe(table, width=1100, hide_index=True)
+
+            st.dataframe(pivot_table, width=1100, hide_index=True)
+            # st.dataframe(table, width=1100, hide_index=True)
 
 
 # Show all requests and generated SPARQL queries
