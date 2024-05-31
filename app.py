@@ -98,7 +98,7 @@ if st.session_state.wen_datasets:
             st.dataframe(table, width=1100, hide_index=True)
 
         chat_plh_style = """<style>
-                                div[data-testid='stVerticalBlock']:has(div#tableTitle):not(:has(div#chat_outer)) {
+                                div[data-testid='stVerticalBlock']:has(div#tableTitle) {
                                     background-color: #E4F2EC
                                 };
                             </style>
