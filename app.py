@@ -69,18 +69,7 @@ if st.session_state.wen_datasets:
     for index, dataset in enumerate(st.session_state.wen_datasets):
         table = st.session_state.wen_datasets[index]
 
-        container_style = """
-                            <style>
-                            .custom-container {
-                              padding: 20px;
-                              border: 1px solid #ddd;
-                              border-radius: 5px;
-                              background-color: #f5f5f5;
-                            }
-                            </style>
-                            """
         with st.container():  
-            st.write(container_style, unsafe_allow_html=True)  
             st.markdown("""
                             <style>
                             .tableTitle {
