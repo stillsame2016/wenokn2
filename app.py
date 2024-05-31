@@ -96,25 +96,22 @@ if st.session_state.wen_datasets:
                 'Year',
                 'Count_Person',
             )
-            pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
+            # pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
             col3, col4 = st.columns([3, 2])
 
             with col3:
-                min_value, max_value = 1970, 2022
-                from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
-                                        min_value=min_value,
-                                        max_value=max_value,
-                                        value=[min_value, max_value])
+                # min_value, max_value = 1970, 2022
+                # from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
+                #                         min_value=min_value,
+                #                         max_value=max_value,
+                #                         value=[min_value, max_value])
     
-                selected_counties = st.multiselect(
-                                        'Which counties would you like to view?',
-                                        dataset['Name'],
-                                        ['Pike County', 'Ross County'])
+                selected_counties = ['Pike County', 'Ross County'])
                 # Filter the data
                 filtered_gdp_df = pivot_table[
                     (pivot_table['Name'].isin(selected_counties))
-                    & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
+                    & (pivot_table['Year'] <= '2024') & ('1970' <= pivot_table['Year'])
                 ]
                 
                 ''
