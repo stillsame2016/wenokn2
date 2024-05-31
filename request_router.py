@@ -28,8 +28,18 @@ def get_question_route(llm, question):
         reporting requirements, and other conditions to ensure compliance with water quality standards and protect 
         the environment and public health.
 
-        Use Data Commons for questions related to populations or floor event counts for counties or states. For 
-        example, to find the populations of all counties where Muskingum River flows through, we need to find 
+        Use Data Commons for questions related to the following data for counties or states. 
+
+            Count_Person (for population)
+            Count_FireEvent
+            Count_FlashFloodEvent
+            Count_FloodEvent
+            Count_HailEvent
+            Count_HeatTemperatureEvent
+            Count_HeatWaveEvent
+            Count_HeavyRainEvent
+        
+        For example, to find the populations of all counties where Muskingum River flows through, we need to find 
         the populations for some counties. In this case, this request uses "Data Commons".
         
         Use Other for questions related to common knowledge. 
