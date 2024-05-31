@@ -115,7 +115,7 @@ if st.session_state.wen_datasets:
                 & (pivot_table['Year'] <= to_year) & (from_year <= pivot_table['Year'])
             ]
 
-            st.line_chart(
+            st.area_chart(
                 filtered_gdp_df,
                 x='Year',
                 y='Count_Person',
