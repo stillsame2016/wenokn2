@@ -86,6 +86,10 @@ if st.session_state.wen_datasets:
                                 width: 90%;
                                 margin: 0px 50px 0px 30px;
                             }
+
+                            .stDataFrame {
+                                margin-left: 30px;
+                            }
                             </style>
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.title}</div>", unsafe_allow_html=True)
