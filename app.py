@@ -192,10 +192,13 @@ with col2:
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, chat_container)
                 st.code(code)
-                exec(code)
-                df.id = user_input
-                st.session_state.wen_datasets.append(df)
-                st.session_state.wen_tables.append(df.copy())
+                try:
+                    exec(code)
+                    df.id = user_input
+                    st.session_state.wen_datasets.append(df)
+                    st.session_state.wen_tables.append(df.copy())
+                except Exception as e:
+                    st.markdown(str(e))
                 
                 # ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
