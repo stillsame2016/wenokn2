@@ -25,11 +25,11 @@ def get_time_series_dataframe_for_fips(fips_list, variable_name):
 def get_fips_from_county_name(county_name):
     simple_query = f"""
                     SELECT ?geoId
-                    WHERE {
-                      ?county typeOf City .
+                    WHERE {{
+                      ?county typeOf County .
                       ?county name '{county_name}' .
                       ?county dcid ?geoId .
-                    }
+                    }}
                     LIMIT 1
                  """
     try:
