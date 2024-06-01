@@ -121,7 +121,7 @@ if st.session_state.wen_datasets:
             ]
             
             ''
-            st.line_chart(
+            st.bar_chart(
                 filtered_gdp_df,
                 x='Year',
                 y=dataset.variable_name,
