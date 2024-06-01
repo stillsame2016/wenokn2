@@ -128,13 +128,11 @@ if st.session_state.wen_datasets:
             col3, col4 = st.columns([3, 2])
 
             with col3:
-               pass
-
-            with col4:
-                ''
                 st.dataframe(pivot_table, hide_index=True, use_container_width=True)
                 # st.dataframe(table, width=1100, hide_index=True)
 
+            with col4:
+                pass
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
