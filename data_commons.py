@@ -22,21 +22,21 @@ def get_time_series_dataframe_for_fips(fips_list, variable_name):
     return _df
 
 
-# def get_fips_from_county_name(county_name):
-#     simple_query = f"""
-#                     SELECT ?geoId
-#                     WHERE {
-#                       ?county typeOf City .
-#                       ?county name '{county_name}' .
-#                       ?county dcid ?geoId .
-#                     }
-#                     LIMIT 1
-#                  """
-#     try:
-#         # Execute the simple query
-#         fips_dict = dc.query(simple_query)
-#         fips = [ item['?geoId'] for item in fips_dict ]
-#         return fips
-#     except Exception as ex:
-#         return None
+def get_fips_from_county_name(county_name):
+    simple_query = f"""
+                    SELECT ?geoId
+                    WHERE {
+                      ?county typeOf City .
+                      ?county name '{county_name}' .
+                      ?county dcid ?geoId .
+                    }
+                    LIMIT 1
+                 """
+    # try:
+    #     # Execute the simple query
+    #     fips_dict = dc.query(simple_query)
+    #     fips = [ item['?geoId'] for item in fips_dict ]
+    #     return fips
+    # except Exception as ex:
+    #     return None
      
