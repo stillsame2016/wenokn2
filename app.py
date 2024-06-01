@@ -10,7 +10,7 @@ from request_plan import get_request_plan
 
 import pandas as pd
 import datacommons_pandas as dc
-from data_commons import get_time_series_dataframe_for_fips, get_variables_for_fips
+from data_commons import get_time_series_dataframe_for_fips
 from streamlit_extras.chart_container import chart_container
 
 
