@@ -88,7 +88,7 @@ if st.session_state.wen_datasets:
                             }
 
                             .stDataFrame {
-                                margin-left: 30px;
+                                margin-left: 50px;
                             }
                             </style>
                         """, unsafe_allow_html=True)
