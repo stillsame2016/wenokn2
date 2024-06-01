@@ -98,14 +98,14 @@ if st.session_state.wen_datasets:
             pivot_table = table.melt(
                 ['Name'],
                 columns,
-                'Year',
+                'Date',
                 dataset.variable_name,
             )
             pivot_table = pivot_table.dropna()
-            # pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
+            # pivot_table['Date'] = pd.to_numeric(pivot_table['Date'])
 
-            min_value = pivot_table['Year'].min()
-            max_value = pivot_table['Year'].max()
+            min_value = pivot_table['Date'].min()
+            max_value = pivot_table['Date'].max()
             
             # min_value, max_value = 1970, 2022
             # from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
@@ -117,7 +117,7 @@ if st.session_state.wen_datasets:
             # Filter the data
             filtered_gdp_df = pivot_table[
                 (pivot_table['Name'].isin(selected_counties))
-                & (pivot_table['Year'] <= max_value) & (min_value <= pivot_table['Year'])
+                & (pivot_table['Date'] <= max_value) & (min_value <= pivot_table['Date'])
             ]
             
             ''
