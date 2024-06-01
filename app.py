@@ -123,7 +123,7 @@ if st.session_state.wen_datasets:
             ''
             st.bar_chart(
                 filtered_gdp_df,
-                x='Year',
+                x='Date',
                 y=dataset.variable_name,
                 color='Name',
                 height=450
