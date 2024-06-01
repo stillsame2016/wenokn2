@@ -36,7 +36,7 @@ def get_fips_from_county_name(county_name):
         # Execute the simple query
         fips_dict = dc.query(simple_query)
         fips = [ item['?geoId'] for item in fips_dict ]
-        return fips
+        return fips[0]
     except Exception as ex:
         return None
      
