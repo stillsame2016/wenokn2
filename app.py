@@ -100,33 +100,35 @@ if st.session_state.wen_datasets:
             pivot_table = pivot_table.dropna()
             # pivot_table['Year'] = pd.to_numeric(pivot_table['Year'])
 
+            min_value = pivot_table['Year'].min()
+            max_value = pivot_table['Year'].max()
+            
+            # min_value, max_value = 1970, 2022
+            # from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
+            #                         min_value=min_value,
+            #                         max_value=max_value,
+            #                         value=[min_value, max_value])
+
+            selected_counties = dataset['Name']
+            # Filter the data
+            filtered_gdp_df = pivot_table[
+                (pivot_table['Name'].isin(selected_counties))
+                & (pivot_table['Year'] <= max_value) & (min_value <= pivot_table['Year'])
+            ]
+            
+            ''
+            st.line_chart(
+                filtered_gdp_df,
+                x='Year',
+                y=dataset.variable_name,
+                color='Name',
+                height=450
+            )
+            
             col3, col4 = st.columns([3, 2])
 
             with col3:
-                min_value = pivot_table['Year'].min()
-                max_value = pivot_table['Year'].max()
-                
-                # min_value, max_value = 1970, 2022
-                # from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
-                #                         min_value=min_value,
-                #                         max_value=max_value,
-                #                         value=[min_value, max_value])
-    
-                selected_counties = dataset['Name']
-                # Filter the data
-                filtered_gdp_df = pivot_table[
-                    (pivot_table['Name'].isin(selected_counties))
-                    & (pivot_table['Year'] <= max_value) & (min_value <= pivot_table['Year'])
-                ]
-                
-                ''
-                st.line_chart(
-                    filtered_gdp_df,
-                    x='Year',
-                    y=dataset.variable_name,
-                    color='Name',
-                    height=450
-                )
+               pass
 
             with col4:
                 ''
