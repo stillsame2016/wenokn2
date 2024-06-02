@@ -50,4 +50,22 @@ def get_fips_from_county_name(county_name):
         return fips[0]
     except Exception as ex:
         return None
-     
+
+
+def get_fips_from_state_name(state_name):
+    simple_query = f"""
+                    SELECT ?geoId
+                    WHERE {{
+                      ?state typeOf State .
+                      ?state name '{state_name}' .
+                      ?state dcid ?geoId .
+                    }}
+                    LIMIT 1
+                 """
+    try:
+        # Execute the simple query
+        fips_dict = dc.query(simple_query)
+        fips = [ item['?geoId'] for item in fips_dict ]
+        return fips[0]
+    except Exception as ex:
+        return None
