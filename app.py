@@ -185,7 +185,7 @@ with col2:
                     df.id = user_input
                     st.session_state.wen_datasets.append(df)
                     st.session_state.wen_tables.append(df.copy())
-                    st.session_state.table_chat_histories.append([])
+                    st.session_state.table_chat_histories.append([{"role": "assistant", "content": "What can I help you with?"}])
                 except Exception as e:
                     st.markdown(str(e))
                 
