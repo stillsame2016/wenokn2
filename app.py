@@ -124,7 +124,10 @@ if st.session_state.wen_datasets:
                     with table_chat_container:
                         st.chat_message("user").markdown(user_input_for_table)
                         st.session_state.table_chat_histories[index].append({"role": "user", "content": user_input_for_table})
-                        # st.code(st.session_state.table_chat_histories[index])
+
+                        response = f"echo: {user_input_for_table}"
+                        st.chat_message("assistant").markdown(response)
+                        st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response})
                 
 
 # Show all requests and generated SPARQL queries
