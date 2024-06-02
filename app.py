@@ -38,6 +38,7 @@ if "chat" not in st.session_state:
 if "wen_datasets" not in st.session_state:
     st.session_state.wen_datasets = []
     st.session_state.wen_tables = []
+    st.session_state.table_chat_history = []
     
 
 # Add all generated SPARQL queries with the requests to Streamlit session state
@@ -181,6 +182,7 @@ with col2:
                     df.id = user_input
                     st.session_state.wen_datasets.append(df)
                     st.session_state.wen_tables.append(df.copy())
+                    st.session_state.table_chat_history.append([])
                 except Exception as e:
                     st.markdown(str(e))
                 
