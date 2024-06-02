@@ -96,7 +96,7 @@ if st.session_state.wen_datasets:
             min_value = pivot_table['Date'].min()
             max_value = pivot_table['Date'].max()
             
-            selected_counties = dataset['Name']
+            selected_counties = pivot_table['Name']
             # Filter the data
             filtered_pivot_table = pivot_table[
                 (pivot_table['Name'].isin(selected_counties))
