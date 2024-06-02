@@ -70,7 +70,7 @@ def add_map():
 # Process tables
 if st.session_state.wen_datasets:
     for index, dataset in enumerate(st.session_state.wen_datasets):
-        table = st.session_state.wen_datasets[index]
+        pivot_table = st.session_state.wen_datasets[index]
         with st.container(): 
             ''
             st.markdown("""
@@ -94,14 +94,14 @@ if st.session_state.wen_datasets:
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.title}</div>", unsafe_allow_html=True)
             ''
-            columns = dataset.columns.to_list().remove('Name')
-            pivot_table = table.melt(
-                ['Name'],
-                columns,
-                'Date',
-                dataset.variable_name,
-            )
-            pivot_table = pivot_table.dropna()
+            # columns = dataset.columns.to_list().remove('Name')
+            # pivot_table = table.melt(
+            #     ['Name'],
+            #     columns,
+            #     'Date',
+            #     dataset.variable_name,
+            # )
+            # pivot_table = pivot_table.dropna()
             # pivot_table['Date'] = pd.to_numeric(pivot_table['Date'])
 
             min_value = pivot_table['Date'].min()
