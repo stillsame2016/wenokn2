@@ -116,22 +116,23 @@ if st.session_state.wen_datasets:
                         st.session_state.chat_types[index] = 'bar_chart'
                     
             ''
-            min_value = pivot_table['Date'].min()
-            max_value = pivot_table['Date'].max()
             
-            selected_counties = pivot_table['Name']
-            # Filter the data
-            filtered_pivot_table = pivot_table[
-                (pivot_table['Name'].isin(selected_counties))
-                & (pivot_table['Date'] <= max_value) & (min_value <= pivot_table['Date'])
-            ]
+            # min_value = pivot_table['Date'].min()
+            # max_value = pivot_table['Date'].max()            
+            # selected_counties = pivot_table['Name']
+            # filtered_pivot_table = pivot_table[
+            #     (pivot_table['Name'].isin(selected_counties))
+            #     & (pivot_table['Date'] <= max_value) & (min_value <= pivot_table['Date'])
+            # ]
             
             ''
             if st.session_state.chat_types[index] == 'bar_chart':
                 st.bar_chart(
                     buffered_table, # filtered_pivot_table,
-                    x='Date',
-                    y=pivot_table.variable_name,
+                    # x='Date',
+                    # y=pivot_table.variable_name,
+                    x=buffered_table.columns[-2],
+                    y=buffered_table.columns[-1],
                     color='Name',
                     height=450
                 )
