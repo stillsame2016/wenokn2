@@ -174,10 +174,17 @@ if st.session_state.wen_datasets:
                         response = process_table_request(llm, user_input_for_table, index)
                         if response["category"] == "Request data":
                             exec(response['answer'])
+                            response = f"""
+                                        Your request has been processed. {st.session_state.wen_tables[index].shape[0]}
+                                        { "rows are" if st.session_state.wen_tables[index].shape[0] > 1 else "row is"}
+                                        found and displayed.
+                                        """
+                            st.chat_message("assistant").markdown(answer)
+                            st.session_state.table_chat_histories[index].append({"role": "assistant", "content": answer})
                             st.rerun()
-            
-                        st.chat_message("assistant").markdown(response)
-                        st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response})
+                        else:
+                            st.chat_message("assistant").markdown(response['answer'])
+                            st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
                 
 
 # Show all requests and generated SPARQL queries
