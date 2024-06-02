@@ -137,7 +137,8 @@ def process_data_commons_request(llm, user_input, chat_container):
             get_fips_from_county_name(county_name) 
         
         Data Commons has the following statistical variables available for a particular place:
-            Count_Person
+            Area_FloodEvent
+            Count_Person (for population)
             Count_FireEvent
             Count_FlashFloodEvent
             Count_FloodEvent
@@ -145,9 +146,12 @@ def process_data_commons_request(llm, user_input, chat_container):
             Count_HeatTemperatureEvent
             Count_HeatWaveEvent
             Count_HeavyRainEvent
+            CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
             Max_Rainfall
             Max_Snowfall
-            Max_Temperature
+            SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
+            SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+            SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
               
         The following code can fetch some variables data for some fips from Data Commons:
                 
