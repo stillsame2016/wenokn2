@@ -69,7 +69,8 @@ def add_map():
 
 # Process tables
 if st.session_state.wen_datasets:
-    for index, pivot_table in enumerate(st.session_state.wen_tables):
+    for index, pivot_table in enumerate(st.session_state.wen_datasets):
+        buffered_table = st.session_state.wen_tables(index)
         with st.container(): 
             ''
             st.markdown("""
@@ -114,7 +115,7 @@ if st.session_state.wen_datasets:
             
             col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
-                st.dataframe(pivot_table, hide_index=True, use_container_width=True)
+                st.dataframe(buffered_table, hide_index=True, use_container_width=True)
                 # st.dataframe(table, width=1100, hide_index=True)
 
             with col4:
