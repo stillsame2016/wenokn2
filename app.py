@@ -74,17 +74,6 @@ if st.session_state.wen_datasets:
         
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
-
-        with stylable_container(
-            key="container_with_border",
-            css_styles=r"""
-                border-radius: 25px;
-                background: #73AD21;
-                padding: 20px;
-                """,
-        ):
-            with st.container():
-                st.markdown("Hello")
         
         with st.container(): 
             ''
