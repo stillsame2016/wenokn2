@@ -117,11 +117,10 @@ if st.session_state.wen_datasets:
             col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
                 st.dataframe(buffered_table, hide_index=True, use_container_width=True)
-                # st.dataframe(table, width=1100, hide_index=True)
-
             with col4:
                 table_chat = st.container(height=340)
-                user_input_for_table = st.chat_input(f"What can I help you with Table {index}?")
+                user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
+                
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
