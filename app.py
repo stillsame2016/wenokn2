@@ -123,7 +123,7 @@ if st.session_state.wen_datasets:
                 if user_input_for_table:
                     with table_chat_container:
                         st.chat_message("user").markdown(user_input_for_table)
-                        st.session_state.table_chat_history[index].append({"role": "user", "content": user_input})
+                        st.session_state.table_chat_histories[index].append({"role": "user", "content": user_input})
                 
 
 # Show all requests and generated SPARQL queries
@@ -185,7 +185,7 @@ with col2:
                     df.id = user_input
                     st.session_state.wen_datasets.append(df)
                     st.session_state.wen_tables.append(df.copy())
-                    st.session_state.table_chat_history.append([])
+                    st.session_state.table_chat_histories.append([])
                 except Exception as e:
                     st.markdown(str(e))
                 
