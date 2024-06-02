@@ -72,7 +72,6 @@ def add_map():
 
 # Process tables
 if st.session_state.wen_datasets:
-        
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
         
@@ -174,6 +173,7 @@ if st.session_state.wen_datasets:
                         response = process_table_request(llm, user_input_for_table, index)
                         if response["category"] == "Request data":
                             exec(response['answer'])
+                            st.rerun()
             
                         st.chat_message("assistant").markdown(response)
                         st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response})
