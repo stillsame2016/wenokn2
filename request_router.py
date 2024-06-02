@@ -30,6 +30,7 @@ def get_question_route(llm, question):
 
         Use Data Commons for questions related to the following data for counties or states. 
 
+            Area_FloodEvent
             Count_Person (for population)
             Count_FireEvent
             Count_FlashFloodEvent
@@ -38,8 +39,12 @@ def get_question_route(llm, question):
             Count_HeatTemperatureEvent
             Count_HeatWaveEvent
             Count_HeavyRainEvent
+            CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
             Max_Rainfall
             Max_Snowfall
+            SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
+            SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+            SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
         
         For example, to find the populations of all counties where Muskingum River flows through, we need to find 
         the populations for some counties. In this case, this request uses "Data Commons".
