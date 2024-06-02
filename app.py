@@ -139,16 +139,16 @@ if st.session_state.wen_datasets:
             elif st.session_state.chat_types[index] == 'scatter_chart':
                 st.scatter_chart(
                     buffered_table, # filtered_pivot_table,
-                    x='Date',
-                    y=pivot_table.variable_name,
+                    x=buffered_table.columns[-2],
+                    y=buffered_table.columns[-1],
                     color='Name',
                     height=450
                 )
             else:
                 st.line_chart(
                     buffered_table, # filtered_pivot_table,
-                    x='Date',
-                    y=pivot_table.variable_name,
+                    x=buffered_table.columns[-2],
+                    y=buffered_table.columns[-1],
                     color='Name',
                     height=450
                 )
