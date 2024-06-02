@@ -81,19 +81,12 @@ if st.session_state.wen_datasets:
                 border-radius: 25px;
                 background: #73AD21;
                 padding: 20px;
-
-                button p:before {
-                    font-family: 'Font Awesome 5 Free';
-                    content: '\f1c1';
-                    display: inline-block;
-                    padding-right: 3px;
-                    vertical-align: middle;
-                    font-weight: 900;
-                }
                 """,
         ):
+            with st.container():
+                st.markdown("Hello")
         
-        # with st.container(): 
+        with st.container(): 
             ''
             st.markdown("""
                             <style>
