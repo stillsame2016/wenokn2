@@ -128,7 +128,7 @@ if st.session_state.wen_datasets:
             
             ''
             if st.session_state.chat_types[index] == 'bar_chart':
-                st.bar_chart(
+                st.scatter_chart(
                     filtered_pivot_table,
                     x='Date',
                     y=pivot_table.variable_name,
