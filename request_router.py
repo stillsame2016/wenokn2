@@ -29,7 +29,6 @@ def get_question_route(llm, question):
         the environment and public health.
 
         Use Data Commons for questions related to the following data for counties or states. 
-
             Area_FloodEvent
             Count_Person (for population)
             Count_FireEvent
