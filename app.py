@@ -173,7 +173,7 @@ if st.session_state.wen_datasets:
 
                         response = process_table_request(llm, user_input_for_table, index)
                         if response["category"] == "Request data":
-                            exec(answer)
+                            exec(response['answer'])
             
                         st.chat_message("assistant").markdown(response)
                         st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response})
