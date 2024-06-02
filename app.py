@@ -69,8 +69,7 @@ def add_map():
 
 # Process tables
 if st.session_state.wen_datasets:
-    for index, dataset in enumerate(st.session_state.wen_datasets):
-        pivot_table = st.session_state.wen_datasets[index]
+    for index, pivot_table in enumerate(st.session_state.wen_datasets):
         with st.container(): 
             ''
             st.markdown("""
@@ -92,39 +91,23 @@ if st.session_state.wen_datasets:
                             }
                             </style>
                         """, unsafe_allow_html=True)
-            st.write(f"<div class='tableTitle'>Table {index+1}: {dataset.title}</div>", unsafe_allow_html=True)
+            st.write(f"<div class='tableTitle'>Table {index+1}: {pivot_table.title}</div>", unsafe_allow_html=True)
             ''
-            # columns = dataset.columns.to_list().remove('Name')
-            # pivot_table = table.melt(
-            #     ['Name'],
-            #     columns,
-            #     'Date',
-            #     dataset.variable_name,
-            # )
-            # pivot_table = pivot_table.dropna()
-            # pivot_table['Date'] = pd.to_numeric(pivot_table['Date'])
-
             min_value = pivot_table['Date'].min()
             max_value = pivot_table['Date'].max()
             
-            # min_value, max_value = 1970, 2022
-            # from_year, to_year = st.slider(f"Select a time range for Table {index+1}",
-            #                         min_value=min_value,
-            #                         max_value=max_value,
-            #                         value=[min_value, max_value])
-
             selected_counties = dataset['Name']
             # Filter the data
-            filtered_gdp_df = pivot_table[
+            filtered_pivot_table = pivot_table[
                 (pivot_table['Name'].isin(selected_counties))
                 & (pivot_table['Date'] <= max_value) & (min_value <= pivot_table['Date'])
             ]
             
             ''
             st.bar_chart(
-                filtered_gdp_df,
+                filtered_pivot_table,
                 x='Date',
-                y=dataset.variable_name,
+                y=pivot_table.variable_name,
                 color='Name',
                 height=450
             )
