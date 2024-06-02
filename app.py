@@ -69,7 +69,7 @@ def add_map():
 
 # Process tables
 if st.session_state.wen_datasets:
-    for index, pivot_table in enumerate(st.session_state.wen_datasets):
+    for index, pivot_table in enumerate(st.session_state.wen_tables):
         with st.container(): 
             ''
             st.markdown("""
