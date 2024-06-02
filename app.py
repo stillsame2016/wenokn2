@@ -90,7 +90,7 @@ if st.session_state.wen_datasets:
             }
             """,
     ):
-        st.button(" ")
+        st.button("click")
     
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
