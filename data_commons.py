@@ -13,11 +13,22 @@ def get_variables_for_fips(fips_list, variable_name_list):
 
 def get_time_series_dataframe_for_fips(fips_list, variable_name):
     _df = dc.build_time_series_dataframe(fips_list, variable_name)
+    
     # _df = _df.fillna(0)
     # _df['name'] = _df.index.map(dc.get_property_values(_df.index, 'name'))
     # _df['fips'] = _df.index.to_series().apply(lambda x: x.replace("geoId/", ""))
+    
     _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
-    _df['Name'] = _df['Name'].str[0]
+    _df['Name'] = _df['Name'].str[0]    
+    
+    columns = _df.columns.to_list().remove('Name')
+    _df = _df.melt(
+        ['Name'],
+        columns,
+        'Date',
+         variable_name,
+    )
+    _df = _df.dropna()        
     _df.variable_name = variable_name
     return _df
 
