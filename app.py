@@ -71,30 +71,25 @@ def add_map():
 
 # Process tables
 if st.session_state.wen_datasets:
-
-    st.markdown(
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>',
-        unsafe_allow_html=True,
-    )
-    
-    with stylable_container(
-        key="container_with_border",
-        css_styles=r"""
-            button p:before {
-                font-family: 'Font Awesome 5 Free';
-                content: '\f1c1';
-                display: inline-block;
-                padding-right: 3px;
-                vertical-align: middle;
-                font-weight: 900;
-            }
-            """,
-    ):
-        st.button("click")
-    
+        
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
-        with st.container(): 
+
+        with stylable_container(
+            key="container_with_border",
+            css_styles=r"""
+                button p:before {
+                    font-family: 'Font Awesome 5 Free';
+                    content: '\f1c1';
+                    display: inline-block;
+                    padding-right: 3px;
+                    vertical-align: middle;
+                    font-weight: 900;
+                }
+                """,
+        ):
+        
+        # with st.container(): 
             ''
             st.markdown("""
                             <style>
