@@ -40,6 +40,7 @@ if "wen_datasets" not in st.session_state:
     st.session_state.wen_datasets = []
     st.session_state.wen_tables = []
     st.session_state.table_chat_histories = []
+    st.session_state.chat_types = []
     
 
 # Add all generated SPARQL queries with the requests to Streamlit session state
@@ -102,8 +103,15 @@ if st.session_state.wen_datasets:
                 del st.session_state.wen_datasets[index]
                 del st.session_state.wen_tables[index]
                 del st.session_state.table_chat_histories[index]
+                del st.session_state.chat_types[index]
                 st.rerun()
-            
+
+            if st.button('Change Chart Type', key=f'chart-type-{index}'):
+                if st.session_state.chat_types[index] == 'bar-chart':
+                    st.session_state.chat_types[index] = 'line-chart'
+                else:
+                    st.session_state.chat_types[index] = 'bar-chart'
+                    
             ''
             min_value = pivot_table['Date'].min()
             max_value = pivot_table['Date'].max()
@@ -116,13 +124,22 @@ if st.session_state.wen_datasets:
             ]
             
             ''
-            st.bar_chart(
-                filtered_pivot_table,
-                x='Date',
-                y=pivot_table.variable_name,
-                color='Name',
-                height=450
-            )
+            if st.session_state.chat_types[index] == 'bar-chart':
+                st.bar_chart(
+                    filtered_pivot_table,
+                    x='Date',
+                    y=pivot_table.variable_name,
+                    color='Name',
+                    height=450
+                )
+            else:
+                st.line_chart(
+                    filtered_pivot_table,
+                    x='Date',
+                    y=pivot_table.variable_name,
+                    color='Name',
+                    height=450
+                )
             
             col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
@@ -206,6 +223,7 @@ with col2:
                     st.session_state.wen_datasets.append(df)
                     st.session_state.wen_tables.append(df.copy())
                     st.session_state.table_chat_histories.append([])
+                    st.session_state.chat_types.append("bar_chart")
                 except Exception as e:
                     st.markdown(str(e))                
                 message = f"""
