@@ -335,7 +335,10 @@ def process_table_request(llm, user_input, index):
             You are an expert of Jordan Standardized Precipitation Index data which is loaded in a DataFrame 
             st.session_state.wen_datasets[{index}] with the following columns: 
                 {columns}
-            Also the data is displayed to the user.
+            The following is the first 5 rows of the data:
+                {sample}
+            
+            The data is displayed to the user.
 
             Users can make queries in natural language to request data from this DataFrame, or they may ask other types of 
             questions.
@@ -355,12 +358,17 @@ def process_table_request(llm, user_input, index):
 
             Answer:<|eot_id|><|start_header_id|>assistant<|end_header_id|>
             """,
-        input_variables=["index", "columns", "question"],
+        input_variables=["index", "columns", "sample", "question"],
     )
 
     df_code_chain = prompt | llm | JsonOutputParser()
+    
+    sample_df = st.session_state.wen_datasets[index].head(5)
+    csv_string = sample_df.to_csv(index=False)
+    
     return df_code_chain.invoke({'index': index,
-                                 'columns': 'Name\nDate\nCount_Person',
+                                 'columns': str(st.session_state.wen_datasets[index].columns.to_list()),
+                                 'sample': csv_string,
                                  'question': user_input})
 
 
