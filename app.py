@@ -121,7 +121,7 @@ if st.session_state.wen_datasets:
 
             with col4:
                 table_chat = st.container(height=340)
-                user_input_for_table = st.chat_input("What can I help you with Table {index}?")
+                user_input_for_table = st.chat_input(f"What can I help you with Table {index}?")
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
