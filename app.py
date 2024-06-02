@@ -97,7 +97,8 @@ if st.session_state.wen_datasets:
                             </style>
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {pivot_table.title}</div>", unsafe_allow_html=True)
-            st.button('Delete')
+            if st.button('Delete', key=f'delete-table-{index}'):
+                st.markdown("Deleted")
             ''
             min_value = pivot_table['Date'].min()
             max_value = pivot_table['Date'].max()
