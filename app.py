@@ -2,7 +2,7 @@ import time
 import json
 import streamlit as st
 from keplergl import keplergl
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, process_table_request
 from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
@@ -171,7 +171,8 @@ if st.session_state.wen_datasets:
                         st.chat_message("user").markdown(user_input_for_table)
                         st.session_state.table_chat_histories[index].append({"role": "user", "content": user_input_for_table})
 
-                        response = f"echo: {user_input_for_table}"
+                        response = process_table_request(llm, user_input_for_table, st.session_state.wen_datasets[index])
+                        # response = f"echo: {user_input_for_table}"
                         st.chat_message("assistant").markdown(response)
                         st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response})
                 
