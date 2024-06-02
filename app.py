@@ -112,7 +112,7 @@ if st.session_state.wen_datasets:
                 height=450
             )
             
-            col3, pad, col4 = st.columns([30, 2, 20])
+            col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
                 st.dataframe(pivot_table, hide_index=True, use_container_width=True)
                 # st.dataframe(table, width=1100, hide_index=True)
