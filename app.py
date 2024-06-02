@@ -112,14 +112,14 @@ if st.session_state.wen_datasets:
                 height=450
             )
             
-            col3, col4 = st.columns([2, 3])
-
+            col3, col4 = st.columns([3, 2])
             with col3:
                 st.dataframe(pivot_table, hide_index=True, use_container_width=True)
                 # st.dataframe(table, width=1100, hide_index=True)
 
             with col4:
-                pass
+                table_chat = st.container(height=355)
+                user_input_for_table = st.chat_input("What can I help you with this table?")
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
