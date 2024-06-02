@@ -107,10 +107,10 @@ if st.session_state.wen_datasets:
                 st.rerun()
 
             if st.button('Change Chart Type', key=f'chart-type-{index}'):
-                if st.session_state.chat_types[index] == 'bar-chart':
-                    st.session_state.chat_types[index] = 'line-chart'
+                if st.session_state.chat_types[index] == 'bar_chart':
+                    st.session_state.chat_types[index] = 'line_chart'
                 else:
-                    st.session_state.chat_types[index] = 'bar-chart'
+                    st.session_state.chat_types[index] = 'bar_chart'
                     
             ''
             min_value = pivot_table['Date'].min()
@@ -124,7 +124,7 @@ if st.session_state.wen_datasets:
             ]
             
             ''
-            if st.session_state.chat_types[index] == 'bar-chart':
+            if st.session_state.chat_types[index] == 'bar_chart':
                 st.bar_chart(
                     filtered_pivot_table,
                     x='Date',
