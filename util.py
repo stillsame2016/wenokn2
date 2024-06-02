@@ -360,7 +360,7 @@ def process_table_request(llm, user_input, index):
 
     df_code_chain = prompt | llm | JsonOutputParser()
     return df_code_chain.invoke({"index": index,
-                                 "columns": st.session_state.wen_datasets[index].columns().to_list(), 
+                                 "columns": st.session_state.wen_datasets[index].columns.to_list(), 
                                  "question": question})
 
 
