@@ -74,7 +74,6 @@ def add_map():
 if st.session_state.wen_datasets:
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
-        
         with st.container(): 
             ''
             st.markdown("""
@@ -130,7 +129,7 @@ if st.session_state.wen_datasets:
             ''
             if st.session_state.chat_types[index] == 'bar_chart':
                 st.bar_chart(
-                    filtered_pivot_table,
+                    buffered_table, # filtered_pivot_table,
                     x='Date',
                     y=pivot_table.variable_name,
                     color='Name',
