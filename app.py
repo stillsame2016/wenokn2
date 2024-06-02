@@ -78,6 +78,10 @@ if st.session_state.wen_datasets:
         with stylable_container(
             key="container_with_border",
             css_styles=r"""
+                border-radius: 25px;
+                background: #73AD21;
+                padding: 20px;
+
                 button p:before {
                     font-family: 'Font Awesome 5 Free';
                     content: '\f1c1';
