@@ -122,6 +122,12 @@ if st.session_state.wen_datasets:
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
                 if user_input_for_table:
                     with table_chat_container:
+
+                        # Show the chat history
+                        for message in st.session_state.table_chat_histories[index]:
+                            with st.chat_message(message['role']):
+                                st.markdown(message['content'])
+                        
                         st.chat_message("user").markdown(user_input_for_table)
                         st.session_state.table_chat_histories[index].append({"role": "user", "content": user_input_for_table})
 
