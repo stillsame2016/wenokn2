@@ -332,35 +332,36 @@ def process_off_topic_request(llm, user_input, chat_container):
 def process_table_request(llm, user_input, index):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-        You are an expert of Jordan Standardized Precipitation Index data which is loaded in a DataFrame 
-        st.session_state.wen_datasets[index] with the following columns: 
-            {columns}
-        Also the data is displayed to the user.
+            You are an expert of Jordan Standardized Precipitation Index data which is loaded in a DataFrame 
+            st.session_state.wen_datasets[{index}] with the following columns: 
+                {columns}
+            Also the data is displayed to the user.
 
-        Users can make queries in natural language to request data from this DataFrame, or they may ask other types of 
-        questions.
+            Users can make queries in natural language to request data from this DataFrame, or they may ask other types of 
+            questions.
 
-        Please categorize the following user question as either a "Request data" or "Other" in a JSON field "category". 
+            Please categorize the following user question as either a "Request data" or "Other" in a JSON field "category". 
 
-        For "Request data", return a python statement in the following format:
-             st.session_state.wen_tables[index] = <your expression with st.session_state.wen_datasets[index] only>      
-        in the JSON field "answer".  Note that you can't use df.resample('Y', on='Time') because the type of df['Time'] is string.
-        
-        For "Other", return a reasonable answer in the JSON field "answer". 
+            For "Request data", return a python statement in the following format:
+                 st.session_state.wen_tables[{index}] = <your expression with st.session_state.wen_datasets[{index}] only>      
+            in the JSON field "answer".  Note that you can't use df.resample('Y', on='Time') because the type of df['Time'] is string.
 
-        Return JSON only without any explanations.
+            For "Other", return a reasonable answer in the JSON field "answer". 
 
-        User question:
-        {columns, question}
+            Return JSON only without any explanations.
 
-        Answer:<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-        """,
-        input_variables=["question"],
+            User question:
+            {question}
+
+            Answer:<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            """,
+        input_variables=["index", "columns", "question"],
     )
 
     df_code_chain = prompt | llm | JsonOutputParser()
-    return df_code_chain.invoke({"columns": "\n".join(st.session_state.wen_datasets[index].columns.to_list()), 
-                                 "question": user_input})
+    return df_code_chain.invoke({'index': index,
+                                 'columns': 'Name\nDate\nCount_Person',
+                                 'question': user_input})
 
 
 
