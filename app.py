@@ -98,19 +98,22 @@ if st.session_state.wen_datasets:
                             </style>
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {pivot_table.title}</div>", unsafe_allow_html=True)
-            
-            if st.button('Delete', key=f'delete-table-{index}'):
-                del st.session_state.wen_datasets[index]
-                del st.session_state.wen_tables[index]
-                del st.session_state.table_chat_histories[index]
-                del st.session_state.chat_types[index]
-                st.rerun()
 
-            if st.button('Change Chart Type', key=f'chart-type-{index}'):
-                if st.session_state.chat_types[index] == 'bar_chart':
-                    st.session_state.chat_types[index] = 'line_chart'
-                else:
-                    st.session_state.chat_types[index] = 'bar_chart'
+            but_col1, but_col2 = st.columns(3)
+            with but_col1:
+                if st.button('Delete', key=f'delete-table-{index}'):
+                    del st.session_state.wen_datasets[index]
+                    del st.session_state.wen_tables[index]
+                    del st.session_state.table_chat_histories[index]
+                    del st.session_state.chat_types[index]
+                    st.rerun()
+
+            with but_col2:
+                if st.button('Change Chart Type', key=f'chart-type-{index}'):
+                    if st.session_state.chat_types[index] == 'bar_chart':
+                        st.session_state.chat_types[index] = 'line_chart'
+                    else:
+                        st.session_state.chat_types[index] = 'bar_chart'
                     
             ''
             min_value = pivot_table['Date'].min()
