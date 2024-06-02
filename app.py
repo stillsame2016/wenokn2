@@ -123,7 +123,7 @@ if st.session_state.wen_datasets:
                 if user_input_for_table:
                     with table_chat_container:
                         st.chat_message("user").markdown(user_input_for_table)
-                        st.code(st.session_state.table_chat_histories)
+                        st.code(st.session_state.table_chat_histories[index])
                 
 
 # Show all requests and generated SPARQL queries
