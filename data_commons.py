@@ -28,7 +28,8 @@ def get_time_series_dataframe_for_fips(fips_list, variable_name):
         'Date',
          variable_name,
     )
-    _df = _df.dropna()        
+    _df = _df.dropna()     
+    _df = _df.drop_duplicates(keep='First')
     _df.variable_name = variable_name
     return _df
 
