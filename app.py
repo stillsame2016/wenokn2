@@ -77,7 +77,6 @@ if st.session_state.wen_datasets:
         unsafe_allow_html=True,
     )
     
-    
     with stylable_container(
         key="container_with_border",
         css_styles=r"""
@@ -91,7 +90,7 @@ if st.session_state.wen_datasets:
             }
             """,
     ):
-        st.button("Button with icon")
+        st.button("")
     
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
