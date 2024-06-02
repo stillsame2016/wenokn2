@@ -332,8 +332,8 @@ def process_off_topic_request(llm, user_input, chat_container):
 def process_table_request(llm, user_input, index):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-            You are an expert of Jordan Standardized Precipitation Index data which is loaded in a DataFrame 
-            st.session_state.wen_datasets[{index}] with the following columns: 
+            You are an expert of {title} which is loaded in a DataFrame st.session_state.wen_datasets[{index}] 
+            with the following columns: 
                 {columns}
             The following is the first 5 rows of the data:
                 {sample}
@@ -358,7 +358,7 @@ def process_table_request(llm, user_input, index):
 
             Answer:<|eot_id|><|start_header_id|>assistant<|end_header_id|>
             """,
-        input_variables=["index", "columns", "sample", "question"],
+        input_variables=["index", "title", "columns", "sample", "question"],
     )
 
     df_code_chain = prompt | llm | JsonOutputParser()
@@ -367,6 +367,7 @@ def process_table_request(llm, user_input, index):
     csv_string = sample_df.to_csv(index=False)
     
     return df_code_chain.invoke({'index': index,
+                                 'title': st.session_state.wen_datasets[index].title,
                                  'columns': str(st.session_state.wen_datasets[index].columns.to_list()),
                                  'sample': csv_string,
                                  'question': user_input})
