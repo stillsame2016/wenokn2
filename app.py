@@ -174,7 +174,7 @@ if st.session_state.wen_datasets:
                         response = process_table_request(llm, user_input_for_table, index)
                         if response["category"] == "Request data":
                             exec(response['answer'])
-                            response = f"""
+                            answer = f"""
                                         Your request has been processed. {st.session_state.wen_tables[index].shape[0]}
                                         { "rows are" if st.session_state.wen_tables[index].shape[0] > 1 else "row is"}
                                         found and displayed.
