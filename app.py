@@ -99,7 +99,7 @@ if st.session_state.wen_datasets:
                         """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {pivot_table.title}</div>", unsafe_allow_html=True)
 
-            but_col1, but_col2 = st.columns(3)
+            but_col1, but_col2 = st.columns(2)
             with but_col1:
                 if st.button('Delete', key=f'delete-table-{index}'):
                     del st.session_state.wen_datasets[index]
