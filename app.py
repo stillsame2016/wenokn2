@@ -118,8 +118,12 @@ if st.session_state.wen_datasets:
             with col3:
                 st.dataframe(buffered_table, hide_index=True, use_container_width=True)
             with col4:
-                table_chat = st.container(height=340)
+                table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
+                if user_input_for_table:
+                    with table_chat_container:
+                        st.chat_message("user").markdown(user_input_for_table)
+                        st.session_state.table_chat_history[index].append({"role": "user", "content": user_input})
                 
 
 # Show all requests and generated SPARQL queries
