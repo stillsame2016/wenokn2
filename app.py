@@ -195,17 +195,9 @@ with col2:
                     df.id = user_input
                     st.session_state.wen_datasets.append(df)
                     st.session_state.wen_tables.append(df.copy())
-                    st.session_state.table_chat_histories.append([{"role": "assistant", "content": "What can I help you with?"}])
+                    st.session_state.table_chat_histories.append([])
                 except Exception as e:
-                    st.markdown(str(e))
-                
-                # ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
-                # df = get_variables_for_fips(ohio_county_fips, ["Count_Person"])
-                # df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
-                # df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_FloodEvent")
-                # df.id = user_input
-                # st.session_state.wen_datasets.append(df)
-                
+                    st.markdown(str(e))                
                 message = f"""
                             Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                             found and displayed.
