@@ -7,7 +7,7 @@ import geopandas as gpd
 from langchain_core.prompts import PromptTemplate
 from shapely import wkt
 import streamlit as st
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 
 
 def get_column_name_parts(column_name):
