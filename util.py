@@ -363,7 +363,7 @@ def process_table_request(llm, user_input, index):
     #                              "columns": st.session_state.wen_datasets[index].columns.to_list(), 
     #                              "question": user_input})
     return {"index": str(index),
-             "columns": st.session_state.wen_datasets[index].columns.to_list(), 
+             "columns": "\n".join(st.session_state.wen_datasets[index].columns.to_list()), 
              "question": user_input}
 
 
