@@ -184,7 +184,9 @@ if st.session_state.wen_datasets:
                                         """
                             st.chat_message("assistant").markdown(answer)
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": answer})
-                            # st.rerun()
+
+                            time.sleep(2)
+                            st.rerun()
                         else:
                             st.chat_message("assistant").markdown(response['answer'])
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
