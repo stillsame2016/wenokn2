@@ -263,7 +263,7 @@ with col2:
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
-                        st.chat_message("assistant").markdown(message)
+                        st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
             else:
