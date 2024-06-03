@@ -179,7 +179,7 @@ if st.session_state.wen_datasets:
                                         { "rows are" if st.session_state.wen_tables[index].shape[0] > 1 else "row is"}
                                         found and displayed.
 
-                                        { esponse['answer'] }
+                                        { response['answer'] }
                                         """
                             st.chat_message("assistant").markdown(answer)
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": answer})
