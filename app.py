@@ -69,7 +69,8 @@ def add_map():
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
         for i in reversed(indices_to_remove):
-            del st.session_state.datasets[i]
+            # del st.session_state.datasets[i]
+            pass
 
     return _map_config
 
