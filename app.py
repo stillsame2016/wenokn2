@@ -194,6 +194,7 @@ if st.session_state.wen_datasets:
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
+    ''
     st.write(f"<div class='tableTitle'>Spatial Requests and SPARQL queries</div>", unsafe_allow_html=True)
     info_container = st.container(height=350)
     with info_container:
