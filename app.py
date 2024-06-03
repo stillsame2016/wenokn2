@@ -175,6 +175,8 @@ if st.session_state.wen_datasets:
                         if response["category"] == "Request data":
                             st.code(response['answer'])
                             exec(response['answer'])
+                            if isinstance(st.session_state.wen_tables[index], pd.Series):
+                                st.session_state.wen_tables[index] = st.session_state.wen_tables[index].to_frame().T
                             answer = f"""
                                         Your request has been processed. {st.session_state.wen_tables[index].shape[0]}
                                         { "rows are" if st.session_state.wen_tables[index].shape[0] > 1 else "row is"}
