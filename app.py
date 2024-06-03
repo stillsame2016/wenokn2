@@ -248,23 +248,24 @@ with col2:
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, chat_container)
                 # st.code(code)
-                with st.spinner("Loading data ..."):
-                    try:
-                        exec(code)
-                        df.id = user_input
-                        st.session_state.wen_datasets.append(df)
-                        st.session_state.wen_tables.append(df.copy())
-                        st.session_state.table_chat_histories.append([])
-                        st.session_state.chat_types.append("bar_chart")
-                    except Exception as e:
-                        st.markdown(str(e))                
-                    message = f"""
-                                Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
-                                found and displayed.
-                                """
-                    st.chat_message("assistant").markdown(message)
-                    st.session_state.chat.append({"role": "assistant", "content": message})
-                    st.rerun()
+                with st.chat_message("assistant"):
+                    with st.spinner("Loading data ..."):
+                        try:
+                            exec(code)
+                            df.id = user_input
+                            st.session_state.wen_datasets.append(df)
+                            st.session_state.wen_tables.append(df.copy())
+                            st.session_state.table_chat_histories.append([])
+                            st.session_state.chat_types.append("bar_chart")
+                        except Exception as e:
+                            st.markdown(str(e))                
+                        message = f"""
+                                    Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                                    found and displayed.
+                                    """
+                        st.chat_message("assistant").markdown(message)
+                        st.session_state.chat.append({"role": "assistant", "content": message})
+                        st.rerun()
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
