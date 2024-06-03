@@ -333,7 +333,7 @@ def process_table_request(llm, user_input, index):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
             You are an expert of {title} which is loaded in a DataFrame st.session_state.wen_datasets[{index}] 
-            with the following columns: 
+            with the following columns and types: 
                 {columns}
             The following is the first 5 rows of the data:
                 {sample}
@@ -368,7 +368,7 @@ def process_table_request(llm, user_input, index):
     
     return df_code_chain.invoke({'index': index,
                                  'title': st.session_state.wen_datasets[index].title,
-                                 'columns': str(st.session_state.wen_datasets[index].columns.to_list()),
+                                 'columns': str(st.session_state.wen_datasets[index].dtypes),
                                  'sample': csv_string,
                                  'question': user_input})
 
