@@ -135,8 +135,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         We have the following functions to get fips from a state/county name:
             get_fips_from_state_name(state_name)
             get_fips_from_county_name(county_name) 
-        where a county name must be a offical name like "San Diego County". Don't miss "County" in the 
-        name.
+        To call get_fips_from_county_name, the county name must be in the format "San Diego County". 
+        Don't miss "County" in the name. 
         
         Data Commons has the following statistical variables available for a particular place:
             Area_FloodEvent
@@ -200,6 +200,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                 scioto_river_fips = [ get_fips_from_county_name(county_name) for county_name in gdf['name']]
                 df = get_time_series_dataframe_for_fips(scioto_river_fips, "Count_Person")  
                 df.title = "The Populations for All Counties where Scioto River Flows Through"
+
+            If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
+            it to 'Ross County' to call get_fips_from_county_name.
                      
             [ Question ]
             The following is the question from the user:
