@@ -135,6 +135,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         We have the following functions to get fips from a state/county name:
             get_fips_from_state_name(state_name)
             get_fips_from_county_name(county_name) 
+        where a county name must be a offical name like "San Diego County". Don't miss "County" in the 
+        name.
         
         Data Commons has the following statistical variables available for a particular place:
             Area_FloodEvent
