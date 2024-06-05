@@ -225,7 +225,7 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
+            # st.markdown(route)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
@@ -248,7 +248,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, chat_container)
-                # st.code(code)
+                st.code(code)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
