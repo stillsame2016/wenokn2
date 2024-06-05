@@ -253,6 +253,7 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             exec(code)
+                            st.code(code)
                             df.id = user_input
                             st.session_state.wen_datasets.append(df)
                             st.session_state.wen_tables.append(df.copy())
