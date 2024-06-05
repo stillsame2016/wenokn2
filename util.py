@@ -219,10 +219,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             variables += f"""
                              st.session_state.datasets[{index}] holds a geodataframe with the following columns 
                              after processing the request { st.session_state.datasets[index].label}:
-                                 { st.session_state.datasets[index].dtypes() }
+                                 { st.session_state.datasets[index].dtypes }
                                  
                           """
-        st.markdown(variables)
     return df_code_chain.invoke({"question": user_input, "variables": variables})
     
 
