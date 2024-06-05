@@ -152,6 +152,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
             SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
             SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
+
+        The following are the variables with the data:
+            {variables}
               
         The following code can fetch some variables data for some fips from Data Commons:
                 
@@ -206,10 +209,18 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
-        input_variables=["question"],
+        input_variables=["question", "variables"],
     )
     df_code_chain = prompt | llm | StrOutputParser()
-    return df_code_chain.invoke({"question": user_input})
+
+    variables = ""
+    if spatial_datasets:
+        for index, dataset in enumerate(spatial_datasets)
+            variables += f"""
+                             st.session_state.datasets[{index}] : { st.session_state.datasets[index]..label}
+                          """
+        
+    return df_code_chain.invoke({"question": user_input, "variables": variables})
     
 
 def process_regulation_request(llm, user_input, chat_container):
