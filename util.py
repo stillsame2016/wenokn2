@@ -124,7 +124,7 @@ def process_data_request(message, chat_container):
                     st.rerun()
 
 
-def process_data_commons_request(llm, user_input, chat_container):
+def process_data_commons_request(llm, user_input, data_env):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
