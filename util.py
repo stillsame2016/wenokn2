@@ -217,11 +217,12 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
             variables += f"""
-                             st.session_state.datasets[{index}] holds a geodataframe with the following columns 
-                             after processing the request { st.session_state.datasets[index].label}:
+                             st.session_state.datasets[{index}] holds a geodataframe after processing 
+                             the request: { st.session_state.datasets[index].label}
+                             The following is the columns of st.session_state.datasets[{index}]:
                                  { st.session_state.datasets[index].dtypes }
                              The following is the first 5 rows of the data:
-                                 { st.session_state.datasets[index].head(5).drop(columns='geometry') }
+                                 { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }
                                  
                           """
     st.markdown(variables)
