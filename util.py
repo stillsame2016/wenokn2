@@ -214,8 +214,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     df_code_chain = prompt | llm | StrOutputParser()
 
     variables = ""
-    # if spatial_datasets:
-    #     for index, dataset in enumerate(spatial_datasets)
+    if spatial_datasets:
+        for index, dataset in enumerate(spatial_datasets)
+            pass
     #         variables += f"""
     #                          st.session_state.datasets[{index}] : { st.session_state.datasets[index]..label}
     #                       """
