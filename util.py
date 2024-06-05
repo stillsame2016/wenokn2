@@ -220,6 +220,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                              st.session_state.datasets[{index}] holds a geodataframe with the following columns 
                              after processing the request { st.session_state.datasets[index].label}:
                                  { st.session_state.datasets[index].dtypes }
+                             The following is the first 5 rows of the data:
+                                 { st.session_state.datasets[index].head(5).drop(columns='geometry') }
                                  
                           """
     return df_code_chain.invoke({"question": user_input, "variables": variables})
