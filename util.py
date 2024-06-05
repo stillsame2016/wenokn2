@@ -217,7 +217,10 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
             variables += f"""
-                             st.session_state.datasets[{index}] : { st.session_state.datasets[index].label}
+                             st.session_state.datasets[{index}] holds a geodataframe with the following columns 
+                             after processing the request { st.session_state.datasets[index].label}:
+                                 { st.session_state.datasets[index].dtypes() }
+                                 
                           """
         
     return df_code_chain.invoke({"question": user_input, "variables": variables})
