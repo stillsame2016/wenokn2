@@ -224,6 +224,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                                  { st.session_state.datasets[index].head(5).drop(columns='geometry') }
                                  
                           """
+    st.markdown(variables)
     return df_code_chain.invoke({"question": user_input, "variables": variables})
     
 
