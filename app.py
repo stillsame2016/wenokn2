@@ -248,7 +248,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                # st.code(code)
+                st.code(code)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
@@ -258,12 +258,13 @@ with col2:
                             st.session_state.wen_tables.append(df.copy())
                             st.session_state.table_chat_histories.append([])
                             st.session_state.chat_types.append("bar_chart")
-                        except Exception as e:
-                            st.markdown(str(e))                
-                        message = f"""
+                            message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
+                        except Exception as e:
+                            message = str(e)               
+                            message = "We are not able to process your request. Please refine your request and try it again."
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
