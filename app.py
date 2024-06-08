@@ -264,7 +264,7 @@ with col2:
                                     """
                         except Exception as e:
                             message = str(e)               
-                            message = "We are not able to process your request. Please refine your request and try it again."
+                            # message = "We are not able to process your request. Please refine your request and try it again."
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
