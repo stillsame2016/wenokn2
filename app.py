@@ -248,7 +248,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                st.code(code)
+                # st.code(code)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
