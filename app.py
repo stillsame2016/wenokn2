@@ -263,7 +263,10 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            message = str(e)               
+                            message = f"""
+                                       {code} 
+                                       {str(e)}
+                                       """               
                             # message = "We are not able to process your request. Please refine your request and try it again."
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
