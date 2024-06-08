@@ -174,7 +174,7 @@ if st.session_state.wen_datasets:
 
                         response = process_table_request(llm, user_input_for_table, index)
                         if response["category"] == "Request data":
-                            # st.code(response['answer'])
+                            st.code(response['answer'])
                             exec(response['answer'])
                             if isinstance(st.session_state.wen_tables[index], pd.Series):
                                 st.session_state.wen_tables[index] = st.session_state.wen_tables[index].to_frame().T
