@@ -368,7 +368,6 @@ def process_table_request(llm, user_input, index):
             Please categorize the following user question as either a "Request data" or "Other" in a JSON field "category". 
 
             For "Request data", return a python statement in the following format:
-                 <your other statements using but not changing st.session_state.wen_datasets[{index}] >
                  st.session_state.wen_tables[{index}] = <your expression with st.session_state.wen_datasets[{index}] only>      
             in the JSON field "answer".  Note that you can't use df.resample('Y', on='Time') because the type of df['Time'] is string.
 
