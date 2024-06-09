@@ -191,7 +191,7 @@ if st.session_state.wen_datasets:
                             # Optionally, rename 'Name_y' back to 'Name'
                             result = result.rename(columns={'Name_y': 'Name'})
                             
-                            st.dataframe(result)
+                            st.code(result.columns)
                         else:
                             st.markdown("No")
             with col4:
