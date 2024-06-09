@@ -200,6 +200,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                 scioto_river_fips = [ get_fips_from_county_name(county_name) for county_name in gdf['name']]
                 df = get_time_series_dataframe_for_fips(scioto_river_fips, "Count_Person")  
                 df.title = "The Populations for All Counties where Scioto River Flows Through"
+                df.use = gdf
 
             If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
             it to 'Ross County' to call get_fips_from_county_name.
@@ -210,7 +211,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             
             Please return only the complete Python code to implement the user's request without preamble or 
             explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
-            save the title in df.title.
+            save the title in df.title. If a given geodataframe gdf is used to load df, then add "df.use = gdf"
+            in the code.
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
