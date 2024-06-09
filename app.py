@@ -173,6 +173,23 @@ if st.session_state.wen_datasets:
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
                         if hasattr(pivot_table, 'use'):
                             st.markdown("Yes")
+
+                            df = buffered_table.copy()
+                            gdf = pivot_table.use.copy()
+                            
+                            # Create a new column in df that matches the format of the Name column in gdf
+                            df['CountyName'] = df['Name'].str.replace(' County', '')
+                            
+                            # Perform the join operation
+                            result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
+                            
+                            # Select the desired columns, including geometry and the original columns from df
+                            result = result[['Name_y', 'geometry'] + df.columns[:-1].tolist()]
+                            
+                            # Optionally, rename 'Name_y' back to 'Name'
+                            result = result.rename(columns={'Name_y': 'Name'})
+                            
+                            st.dataframe(result)
                         else:
                             st.markdown("No")
             with col4:
