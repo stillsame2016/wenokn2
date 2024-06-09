@@ -159,6 +159,17 @@ if st.session_state.wen_datasets:
             col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
                 st.dataframe(buffered_table, hide_index=True, use_container_width=True)
+                with stylable_container(
+                    key="green_button",
+                    css_styles="""
+                        button {
+                            background-color: green;
+                            color: white;
+                            border-radius: 20px;
+                        }
+                        """,
+                ):
+                    st.button("Green button")
                 if st.button('Add to Map', key=f'add-to-map-{index}'):
                     st.markdown("Added")
             with col4:
