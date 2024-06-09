@@ -379,8 +379,8 @@ def process_table_request(llm, user_input, index):
             Return JSON only without any explanations. 
 
             [ Example ]
-            If st.session_state.wen_datasets[0] has three columns "Name", "Date" and "Count_Person". To find the year with greatest increment 
-            for each county,  we can use the following code:
+            To find the date with greatest increment for each place,  we can use the following code:
+            if st.session_state.wen_datasets[0] has three columns "Name", "Date" and "Count_Person". 
 
                 # Sort the dataframe by Name and Date
                 df_sorted = st.session_state.wen_datasets[0].sort_values(by=['Name', 'Date'])
@@ -393,6 +393,8 @@ def process_table_request(llm, user_input, index):
                 
                 # Select only relevant columns
                 st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'Count_Person_Diff']]
+
+            For a column other than "Count_Person", please update the code accordingly.
             
             User question:
             {question}
