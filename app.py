@@ -160,12 +160,12 @@ if st.session_state.wen_datasets:
             with col3:
                 st.dataframe(buffered_table, hide_index=True, use_container_width=True)
                 with stylable_container(
-                    key="green_button",
+                    key=f'add-to-map-{index}-button',
                     css_styles="""
                         button {
                             background-color: green;
                             color: white;
-                            border-radius: 20px;
+                            border-radius: 10px;
                         }
                         """,
                 ):
