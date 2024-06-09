@@ -394,7 +394,6 @@ def process_table_request(llm, user_input, index):
                 # Select only relevant columns
                 st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'PopulationDiff']]
             
-
             User question:
             {question}
 
