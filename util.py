@@ -386,13 +386,13 @@ def process_table_request(llm, user_input, index):
                 df_sorted = st.session_state.wen_datasets[0].sort_values(by=['Name', 'Date'])
                 
                 # Calculate the population difference using groupby and diff
-                df_sorted['PopulationDiff'] = df_sorted.groupby('Name')['Count_Person'].diff()
+                df_sorted['Count_Person_Diff'] = df_sorted.groupby('Name')['Count_Person'].diff()
                 
                 # Find the year with the greatest increment for each county
-                max_increment_years = df_sorted.loc[df_sorted.groupby('yName')['PopulationDiff'].idxmax()]
+                max_increment_years = df_sorted.loc[df_sorted.groupby('yName')['Count_Person_Diff'].idxmax()]
                 
                 # Select only relevant columns
-                st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'PopulationDiff']]
+                st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'Count_Person_Diff']]
             
             User question:
             {question}
