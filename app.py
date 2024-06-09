@@ -71,31 +71,33 @@ def add_map():
 
     return _map_config
 
+  st.markdown("""
+            <style>
+            .tableTitle {
+                font-size: 18pt;
+                font-weight: 600;
+                color: rgb(49, 51, 63);
+                padding: 0px 0px 10px 0px;
+            }
+            
+            .stSlider [data-baseweb=slider]{
+                width: 90%;
+                margin: 0px 50px 0px 30px;
+            }
+
+            .stDataFrame {
+                margin-left: 50px;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+
+
 # Process tables
 if st.session_state.wen_datasets:
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
         with st.container(): 
             ''
-            st.markdown("""
-                            <style>
-                            .tableTitle {
-                                font-size: 18pt;
-                                font-weight: 600;
-                                color: rgb(49, 51, 63);
-                                padding: 0px 0px 10px 0px;
-                            }
-                            
-                            .stSlider [data-baseweb=slider]{
-                                width: 90%;
-                                margin: 0px 50px 0px 30px;
-                            }
-
-                            .stDataFrame {
-                                margin-left: 50px;
-                            }
-                            </style>
-                        """, unsafe_allow_html=True)
             st.write(f"<div class='tableTitle'>Table {index+1}: {pivot_table.title}</div>", unsafe_allow_html=True)
 
             but_col1, but_col2, but_pad = st.columns([50,100,500])
