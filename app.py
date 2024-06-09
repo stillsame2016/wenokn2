@@ -71,7 +71,7 @@ def add_map():
 
     return _map_config
 
-  st.markdown("""
+st.markdown("""
             <style>
             .tableTitle {
                 font-size: 18pt;
