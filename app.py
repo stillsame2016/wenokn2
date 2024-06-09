@@ -171,7 +171,7 @@ if st.session_state.wen_datasets:
                         """,
                 ):
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
-                        if st.session_state.wen_datasets[index].use:
+                        if st.session_state.wen_datasets[index].use: 
                             st.markdown("Yes")
                         else:
                             st.markdown("No")
