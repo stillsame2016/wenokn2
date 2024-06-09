@@ -159,6 +159,8 @@ if st.session_state.wen_datasets:
             col3, pad, col4 = st.columns([30, 3, 20])
             with col3:
                 st.dataframe(buffered_table, hide_index=True, use_container_width=True)
+                if st.button('Add to Map', key=f'add-to-map-{index}'):
+                    st.markdown("Added")
             with col4:
                 table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
