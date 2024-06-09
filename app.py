@@ -171,7 +171,10 @@ if st.session_state.wen_datasets:
                         """,
                 ):
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
-                        st.markdown("Added")
+                        if st.session_state.wen_datasets[index].use:
+                            st.markdown("Yes")
+                        else:
+                            st.markdown("No")
             with col4:
                 table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
