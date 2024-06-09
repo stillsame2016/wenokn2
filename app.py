@@ -166,6 +166,7 @@ if st.session_state.wen_datasets:
                             background-color: green;
                             color: white;
                             border-radius: 10px;
+                            margin-left: 50px;
                         }
                         """,
                 ):
