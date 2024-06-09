@@ -378,6 +378,23 @@ def process_table_request(llm, user_input, index):
 
             Return JSON only without any explanations. 
 
+            [ Example ]
+            If st.session_state.wen_datasets[0] has three columns "Name", "Date" and "Count_Person". To find the year with greatest increment 
+            for each county,  we can use the following code:
+
+                # Sort the dataframe by Name and Date
+                df_sorted = st.session_state.wen_datasets[0].sort_values(by=['Name', 'Date'])
+                
+                # Calculate the population difference using groupby and diff
+                df_sorted['PopulationDiff'] = df_sorted.groupby('Name')['Count_Person'].diff()
+                
+                # Find the year with the greatest increment for each county
+                max_increment_years = df_sorted.loc[df_sorted.groupby('yName')['PopulationDiff'].idxmax()]
+                
+                # Select only relevant columns
+                st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'PopulationDiff']]
+            
+
             User question:
             {question}
 
