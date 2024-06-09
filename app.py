@@ -182,6 +182,8 @@ if st.session_state.wen_datasets:
                             
                             # Perform the join operation
                             result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
+
+                            st.dataframe(result)
                             
                             # Select the desired columns, including geometry and the original columns from df
                             result = result[['Name_y', 'geometry'] + df.columns[:-1].tolist()]
