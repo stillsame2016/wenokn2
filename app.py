@@ -278,6 +278,8 @@ with col2:
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
+
+                                    {code}
                                     """
                         except Exception as e:
                             # message = f"""
