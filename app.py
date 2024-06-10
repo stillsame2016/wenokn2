@@ -324,5 +324,5 @@ with col2:
                 st.rerun()
 
 if map_config:
-    map_config_json = json.loads(_map_config)
+    map_config_json = json.loads(map_config)
     st.code(map_config_json)
