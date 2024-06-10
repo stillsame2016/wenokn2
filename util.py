@@ -418,8 +418,8 @@ def process_table_request(llm, llm2, user_input, index):
                                      'columns': str(st.session_state.wen_datasets[index].dtypes),
                                      'sample': csv_string,
                                      'question': user_input})
-    except:
-        time.sleep(2)
+    except Exception as e:
+        st.markdown(str(e)) 
         return df_code_chain2.invoke({'index': index,
                                      'title': st.session_state.wen_datasets[index].title,
                                      'columns': str(st.session_state.wen_datasets[index].dtypes),
