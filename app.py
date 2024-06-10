@@ -325,4 +325,4 @@ with col2:
 
 if map_config:
     map_config_json = json.loads(map_config)
-    st.code(map_config_json)
+    st.code(json.dumps(map_config_json, indent=4))
