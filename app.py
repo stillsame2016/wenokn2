@@ -193,6 +193,10 @@ if st.session_state.wen_datasets:
                             
                             st.code(result.columns)
 
+                            result.attrs['data_name'] = "Test"
+                            result.label = "Test"
+                            result.id = "1234567"
+                            
                             st.session_state.requests.append("Test")
                             st.session_state.sparqls.append("Join")
                             st.session_state.datasets.append(result)
