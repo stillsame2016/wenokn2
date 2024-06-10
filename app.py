@@ -170,7 +170,6 @@ if st.session_state.wen_datasets:
                         }
                         """,
                 ):
-                    st.markdown(str(buffered_table['Name'].duplicated().any()))
                     if not buffered_table['Name'].duplicated().any() and hasattr(pivot_table, 'use'):
                         if st.button('Add to Map', key=f'add-to-map-{index}'):
                             df = buffered_table.copy()
