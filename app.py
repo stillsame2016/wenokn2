@@ -182,16 +182,12 @@ if st.session_state.wen_datasets:
                             
                             # Perform the join operation
                             result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
-
-                            st.code(result.columns)
                             
                             # Select the desired columns, including geometry and the original columns from df
                             result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
                             
                             # Optionally, rename 'Name_y' back to 'Name'
                             result = result.rename(columns={'Name_y': 'Name'})
-                            
-                            st.code(result.columns)
 
                             result.attrs['data_name'] = "Test"
                             result.label = "Test"
