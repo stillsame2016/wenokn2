@@ -170,37 +170,32 @@ if st.session_state.wen_datasets:
                         }
                         """,
                 ):
-                    if st.button('Add to Map', key=f'add-to-map-{index}'):
-                        if hasattr(pivot_table, 'use'):
-                            st.markdown("Yes")
+                    if buffered_table['Name'].duplicated().any() and hasattr(pivot_table, 'use') and st.button('Add to Map', key=f'add-to-map-{index}'):
+                        df = buffered_table.copy()
+                        df.title = buffered_table.title
+                        gdf = pivot_table.use.copy()
+                        
+                        # Create a new column in df that matches the format of the Name column in gdf
+                        df['CountyName'] = df['Name'].str.replace(' County', '')
+                        
+                        # Perform the join operation
+                        result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
+                        
+                        # Select the desired columns, including geometry and the original columns from df
+                        result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
+                        
+                        # Optionally, rename 'Name_y' back to 'Name'
+                        result = result.rename(columns={'Name_y': 'Name'})
 
-                            df = buffered_table.copy()
-                            df.title = buffered_table.title
-                            gdf = pivot_table.use.copy()
-                            
-                            # Create a new column in df that matches the format of the Name column in gdf
-                            df['CountyName'] = df['Name'].str.replace(' County', '')
-                            
-                            # Perform the join operation
-                            result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
-                            
-                            # Select the desired columns, including geometry and the original columns from df
-                            result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
-                            
-                            # Optionally, rename 'Name_y' back to 'Name'
-                            result = result.rename(columns={'Name_y': 'Name'})
+                        result.attrs['data_name'] = df.title
+                        result.label = df.title
+                        result.id = "1234567"
+                        
+                        st.session_state.requests.append(df.title)
+                        st.session_state.sparqls.append("Join")
+                        st.session_state.datasets.append(result)
 
-                            result.attrs['data_name'] = df.title
-                            result.label = df.title
-                            result.id = "1234567"
-                            
-                            st.session_state.requests.append(df.title)
-                            st.session_state.sparqls.append("Join")
-                            st.session_state.datasets.append(result)
-
-                            st.rerun()
-                        else:
-                            st.markdown("No")
+                        st.rerun()
             with col4:
                 table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
