@@ -317,6 +317,6 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
 
-if map_config:
-    map_config_json = json.loads(map_config)
-    st.code(json.dumps(map_config_json, indent=4))
+# if map_config:
+#     map_config_json = json.loads(map_config)
+#     st.code(json.dumps(map_config_json, indent=4))
