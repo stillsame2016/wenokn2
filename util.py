@@ -1,6 +1,7 @@
 import re
 import uuid
 import json
+import time
 import requests
 import sparql_dataframe
 import geopandas as gpd
@@ -353,7 +354,7 @@ def process_off_topic_request(llm, user_input, chat_container):
             return result
 
 
-def process_table_request(llm, user_input, index):
+def process_table_request(llm, llm2, user_input, index):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
             You are an expert of {title} which is loaded in a DataFrame st.session_state.wen_datasets[{index}] 
@@ -406,15 +407,24 @@ def process_table_request(llm, user_input, index):
     )
 
     df_code_chain = prompt | llm | JsonOutputParser()
+    df_code_chain2 = prompt | llm2 | JsonOutputParser()
     
     sample_df = st.session_state.wen_datasets[index].head(5)
     csv_string = sample_df.to_csv(index=False)
-    
-    return df_code_chain.invoke({'index': index,
-                                 'title': st.session_state.wen_datasets[index].title,
-                                 'columns': str(st.session_state.wen_datasets[index].dtypes),
-                                 'sample': csv_string,
-                                 'question': user_input})
+
+    try:
+        return df_code_chain.invoke({'index': index,
+                                     'title': st.session_state.wen_datasets[index].title,
+                                     'columns': str(st.session_state.wen_datasets[index].dtypes),
+                                     'sample': csv_string,
+                                     'question': user_input})
+    except:
+        time.sleep(2)
+        return df_code_chain2.invoke({'index': index,
+                                     'title': st.session_state.wen_datasets[index].title,
+                                     'columns': str(st.session_state.wen_datasets[index].dtypes),
+                                     'sample': csv_string,
+                                     'question': user_input})
 
 
 
