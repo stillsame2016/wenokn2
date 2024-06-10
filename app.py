@@ -186,7 +186,7 @@ if st.session_state.wen_datasets:
                             st.code(result.columns)
                             
                             # Select the desired columns, including geometry and the original columns from df
-                            result = result[['Name_y', 'geometry', 'Date', 'Count_Person']]
+                            result = result[['Name_y', 'geometry'] + df.columns[1:]]
                             
                             # Optionally, rename 'Name_y' back to 'Name'
                             result = result.rename(columns={'Name_y': 'Name'})
