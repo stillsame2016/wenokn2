@@ -189,11 +189,11 @@ if st.session_state.wen_datasets:
                             # Optionally, rename 'Name_y' back to 'Name'
                             result = result.rename(columns={'Name_y': 'Name'})
 
-                            result.attrs['data_name'] = "Test"
-                            result.label = "Test"
+                            result.attrs['data_name'] = df.title
+                            result.label = df.title
                             result.id = "1234567"
                             
-                            st.session_state.requests.append("Test")
+                            st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
                             st.session_state.datasets.append(result)
 
