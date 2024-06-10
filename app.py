@@ -213,7 +213,7 @@ if st.session_state.wen_datasets:
                         st.chat_message("user").markdown(user_input_for_table)
                         st.session_state.table_chat_histories[index].append({"role": "user", "content": user_input_for_table})
 
-                        response = process_table_request(llm2, user_input_for_table, index)
+                        response = process_table_request(llm, llm2, user_input_for_table, index)
                         if response["category"] == "Request data":
                             # st.code(response['answer'])
                             exec(response['answer'])
