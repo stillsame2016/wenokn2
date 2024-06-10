@@ -175,6 +175,7 @@ if st.session_state.wen_datasets:
                             st.markdown("Yes")
 
                             df = buffered_table.copy()
+                            df.title = buffered_table.title
                             gdf = pivot_table.use.copy()
                             
                             # Create a new column in df that matches the format of the Name column in gdf
