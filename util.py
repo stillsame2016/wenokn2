@@ -394,6 +394,7 @@ def process_table_request(llm, user_input, index):
                 
                 # Select only relevant columns
                 st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'Count_Person_Diff']]
+                st.session_state.wen_tables[0].title = "The max change of the populations for all neighbor counties of Ross county"
 
             For a column other than "Count_Person", please update the code accordingly.
             
