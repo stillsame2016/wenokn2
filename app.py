@@ -1,5 +1,6 @@
 import time
 import json
+import uuid
 import streamlit as st
 from keplergl import keplergl
 from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, process_table_request
@@ -190,7 +191,7 @@ if st.session_state.wen_datasets:
     
                             result.attrs['data_name'] = df.title
                             result.label = df.title
-                            result.id = str(uuid.uuid())
+                            result.id = str(uuid.uuid4())[:8]
                             
                             st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
