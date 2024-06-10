@@ -372,8 +372,6 @@ def process_table_request(llm, user_input, index):
             For "Request data", return a python statement in the following format:
                  other code with with st.session_state.wen_datasets[{index}] only
                  st.session_state.wen_tables[{index}] = <your expression with st.session_state.wen_datasets[{index}] only>  
-                 # create a short title by summaring the original data and the user's question
-                 st.session_state.wen_tables[{index}].title = ...
             in the JSON field "answer".  Note that you can't use df.resample('Y', on='Time') because the type of df['Time'] is string.
 
             For "Other", return a reasonable answer in the JSON field "answer". 
@@ -395,7 +393,6 @@ def process_table_request(llm, user_input, index):
                 
                 # Select only relevant columns
                 st.session_state.wen_tables[0] = max_increment_years[['Name', 'Date', 'Count_Person_Diff']]
-                st.session_state.wen_tables[0].title = "The max change of the populations for all neighbor counties of Ross county"
 
             For a column other than "Count_Person", please update the code accordingly.
             
