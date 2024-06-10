@@ -190,7 +190,7 @@ if st.session_state.wen_datasets:
     
                             result.attrs['data_name'] = df.title
                             result.label = df.title
-                            result.id = "1234567"
+                            result.id = str(uuid.uuid())
                             
                             st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
