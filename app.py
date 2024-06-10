@@ -192,6 +192,10 @@ if st.session_state.wen_datasets:
                             result = result.rename(columns={'Name_y': 'Name'})
                             
                             st.code(result.columns)
+
+                            st.session_state.requests.append("Test")
+                            st.session_state.sparqls.append("Join")
+                            st.session_state.datasets.append(result)
                         else:
                             st.markdown("No")
             with col4:
