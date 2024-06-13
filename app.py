@@ -68,7 +68,9 @@ def add_map():
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
 
-        st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+        for i, dataset in enumerate(st.session_state.datasets):
+            st.markdown(i, dataset.id, dataset.label)
+        # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
         st.markdown("map_data_ids")
         st.code(map_data_ids)
         st.markdown("indices_to_remove")
