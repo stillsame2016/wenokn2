@@ -62,25 +62,14 @@ def add_map():
     # Sync datasets saved in the session with the map
     if _map_config:
         map_config_json = json.loads(_map_config)
-        st.code(json.dumps(map_config_json, indent=4))
+        # st.code(json.dumps(map_config_json, indent=4))
 
         # check if any datasets were deleted
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
-        indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
-
-        st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
-        for i, dataset in enumerate(st.session_state.datasets):
-            st.code(f"{i},  {dataset.id},  {dataset.label}")
-    
-        st.markdown("map_data_ids")
-        st.code(map_data_ids)
-        st.markdown("indices_to_remove")
-        st.code(indices_to_remove)
-        
+        indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]        
         for i in reversed(indices_to_remove):
-            st.markdown(f"delete {i}")
-            del st.session_state.datasets[i]
-            # pass
+            if time.time() - st.session_state.datasets[i].time > 3:
+                del st.session_state.datasets[i]
     
     return _map_config
 
