@@ -77,6 +77,7 @@ def add_map():
         st.code(indices_to_remove)
         
         for i in reversed(indices_to_remove):
+            st.markdown(f"delete {i}")
             del st.session_state.datasets[i]
             # pass
     
