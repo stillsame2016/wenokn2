@@ -69,7 +69,7 @@ def add_map():
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
 
         for i, dataset in enumerate(st.session_state.datasets):
-            st.markdown(i, dataset.id, dataset.label)
+            st.markdown(f"{i}, {dataset.id}, {dataset.label}")
         # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
         st.markdown("map_data_ids")
         st.code(map_data_ids)
