@@ -27,6 +27,7 @@ def df_to_gdf(df, dataset_name):
     gdf.attrs['data_name'] = " ".join(column_name_parts).capitalize()
     gdf.label = dataset_name
     gdf.id = str(uuid.uuid4())[:8]
+    gdf.time = time.time()
 
     for column_name in column_names:
         tmp_column_name_parts = get_column_name_parts(column_name)
