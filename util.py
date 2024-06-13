@@ -376,9 +376,9 @@ def process_table_request(llm, llm2, user_input, index):
                  st.session_state.wen_tables[{index}] = <your expression with st.session_state.wen_datasets[{index}] only>  
             in the JSON field "answer".  
             
-            Note that you can't use df.resample('Y', on='Time') because the type of df['Time'] is string. 
+            Note that you can't use df.resample('Y', on='Time') when the type of df['Time'] is string.
 
-            Dont use triple quote in the JSON string which make the result an invalid JSON string. 
+            Dont use triple quotes in the JSON string which make the result an invalid JSON string. 
 
             For "Other", return a reasonable answer in the JSON field "answer". 
 
