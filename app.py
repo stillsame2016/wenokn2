@@ -54,7 +54,7 @@ col1, col2 = st.columns([3, 2])
 
 @st.experimental_fragment
 def add_map():
-    st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+    # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
     _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
     time.sleep(0.5)
@@ -67,6 +67,13 @@ def add_map():
         # check if any datasets were deleted
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]
+
+        st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+        st.markdown("map_data_ids")
+        st.code(map_data_ids)
+        st.markdown("indices_to_remove")
+        st.code(indices_to_remove)
+        
         for i in reversed(indices_to_remove):
             # del st.session_state.datasets[i]
             pass
