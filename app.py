@@ -62,7 +62,7 @@ def add_map():
     # Sync datasets saved in the session with the map
     if _map_config:
         map_config_json = json.loads(_map_config)
-        # st.code(json.dumps(map_config_json, indent=4))
+        st.code(json.dumps(map_config_json, indent=4))
 
         # check if any datasets were deleted
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
