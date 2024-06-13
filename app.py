@@ -62,6 +62,7 @@ def add_map():
     # Sync datasets saved in the session with the map
     if _map_config:
         map_config_json = json.loads(_map_config)
+        st.code(json.dumps(map_config_json, indent=4))
 
         # check if any datasets were deleted
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
@@ -69,7 +70,7 @@ def add_map():
         for i in reversed(indices_to_remove):
             # del st.session_state.datasets[i]
             pass
-
+    
     return _map_config
 
 st.markdown("""
@@ -317,6 +318,6 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
 
-if map_config:
-    map_config_json = json.loads(map_config)
-    st.code(json.dumps(map_config_json, indent=4))
+# if map_config:
+#     map_config_json = json.loads(map_config)
+#     st.code(json.dumps(map_config_json, indent=4))
