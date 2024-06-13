@@ -374,7 +374,8 @@ def process_table_request(llm, llm2, user_input, index):
             For "Request data", return a python statement in the following format:
                  other code with with st.session_state.wen_datasets[{index}] only
                  st.session_state.wen_tables[{index}] = <your expression with st.session_state.wen_datasets[{index}] only>  
-            in the JSON field "answer".  
+            in the JSON field "answer". Also return a short title by summarizing "{title}" and "{question}" in the JSON field 
+            "title".
             
             Note that you can't use df.resample('Y', on='Time') when the type of df['Time'] is string.
 
