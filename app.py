@@ -57,7 +57,7 @@ def add_map():
     # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
     _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
-    time.sleep(2)
+    time.sleep(0.5)
 
     # Sync datasets saved in the session with the map
     if _map_config:
