@@ -107,7 +107,7 @@ def render_interface_for_table(index, pivot_table):
                 del st.session_state.table_chat_histories[index]
                 del st.session_state.chart_types[index]
                 st.session_state.rerun = True
-                break
+                return
 
         with but_col2:
             if st.button('Change Chart Type', key=f'chart-type-{index}'):
