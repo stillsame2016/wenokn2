@@ -42,6 +42,7 @@ if "wen_datasets" not in st.session_state:
     st.session_state.wen_tables = []
     st.session_state.table_chat_histories = []
     st.session_state.chat_types = []
+    st.session_stathe.deleted_table = False
     
 # Add all generated SPARQL queries with the requests to Streamlit session state
 if "sparqls" not in st.session_state:
@@ -96,7 +97,6 @@ st.markdown("""
 
 # Process tables
 if st.session_state.wen_datasets:
-    deleted_table = False
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
         with st.container(): 
@@ -110,7 +110,7 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
                     del st.session_state.chat_types[index]
-                    deleted_table = True
+                    st.session_stathe.deleted_table = True
                     break
                     # st.rerun()
 
@@ -324,8 +324,8 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
 
-if deleted_table:
-    deleted_table = False
+if st.session_stathe.deleted_table:
+    st.session_stathe.deleted_table = False
     st.rerun()
 
 # if map_config:
