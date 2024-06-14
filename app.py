@@ -42,7 +42,7 @@ if "wen_datasets" not in st.session_state:
     st.session_state.wen_tables = []
     st.session_state.table_chat_histories = []
     st.session_state.chat_types = []
-    st.session_stathe.deleted_table = False
+    st.session_state.deleted_table = False
     
 # Add all generated SPARQL queries with the requests to Streamlit session state
 if "sparqls" not in st.session_state:
