@@ -12,7 +12,8 @@ from request_plan import get_request_plan
 
 import pandas as pd
 import datacommons_pandas as dc
-from data_commons import get_time_series_dataframe_for_fips, get_fips_from_county_name, get_fips_from_state_name
+from data_commons import (get_time_series_dataframe_for_fips, get_fips_from_county_name, 
+                          get_fips_from_state_name)
 from streamlit_extras.chart_container import chart_container
 from streamlit_extras.stylable_container import stylable_container
 
