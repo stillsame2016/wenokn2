@@ -324,7 +324,7 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
 
-if st.session_stathe.deleted_table:
+if st.session_state.deleted_table:
     st.session_stathe.deleted_table = False
     st.rerun()
 
