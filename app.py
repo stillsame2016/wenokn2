@@ -237,8 +237,7 @@ if st.session_state.wen_datasets:
                         else:
                             st.chat_message("assistant").markdown(response['answer'])
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
-    if deleted_table:
-        st.rerun()
+
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
@@ -324,6 +323,10 @@ with col2:
                 st.chat_message("assistant").markdown(message)
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
+
+if deleted_table:
+    deleted_table = False
+    st.rerun()
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
