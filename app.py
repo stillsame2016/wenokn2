@@ -74,6 +74,8 @@ def add_map():
         for i in reversed(indices_to_remove):
             if time.time() - st.session_state.datasets[i].time > 3:
                 del st.session_state.datasets[i]
+                del st.session_state.requests[i]
+                del st.session_state.sparqls[i]
     
     return _map_config
 
