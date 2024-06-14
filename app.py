@@ -203,8 +203,9 @@ if st.session_state.wen_datasets:
                             st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
                             st.session_state.datasets.append(result)
-    
-                            st.rerun()
+
+                            st.session_state.rerun = True
+                            # st.rerun()
             with col4:
                 table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
