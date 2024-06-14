@@ -42,7 +42,9 @@ if "wen_datasets" not in st.session_state:
     st.session_state.wen_tables = []
     st.session_state.table_chat_histories = []
     st.session_state.chat_types = []
-    st.session_state.deleted_table = False
+
+if "rerun" not in st.session_state:
+    st.session_state.rerun = False
     
 # Add all generated SPARQL queries with the requests to Streamlit session state
 if "sparqls" not in st.session_state:
@@ -110,7 +112,7 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
                     del st.session_state.chat_types[index]
-                    st.session_state.deleted_table = True
+                    st.session_state.rerun = True
                     break
                     # st.rerun()
 
@@ -324,8 +326,8 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
 
-if st.session_state.deleted_table:
-    st.session_state.deleted_table = False
+if st.session_state.rerun:
+    st.session_state.rerun = False
     st.rerun()
 
 # if map_config:
