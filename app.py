@@ -2,18 +2,17 @@ import time
 import json
 import streamlit as st
 from keplergl import keplergl
-from util import (process_data_request, process_regulation_request, 
-                  process_off_topic_request,  process_data_commons_request)
 from langchain_groq import ChatGroq
+
+from util import process_data_request, process_regulation_request, process_off_topic_request,  process_data_commons_request
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
-# import pandas as pd
-from data_commons import (get_time_series_dataframe_for_fips, get_fips_from_county_name, 
-                          get_fips_from_state_name)
+from data_commons import get_time_series_dataframe_for_fips, get_fips_from_county_name,  get_fips_from_state_name
 
 
+# Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
 
@@ -55,7 +54,7 @@ def add_map():
     # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
     _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
-    time.sleep(0.5)
+    time.sleep(0)
 
     # Sync datasets saved in the session with the map
     if _map_config:
