@@ -33,6 +33,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
 
 
         with stylable_container(key=f'chart-panel-{index}', css_styles="padding-top: 100px;"):
+            st.markdown("")
             if st.session_state.chart_types[index] == 'bar_chart':
                 st.bar_chart(
                     buffered_table, # filtered_pivot_table,
