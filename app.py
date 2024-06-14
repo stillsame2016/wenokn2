@@ -41,7 +41,7 @@ if "wen_datasets" not in st.session_state:
     st.session_state.wen_datasets = []
     st.session_state.wen_tables = []
     st.session_state.table_chat_histories = []
-    st.session_state.chat_types = []
+    st.session_state.chart_types = []
 
 if "rerun" not in st.session_state:
     st.session_state.rerun = False
@@ -111,19 +111,18 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_datasets[index]
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
-                    del st.session_state.chat_types[index]
+                    del st.session_state.chart_types[index]
                     st.session_state.rerun = True
                     break
-                    # st.rerun()
 
             with but_col2:
                 if st.button('Change Chart Type', key=f'chart-type-{index}'):
-                    if st.session_state.chat_types[index] == 'bar_chart':
-                        st.session_state.chat_types[index] = 'scatter_chart'
-                    elif st.session_state.chat_types[index] == 'scatter_chart':
-                        st.session_state.chat_types[index] = 'line_chart'
+                    if st.session_state.chart_types[index] == 'bar_chart':
+                        st.session_state.chart_types[index] = 'scatter_chart'
+                    elif st.session_state.chart_types[index] == 'scatter_chart':
+                        st.session_state.chart_types[index] = 'line_chart'
                     else:
-                        st.session_state.chat_types[index] = 'bar_chart'
+                        st.session_state.chart_types[index] = 'bar_chart'
                     
             ''
             
@@ -136,7 +135,7 @@ if st.session_state.wen_datasets:
             # ]
             
             ''
-            if st.session_state.chat_types[index] == 'bar_chart':
+            if st.session_state.chart_types[index] == 'bar_chart':
                 st.bar_chart(
                     buffered_table, # filtered_pivot_table,
                     # x='Date',
@@ -146,7 +145,7 @@ if st.session_state.wen_datasets:
                     color='Name',
                     height=450
                 )
-            elif st.session_state.chat_types[index] == 'scatter_chart':
+            elif st.session_state.chart_types[index] == 'scatter_chart':
                 st.scatter_chart(
                     buffered_table, # filtered_pivot_table,
                     x=buffered_table.columns[-2],
@@ -203,9 +202,8 @@ if st.session_state.wen_datasets:
                             st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
                             st.session_state.datasets.append(result)
-
                             st.session_state.rerun = True
-                            # st.rerun()
+                
             with col4:
                 table_chat_container = st.container(height=340)
                 user_input_for_table = st.chat_input(f"What can I help you with Table {index+1}?")
@@ -235,9 +233,7 @@ if st.session_state.wen_datasets:
                                         """
                             st.chat_message("assistant").markdown(answer)
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": answer})
-                            st.session_state.rerun = True
-                            # st.rerun()
-                            
+                            st.session_state.rerun = True                            
                         else:
                             st.chat_message("assistant").markdown(response['answer'])
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
@@ -308,7 +304,7 @@ with col2:
                             st.session_state.wen_datasets.append(df)
                             st.session_state.wen_tables.append(df.copy())
                             st.session_state.table_chat_histories.append([])
-                            st.session_state.chat_types.append("bar_chart")
+                            st.session_state.chart_types.append("bar_chart")
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
