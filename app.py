@@ -223,11 +223,6 @@ def render_interface_for_table(index, pivot_table):
                         st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
 
 
-# Process tables
-if st.session_state.wen_datasets:
-    for index, pivot_table in enumerate(st.session_state.wen_datasets):
-        render_interface_for_table(index, pivot_table)
-
 # Set up two columns for the map and chat interface
 col1, col2 = st.columns([3, 2])
 
@@ -305,6 +300,11 @@ with col2:
                 st.chat_message("assistant").markdown(message)
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
+
+# Process tables
+if st.session_state.wen_datasets:
+    for index, pivot_table in enumerate(st.session_state.wen_datasets):
+        render_interface_for_table(index, pivot_table)
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
