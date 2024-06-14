@@ -109,7 +109,7 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
                     del st.session_state.chat_types[index]
-                    time.sleep(2)
+                    time.sleep(10)
                     st.rerun()
 
             with but_col2:
