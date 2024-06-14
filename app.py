@@ -110,7 +110,7 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
                     del st.session_state.chat_types[index]
-                    st.session_stathe.deleted_table = True
+                    st.session_state.deleted_table = True
                     break
                     # st.rerun()
 
