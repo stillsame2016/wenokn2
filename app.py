@@ -40,6 +40,7 @@ if "wen_datasets" not in st.session_state:
     st.session_state.table_chat_histories = []
     st.session_state.chart_types = []
 
+# Flag for managing rerun. 
 if "rerun" not in st.session_state:
     st.session_state.rerun = False
     
