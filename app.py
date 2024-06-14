@@ -72,6 +72,7 @@ def add_map():
               
     return _map_config
 
+
 # Set up CSS for tables
 st.markdown("""
             <style>
