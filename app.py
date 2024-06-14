@@ -52,9 +52,6 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
-# Set up two columns for the map and chat interface
-col1, col2 = st.columns([3, 2])
-
 
 @st.experimental_fragment
 def add_map():
@@ -76,7 +73,9 @@ def add_map():
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
+              
     return _map_config
+
 
 st.markdown("""
             <style>
@@ -228,6 +227,9 @@ def render_interface_for_table(index, pivot_table):
 if st.session_state.wen_datasets:
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         render_interface_for_table(index, pivot_table)
+
+# Set up two columns for the map and chat interface
+col1, col2 = st.columns([3, 2])
 
 # Set up the Kepler map
 with col1:
