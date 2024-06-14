@@ -227,7 +227,7 @@ def render_interface_for_table(index, pivot_table):
 # Set up two columns for the map and chat interface
 col1, col2 = st.columns([3, 2])
 
-# Process tables
+# Show all tables
 if st.session_state.wen_datasets:
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         render_interface_for_table(index, pivot_table)
