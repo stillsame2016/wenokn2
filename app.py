@@ -96,6 +96,7 @@ st.markdown("""
 
 # Process tables
 if st.session_state.wen_datasets:
+    deleted_table = False
     for index, pivot_table in enumerate(st.session_state.wen_datasets):
         buffered_table = st.session_state.wen_tables[index]
         with st.container(): 
@@ -109,8 +110,9 @@ if st.session_state.wen_datasets:
                     del st.session_state.wen_tables[index]
                     del st.session_state.table_chat_histories[index]
                     del st.session_state.chat_types[index]
-                    time.sleep(10)
-                    st.rerun()
+                    deleted_table = False
+                    break
+                    # st.rerun()
 
             with but_col2:
                 if st.button('Change Chart Type', key=f'chart-type-{index}'):
@@ -235,7 +237,8 @@ if st.session_state.wen_datasets:
                         else:
                             st.chat_message("assistant").markdown(response['answer'])
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
-                
+      if deleted_table:
+          st.rerun()
 
 # Show all requests and generated SPARQL queries
 if len(st.session_state.sparqls) > 0:
