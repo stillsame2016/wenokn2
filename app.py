@@ -85,7 +85,7 @@ st.markdown("""
                 font-size: 18pt;
                 font-weight: 600;
                 color: rgb(49, 51, 63);
-                padding: 0px 0px 10px 0px;
+                padding: 10px 0px 10px 0px;
             }
             .stDataFrame {
                 margin-left: 50px;
