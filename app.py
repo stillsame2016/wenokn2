@@ -198,6 +198,7 @@ if st.session_state.wen_datasets:
                             result.attrs['data_name'] = df.title
                             result.label = df.title
                             result.id = str(uuid.uuid4())[:8]
+                            result.time = time.time()
                             
                             st.session_state.requests.append(df.title)
                             st.session_state.sparqls.append("Join")
