@@ -325,6 +325,7 @@ with col2:
                 st.rerun()
 
 if st.session_state.deleted_table:
+    st.markdown(st.session_state.deleted_table)
     st.session_stathe.deleted_table = False
     st.rerun()
 
