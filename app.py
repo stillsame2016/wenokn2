@@ -76,7 +76,6 @@ def add_map():
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
-    
     return _map_config
 
 st.markdown("""
