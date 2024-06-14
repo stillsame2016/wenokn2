@@ -230,12 +230,12 @@ if st.session_state.wen_datasets:
                                         Your request has been processed. {st.session_state.wen_tables[index].shape[0]}
                                         { "rows are" if st.session_state.wen_tables[index].shape[0] > 1 else "row is"}
                                         found and displayed.
-
-                                        {response}
                                         """
                             st.chat_message("assistant").markdown(answer)
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": answer})
-                            st.rerun()
+                            st.session_state.rerun = True
+                            # st.rerun()
+                            
                         else:
                             st.chat_message("assistant").markdown(response['answer'])
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
