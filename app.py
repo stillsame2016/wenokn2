@@ -3,7 +3,8 @@ import json
 import uuid
 import streamlit as st
 from keplergl import keplergl
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, process_table_request
+from util import (process_data_request, process_regulation_request, process_off_topic_request, 
+                  process_data_commons_request, process_table_request)
 from langchain_groq import ChatGroq
 from refine_request import get_refined_question
 from request_router import get_question_route
