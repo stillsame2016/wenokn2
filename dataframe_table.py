@@ -32,34 +32,34 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     st.session_state.chart_types[index] = 'bar_chart'
 
 
-        with stylable_container(key=f'chart-panel-{index}', css_styles="padding-top: 100px;"):
-            st.markdown("")
-            if st.session_state.chart_types[index] == 'bar_chart':
-                st.bar_chart(
-                    buffered_table, # filtered_pivot_table,
-                    # x='Date',
-                    # y=pivot_table.variable_name,
-                    x=buffered_table.columns[-2],
-                    y=buffered_table.columns[-1],
-                    color='Name',
-                    height=450
-                )
-            elif st.session_state.chart_types[index] == 'scatter_chart':
-                st.scatter_chart(
-                    buffered_table, # filtered_pivot_table,
-                    x=buffered_table.columns[-2],
-                    y=buffered_table.columns[-1],
-                    color='Name',
-                    height=450
-                )
-            else:
-                st.line_chart(
-                    buffered_table, # filtered_pivot_table,
-                    x=buffered_table.columns[-2],
-                    y=buffered_table.columns[-1],
-                    color='Name',
-                    height=450
-                )
+
+        st.markdown("")
+        if st.session_state.chart_types[index] == 'bar_chart':
+            st.bar_chart(
+                buffered_table, # filtered_pivot_table,
+                # x='Date',
+                # y=pivot_table.variable_name,
+                x=buffered_table.columns[-2],
+                y=buffered_table.columns[-1],
+                color='Name',
+                height=450
+            )
+        elif st.session_state.chart_types[index] == 'scatter_chart':
+            st.scatter_chart(
+                buffered_table, # filtered_pivot_table,
+                x=buffered_table.columns[-2],
+                y=buffered_table.columns[-1],
+                color='Name',
+                height=450
+            )
+        else:
+            st.line_chart(
+                buffered_table, # filtered_pivot_table,
+                x=buffered_table.columns[-2],
+                y=buffered_table.columns[-1],
+                color='Name',
+                height=450
+            )
 
         col3, pad, col4 = st.columns([30, 3, 20])
         with col3:
