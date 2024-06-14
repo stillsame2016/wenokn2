@@ -241,16 +241,6 @@ if st.session_state.wen_datasets:
                             st.session_state.table_chat_histories[index].append({"role": "assistant", "content": response['answer']})
 
 
-# # Show all requests and generated SPARQL queries
-# if len(st.session_state.sparqls) > 0:
-#     ''
-#     st.write(f"<div class='tableTitle'>Spatial Requests and SPARQL queries</div>", unsafe_allow_html=True)
-#     info_container = st.container(height=350)
-#     with info_container:
-#         for idx, sparql in enumerate(st.session_state.sparqls):
-#             st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
-#             st.code(sparql)
-
 # Set up the Kepler map
 with col1:
     map_config = add_map()
