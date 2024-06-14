@@ -23,7 +23,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                 return
 
         with but_col2:
-            if st.button('Change Chart Type', key=f'chart-type-{index}'):
+            if st.button('OOPS Change Chart Type', key=f'chart-type-{index}'):
                 if st.session_state.chart_types[index] == 'bar_chart':
                     st.session_state.chart_types[index] = 'scatter_chart'
                 elif st.session_state.chart_types[index] == 'scatter_chart':
@@ -33,7 +33,6 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
 
 
         with stylable_container(key=f'chart-panel', css_styles="margin-top: 30px;"):
-            '&nbsp; oops'
             if st.session_state.chart_types[index] == 'bar_chart':
                 st.bar_chart(
                     buffered_table, # filtered_pivot_table,
