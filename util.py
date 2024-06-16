@@ -466,15 +466,21 @@ def create_new_geodataframe(gdfs, df):
     for idx, row in df.iterrows():
         name = row['Name']
         st.markdown(f"check===={name}===={remove_suffixes(name)}====")
+        found = False
         for tmp in geometry_dict.keys():
             st.markdown(f"    compare: {tmp}")
             if name == tmp or remove_suffixes(name) == tmp:
                 st.markdown("Yes")
+                geometries.append(geometry_dict[tmp])
+                found = True
                 break
-        if name in geometry_dict.keys() or remove_suffixes(name) in geometry_dict.keys():
-            geometries.append(geometry_dict[name])
-        else:
+        if not found:
             raise ValueError(f"Geometry not found for name: {name}")
+            
+        # if name in geometry_dict.keys() or remove_suffixes(name) in geometry_dict.keys():
+        #     geometries.append(geometry_dict[name])
+        # else:
+        #     raise ValueError(f"Geometry not found for name: {name}")
     
     # Create the new GeoDataFrame
     new_gdf = gpd.GeoDataFrame(df.copy(), geometry=geometries)
