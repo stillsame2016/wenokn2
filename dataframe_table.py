@@ -3,7 +3,7 @@ import time
 import pandas as pd
 import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
-from util import process_table_request
+from util import process_table_request, create_new_geodataframe
 
 
 def render_interface_for_table(llm, llm2, index, pivot_table):
@@ -74,7 +74,10 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     """,
             ):
                 st.markdown(f"buffered_table['Name'].duplicated().any(): {buffered_table['Name'].duplicated().any()}")
-                st.markdown(f"hasattr(pivot_table, 'use'): {hasattr(pivot_table, 'use')}")
+
+                new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
+                st.markdown(f"new_gdf: {new_gdf.shape}")
+                
                 if not buffered_table['Name'].duplicated().any() and hasattr(pivot_table, 'use'):
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
                         df = buffered_table.copy()
