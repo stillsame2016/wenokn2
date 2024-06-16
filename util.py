@@ -452,7 +452,7 @@ def create_new_geodataframe(gdfs, df):
     
     # Iterate through each GeoDataFrame in the list
     for gdf in gdfs:
-        st.markdown(f"collect name and geometry for ==== {gdf.label}")
+        st.markdown(f"==========> collect name and geometry for ==== {gdf.label}")
         for idx, row in gdf.iterrows():
             name = row['Name']
             geometry = row['geometry']
