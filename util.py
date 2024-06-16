@@ -442,7 +442,7 @@ def create_new_geodataframe(gdfs, df):
     for gdf in gdfs:
         for idx, row in gdf.iterrows():
             name = row['Name']
-            geometry = row['Geometry']
+            geometry = row['geometry']
             geometry_dict[name] = geometry
     
     # Initialize a list to store geometries for the new GeoDataFrame
