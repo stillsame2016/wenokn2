@@ -73,6 +73,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     }
                     """,
             ):
+                st.markdown(f"buffered_table['Name'].duplicated().any(): {buffered_table['Name'].duplicated().any()}")
                 if not buffered_table['Name'].duplicated().any() and hasattr(pivot_table, 'use'):
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
                         df = buffered_table.copy()
