@@ -449,6 +449,8 @@ def remove_suffixes(place_name):
 def create_new_geodataframe(gdfs, df):
     # Create a dictionary to store geometries with "Name" as the key
     geometry_dict = {}
+
+    st.markdown(f"==========> 100: {len(gdfs)}")
     
     # Iterate through each GeoDataFrame in the list
     for gdf in gdfs:
