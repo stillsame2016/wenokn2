@@ -67,7 +67,7 @@ def add_map():
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]        
         for i in reversed(indices_to_remove):
             # the returnd map config may have several seconds delay 
-            if time.time() - st.session_state.datasets[i].time > 20:
+            if time.time() - st.session_state.datasets[i].time > 3:
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
@@ -136,9 +136,13 @@ with col2:
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
+                    count_start = len(st.session_state.datasets)
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
                         process_data_request(request, chat_container)
+                    count_end = len(st.session_state.datasets)   
+                    for gdf in st.session_state.datasets:
+                        gdf.time = time.time()
                     st.session_state.chat.append({"role": "assistant",
                                                   "content": "Your request has been processed."})
                     st.rerun()
