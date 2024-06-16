@@ -450,11 +450,8 @@ def create_new_geodataframe(gdfs, df):
     # Create a dictionary to store geometries with "Name" as the key
     geometry_dict = {}
 
-    st.markdown(f"==========> 100: {len(gdfs)}")
-    
     # Iterate through each GeoDataFrame in the list
     for gdf in gdfs:
-        st.markdown(f"==========> collect name and geometry for ==== {gdf.label}")
         for idx, row in gdf.iterrows():
             name = row['Name']
             geometry = row['geometry']
@@ -468,12 +465,9 @@ def create_new_geodataframe(gdfs, df):
     # Iterate through the DataFrame df to build the new GeoDataFrame
     for idx, row in df.iterrows():
         name = row['Name']
-        st.markdown(f"check===={name}===={remove_suffixes(name)}====")
         found = False
         for tmp in geometry_dict.keys():
-            st.markdown(f"    compare: {tmp}")
             if name == tmp or remove_suffixes(name) == tmp:
-                st.markdown("Yes")
                 geometries.append(geometry_dict[tmp])
                 found = True
                 break
