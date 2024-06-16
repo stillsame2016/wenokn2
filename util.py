@@ -456,6 +456,8 @@ def create_new_geodataframe(gdfs, df):
             name = row['Name']
             geometry = row['geometry']
             geometry_dict[name] = geometry
+
+    st.code(geometry_dict.keys())
     
     # Initialize a list to store geometries for the new GeoDataFrame
     geometries = []
