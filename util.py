@@ -4,6 +4,7 @@ import json
 import time
 import requests
 import sparql_dataframe
+import pandas as pd
 import geopandas as gpd
 from langchain_core.prompts import PromptTemplate
 from shapely import wkt
@@ -433,6 +434,32 @@ def process_table_request(llm, llm2, user_input, index):
 
 
 
+def create_new_geodataframe(gdfs, df):
+    # Create a dictionary to store geometries with "Name" as the key
+    geometry_dict = {}
+    
+    # Iterate through each GeoDataFrame in the list
+    for gdf in gdfs:
+        for idx, row in gdf.iterrows():
+            name = row['Name']
+            geometry = row['Geometry']
+            geometry_dict[name] = geometry
+    
+    # Initialize a list to store geometries for the new GeoDataFrame
+    geometries = []
+    
+    # Iterate through the DataFrame df to build the new GeoDataFrame
+    for idx, row in df.iterrows():
+        name = row['Name']
+        if name in geometry_dict:
+            geometries.append(geometry_dict[name])
+        else:
+            raise ValueError(f"Geometry not found for name: {name}")
+    
+    # Create the new GeoDataFrame
+    new_gdf = gpd.GeoDataFrame(df.copy(), geometry=geometries)
+    
+    return new_gdf
 
     
     
