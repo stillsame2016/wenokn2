@@ -433,6 +433,18 @@ def process_table_request(llm, llm2, user_input, index):
                                      'question': user_input})
 
 
+def remove_suffixes(place_name):
+    # Define the pattern to match the suffixes "County", "State", or "City"
+    pattern = r'\b(County|State|City)\b'
+    
+    # Use re.sub to remove the matched suffixes
+    cleaned_name = re.sub(pattern, '', place_name).strip()
+    
+    # Optionally, remove any extra whitespace
+    cleaned_name = re.sub(r'\s+', ' ', cleaned_name)
+    
+    return cleaned_name
+
 
 def create_new_geodataframe(gdfs, df):
     # Create a dictionary to store geometries with "Name" as the key
