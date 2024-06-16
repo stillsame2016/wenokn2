@@ -465,6 +465,7 @@ def create_new_geodataframe(gdfs, df):
     # Iterate through the DataFrame df to build the new GeoDataFrame
     for idx, row in df.iterrows():
         name = row['Name']
+        st.makedown(f"check===={name}===={remove_suffixes(name)}")
         if name in geometry_dict.keys() or remove_suffixes(name) in geometry_dict.keys():
             geometries.append(geometry_dict[name])
         else:
