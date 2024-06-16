@@ -466,6 +466,11 @@ def create_new_geodataframe(gdfs, df):
     for idx, row in df.iterrows():
         name = row['Name']
         st.markdown(f"check===={name}===={remove_suffixes(name)}====")
+        for tmp in geometry_dict.keys():
+            st.markdown(f"    compare: {tmp}")
+            if name == tmp or remove_suffixes(name) == tmp:
+                st.markdown("Yes")
+                break
         if name in geometry_dict.keys() or remove_suffixes(name) in geometry_dict.keys():
             geometries.append(geometry_dict[name])
         else:
