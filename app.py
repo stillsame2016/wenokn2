@@ -52,7 +52,7 @@ if "sparqls" not in st.session_state:
 
 @st.experimental_fragment
 def add_map():
-    # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+    st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
     _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
     time.sleep(0.5)
@@ -167,8 +167,6 @@ with col2:
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
-
-                                    {code}
                                     """
                         except Exception as e:
                             # message = f"""
