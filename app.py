@@ -52,7 +52,7 @@ if "sparqls" not in st.session_state:
 
 @st.experimental_fragment
 def add_map():
-    st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+    # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
     _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=410)
     time.sleep(0.5)
