@@ -73,15 +73,13 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     }
                     """,
             ):
-                st.markdown(f"buffered_table['Name'].duplicated().any(): {buffered_table['Name'].duplicated().any()}")
-
-                try:
-                    new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
-                    st.markdown(f"new_gdf: {new_gdf.shape}")
-                except Exception as e:
-                    st.markdown(f"Not Found: {str(e)}")
+                if not buffered_table['Name'].duplicated().any():
+                    try:
+                        new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
+                        st.markdown(f"new_gdf: {new_gdf.shape}")
+                    except Exception as e:
+                        st.markdown(f"Not Found: {str(e)}")
                 
-                if not buffered_table['Name'].duplicated().any() and hasattr(pivot_table, 'use'):
                     if st.button('Add to Map', key=f'add-to-map-{index}'):
                         df = buffered_table.copy()
                         df.title = buffered_table.title
