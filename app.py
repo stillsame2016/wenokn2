@@ -71,7 +71,6 @@ def add_map():
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
-                st.session_state.rerun = True
               
     return _map_config
 
