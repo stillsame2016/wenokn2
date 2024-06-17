@@ -74,11 +74,11 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     """,
             ):
                 if not buffered_table['Name'].duplicated().any():
+                    new_gdf = None
                     try:
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
                         st.markdown(f"new_gdf: {new_gdf.shape}")
                     except Exception as e:
-                        new_gdf = None
                         st.markdown(f"Not Found: {str(e)}")
                 
                     if new_gdf and st.button('Add to Map', key=f'add-to-map-{index}'):
