@@ -449,10 +449,6 @@ def remove_suffixes(place_name):
 def create_new_geodataframe(gdfs, df):
     # Create a dictionary to store geometries with "Name" as the key
     geometry_dict = {}
-
-    df = df.copy()
-    cols = df.columns.tolist()
-    df = df[[cols[-1]] + cols[:-1]]
     
     # Iterate through each GeoDataFrame in the list
     for gdf in gdfs:
@@ -477,11 +473,6 @@ def create_new_geodataframe(gdfs, df):
         if not found:
             raise ValueError(f"Geometry not found for name: {name}")
             
-        # if name in geometry_dict.keys() or remove_suffixes(name) in geometry_dict.keys():
-        #     geometries.append(geometry_dict[name])
-        # else:
-        #     raise ValueError(f"Geometry not found for name: {name}")
-    
     # Create the new GeoDataFrame
     new_gdf = gpd.GeoDataFrame(df.copy(), geometry=geometries)
     
