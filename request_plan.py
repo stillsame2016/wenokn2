@@ -14,8 +14,6 @@ def get_request_plan(llm, question):
                     types requested to fetch. Each atomic request must be executable 
                     independently of the others.
 
-                    Examples
-                    
                     Example 1:   
                     Original Question: "First find Scioto River and all dams on it."
                     
@@ -40,6 +38,11 @@ def get_request_plan(llm, question):
                     Original Question: "Find all dams on Scioto River."
                     Atomic Request:
                         "Find all dams on Scioto River."
+
+                    Example 5:
+                    Original Question: "Find all counties both Scioto River and Ohio River flow through."
+                    Atomic Request:
+                        "Find all counties both Scioto River and Ohio River flow through."
                     
                     Task
                     Divide the user's question into atomic requests based on the entity types 
