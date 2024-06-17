@@ -90,7 +90,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                         result.time = time.time()
 
                         st.session_state.requests.append(buffered_table.title)
-                        st.session_state.sparqls.append("Join")
+                        st.session_state.sparqls.append("")
                         st.session_state.datasets.append(result)
                         st.session_state.rerun = True
 
