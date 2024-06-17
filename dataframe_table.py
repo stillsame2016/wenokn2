@@ -77,7 +77,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     new_gdf = None
                     try:
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
-                        st.markdown(f"new_gdf: {new_gdf.shape}")
+                        st.markdown(f"new_gdf: {new_gdf.shape}   {new_gdf.columns.to_list()}")
                     except Exception as e:
                         st.markdown(f"Not Found: {str(e)}")
                 
