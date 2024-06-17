@@ -105,10 +105,7 @@ if len(st.session_state.sparqls) > 0:
     info_container = st.container(height=350)
     with info_container:
         for idx, sparql in enumerate(st.session_state.sparqls):
-            st.markdown(f"""==={st.session_state.requests[idx] == ""}==={st.session_state.requests[idx]}===""")
-            if st.session_state.requests[idx] == "":
-                pass
-            else:
+            if st.session_state.sparqls[idx] != "":
                 st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
                 st.code(sparql)
 
