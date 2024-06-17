@@ -6,6 +6,13 @@ from streamlit_extras.stylable_container import stylable_container
 from util import process_table_request, create_new_geodataframe
 
 
+def session_datasets_contain(title):
+    for dataset in st.session_state.datasets:
+        if dataset.label == title:
+            return True
+    return False
+    
+
 def render_interface_for_table(llm, llm2, index, pivot_table):
     buffered_table = st.session_state.wen_tables[index]
     with st.container():
@@ -73,7 +80,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     }
                     """,
             ):
-                if not buffered_table['Name'].duplicated().any():
+                if not buffered_table['Name'].duplicated().any() and session_datasets_contain(buffered_table.title):
                     new_gdf = None
                     try:
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
