@@ -78,9 +78,10 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
                         st.markdown(f"new_gdf: {new_gdf.shape}")
                     except Exception as e:
+                        new_gdf = None
                         st.markdown(f"Not Found: {str(e)}")
                 
-                    if st.button('Add to Map', key=f'add-to-map-{index}'):
+                    if new_gdf and st.button('Add to Map', key=f'add-to-map-{index}'):
                         df = buffered_table.copy()
                         df.title = buffered_table.title
                         gdf = pivot_table.use.copy()
