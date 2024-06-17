@@ -77,32 +77,12 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     new_gdf = None
                     try:
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
-                        st.markdown(f"new_gdf: {new_gdf.shape}   {new_gdf.columns.to_list()}")
+                        # st.markdown(f"new_gdf: {new_gdf.shape}   {new_gdf.columns.to_list()}")
                     except Exception as e:
-                        st.markdown(f"Not Found: {str(e)}")
+                        # st.markdown(f"Not Found: {str(e)}")
+                        pass
                 
                     if new_gdf is not None and st.button('Add to Map', key=f'add-to-map-{index}'):
-                        # df = buffered_table.copy()
-                        # df.title = buffered_table.title
-                        # gdf = pivot_table.use.copy()
-
-                        # # Create a new column in df that matches the format of the Name column in gdf
-                        # df['CountyName'] = df['Name'].str.replace(' County', '')
-
-                        # # Perform the join operation
-                        # result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
-
-                        # # Select the desired columns, including geometry and the original columns from df
-                        # result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
-
-                        # # Optionally, rename 'Name_y' back to 'Name'
-                        # result = result.rename(columns={'Name_y': 'Name'})
-
-                        # result.attrs['data_name'] = df.title
-                        # result.label = df.title
-                        # result.id = str(uuid.uuid4())[:8]
-                        # result.time = time.time()
-
                         result = new_gdf
                         result.attrs['data_name'] = buffered_table.title
                         result.label = buffered_table.title
