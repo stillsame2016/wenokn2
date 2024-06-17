@@ -82,28 +82,34 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                         st.markdown(f"Not Found: {str(e)}")
                 
                     if new_gdf is not None and st.button('Add to Map', key=f'add-to-map-{index}'):
-                        df = buffered_table.copy()
-                        df.title = buffered_table.title
-                        gdf = pivot_table.use.copy()
+                        # df = buffered_table.copy()
+                        # df.title = buffered_table.title
+                        # gdf = pivot_table.use.copy()
 
-                        # Create a new column in df that matches the format of the Name column in gdf
-                        df['CountyName'] = df['Name'].str.replace(' County', '')
+                        # # Create a new column in df that matches the format of the Name column in gdf
+                        # df['CountyName'] = df['Name'].str.replace(' County', '')
 
-                        # Perform the join operation
-                        result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
+                        # # Perform the join operation
+                        # result = gdf.merge(df, left_on='Name', right_on='CountyName', how='left')
 
-                        # Select the desired columns, including geometry and the original columns from df
-                        result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
+                        # # Select the desired columns, including geometry and the original columns from df
+                        # result = result[['Name_y', 'geometry'] + df.columns[1:-1].to_list()]
 
-                        # Optionally, rename 'Name_y' back to 'Name'
-                        result = result.rename(columns={'Name_y': 'Name'})
+                        # # Optionally, rename 'Name_y' back to 'Name'
+                        # result = result.rename(columns={'Name_y': 'Name'})
 
-                        result.attrs['data_name'] = df.title
-                        result.label = df.title
+                        # result.attrs['data_name'] = df.title
+                        # result.label = df.title
+                        # result.id = str(uuid.uuid4())[:8]
+                        # result.time = time.time()
+
+                        result = new_gdf
+                        result.attrs['data_name'] = buffered_table.title
+                        result.label = buffered_table.title
                         result.id = str(uuid.uuid4())[:8]
                         result.time = time.time()
 
-                        st.session_state.requests.append(df.title)
+                        st.session_state.requests.append(buffered_table.title)
                         st.session_state.sparqls.append("Join")
                         st.session_state.datasets.append(result)
                         st.session_state.rerun = True
