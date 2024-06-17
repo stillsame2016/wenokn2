@@ -146,8 +146,8 @@ with col2:
                     for request in plan['requests']:
                         process_data_request(request, chat_container)
                     count_end = len(st.session_state.datasets)   
-                    for gdf in st.session_state.datasets:
-                        gdf.time = time.time()
+                    for idx in range(count_start, count_end):
+                        st.session_state.datasets[idx].time = time.time()
                     st.session_state.chat.append({"role": "assistant",
                                                   "content": "Your request has been processed."})
                     st.rerun()
