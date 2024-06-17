@@ -450,6 +450,10 @@ def create_new_geodataframe(gdfs, df):
     # Create a dictionary to store geometries with "Name" as the key
     geometry_dict = {}
 
+    df = df.copy()
+    cols = df.columns.tolist()
+    df = df[[cols[-1]] + cols[:-1]]
+    
     # Iterate through each GeoDataFrame in the list
     for gdf in gdfs:
         for idx, row in gdf.iterrows():
