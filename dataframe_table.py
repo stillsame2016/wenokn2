@@ -81,7 +81,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     except Exception as e:
                         st.markdown(f"Not Found: {str(e)}")
                 
-                    if new_gdf and st.button('Add to Map', key=f'add-to-map-{index}'):
+                    if new_gdf is not None and st.button('Add to Map', key=f'add-to-map-{index}'):
                         df = buffered_table.copy()
                         df.title = buffered_table.title
                         gdf = pivot_table.use.copy()
