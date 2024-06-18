@@ -184,9 +184,7 @@ with col2:
                             #            {str(e)}
                             #            """               
                             message = f"""We are not able to process your request. Please refine your 
-                                          request and try it again. 
-                                          
-                                          Error: {str(e)}"""
+                                          request and try it again. \n\nError: {str(e)}"""
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
