@@ -9,7 +9,7 @@ from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
-from data_commons import get_time_series_dataframe_for_fips, get_fips_from_county_name,  get_fips_from_state_name
+from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name
 
 
 # Setup LLM
