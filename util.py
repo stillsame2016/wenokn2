@@ -309,9 +309,10 @@ def process_regulation_request(llm, user_input, chat_container):
 
 def process_off_topic_request(llm, user_input, chat_container):
     template = PromptTemplate(
-        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert of the WEN-OKN 
-            knowledge database and National Pollution Discharge Elimination System (NPDES) and Kentucky 
-            Pollutant Discharge Elimination System (KPDES). 
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert of following systems:
+               1. The WEN-OKN knowledge database 
+               2. National Pollution Discharge Elimination System (NPDES) and Kentucky Pollutant Discharge Elimination System (KPDES) 
+               3. Data Commons.
 
             The WEN-KEN database contains the following entities: 
               1. Locations of buildings, power stations, and underground storage tanks in Ohio.
@@ -340,6 +341,23 @@ def process_off_topic_request(llm, user_input, chat_container):
             thereby improving and maintaining water quality, protecting aquatic ecosystems, and safeguarding human health. 
             It plays a critical role in preventing water pollution and maintaining the integrity of the nation's water 
             resources.
+
+            Data Commons has the following data for counties or states or countries. 
+                Area_FloodEvent
+                Count_Person (for population)
+                Count_FireEvent
+                Count_FlashFloodEvent
+                Count_FloodEvent
+                Count_HailEvent
+                Count_HeatTemperatureEvent
+                Count_HeatWaveEvent
+                Count_HeavyRainEvent
+                CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+                Max_Rainfall
+                Max_Snowfall
+                SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
+                SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+                SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
 
             Based on the provided context, use easy understanding language to answer the question.
             
