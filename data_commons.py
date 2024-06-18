@@ -62,3 +62,22 @@ def get_dcid_from_state_name(state_name):
         return dcid[0]
     except Exception as ex:
         return None
+
+
+def get_dcid_from_country_name(country_name):
+    simple_query = f"""
+                    SELECT ?geoId
+                    WHERE {{
+                      ?country typeOf Country .
+                      ?country name '{country_name}' .
+                      ?country dcid ?geoId .
+                    }}
+                    LIMIT 1
+                 """
+    try:
+        # Execute the simple query
+        dcid_dict = dc.query(simple_query)
+        dcid = [ item['?geoId'] for item in dcid_dict ]
+        return dcid[0]
+    except Exception as ex:
+        return None
