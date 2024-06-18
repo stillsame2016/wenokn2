@@ -138,6 +138,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         We have the following functions to get dcid from a state/county name:
             get_dcid_from_state_name(state_name)
             get_dcid_from_county_name(county_name) 
+            get_dcid_from_country_name(country_name)
         To call get_dcid_from_county_name, the county name must be in the format "San Diego County". 
         Don't miss "County" in the name. 
         
