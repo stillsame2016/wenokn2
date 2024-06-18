@@ -131,14 +131,14 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
-        In Data Commons, fips is used as index to access data. A fips has the following format, 
-        for example, "geoid/39" is the fips for the Ohio State and "geoid/06" is the fips for the
+        In Data Commons, dcid is used as index to access data. A dcid has the following format, 
+        for example, "geoid/39" is the dcid for the Ohio State and "geoid/06" is the dcid for the
         California State. 
         
-        We have the following functions to get fips from a state/county name:
-            get_fips_from_state_name(state_name)
-            get_fips_from_county_name(county_name) 
-        To call get_fips_from_county_name, the county name must be in the format "San Diego County". 
+        We have the following functions to get dcid from a state/county name:
+            get_dcid_from_state_name(state_name)
+            get_dcid_from_county_name(county_name) 
+        To call get_dcid_from_county_name, the county name must be in the format "San Diego County". 
         Don't miss "County" in the name. 
         
         Data Commons has the following statistical variables available for a particular place:
@@ -161,12 +161,12 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         The following are the variables with the data:
             {variables}
               
-        The following code can fetch some variables data for some fips from Data Commons:
+        The following code can fetch some variables data for some dcid from Data Commons:
                 
             import datacommons_pandas as dc
             
-            def get_time_series_dataframe_for_fips(fips_list, variable_name):
-                _df = dc.build_time_series_dataframe(fips_list, variable_name)
+            def get_time_series_dataframe_for_dcid(dcid_list, variable_name):
+                _df = dc.build_time_series_dataframe(dcid_list, variable_name)
                 _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
                 _df['Name'] = _df['Name'].str[0]
                 return _df
@@ -174,39 +174,39 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             [Example 1] 
             Find the populations for all counties in Ohio, we can run the following code:
             
-                # Get fips for all counties in Ohio
-                ohio_county_fips = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
+                # Get dcid for all counties in Ohio
+                ohio_county_dcid = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 
                 # Get Count_Person (i.e., population) for all counties in Ohio
-                df = get_time_series_dataframe_for_fips(ohio_county_fips, "Count_Person")
+                df = get_time_series_dataframe_for_dcid(ohio_county_dcid, "Count_Person")
                 df.title = "The Populations for All Counties in Ohio"
                     
             [Example 2]
             Find the populations for the Ross county and Pike county in Ohio, we can run the 
             following code:
             
-                ross_pike_fips = ['geoId/39131', 'geoId/39141']
-                df = get_time_series_dataframe_for_fips(ross_pike_fips, "Count_Person")
+                ross_pike_dcid = ['geoId/39131', 'geoId/39141']
+                df = get_time_series_dataframe_for_dcid(ross_pike_dcid, "Count_Person")
                 df.title = "The Populations for the Ross county and Pike county in Ohio"
                      
             [Example 3]
             Find the populations of Ross county and Scioto county
             
-                ross_scioto_fips = [ get_fips_from_county_name('Ross County'), get_fips_from_county_name('Scioto County') ]
-                df = get_time_series_dataframe_for_fips(ross_scioto_fips, "Count_Person")
+                ross_scioto_dcid = [ get_dcid_from_county_name('Ross County'), get_dcid_from_county_name('Scioto County') ]
+                df = get_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
                 df.title = "The Populations for the Ross county and Scioto county in Ohio"
                  
             [Example 4]   
             Given a geodataframe gdf containing all counties Scioto River passes through with a column
             "name" for county names. Find the populations of all counties where Scioto River flows through.
             
-                scioto_river_fips = [ get_fips_from_county_name(county_name) for county_name in gdf['name']]
-                df = get_time_series_dataframe_for_fips(scioto_river_fips, "Count_Person")  
+                scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
+                df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
                 df.title = "The Populations for All Counties where Scioto River Flows Through"
     
 
             If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
-            it to 'Ross County' to call get_fips_from_county_name.
+            it to 'Ross County' to call get_dcid_from_county_name.
                      
             [ Question ]
             The following is the question from the user:
