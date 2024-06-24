@@ -80,7 +80,7 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
                     }
                     """,
             ):
-                if not buffered_table['Name'].duplicated().any() and not session_datasets_contain(buffered_table.title):
+                if not buffered_table['Name'].duplicated().any() and hasattr(buffered_table, 'title') and not session_datasets_contain(buffered_table.title):
                     new_gdf = None
                     try:
                         new_gdf = create_new_geodataframe(st.session_state.datasets, buffered_table)
