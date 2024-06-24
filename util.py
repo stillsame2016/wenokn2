@@ -210,10 +210,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     df_code_chain = prompt | llm | StrOutputParser()
 
     dc_variables = ""
-    st.code(f"https://sparcal.sdsc.edu/api/v1/Utility/data_commons?search_terms={user_input}")
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/data_commons?search_terms={user_input}")
     items = json.loads(response.text)
-    st.code(items)
     for item in items:
         dc_variables = f"""{dc_variables}
                             variable: {item['variable']}
