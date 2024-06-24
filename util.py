@@ -214,8 +214,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     items = json.loads(response.text)
     for item in items:
         dc_variables = f"""{dc_variables}
-                            variable: {item.variable}
-                            description: {item.name}
+                            variable: {item['variable']}
+                            description: {item['name']}
                             
                         """
     
