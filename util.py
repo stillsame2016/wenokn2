@@ -127,7 +127,7 @@ def process_data_request(message, chat_container):
                     st.rerun()
 
 
-def process_data_commons_request(llm, user_input, spatial_datasets):
+def process_data_commons_request(llm, user_input, spatial_datasets):    
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
@@ -143,21 +143,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Don't miss "County" in the name. 
         
         Data Commons has the following statistical variables available for a particular place:
-            Area_FloodEvent
-            Count_Person (for population)
-            Count_FireEvent
-            Count_FlashFloodEvent
-            Count_FloodEvent
-            Count_HailEvent
-            Count_HeatTemperatureEvent
-            Count_HeatWaveEvent
-            Count_HeavyRainEvent
-            CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
-            Max_Rainfall
-            Max_Snowfall
-            SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
-            SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
-            SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
+            {dc_variables}
 
         The following are the variables with the data:
             {variables}
@@ -219,10 +205,20 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
-        input_variables=["question", "variables"],
+        input_variables=["question", "variables", "dc_variables"],
     )
     df_code_chain = prompt | llm | StrOutputParser()
 
+    dc_variables = ""
+    response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/data_commons?query_text={user_input}")
+    items = json.loads(response.text)
+    for item in items:
+        dc_variables = f"""{dc_variables}
+                            variable: {item.variable}
+                            description: {item.name}
+                            
+                        """
+    
     variables = ""
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
@@ -236,7 +232,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                                  
                           """
     # st.code(variables)
-    return df_code_chain.invoke({"question": user_input, "variables": variables})
+    return df_code_chain.invoke({"question": user_input, "variables": variables, "dc_variables": dc_variables})
     
 
 def process_regulation_request(llm, user_input, chat_container):
