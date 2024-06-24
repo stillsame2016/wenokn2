@@ -212,6 +212,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     dc_variables = ""
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/data_commons?query_text={user_input}")
     items = json.loads(response.text)
+    st.code(items)
     for item in items:
         dc_variables = f"""{dc_variables}
                             variable: {item['variable']}
