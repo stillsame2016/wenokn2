@@ -199,7 +199,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             The following is the question from the user:
             {question}
 
-            Please use df.concat(df2) to concatenate two dataframes if needed. 
+            Please use pd.concat([df1, df2], ignore_index=True) to concatenate two dataframes if needed. 
 
             Please return only the complete Python code to implement the user's request without preamble or 
             explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
