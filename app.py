@@ -189,9 +189,9 @@ with col2:
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
-            elif route['request_type'] == 'Data Commons':
+            elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
-                    message = "Echo"
+                    message = "Echo US Energy Atlas"
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
