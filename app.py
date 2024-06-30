@@ -191,7 +191,14 @@ with col2:
                         st.rerun()
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
-                    message = "Echo US Energy Atlas"
+                    try:
+                        code = process_energy_atlas_request(llm, user_input)
+                         message = "Echo US Energy Atlas"
+                    except Exception as e:
+                        message = f"""
+                                   {code} 
+                                   {str(e)}
+                                   """              
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
