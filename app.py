@@ -193,7 +193,7 @@ with col2:
                 with st.chat_message("assistant"):
                     try:
                         code = process_energy_atlas_request(llm, user_input)
-                         message = "Echo US Energy Atlas"
+                        message = "Echo US Energy Atlas"
                     except Exception as e:
                         message = f"""
                                    {code} 
