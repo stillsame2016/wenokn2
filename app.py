@@ -189,6 +189,11 @@ with col2:
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
+            elif route['request_type'] == 'Data Commons':
+                with st.chat_message("assistant"):
+                    message = "Echo"
+                    st.markdown(message)
+                        st.session_state.chat.append({"role": "assistant", "content": message})
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
