@@ -481,11 +481,11 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Don't include any print statement. Don't add ``` around the code. Make a title and save the title in gdf.title.  
 
         [ Example 1]
-        Load all coal mines within 10 miles away from Ohio River. 
+        Load all coal mines alone Ohio River. 
 
         Assume gdf1 contains Ohio River only. Then you can return the following code:
             gdf2 = load_coal_mines("1 = 1")
-            distance_threshold = 5000  
+            distance_threshold = 0.01 
             gdf2['distance_to_river'] = gdf2.geometry.apply(lambda x: gdf1.distance(x).min())
             gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
             gdf = gdf.drop(columns=['distance_to_river'])
