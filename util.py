@@ -562,7 +562,7 @@ def load_features(self_url, where, wkid):
     url_string = self_url + "/query?where={}&returnGeometry=true&outFields={}&f=geojson".format(where, '*')
     resp = requests.get(url_string, verify=False)
     data = resp.json()
-    return geopandas.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
+    return gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
      
 
 def load_coal_mines(where):
