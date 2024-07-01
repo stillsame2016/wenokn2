@@ -449,6 +449,57 @@ def process_table_request(llm, llm2, user_input, index):
                                      'question': user_input})
 
 
+def process_energy_atlas_request(llm, user_input, spatial_datasets):
+        prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+        
+        We have the following functions to get coal mines from an ArcGIS Feature Service as a 
+        GeoDataFrame:
+            load_coal_mines(where_condition)
+        
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'MSHA_ID', 'MINE_NAME', 'MINE_TYPE',
+            'MINE_STATE', 'STATE', 'FIPS_COUNTY', 'MINE_COUNTY', 'PRODUCTION',
+            'PHYSICAL_UNIT', 'REFUSE', 'Source', 'PERIOD', 'Longitude', 'Latitude'
+        The values in the column 'STATE' are all in upper case like 'ALABAMA' or 'COLORADO' etc. 
+        The column 'MINE_COUNTY' contains values like 'Walker' or 'Jefferson'. 
+        
+        To get all coal mines, call load_coal_mines with "1 = 1" as where_condition.
+        
+        The following are the variables with the data:
+            {variables}
+                        
+        [ Question ]
+        The following is the question from the user:
+            {question}
+
+        Please return only the complete Python code in the following format to implement the user's request without preamble or 
+        explanation. 
+            gdf = ......
+        Don't include any print statement. Don't add ``` around the code. Make a title and save the title in gdf.title.  
+    
+        <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question", "variables"],
+    )
+    df_code_chain = prompt | llm | StrOutputParser()
+ 
+    variables = ""
+    if spatial_datasets:
+        for index, dataset in enumerate(spatial_datasets):
+            variables += f"""
+                             st.session_state.datasets[{index}] holds a geodataframe after processing 
+                             the request: { st.session_state.datasets[index].label}
+                             The following is the columns of st.session_state.datasets[{index}]:
+                                 { st.session_state.datasets[index].dtypes }
+                             The following is the first 5 rows of the data:
+                                 { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }
+                                 
+                          """
+    # st.code(variables)
+    return df_code_chain.invoke({"question": user_input, "variables": variables})
+
+
 def remove_suffixes(place_name):
     # Define the pattern to match the suffixes "County", "State", or "City"
     pattern = r'\b(County|State|City)\b'
