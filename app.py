@@ -194,6 +194,11 @@ with col2:
                     try:
                         code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                         message = f"Echo US Energy Atlas: {code}"
+                        exec(code)
+                        st.session_state.requests.append(gdf.title)
+                        st.session_state.sparqls.append("")
+                        st.session_state.datasets.append(gdf)
+                        st.session_state.rerun = True
                     except Exception as e:
                         message = f"""
                                    {code} 
