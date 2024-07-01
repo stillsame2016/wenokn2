@@ -545,5 +545,14 @@ def create_new_geodataframe(gdfs, df):
     
     return new_gdf
 
+def load_coal_mines(where):
+    url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
+    url_string = self_url + "/query?where={}&returnGeometry=true&outFields={}&f=geojson".format(where, '*')
+    resp = requests.get(url_string, verify=False)
+    data = resp.json()
+
+    wkid = "4326"
+    gdf = geopandas.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
+    return gdf
     
     
