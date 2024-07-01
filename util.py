@@ -450,7 +450,7 @@ def process_table_request(llm, llm2, user_input, index):
 
 
 def process_energy_atlas_request(llm, user_input, spatial_datasets):
-        prompt = PromptTemplate(
+    prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
         We have the following functions to get coal mines from an ArcGIS Feature Service as a 
