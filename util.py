@@ -462,8 +462,9 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'geometry', 'OBJECTID', 'MSHA_ID', 'MINE_NAME', 'MINE_TYPE',
             'MINE_STATE', 'STATE', 'FIPS_COUNTY', 'MINE_COUNTY', 'PRODUCTION',
             'PHYSICAL_UNIT', 'REFUSE', 'Source', 'PERIOD', 'Longitude', 'Latitude'
+
+        Use the column 'STATE' rather than the column 'MINE_STATE' to find coal mines in a state. 
         The values in the column 'STATE' are all in upper case like 'ALABAMA' or 'COLORADO' etc. 
-        The column 'MINE_STATE' should not be used to query coal mines in a state.
         The column 'COUNTY' contains values like 'Walker' or 'Jefferson'. 
         
         To get all coal mines, call load_coal_mines with "1 = 1" as where_condition.
