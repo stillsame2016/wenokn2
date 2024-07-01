@@ -475,7 +475,9 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         Please return only the complete Python code in the following format to implement the user's request without preamble or 
         explanation. 
+            other code which do not change spatial_datasets
             gdf = ......
+            gdf.title = ......
         Don't include any print statement. Don't add ``` around the code. Make a title and save the title in gdf.title.  
     
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
