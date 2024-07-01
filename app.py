@@ -1,5 +1,6 @@
 import time
 import json
+import uuid
 import streamlit as st
 import pandas as pd
 import datacommons_pandas as dc
@@ -196,7 +197,10 @@ with col2:
                         code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                         message = f"Echo US Energy Atlas: {code}"
                         exec(code)
-                        st.session_state.requests.append(gdf.title)
+                        gdf.label = gdf.title
+                        gdf.id = str(uuid.uuid4())[:8]
+                        gdf.time = time.time()
+                        st.session_state.requests.append(user_input)
                         st.session_state.sparqls.append("")
                         st.session_state.datasets.append(gdf)
                         st.session_state.rerun = True
