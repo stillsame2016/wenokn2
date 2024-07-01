@@ -209,7 +209,7 @@ with col2:
                                    {code} 
                                    {str(e)}
                                    """              
-                    st.markdown(message)
+                    st.code(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
