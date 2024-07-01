@@ -452,8 +452,9 @@ def process_table_request(llm, llm2, user_input, index):
 def process_energy_atlas_request(llm, user_input, spatial_datasets):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-        
-        We have the following functions to get coal mines from an ArcGIS Feature Service as a 
+
+        [ Definition 1 ] 
+        We have the following function to get coal mines from an ArcGIS Feature Service as a 
         GeoDataFrame:
             load_coal_mines(where_condition)
         
@@ -465,7 +466,23 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         The column 'MINE_COUNTY' contains values like 'Walker' or 'Jefferson'. 
         
         To get all coal mines, call load_coal_mines with "1 = 1" as where_condition.
+
+        [ Definition 2 ] 
+        We have the following function to get coal power plants from an ArcGIS Feature Service as a 
+        GeoDataFrame:
+            load_coal_power_plants(where_condition)
         
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
+            'Street_Address', 'City', 'County', 'State', 'Zip', 'PrimSource', 'source_desc', 'tech_desc', 
+            'Install_MW', 'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW', 'HydroPS_MW', 
+            'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW', 'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
+        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
+        The column 'County' contains values like 'Adams' or 'Yellowstone'. 
+        
+        To get all coal mines/coal power plants, call load_coal_mines with "1 = 1" as where_condition.
+
+        [ Available Data ]
         The following are the variables with the data:
             {variables}
                         
@@ -567,6 +584,11 @@ def load_features(self_url, where, wkid):
 
 def load_coal_mines(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)
+
+def load_coal_power_plants(where):
+    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Coal_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
     
