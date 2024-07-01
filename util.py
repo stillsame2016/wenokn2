@@ -479,7 +479,18 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = ......
             gdf.title = ......
         Don't include any print statement. Don't add ``` around the code. Make a title and save the title in gdf.title.  
-    
+
+        [ Example 1]
+        Load all coal mines within 10 miles away from Ohio River. 
+
+        Assume gdf1 contains Ohio River only. Then you can return the following code:
+            gdf2 = load_coal_mines("1 = 1")
+            ohio_river_buffer = gdf1.buffer(buffer_distance)             
+            ohio_river_buffer_unified = ohio_river_buffer.unary_union
+            ohio_river_buffer_gdf = gpd.GeoDataFrame(geometry=[ohio_river_buffer_unified], crs=gdf1.crs)
+            gdf = gpd.sjoin(gdf2, ohio_river_buffer_gdf, op='intersects')
+            gdf = gdf.drop_duplicates().reset_index(drop=True)        
+            gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
