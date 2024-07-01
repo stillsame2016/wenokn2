@@ -485,11 +485,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         Assume gdf1 contains Ohio River only. Then you can return the following code:
             gdf2 = load_coal_mines("1 = 1")
-            ohio_river_buffer = gdf1.buffer(buffer_distance)             
-            ohio_river_buffer_unified = ohio_river_buffer.unary_union
-            ohio_river_buffer_gdf = gpd.GeoDataFrame(geometry=[ohio_river_buffer_unified], crs=gdf1.crs)
-            gdf = gpd.sjoin(gdf2, ohio_river_buffer_gdf, predicate='intersects')
-            gdf = gdf.drop_duplicates().reset_index(drop=True)        
+            distance_threshold = 5000  
+            gdf2['distance_to_river'] = gdf2.geometry.apply(lambda x: gdf1.distance(x).min())
+            gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
+            gdf = gdf.drop(columns=['distance_to_river'])
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
