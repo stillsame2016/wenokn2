@@ -206,6 +206,8 @@ with col2:
                             st.session_state.datasets.append(gdf)
                             st.session_state.rerun = True
                             message = f"""
+                                        {code}
+                                        
                                         Your request has been processed. {gdf.shape[0]} 
                                         { "items are" if gdf.shape[0] > 1 else "item is"}
                                         loaded on the map.
