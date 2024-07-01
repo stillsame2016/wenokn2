@@ -211,13 +211,13 @@ with col2:
                                         loaded on the map.
                                         """
                         except Exception as e:
-                            # message = f"""
-                            #            {code} 
-                            #            {str(e)}
-                            #            """  
-                            message = f"""We are not able to process your request. Please refine your 
-                                              request and try it again. \n\nError: {str(e)}"""
-                    st.markdown(message)
+                            message = f"""
+                                       {code} 
+                                       {str(e)}
+                                       """  
+                            # message = f"""We are not able to process your request. Please refine your 
+                            #                   request and try it again. \n\nError: {str(e)}"""
+                    st.code(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
