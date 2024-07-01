@@ -506,7 +506,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf2 = load_coal_mines("1 = 1")
             # Keep the following line exactly as it is
             distance_threshold = 0.2
-            gdf2['distance_to_river'] = gdf2.geometry.apply(lambda x: gdf1.distance(x))
+            gdf2['distance_to_river'] = gdf2.geometry.apply(lambda x: gdf1.distance(x).min())
             gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
             gdf = gdf.drop(columns=['distance_to_river'])
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
