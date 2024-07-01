@@ -500,7 +500,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Don't include any print statement. Don't add ``` around the code. Make a title and save the title in gdf.title.  
 
         [ Example 1]
-        Load all coal mines alone Ohio River. 
+        Find all coal mines along Ohio River. 
 
         Assume gdf1 contains Ohio River only. Then you can return the following code:
             gdf2 = load_coal_mines("1 = 1")
@@ -509,6 +509,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
             gdf = gdf.drop(columns=['distance_to_river'])
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
+
+        [ Example 2]
+        Find all coal power plants along Ohio River.
+
+        Use the same way as Example 1 to implement it. Just replace load_coal_mines by load_coal_power_plants
+        and change the title.
+        
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
