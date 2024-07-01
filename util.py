@@ -485,7 +485,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         Assume gdf1 contains Ohio River only. Then you can return the following code:
             gdf2 = load_coal_mines("1 = 1")
-            distance_threshold = 0.01 
+            distance_threshold = 0.05 
             gdf2['distance_to_river'] = gdf2.geometry.apply(lambda x: gdf1.distance(x).min())
             gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
             gdf = gdf.drop(columns=['distance_to_river'])
