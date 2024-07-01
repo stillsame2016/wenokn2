@@ -564,7 +564,8 @@ def load_coal_mines(where):
     resp = requests.get(url_string, verify=False)
     data = resp.json()
 
-    wkid = "4326"
+    # wkid = "4326"
+    wkid = "3857"
     gdf = gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
     return gdf
     
