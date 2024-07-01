@@ -552,7 +552,7 @@ def load_coal_mines(where):
     data = resp.json()
 
     wkid = "4326"
-    gdf = geopandas.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
+    gdf = gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
     return gdf
     
     
