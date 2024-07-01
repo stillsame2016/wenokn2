@@ -196,7 +196,6 @@ with col2:
                 with st.chat_message("assistant"):
                     try:
                         code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
-                        message = f"Echo US Energy Atlas: {code}"
                         exec(code)
                         gdf.label = gdf.title
                         gdf.id = str(uuid.uuid4())[:8]
@@ -205,11 +204,18 @@ with col2:
                         st.session_state.sparqls.append("")
                         st.session_state.datasets.append(gdf)
                         st.session_state.rerun = True
-                    except Exception as e:
                         message = f"""
-                                   {code} 
-                                   {str(e)}
-                                   """              
+                                    Your request has been processed. {gdf.shape[0]} 
+                                    { "items are" if df.shape[0] > 1 else "item is"}
+                                    loaded on the map.
+                                    """
+                    except Exception as e:
+                        # message = f"""
+                        #            {code} 
+                        #            {str(e)}
+                        #            """   
+                        message = f"""We are not able to process your request. Please refine your 
+                                          request and try it again. \n\nError: {str(e)}"""
                     st.code(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
