@@ -463,7 +463,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'MINE_STATE', 'STATE', 'FIPS_COUNTY', 'MINE_COUNTY', 'PRODUCTION',
             'PHYSICAL_UNIT', 'REFUSE', 'Source', 'PERIOD', 'Longitude', 'Latitude'
         The values in the column 'STATE' are all in upper case like 'ALABAMA' or 'COLORADO' etc. 
-        The column 'MINE_COUNTY' contains values like 'Walker' or 'Jefferson'. 
+        The column 'MINE_STATE' should not be used to query coal mines in a state.
+        The column 'COUNTY' contains values like 'Walker' or 'Jefferson'. 
         
         To get all coal mines, call load_coal_mines with "1 = 1" as where_condition.
 
