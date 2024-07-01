@@ -50,6 +50,7 @@ def get_question_route(llm, question):
 
         Use US Energy Atlas for requests related to the following data:
             Coal Mine
+            Coal Power Plant
             
         Use Other for questions related to common knowledge. 
         
