@@ -12,6 +12,7 @@ from request_router import get_question_route
 from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name
+from util import load_coal_mines
 
 
 # Setup LLM
