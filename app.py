@@ -3,6 +3,7 @@ import json
 import uuid
 import streamlit as st
 import pandas as pd
+import geopandas as gpd
 import datacommons_pandas as dc
 from keplergl import keplergl
 from langchain_groq import ChatGroq
