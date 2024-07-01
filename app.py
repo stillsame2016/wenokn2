@@ -6,8 +6,7 @@ import datacommons_pandas as dc
 from keplergl import keplergl
 from langchain_groq import ChatGroq
 
-from util import (process_data_request, process_regulation_request, process_off_topic_request, \ 
-                  process_data_commons_request, process_energy_atlas_request)
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, process_energy_atlas_request
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
@@ -193,7 +192,7 @@ with col2:
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
                     try:
-                        code = process_energy_atlas_request(llm, user_input)
+                        code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                         message = "Echo US Energy Atlas"
                     except Exception as e:
                         message = f"""
