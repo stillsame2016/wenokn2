@@ -625,7 +625,7 @@ def load_features(self_url, where, wkid):
     if data:
         return gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
     else:
-        return gpd.GeoDataFrame(columns=['geometry'], crs=f'EPSG:{wkid}')
+        return gpd.GeoDataFrame(columns=['geometry'])
 
 def load_coal_mines(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
