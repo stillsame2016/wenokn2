@@ -623,6 +623,7 @@ def load_features(self_url, where, wkid):
     resp = requests.get(url_string, verify=False)
     data = resp.json()
     if data:
+        st.code(data)
         return gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
     else:
         return gpd.GeoDataFrame(columns=['geometry'])
