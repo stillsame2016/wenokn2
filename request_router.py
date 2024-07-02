@@ -52,6 +52,7 @@ def get_question_route(llm, question):
             Coal Mine
             Coal Power Plant
             Wind Power Plant
+            Renewable Diesel Fuel and Other Biofuel Plants
             
         Use Other for questions related to common knowledge. 
         
