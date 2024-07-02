@@ -1,5 +1,6 @@
 import geopandas as gpd
 import requests
+import streamlit as st
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
