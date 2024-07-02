@@ -49,10 +49,11 @@ def get_question_route(llm, question):
         the populations for the counties satisfying some conditions. In this case, this request uses "Data Commons".
 
         Use US Energy Atlas for requests related to the following data:
+            Battery Storage Plant
             Coal Mine
             Coal Power Plant
             Wind Power Plant
-            Renewable Diesel Fuel and Other Biofuel Plants
+            Renewable Diesel Fuel and Other Biofuel Plant
             
         Use Other for questions related to common knowledge. 
         
