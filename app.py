@@ -8,13 +8,13 @@ import datacommons_pandas as dc
 from keplergl import keplergl
 from langchain_groq import ChatGroq
 
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, process_energy_atlas_request
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name
-from energy_atlas import load_coal_mines, load_coal_power_plants, load_wind_power_plants, load_renewable_diesel_fuel_and_other_biofuel_plants, load_battery_storage_plant
+from energy_atlas import load_coal_mines, load_coal_power_plants, load_wind_power_plants, load_renewable_diesel_fuel_and_other_biofuel_plants, load_battery_storage_plant, process_energy_atlas_request
 
 
 # Setup LLM
