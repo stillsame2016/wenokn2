@@ -27,12 +27,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
-        geothermal power plants from an ArcGIS Feature Service as a 
+        geothermal power plants/hydro pumped storage power plant from an ArcGIS Feature Service as a 
         GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
             load_battery_storage_plant(where_condition)
             load_geothermal_power_plant(where_condition)
+            load_hydro_pumped_storage_power_plant(where_condition)
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
@@ -156,6 +157,11 @@ def load_geothermal_power_plant(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Geothermal_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
+
+def load_hydro_pumped_storage_power_plant(where)
+    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Hydro_Pumped_Storage_Power_Plants/FeatureServer/0"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)    
 
 
 
