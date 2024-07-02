@@ -44,21 +44,16 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. 
 
-        [ Definition 3 ]
-        We have the following function to get wind power plants from an ArcGIS Feature Service as a 
-        GeoDataFrame:
-            load_wind_power_plants(where_condition)
-        
+        [ Definition 4 ]
+        We have the following function to get renewable diesel fuel and other biofuel plants 
+        from an ArcGIS Feature Service as a GeoDataFrame:
+            load_renewable_diesel_fuel_and_other_biofuel_plants(where_condition)
+
         The returned GeoDataFrame has the following columns:
-            'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID',
-           'Utility_Name', 'sector_name', 'Street_Address', 'City', 'County',
-           'State', 'Zip', 'PrimSource', 'source_desc', 'tech_desc', 'Install_MW',
-           'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW',
-           'HydroPS_MW', 'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW',
-           'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
+            'geometry', 'OBJECTID', 'Company', 'Site', 'State', 'PADD', 'Cap_Mmgal',
+           'Source', 'Period', 'Longitude', 'Latitude'
            
-        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
-        The column 'County' contains values like 'Adams' or 'Yellowstone'. 
+        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc.
         
         To get all coal mines/coal power plants/wind power plants/renewable diesel fuel and 
         other biofuel plants and etc, call the correspondent function with "1 = 1" as where_condition.
