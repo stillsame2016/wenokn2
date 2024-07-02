@@ -52,6 +52,7 @@ def get_question_route(llm, question):
             Battery Storage Plant
             Coal Mine
             Coal Power Plant
+            Geothermal Power Plant
             Wind Power Plant
             Renewable Diesel Fuel and Other Biofuel Plant
             
