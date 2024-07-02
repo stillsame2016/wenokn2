@@ -481,8 +481,24 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW', 'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. 
+
+        [ Definition 3 ]
+        We have the following function to get wind power plants from an ArcGIS Feature Service as a 
+        GeoDataFrame:
+            load_wind_power_plants(where_condition)
         
-        To get all coal mines/coal power plants, call load_coal_mines with "1 = 1" as where_condition.
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID',
+           'Utility_Name', 'sector_name', 'Street_Address', 'City', 'County',
+           'State', 'Zip', 'PrimSource', 'source_desc', 'tech_desc', 'Install_MW',
+           'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW',
+           'HydroPS_MW', 'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW',
+           'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
+
+        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
+        The column 'County' contains values like 'Adams' or 'Yellowstone'. 
+        
+        To get all coal mines/coal power plants/wind power plants, call load_coal_mines with "1 = 1" as where_condition.
 
         [ Available Data ]
         The following are the variables with the data:
@@ -597,9 +613,17 @@ def load_coal_mines(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
+
 def load_coal_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Coal_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
+
+def load_wind_power_plants(where):
+    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Wind_Power_Plants/FeatureServer/0"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)
+
+
     
     
