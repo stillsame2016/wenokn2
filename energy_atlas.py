@@ -18,7 +18,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'geometry', 'OBJECTID', 'MSHA_ID', 'MINE_NAME', 'MINE_TYPE',
             'MINE_STATE', 'STATE', 'FIPS_COUNTY', 'MINE_COUNTY', 'PRODUCTION',
             'PHYSICAL_UNIT', 'REFUSE', 'Source', 'PERIOD', 'Longitude', 'Latitude'
-
+            
         Use the column 'STATE' rather than the column 'MINE_STATE' to find coal mines in a state. 
         The values in the column 'STATE' are all in upper case like 'ALABAMA' or 'COLORADO' etc. 
         The column 'COUNTY' contains values like 'Walker' or 'Jefferson'. 
@@ -35,6 +35,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'Street_Address', 'City', 'County', 'State', 'Zip', 'PrimSource', 'source_desc', 'tech_desc', 
             'Install_MW', 'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW', 'HydroPS_MW', 
             'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW', 'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
+            
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. 
 
@@ -50,7 +51,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
            'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW',
            'HydroPS_MW', 'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW',
            'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
-
+           
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. 
 
@@ -62,7 +63,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Company', 'Site', 'State', 'PADD', 'Cap_Mmgal',
            'Source', 'Period', 'Longitude', 'Latitude'
-
+           
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc.
 
         [ Definition 5 ]
@@ -77,9 +78,23 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
            'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW',
            'HydroPS_MW', 'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW',
            'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
-
+           
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc.
-        
+
+        [ Definition 6 ]
+        We have the following function to get geothermal power plants from an ArcGIS Feature Service 
+        as a GeoDataFrame:
+            load_geothermal_power_plant(where_condition)
+
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID',
+           'Utility_Name', 'sector_name', 'Street_Address', 'City', 'County',
+           'State', 'Zip', 'PrimSource', 'source_desc', 'tech_desc', 'Install_MW',
+           'Total_MW', 'Bat_MW', 'Bio_MW', 'Coal_MW', 'Geo_MW', 'Hydro_MW',
+           'HydroPS_MW', 'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW',
+           'Other_MW', 'Source', 'Period', 'Longitude', 'Latitude'
+           
+        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc.
         
         To get all coal mines/coal power plants/wind power plants/renewable diesel fuel and 
         other biofuel plants and etc, call the correspondent function with "1 = 1" as where_condition.
@@ -177,3 +192,14 @@ def load_battery_storage_plant(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Battery_Storage_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
+
+def load_geothermal_power_plant(where):
+    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Geothermal_Power_Plants/FeatureServer/0"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)
+
+
+
+
+
+
