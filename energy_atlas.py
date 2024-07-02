@@ -1,4 +1,4 @@
-import geopandas as gdp
+import geopandas as gpd
 import requests
 
 
