@@ -539,11 +539,16 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.drop(columns=['distance_to_river'])
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
 
-        [ Example 2]
+        [ Example 2 ]
         Find all coal power plants along Ohio River.
 
         Use the same way as Example 1 to implement it. Just replace load_coal_mines by load_coal_power_plants
         and change the title.
+
+        [ Note 1 ]
+        Use pandas.concat to concatenate two geodataframe gdf1 and gdf2:
+            gdf = pd.concat([gdf1, gdf2], ignore_index=True)
+            gdf = gpd.GeoDataFrame(gdf, geometry='geometry')
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
