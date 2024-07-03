@@ -55,6 +55,13 @@ def get_question_route(llm, question):
             Geothermal Power Plant
             Wind Power Plant
             Renewable Diesel Fuel and Other Biofuel Plant
+            Wind Power Plant
+            Hydro Pumped Storage Power Plant
+            Natural Gas Power Plant
+            Nuclear Power Plant
+            Petroleum Power Plant
+            Solar Power Plant
+            Biodiesel Plant
             
         Use Other for questions related to common knowledge. 
         
