@@ -91,6 +91,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf2[gdf2['distance_to_river'] <= distance_threshold]
             gdf = gdf.drop(columns=['distance_to_river'])
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
+        
+        Make sure gdf1 is available from the available variables or can be calcuated from the 
+        available variables. If gdf1 doesn't exist, then throw an Exception in the code with the
+        information that the data for Ohio River is missing.
 
         [ Example 2 ]
         Find all coal power plants along Ohio River.
