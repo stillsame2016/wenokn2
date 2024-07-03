@@ -27,14 +27,15 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
-        geothermal power plants/hydro pumped storage power plant/natural gas powerplant from an ArcGIS Feature 
-        Service as a GeoDataFrame:
+        geothermal power plants/hydro pumped storage power plant/natural gas power plant/nuclear_power_plant
+        from an ArcGIS Feature Service as a GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
             load_battery_storage_plant(where_condition)
             load_geothermal_power_plant(where_condition)
             load_hydro_pumped_storage_power_plant(where_condition)
             load_natural_gas_power_plant
+            load_nuclear_power_plant
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
@@ -46,7 +47,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. 
 
-        [ Definition 4 ]
+        [ Definition 3 ]
         We have the following function to get renewable diesel fuel and other biofuel plants 
         from an ArcGIS Feature Service as a GeoDataFrame:
             load_renewable_diesel_fuel_and_other_biofuel_plants(where_condition)
@@ -169,8 +170,10 @@ def load_natural_gas_power_plant(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)   
 
-
-
+def load_nuclear_power_plant(where):
+    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Nuclear_Power_Plants/FeatureServer/0"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)  
 
 
 
