@@ -28,17 +28,17 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
         geothermal power plants/hydro pumped storage power plants/natural gas power plants/nuclear power plants/
-        petroleum power plants/solar power plants/load_biodiesel_plant from an ArcGIS Feature Service as a GeoDataFrame:
+        petroleum power plants/solar power plants/biodiesel plant from an ArcGIS Feature Service as a GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
-            load_battery_storage_plant(where_condition)
-            load_geothermal_power_plant(where_condition)
-            load_hydro_pumped_storage_power_plant(where_condition)
-            load_natural_gas_power_plant
-            load_nuclear_power_plant
-            load_petroleum_power_plant
-            load_solar_power_plant
-            load_biodiesel_plant
+            load_battery_storage_plants(where_condition)
+            load_geothermal_power_plants(where_condition)
+            load_hydro_pumped_storage_power_plants(where_condition)
+            load_natural_gas_power_plants(where_condition)
+            load_nuclear_power_plants(where_condition)
+            load_petroleum_power_plants(where_condition)
+            load_solar_power_plants(where_condition)
+            load_biodiesel_plants(where_condition)
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
@@ -153,42 +153,42 @@ def load_renewable_diesel_fuel_and_other_biofuel_plants(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
-def load_battery_storage_plant(where):
+def load_battery_storage_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Battery_Storage_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
-def load_geothermal_power_plant(where):
+def load_geothermal_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Geothermal_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
-def load_hydro_pumped_storage_power_plant(where):
+def load_hydro_pumped_storage_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Hydro_Pumped_Storage_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)    
 
-def load_natural_gas_power_plant(where):
+def load_natural_gas_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Natural_Gas_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)   
 
-def load_nuclear_power_plant(where):
+def load_nuclear_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Nuclear_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_petroleum_power_plant(where):
+def load_petroleum_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Petroleum_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_solar_power_plant(where):
+def load_solar_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Solar_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_biodiesel_plant(where):
+def load_biodiesel_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Biodiesel_Plants_US_EIA/FeatureServer/113"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
