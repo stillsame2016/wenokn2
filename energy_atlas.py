@@ -158,7 +158,7 @@ def load_geothermal_power_plant(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
-def load_hydro_pumped_storage_power_plant(where)
+def load_hydro_pumped_storage_power_plant(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Hydro_Pumped_Storage_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)    
