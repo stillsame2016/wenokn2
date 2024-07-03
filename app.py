@@ -207,13 +207,15 @@ with col2:
                                 st.session_state.datasets.append(gdf)
                                 st.session_state.rerun = True
                                 message = f"""
+                                            {code}
+                                
                                             Your request has been processed. {gdf.shape[0]} 
                                             { "items are" if gdf.shape[0] > 1 else "item is"}
                                             loaded on the map.
                                             """
                             else:
                                 message = f"""
-                                            Your request has been processed. No data was found.
+                                            Your request has been processed. Nothing was found.
                                             Please refine your request and try again if you think
                                             this is a mistake.
                                             """
@@ -224,7 +226,7 @@ with col2:
                             #            """  
                             message = f"""We are not able to process your request. Please refine your 
                                               request and try it again. \n\nError: {str(e)}"""
-                    st.markdown(message)
+                    st.code(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
