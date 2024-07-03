@@ -28,7 +28,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
         geothermal power plants/hydro pumped storage power plants/natural gas power plants/nuclear power plants/
-        petroleum power plants/solar power plants/biodiesel plant from an ArcGIS Feature Service as a GeoDataFrame:
+        petroleum power plants/solar power plants from an ArcGIS Feature Service as a GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
             load_battery_storage_plants(where_condition)
@@ -38,7 +38,6 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             load_nuclear_power_plants(where_condition)
             load_petroleum_power_plants(where_condition)
             load_solar_power_plants(where_condition)
-            load_biodiesel_plants(where_condition)
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
@@ -48,12 +47,14 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'Longitude', 'Latitude'
             
         The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
-        The column 'County' contains values like 'Adams' or 'Yellowstone'. 
+        The column 'County' contains values like 'Adams' or 'Yellowstone'. The column 'Total_MW' gives the 
+        Total Megawatts of the plants.
 
         [ Definition 3 ]
-        We have the following function to get renewable diesel fuel and other biofuel plants 
+        We have the following function to get renewable diesel fuel and other biofuel plants/biodiesel plants
         from an ArcGIS Feature Service as a GeoDataFrame:
             load_renewable_diesel_fuel_and_other_biofuel_plants(where_condition)
+            load_biodiesel_plants(where_condition)
 
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Company', 'Site', 'State', 'PADD', 'Cap_Mmgal',
