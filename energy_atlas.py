@@ -84,6 +84,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Find all coal mines along Ohio River. 
 
         Check available variables to find a geodataframe gdf1 for Ohio River. If gdf1 exists, then return the following code:
+            gdf1 = ......
             gdf2 = load_coal_mines("1 = 1")
             # Keep the following line exactly as it is
             distance_threshold = 0.2
