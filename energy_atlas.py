@@ -103,7 +103,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Find all coal power plants along Ohio River.
 
         Use the same way as Example 1 to implement it. Just replace load_coal_mines by load_coal_power_plants
-        and change the title.
+        and change the title. If none of the available variables are geodataframes containing Ohio River, then retuen the
+        code raising the execption.
 
         [ Note 1 ]
         Use pandas.concat to concatenate two geodataframe gdf1 and gdf2:
