@@ -97,7 +97,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.title = "All Coal Mines within 10 Miles away from Ohio River"
         
         If none of the available variables are geodataframes containing Ohio River, then return the following code:
-            raise Exception("The data for Ohio River is missing. Please load Ohio River first.")
+            raise Exception("The data for Ohio River is missing. Please load Ohio River first by the request: Find Ohio River.")
 
         [ Example 2 ]
         Find all coal power plants along Ohio River.
