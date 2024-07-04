@@ -87,7 +87,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         
         If there is a variable which is a geodataframe containing Ohio River, then return the valid Python code in the 
         following format:
-            gdf1 = <replace by the variable of the geodataframe for Ohio River>
+            gdf1 = <replace by the variable of the geodataframe for Ohio River if you found one>
             gdf2 = load_coal_mines("1 = 1")
             # Keep the following line exactly as it is
             distance_threshold = 0.2
