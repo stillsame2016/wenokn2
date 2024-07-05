@@ -62,11 +62,24 @@ def get_question_route(llm, question):
             Petroleum Power Plant
             Solar Power Plant
             Biodiesel Plant
-            
-        Use Other for questions related to common knowledge. 
+
+        Use "WEN-KEN database use Energy Atlas" for the requests related to find entities from WEN-KEN database but with
+        somes join condition for the entities from WEN-KEN database and Energy Atlas.
+
+        [ Example ]
+        Return "WEN-KEN database use Energy Atlas" for the following request: 
         
-        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'Other' 
-        based on the question. Return a JSON with a single key 'request_type' and a key 'explanation' for reasons. 
+            Find counties downstream of the coal mine with the name "Century Mine" on the Ohio River.
+            
+        Because this request tries to find some counties (in WEN-KEN database) but with some conditions related to
+        Ohio River (in WEN-KEN database) and the coal mine with the name "Century Mine" in Energy Atlas.
+
+    
+        Use "Other" for questions related to common knowledge. 
+        
+        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
+        'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
+        'request_type' and a key 'explanation' for reasons. 
         
         Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
