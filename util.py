@@ -201,7 +201,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
 
             Please use pd.merge(df1, df2, on=df1.columns.to_list[:-1]) to merge two dataframes if needed. 
 
-            Please return only the complete Python code to implement the user's request without preamble or 
+            Please return the complete Python code only to implement the user's request without preamble or 
             explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
             save the title in df.title. 
     
