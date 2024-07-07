@@ -226,6 +226,12 @@ with col2:
                                               request and try it again. \n\nError: {str(e)}"""
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
+            elif route['request_type'] == "WEN-KEN database use Energy Atlas":
+                with st.chat_message("assistant"):
+                    with st.spinner("Loading data ..."):
+                        message = 'WEN-KEN database use Energy Atlas'
+                    st.markdown(message)
+                    st.session_state.chat.append({"role": "assistant", "content": message})
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
