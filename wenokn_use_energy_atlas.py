@@ -86,7 +86,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         This request asks for entities from WEN-OKN database that satisfy certain conditions, some of which are 
         described using entities in Energy Atlas. Your task is to provide Python code which converts this request 
         into a request in natural language without using any conditions related to energy Atlas as a Python variable
-        converted_request.
+        converted_request. Please return the Python code only without any explanation.
 
         [ Example ]
         Find all counties downstream of the coal mine with the name "Century Mine" along Ohio River.
