@@ -96,7 +96,10 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         request into a request without using Energy Atlas. The following is returned Python code:
 
             gdf =  load_coal_mines("MINE_NAME = 'Century Mine'")
-            converted_request = f"Find all counties downstream of the point at the latitude {{gdf['LATITUDE']}} and longitude {{gdf['LONGITUDE']}} along Ohio River"
+            row = gdf.iloc[0]
+            latitude = row['LATITUDE']
+            longitude = row['LONGITUDE']
+            converted_request = f"Find all counties downstream of the point at the latitude {{latitude}} and longitude {{longitude}} along Ohio River"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
