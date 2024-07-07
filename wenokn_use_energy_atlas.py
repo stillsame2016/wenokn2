@@ -5,7 +5,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 
-def process_wenokn_use_energy_atlas(llm, use_input):
+def process_wenokn_use_energy_atlas(llm, user_input):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
