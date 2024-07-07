@@ -63,17 +63,19 @@ def get_question_route(llm, question):
             Solar Power Plant
             Biodiesel Plant
 
-        Use "WEN-KEN database use Energy Atlas" for the requests related to find entities from WEN-KEN database but with
+        Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
 
-        [ Example ]
+        [ Example 1 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
-        
-            Find counties downstream of the coal mine with the name "Century Mine" on the Ohio River.
-            
+            Find counties downstream of the coal mine with the name "Century Mine" on the Ohio River. 
         Because this request tries to find some counties (in WEN-KEN database) but with some conditions related to
         Ohio River (in WEN-KEN database) and the coal mine with the name "Century Mine" in Energy Atlas.
 
+        [ Example 2 ]
+        Return "Energy Atlas" for the following request:
+            Find all coal mines along Ohio River
+        Because this request tried to find coal mines (in Energy Atlas rather than in WEN-KEN database)
     
         Use "Other" for questions related to common knowledge. 
         
