@@ -96,6 +96,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         request into a request without using Energy Atlas. The following is returned Python code:
 
             gdf =  load_coal_mines("MINE_NAME = 'Century Mine'")
+            # Keep this line for debug
             st.code(gdf.shape)
             row = gdf.iloc[0]
             latitude = row['LATITUDE']
