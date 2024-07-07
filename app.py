@@ -230,8 +230,10 @@ with col2:
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        sparql_query = process_wenokn_use_energy_atlas(llm, user_input)
-                        st.code(sparql_query)
+                        code = process_wenokn_use_energy_atlas(llm, user_input)
+                        st.code(code)
+                        exec(code)
+                        st.code(converted_request)
                         message = 'WEN-KEN database use Energy Atlas'
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
