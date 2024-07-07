@@ -234,7 +234,7 @@ with col2:
                         st.code(code)
                         exec(code)
                         st.code(f"converted request: {converted_request}")
-                        process_data_request(converted_request, chat_container):
+                        process_data_request(converted_request, chat_container)
                         
                         message = 'WEN-KEN database use Energy Atlas'
                     st.markdown(message)
