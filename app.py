@@ -233,7 +233,7 @@ with col2:
                         code = process_wenokn_use_energy_atlas(llm, user_input)
                         st.code(code)
                         exec(code)
-                        st.code(converted_request)
+                        st.code(gdf.shape)
                         message = 'WEN-KEN database use Energy Atlas'
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
