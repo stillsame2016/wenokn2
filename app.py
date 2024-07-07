@@ -15,6 +15,7 @@ from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name
 from energy_atlas import *
+from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 
 
 # Setup LLM
@@ -229,6 +230,8 @@ with col2:
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
+                        sparql_query = process_wenokn_use_energy_atlas(llm, user_input)
+                        st.code(sparql_query)
                         message = 'WEN-KEN database use Energy Atlas'
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
