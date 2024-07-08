@@ -368,6 +368,21 @@ def process_off_topic_request(llm, user_input, chat_container):
                 SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
                 SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
 
+            The US Energy Atlas has the following data:
+                Battery Storage Plant
+                Coal Mine
+                Coal Power Plant
+                Geothermal Power Plant
+                Wind Power Plant
+                Renewable Diesel Fuel and Other Biofuel Plant
+                Wind Power Plant
+                Hydro Pumped Storage Power Plant
+                Natural Gas Power Plant
+                Nuclear Power Plant
+                Petroleum Power Plant
+                Solar Power Plant
+                Biodiesel Plant
+
             Based on the provided context, use easy understanding language to answer the question.
             
             Question:{question}?
