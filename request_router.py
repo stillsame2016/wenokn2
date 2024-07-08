@@ -75,8 +75,13 @@ def get_question_route(llm, question):
         [ Example 2 ]
         Return "Energy Atlas" for the following request:
             Find all coal mines along Ohio River
-        Because this request tried to find coal mines (in Energy Atlas rather than in WEN-KEN database)
-    
+        Because this request tries to find coal mines (in Energy Atlas rather than in WEN-KEN database)
+
+        [ Example 3 ]
+        Return "Data Commons" for the following request:
+            Find the social vulnerability for all counties downstream of the coal mine with the name "Century Mine" along Ohio River
+        Because this request tries to find the social vulnerability of some counties which satisfy some conditions.
+
         Use "Other" for questions related to common knowledge. 
         
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
