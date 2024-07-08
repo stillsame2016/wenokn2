@@ -165,7 +165,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                 ohio_county_dcid = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
                 
                 # Get Count_Person (i.e., population) for all counties in Ohio
-                df = get_time_series_dataframe_for_dcid(ohio_county_dcid, "Count_Person")
+                df = dc.build_time_series_dataframe_for_dcid(ohio_county_dcid, "Count_Person")
                 df.title = "The Populations for All Counties in Ohio"
                     
             [Example 2]
@@ -173,14 +173,14 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             following code:
             
                 ross_pike_dcid = ['geoId/39131', 'geoId/39141']
-                df = get_time_series_dataframe_for_dcid(ross_pike_dcid, "Count_Person")
+                df = dc.build_time_series_dataframe_for_dcid(ross_pike_dcid, "Count_Person")
                 df.title = "The Populations for the Ross county and Pike county in Ohio"
                      
             [Example 3]
             Find the populations of Ross county and Scioto county
             
                 ross_scioto_dcid = [ get_dcid_from_county_name('Ross County'), get_dcid_from_county_name('Scioto County') ]
-                df = get_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
+                df = dc.build_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
                 df.title = "The Populations for the Ross county and Scioto county in Ohio"
                  
             [Example 4]   
@@ -188,7 +188,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             "name" for county names. Find the populations of all counties where Scioto River flows through.
             
                 scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
-                df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
+                df = dc.build_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
                 df.title = "The Populations for All Counties where Scioto River Flows Through"
     
 
