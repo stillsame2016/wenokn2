@@ -201,7 +201,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                 df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
                 df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
         
-            Note that gdf should be st.session_state_datasets[i] for an integer i. 
+            Note that gdf should be st.session_state.datasets[i] for an integer i. 
 
             If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
             it to 'Ross County' to call get_dcid_from_county_name.
@@ -244,7 +244,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                                  { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }
                                  
                           """
-    # st.code(variables)
+    st.code(variables)
     return df_code_chain.invoke({"question": user_input, "variables": variables, "dc_variables": dc_variables})
     
 
