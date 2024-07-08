@@ -231,11 +231,12 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         code = process_wenokn_use_energy_atlas(llm, user_input)
-                        st.code(code)
+                        # st.code(code)
                         exec(code)
-                        st.code(f"converted request: {converted_request}")
+                        # st.code(f"converted request: {converted_request}")
                         process_data_request(converted_request, chat_container)
-
+                        st.session_state.datasets[-1].label = user_input
+                        
                         message = "Your request has been processed."
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
