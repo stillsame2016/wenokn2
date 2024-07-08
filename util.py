@@ -190,6 +190,15 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                 scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
                 df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
                 df.title = "The Populations for All Counties where Scioto River Flows Through"
+
+            [Example 5]
+            Given a geodataframe gdf containing all counties downstream of the coal mine with the name "Century Mine" 
+            along Ohio River with a column "name" for county names. To find the social vulnerability for all counties 
+            downstream of the coal mine with the name "Century Mine" along Ohio River, return the following code:
+
+                counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
+                df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
+                df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
     
 
             If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
