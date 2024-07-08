@@ -234,10 +234,12 @@ with col2:
                         # st.code(code)
                         exec(code)
                         # st.code(f"converted request: {converted_request}")
-                        process_data_request(converted_request, chat_container)
-                        st.session_state.datasets[-1].label = user_input
-                        st.session_state.requests[-1] = user_input
-                        message = "Your request has been processed."
+                    
+                    process_data_request(converted_request, chat_container)
+                    st.session_state.datasets[-1].label = user_input
+                    st.session_state.requests[-1] = user_input
+                    message = "Your request has been processed."
+                    
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     st.rerun()
