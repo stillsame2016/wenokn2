@@ -235,10 +235,11 @@ with col2:
                         exec(code)
                         st.code(f"converted request: {converted_request}")
                         process_data_request(converted_request, chat_container)
-                        
-                        message = 'WEN-KEN database use Energy Atlas'
+
+                        message = "Your request has been processed."
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
+                    st.rerun()
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
