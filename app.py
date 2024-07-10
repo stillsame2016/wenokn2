@@ -200,7 +200,7 @@ with col2:
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
                             if gdf.shape[0] > 0:
-                                if gdf.answer:
+                                if hasattr(gdf, 'answer'):
                                     message = gdf.answer
                                 else:
                                     gdf.label = gdf.title
