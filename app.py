@@ -200,19 +200,22 @@ with col2:
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
                             if gdf.shape[0] > 0:
-                                gdf.label = gdf.title
-                                gdf.id = str(uuid.uuid4())[:8]
-                                gdf.time = time.time()
-                                st.session_state.requests.append(user_input)
-                                st.session_state.sparqls.append("")
-                                st.session_state.datasets.append(gdf)
-                                st.session_state.rerun = True
-                                message = f"""
-                                            {code}
-                                            Your request has been processed. {gdf.shape[0]} 
-                                            { "items are" if gdf.shape[0] > 1 else "item is"}
-                                            loaded on the map.
-                                            """
+                                if gdf.asnwer:
+                                    message = gdf.answer
+                                else:
+                                    gdf.label = gdf.title
+                                    gdf.id = str(uuid.uuid4())[:8]
+                                    gdf.time = time.time()
+                                    st.session_state.requests.append(user_input)
+                                    st.session_state.sparqls.append("")
+                                    st.session_state.datasets.append(gdf)
+                                    st.session_state.rerun = True
+                                    message = f"""
+                                                {code}
+                                                Your request has been processed. {gdf.shape[0]} 
+                                                { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                loaded on the map.
+                                                """
                             else:
                                 message = f"""
                                             Your request has been processed. Nothing was found.
