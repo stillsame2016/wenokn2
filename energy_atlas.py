@@ -111,7 +111,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         to the user in gdf.answer. For example, find the capacity of the coal power plant Rockport.
             gdf = load_coal_power_plants("Plant_Name = 'Rockport'")
             gdf.title = "The Coal Power Plant Rockport"
-            gdf.answer = f"The capacity of the coal power plant Rockport is {gdf.iloc[0]['Total_MW']}"
+            gdf.answer = f"The capacity of the coal power plant Rockport is {{gdf.iloc[0]['Total_MW']}}"
 
         [ Note 1 ]
         Use pandas.concat to concatenate two geodataframe gdf1 and gdf2:
