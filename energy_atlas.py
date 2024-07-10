@@ -106,6 +106,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         and change the title. If none of the available variables are geodataframes containing Ohio River, then return the
         code raising the execption.
 
+        [ Example 3 ]
+        If the request is for an attribute of a particular plant, first obtain the plant as gdf, and then store the answer 
+        to the user in gdf.answer. For example, find the capacity of the coal power plant Rockport.
+            gdf = load_coal_power_plants("Plant_Name = 'Rockport'")
+            gdf.title = "The Coal Power Plant Rockport"
+            gdf.answer = f"The capacity of the coal power plant Rockport is {gdf.iloc[0]['Total_MW']}"
+
         [ Note 1 ]
         Use pandas.concat to concatenate two geodataframe gdf1 and gdf2:
             gdf = pd.concat([gdf1, gdf2], ignore_index=True)
