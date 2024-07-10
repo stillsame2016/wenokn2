@@ -217,7 +217,6 @@ with col2:
                                                 """
                             else:
                                 message = f"""
-                                            { code }
                                             Your request has been processed. Nothing was found.
                                             Please refine your request and try again if you think
                                             this is a mistake.
