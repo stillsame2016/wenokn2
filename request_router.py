@@ -94,10 +94,10 @@ def get_question_route(llm, question):
 
         [ Example 5 ]
         Return the following JSON string for the request "Could you please give me some example questions?":
-            {
+            {{
               "request_type" : "Other",
               "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'"
-            }
+            }}
 
         Question to route: {question} 
         
