@@ -83,6 +83,10 @@ def get_question_route(llm, question):
         Because this request tries to find the social vulnerability of some counties which satisfy some conditions.
 
         Use "Other" for questions related to common knowledge. 
+
+        [ Example 4 ]
+        Return "Other" for the following request:
+            Please help search ... website to find out how many ....
         
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
         'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
