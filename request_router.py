@@ -86,7 +86,7 @@ def get_question_route(llm, question):
 
         [ Example 4 ]
         Return "Other" for the following request:
-            Please help search ... website to find out how many ....    
+            Please help search Kentucky Public Service Commission's website to find out how many power plants are in Kentucky
         
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
         'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
