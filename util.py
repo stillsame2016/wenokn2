@@ -384,6 +384,7 @@ def process_off_topic_request(llm, user_input, chat_container):
                 Biodiesel Plant
 
             Based on the provided context, use easy understanding language to answer the question.
+            Please politely reject any requests for searching any websites. 
             
             Question:{question}?
 
