@@ -86,13 +86,22 @@ def get_question_route(llm, question):
 
         [ Example 4 ]
         Return "Other" for the following request:
-            Please help search ... website to find out how many ....
+            Please help search ... website to find out how many ....    
         
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
         'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
         'request_type' and a key 'explanation' for reasons. 
+
+        [ Example 5 ]
+        Return the following JSON string for the request "Could you please give me some example questions?":
+            {
+              "request_type" : "Other",
+              "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'"
+            }
+
+        Question to route: {question} 
         
-        Question to route: {question} <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
     )
