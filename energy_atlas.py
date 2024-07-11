@@ -46,9 +46,11 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'NG_MW', 'Nuclear_MW', 'Crude_MW', 'Solar_MW', 'Wind_MW', 'Other_MW', 'Source', 'Period', 
             'Longitude', 'Latitude'
             
-        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' etc. 
+        The values in the column 'State' are case sensitive like 'Nebraska' or 'Montana' or 'Kentucky' etc. 
         The column 'County' contains values like 'Adams' or 'Yellowstone'. The column 'Total_MW' gives the 
         Total Megawatts of the plants.
+
+        Note that use the case sensitive state names for the column 'State'.
 
         [ Definition 3 ]
         We have the following function to get renewable diesel fuel and other biofuel plants/biodiesel plants
