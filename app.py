@@ -55,7 +55,6 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
-
 # @st.experimental_fragment
 @st.fragment
 def add_map():
