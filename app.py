@@ -56,7 +56,8 @@ if "sparqls" not in st.session_state:
     st.session_state.sparqls = []
 
 
-@st.experimental_fragment
+# @st.experimental_fragment
+@st.fragment
 def add_map():
     # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
     options = {"keepExistingConfig": True}
