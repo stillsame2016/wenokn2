@@ -29,7 +29,8 @@ llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 # Set up the title
-st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
+# st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
+st.markdown("### &nbsp; OpenQuery")
 
 # Set up the datasets in the session for GeoDataframes
 if "datasets" not in st.session_state:
