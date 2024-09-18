@@ -30,7 +30,7 @@ st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 # Set up the title
 # st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
-st.markdown("### &nbsp; OpenQuery")
+st.markdown("### &nbsp; Dive into Data, Never Easier")
 
 # Set up the datasets in the session for GeoDataframes
 if "datasets" not in st.session_state:
