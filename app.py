@@ -146,6 +146,7 @@ with col2:
     user_input = st.chat_input("What can I help you with?")
     if init_query:
         user_input = init_query
+        init_query = None
     
     if user_input:
         with chat_container:
