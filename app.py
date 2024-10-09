@@ -37,8 +37,7 @@ query_params = st.query_params
 init_query = None
 if "query" in query_params:
     init_query = query_params["query"]
-    st.write(f"Init Query: {init_query}")
-
+    # st.write(f"Init Query: {init_query}")
 
 # Set up the datasets in the session for GeoDataframes
 if "datasets" not in st.session_state:
@@ -145,7 +144,9 @@ with col2:
 
     # Get user input
     user_input = st.chat_input("What can I help you with?")
-
+    if init_query:
+        user_input = init_query
+    
     if user_input:
         with chat_container:
             st.chat_message("user").markdown(user_input)
