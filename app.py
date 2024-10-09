@@ -34,11 +34,11 @@ st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
 
 # Get all query parameters
 query_params = st.query_params
-if "option" in query_params:
-    selected_option = query_params["option"]
-    st.write(f"Selected option: {selected_option}")
-else:
-    st.write("No option selected")
+init_query = None
+if "query" in query_params:
+    init_query = query_params["query"]
+    st.write(f"Init Query: {init_query}")
+
 
 # Set up the datasets in the session for GeoDataframes
 if "datasets" not in st.session_state:
