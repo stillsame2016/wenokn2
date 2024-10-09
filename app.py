@@ -144,9 +144,8 @@ with col2:
 
     # Get user input
     user_input = st.chat_input("What can I help you with?")
-    if init_query:
+    if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
-        init_query = None
     
     if user_input:
         with chat_container:
