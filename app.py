@@ -32,6 +32,14 @@ st.set_page_config(layout="wide", page_title="WEN-OKN")
 st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
 # st.markdown("### &nbsp; Dive into Data, Never Easier")
 
+# Get all query parameters
+query_params = st.query_params
+if "option" in query_params:
+    selected_option = query_params["option"]
+    st.write(f"Selected option: {selected_option}")
+else:
+    st.write("No option selected")
+
 # Set up the datasets in the session for GeoDataframes
 if "datasets" not in st.session_state:
     st.session_state.datasets = []
