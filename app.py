@@ -151,7 +151,7 @@ with col2:
         user_input = init_query
 
     options = ['cat', 'dog', 'mouse', 'bat', 'duck']
-    option_selected = st.selectbox('Sample Queries', options)
+    option_selected = st.selectbox(None, options)
     
     if user_input:
         with chat_container:
