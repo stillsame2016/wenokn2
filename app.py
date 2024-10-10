@@ -149,6 +149,9 @@ with col2:
     user_input = st.chat_input("What can I help you with?")
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
+
+    options = ['cat', 'dog', 'mouse', 'bat', 'duck']
+    option_selected = st.selectbox('Pick option', options)
     
     if user_input:
         with chat_container:
