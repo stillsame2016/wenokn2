@@ -22,8 +22,11 @@ from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
 
-llm = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY)
-llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
+# llm = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY)
+# llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
+
+llm = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY)
+llm2 = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY_2)
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
