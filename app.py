@@ -168,9 +168,6 @@ with col2:
             min-height: 40px;
             white-space: normal;
         }
-        .stSelectbox {
-            margin-top: -50px;
-        }
         .custom-select-option {
             white-space: normal !important;
             overflow-wrap: break-word !important;
