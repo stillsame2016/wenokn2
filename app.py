@@ -181,7 +181,7 @@ with col2:
         return f'<div style="white-space: normal;">{option}</div>'
     
     option_selected = st.selectbox("", 
-                                   [format_option(q) for q in sample_queries], 
+                                   sample_queries, 
                                    format_func=lambda x: x,
                                    index=None, 
                                    label_visibility='hidden', 
