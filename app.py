@@ -166,10 +166,14 @@ with col2:
 
         div[data-baseweb="select"] > div {
             min-height: 40px;
-        }
-        div[data-baseweb="select"] span {
             white-space: normal;
-            overflow-wrap: break-word;
+        }
+        .stSelectbox {
+            margin-top: -50px;
+        }
+        .custom-select-option {
+            white-space: normal !important;
+            overflow-wrap: break-word !important;
         }
         
         </style>
