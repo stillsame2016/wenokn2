@@ -176,9 +176,6 @@ with col2:
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
 
-    # Display the selected item
-    st.write(f"You selected: {selected_item}")
-
     if user_input:
         with chat_container:
             st.chat_message("user").markdown(user_input)
