@@ -14,7 +14,6 @@ ul {
     flex-direction: column !important; /* Ensure the content stacks vertically */
     height: auto !important; /* Ensure height is auto-adjusted */
     min-height: auto !important; /* Ensure min-height is also auto-adjusted */
-    border-bottom: 5px solid red;
 }
 
 .tooltip-hover-target {
@@ -35,4 +34,5 @@ ul {
     line-height: 1.5 !important; /* Improve readability with adequate line spacing */
     height: auto !important; /* Ensure height is auto-adjusted */
     font-size: 0.75em !important; /* 14px/16=0.875em */
+    border-bottom: 5px solid red;
 }
