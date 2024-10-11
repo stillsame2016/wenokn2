@@ -14,6 +14,7 @@ ul {
     flex-direction: column !important; /* Ensure the content stacks vertically */
     height: auto !important; /* Ensure height is auto-adjusted */
     min-height: auto !important; /* Ensure min-height is also auto-adjusted */
+    border-bottom: 5px solid red;
 }
 
 .tooltip-hover-target {
