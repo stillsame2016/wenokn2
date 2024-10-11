@@ -3,6 +3,7 @@ ul {
     padding: 0;
     margin: 0;
     width: 100%;
+    border-bottom: 5px solid red;
 }
 .list-item {
     position: relative !important; /* Use relative positioning to prevent overlapping */
@@ -34,5 +35,4 @@ ul {
     line-height: 1.5 !important; /* Improve readability with adequate line spacing */
     height: auto !important; /* Ensure height is auto-adjusted */
     font-size: 0.75em !important; /* 14px/16=0.875em */
-    border-bottom: 5px solid red;
 }
