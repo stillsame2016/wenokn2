@@ -156,7 +156,7 @@ with col2:
         'Find all rivers flow through Ross county',
         'Find all counties downstream of Ross county on Scioto River'
     ]
-    option_selected = st.selectbox("", options, label_visibility='hidden', placeholder="Sample Queries" )
+    option_selected = st.selectbox("", sample_queries, label_visibility='hidden', placeholder="Sample Queries" )
     
     if user_input:
         with chat_container:
