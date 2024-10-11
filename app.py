@@ -150,7 +150,12 @@ with col2:
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
 
-    options = ['cat', 'dog', 'mouse', 'bat', 'duck']
+    sample_queries = [
+        'Find Ohio River', 
+        'Find Ross county', 
+        'Find all rivers flow through Ross county',
+        'Find all counties downstream of Ross county on Scioto River'
+    ]
     option_selected = st.selectbox("", options, label_visibility='hidden', placeholder="Sample Queries" )
     
     if user_input:
