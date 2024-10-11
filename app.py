@@ -176,7 +176,16 @@ with col2:
         """,
         unsafe_allow_html=True,
     )
-    option_selected = st.selectbox("", sample_queries, index=None, label_visibility='hidden', placeholder="Sample Queries" )
+
+    def format_option(option):
+        return f'<div style="white-space: normal;">{option}</div>'
+    
+    option_selected = st.selectbox("", 
+                                   [format_option(q) for q in sample_queries], 
+                                   format_func=lambda x: x,
+                                   index=None, 
+                                   label_visibility='hidden', 
+                                   placeholder="Sample Queries" )
     
     if user_input:
         with chat_container:
