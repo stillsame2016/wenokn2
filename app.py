@@ -162,16 +162,7 @@ with col2:
         <style>
         [data-baseweb="select"] {
             margin-top: -50px;
-        }
-
-        .stSelectbox div[role="listbox"] ul {
-            max-height: none !important;
-        }
-        .stSelectbox div[role="listbox"] ul li {
-            white-space: normal !important;
-            word-wrap: break-word !important;
-        }
-        
+        }        
         </style>
         """,
         unsafe_allow_html=True,
