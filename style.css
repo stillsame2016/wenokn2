@@ -35,3 +35,12 @@ ul {
     height: auto !important; /* Ensure height is auto-adjusted */
     font-size: 0.75em !important; /* 14px/16=0.875em */
 }
+
+.st-emotion-cache-1o2fhjg {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid lightgray;
+}
