@@ -167,6 +167,18 @@ with col2:
             margin-top: -70px;
         }      
         </style>
+
+        <script>
+        const doc = window.parent.document;
+        const selectBox = doc.querySelector('select');
+        const chatInput = doc.querySelector('.stChatInputContainer input');
+        
+        selectBox.addEventListener('change', function() {
+            alert("OOPS")
+            chatInput.value = this.value;
+            chatInput.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        </script>
         """,
         unsafe_allow_html=True,
     )
