@@ -157,46 +157,24 @@ with col2:
         'Find all counties downstream of Ross county on Scioto River',
         'Find flood event counts for all counties downstream of Ross county on Scioto River'
     ]
-    # st.markdown(
-    #     """
-    #     <style>
-    #     [data-baseweb="select"] {
-    #         margin-top: -50px;
-    #     }      
-
-    #     div[data-baseweb="select"] > div {
-    #         min-height: 40px;
-    #         white-space: normal;
-    #     }
-    #     .custom-select-option {
-    #         white-space: normal !important;
-    #         overflow-wrap: break-word !important;
-    #     }
-        
-    #     </style>
-    #     """,
-    #     unsafe_allow_html=True,
-    # )
+    st.markdown(
+        """
+        <style>
+        [data-baseweb="select"] {
+            margin-top: -50px;
+        }      
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
     
-    # option_selected = st.selectbox("", 
-    #                                sample_queries, 
-    #                                format_func=lambda x: x,
-    #                                index=None, 
-    #                                label_visibility='hidden', 
-    #                                placeholder="Sample Queries" )
-
-
-    # Define the items with varying lengths
     with open( "./style.css" ) as css:
-        st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
-    
-    # Create a selectbox with the items
+        st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html=True)
     selected_item = st.selectbox("", 
                                  sample_queries,
                                  index=None,
                                  label_visibility='hidden',
-                                 placeholder="Sample Queries" 
-                                )
+                                 placeholder="Sample Queries")
 
     # Display the selected item
     st.write(f"You selected: {selected_item}")
