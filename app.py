@@ -161,7 +161,7 @@ with col2:
         """
         <style>
         [data-baseweb="select"] {
-            margin-top: -50px;
+            margin-top: -60px;
         }      
         </style>
         """,
