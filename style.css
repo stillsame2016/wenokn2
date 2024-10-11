@@ -1,0 +1,37 @@
+ul {
+    list-style-type: none !important;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.list-item {
+    position: relative !important; /* Use relative positioning to prevent overlapping */
+    width: 100% !important;
+    padding: 10px 0 !important; /* Add some padding for better spacing */
+    box-sizing: border-box !important; /* Ensure padding is included in the width calculation */
+    display: flex !important; /* Use flexbox to handle child alignment */
+    align-items: flex-start !important; /* Align items to the start to allow for varying heights */
+    flex-direction: column !important; /* Ensure the content stacks vertically */
+    height: auto !important; /* Ensure height is auto-adjusted */
+    min-height: auto !important; /* Ensure min-height is also auto-adjusted */
+}
+
+.tooltip-hover-target {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important; /* Ensure it takes full width */
+}
+
+.st-emotion-cache-87mhkc.e1gc5fo22 {
+    flex: 1 !important; /* Allow the container to take up available space */
+    height: auto !important; /* Ensure height is auto-adjusted */
+}
+
+.st-emotion-cache-sy3zga.e1gc5fo21 {
+    white-space: normal !important; /* Allow text to wrap to the next line */
+    word-wrap: break-word !important; /* Break long words to fit within the container */
+    overflow: visible !important; /* Ensure overflow content is visible */
+    line-height: 1.5 !important; /* Improve readability with adequate line spacing */
+    height: auto !important; /* Ensure height is auto-adjusted */
+    font-size: 0.75em !important; /* 14px/16=0.875em */
+}
