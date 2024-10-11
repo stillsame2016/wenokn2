@@ -156,6 +156,18 @@ with col2:
         'Find all rivers flow through Ross county',
         'Find all counties downstream of Ross county on Scioto River'
     ]
+
+    st.markdown(
+        """
+        <style>
+        [data-baseweb="select"] {
+            margin-top: -50px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    
     option_selected = st.selectbox("", sample_queries, label_visibility='hidden', placeholder="Sample Queries" )
     
     if user_input:
