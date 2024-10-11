@@ -181,18 +181,8 @@ with col2:
 
     st.markdown("""
         <script>
-        const doc = window.parent.document;
-        const selectBox = doc.querySelector('select');
-        const chatInput = doc.querySelector('.stChatInputContainer input');
-
-        console.log(selectBox);
-        
-        selectBox.addEventListener('change', function() {
-            if (this.value !== '<Click Me to Expand>') {
-                chatInput.value = this.value;
-                chatInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-        });
+        const chatInput = window.parent.document.querySelector('.stChatInputContainer input');
+        console.log("=======> " + chatInput):
         </script>
         """, unsafe_allow_html=True)
 
