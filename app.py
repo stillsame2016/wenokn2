@@ -157,36 +157,64 @@ with col2:
         'Find all counties downstream of Ross county on Scioto River',
         'Find flood event counts for all counties downstream of Ross county on Scioto River'
     ]
-    st.markdown(
-        """
-        <style>
-        [data-baseweb="select"] {
-            margin-top: -50px;
-        }      
+    # st.markdown(
+    #     """
+    #     <style>
+    #     [data-baseweb="select"] {
+    #         margin-top: -50px;
+    #     }      
 
-        div[data-baseweb="select"] > div {
-            min-height: 40px;
-            white-space: normal;
-        }
-        .custom-select-option {
-            white-space: normal !important;
-            overflow-wrap: break-word !important;
-        }
+    #     div[data-baseweb="select"] > div {
+    #         min-height: 40px;
+    #         white-space: normal;
+    #     }
+    #     .custom-select-option {
+    #         white-space: normal !important;
+    #         overflow-wrap: break-word !important;
+    #     }
         
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    def format_option(option):
-        return f'<div style="white-space: normal;">{option}</div>'
+    #     </style>
+    #     """,
+    #     unsafe_allow_html=True,
+    # )
     
-    option_selected = st.selectbox("", 
-                                   sample_queries, 
-                                   format_func=lambda x: x,
-                                   index=None, 
-                                   label_visibility='hidden', 
-                                   placeholder="Sample Queries" )
+    # option_selected = st.selectbox("", 
+    #                                sample_queries, 
+    #                                format_func=lambda x: x,
+    #                                index=None, 
+    #                                label_visibility='hidden', 
+    #                                placeholder="Sample Queries" )
+
+
+    # Define the items with varying lengths
+    with open( "./style.css" ) as css:
+        st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+    items = [
+        "Short item 1",
+        "This is a longer item that might take up more than one line",
+        "Short item 2",
+        "Another short item",
+        "A very very long item that definitely should wrap around to multiple lines in the selectbox. Like it's so long that if you were to put it in a list, it would probably break the layout of the page. But it's okay because the selectbox is designed to handle this kind of thing.",
+        "Short item 3",
+        "Medium length item for variety",
+        "Short item 4",
+        "A somewhat long item that might or might not wrap to the next line",
+        "Another long item that should wrap around and demonstrate how selectbox handles text overflow",
+        "Short item 5",
+        "Yet another item of medium length to balance the options",
+        "Short item 6",
+        "Short item 7",
+        "The final item which is also quite long to see how it looks at the end of the selectbox"
+    ]
+
+    # Create a selectbox with the items
+    selected_item = st.selectbox("Select an item:", items)
+
+    # Display the selected item
+    st.write(f"You selected: {selected_item}")
+
+
+    
     
     if user_input:
         with chat_container:
