@@ -184,6 +184,8 @@ with col2:
         const doc = window.parent.document;
         const selectBox = doc.querySelector('select');
         const chatInput = doc.querySelector('.stChatInputContainer input');
+
+        alert(selectBox)
         
         selectBox.addEventListener('change', function() {
             if (this.value !== '<Click Me to Expand>') {
