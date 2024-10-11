@@ -208,7 +208,7 @@ with col2:
     ]
 
     # Create a selectbox with the items
-    selected_item = st.selectbox("Select an item:", items)
+    selected_item = st.selectbox("Select an item:", sample_queries)
 
     # Display the selected item
     st.write(f"You selected: {selected_item}")
