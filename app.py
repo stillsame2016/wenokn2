@@ -162,7 +162,20 @@ with col2:
         <style>
         [data-baseweb="select"] {
             margin-top: -50px;
-        }        
+        }      
+
+        div[data-baseweb="select"] > div {
+            min-height: 40px;
+        }
+        div[data-baseweb="select"] span {
+            white-space: normal;
+            overflow-wrap: break-word;
+        }
+        .stSelectbox {
+            margin-top: -50px;
+        }
+
+        
         </style>
         """,
         unsafe_allow_html=True,
