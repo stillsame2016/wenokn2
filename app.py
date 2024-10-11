@@ -171,10 +171,6 @@ with col2:
             white-space: normal;
             overflow-wrap: break-word;
         }
-        .stSelectbox {
-            margin-top: -50px;
-        }
-
         
         </style>
         """,
