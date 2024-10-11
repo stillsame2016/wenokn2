@@ -157,7 +157,15 @@ with col2:
         'Find all counties downstream of Ross county on Scioto River',
         'Find Ohio River', 
         'Find all rivers flow through Ross county',
-        'Find flood event counts for all counties downstream of Ross county on Scioto River'
+        'Find flood event counts for all counties downstream of Ross county on Scioto River',
+
+        'Find Ross county', 
+        'Find all counties in Ohio State',
+        'Find all counties Scioto River flow through',
+        'Find all counties downstream of Ross county on Scioto River',
+        'Find Ohio River', 
+        'Find all rivers flow through Ross county',
+        'Find flood event counts for all counties downstream of Ross county on Scioto River',
     ]
     st.markdown(
         """
