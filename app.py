@@ -180,19 +180,13 @@ with col2:
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
 
-    st.markdown("""
-        <script>
-        alert("======> hello");
-        </script>
-        """, unsafe_allow_html=True)
-
-    js_code = """
-            <script>
-            alert("Hello from JavaScript!");
-            </script>
-            """
-
-    html(js_code)
+    if selected_item:
+        js_code = f"""
+                <script>
+                alert({selected_item});
+                </script>
+                """
+        html(js_code)
 
     if user_input:
         with chat_container:
