@@ -17,6 +17,7 @@ from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_count
 from energy_atlas import *
 from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 
+from streamlit.components.v1 import html
 
 # Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
@@ -184,6 +185,14 @@ with col2:
         alert("======> hello");
         </script>
         """, unsafe_allow_html=True)
+
+    js_code = """
+            <script>
+            alert("Hello from JavaScript!");
+            </script>
+            """
+
+    html(js_code)
 
     if user_input:
         with chat_container:
