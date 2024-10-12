@@ -181,8 +181,9 @@ with col2:
 
     st.markdown("""
         <script>
-        const chatInput = window.parent.document.querySelector('.stChatInputContainer input');
-        console.log("=======> " + chatInput):
+        //const chatInput = window.parent.document.querySelector('.stChatInputContainer input');
+        //console.log("=======> " + chatInput);
+        console.log("======> hello");
         </script>
         """, unsafe_allow_html=True)
 
