@@ -183,7 +183,7 @@ with col2:
     if selected_item:
         js_code = f"""
                 <script>
-                alert({selected_item});
+                alert('{selected_item}');
                 </script>
                 """
         html(js_code)
