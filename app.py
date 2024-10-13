@@ -147,7 +147,7 @@ with col2:
                 st.markdown(message['content'])
 
     # Get user input
-    user_input = st.chat_input("What can I help you with?", key="main_chat_input")
+    user_input = st.chat_input("What can I help you with?", "main_chat_input")
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
 
@@ -159,7 +159,6 @@ with col2:
         'Find Ohio River.', 
         'Find all rivers flow through Ross county.',
         'Find flood event counts for all counties downstream of Ross county on Scioto River.',
-
     ]
     st.markdown(
         """
