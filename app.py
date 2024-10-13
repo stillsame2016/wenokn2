@@ -67,6 +67,9 @@ if "sparqls" not in st.session_state:
     st.session_state.requests = []
     st.session_state.sparqls = []
 
+if "sample_query" not in st.session_state:
+    st.session_state.sample_query = None
+
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
 def add_map():
@@ -179,27 +182,30 @@ with col2:
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
     if selected_item:
-        js_code = f"""
-                <script>
-                const doc = window.parent.document;
-                const chatInput = doc.querySelector('.stChatInput textarea');
-                chatInput.focus();
-                chatInput.value = '{selected_item}';
-                //chatInput.style.height = 'auto';
-                //chatInput.style.height = textarea.scrollHeight + 'px';
+        st.session_state.sample_query = selected_item
+        st.markdown(st.session_state.sample_query)
+        
+        # js_code = f"""
+        #         <script>
+        #         const doc = window.parent.document;
+        #         const chatInput = doc.querySelector('.stChatInput textarea');
+        #         chatInput.focus();
+        #         chatInput.value = '{selected_item}';
+        #         //chatInput.style.height = 'auto';
+        #         //chatInput.style.height = textarea.scrollHeight + 'px';
                 
-                function autoResizeTextarea() {{
-                    chatInput.style.height = 'auto';
-                    chatInput.style.height = chatInput.scrollHeight + 'px';
-                    var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                    nativeInputValueSetter.call(chatInput, "{selected_item}");
-                    const event = new Event('input', {{ bubbles: true }});
-                    chatInput.dispatchEvent(event);
-                }}
-                setTimeout(autoResizeTextarea, 1000)
-                </script>
-                """
-        html(js_code)
+        #         function autoResizeTextarea() {{
+        #             chatInput.style.height = 'auto';
+        #             chatInput.style.height = chatInput.scrollHeight + 'px';
+        #             var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+        #             nativeInputValueSetter.call(chatInput, "{selected_item}");
+        #             const event = new Event('input', {{ bubbles: true }});
+        #             chatInput.dispatchEvent(event);
+        #         }}
+        #         setTimeout(autoResizeTextarea, 1000)
+        #         </script>
+        #         """
+        # html(js_code)
 
     if user_input:
         with chat_container:
