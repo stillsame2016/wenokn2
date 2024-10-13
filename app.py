@@ -188,10 +188,10 @@ with col2:
                 console.log('200 =====> ' + chatInput.value);
                 chatInput.focus();
                 chatInput.value = '{selected_item}';
-                function autoResizeTextarea() {
+                function autoResizeTextarea() {{
                     chatInput.style.height = 'auto';
                     chatInput.style.height = textarea.scrollHeight + 'px';
-                }
+                }}
                 setTimeout(autoResizeTextarea, 2000)
                 </script>
                 """
