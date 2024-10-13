@@ -339,7 +339,7 @@ if st.session_state.sample_query:
                 chatInput.dispatchEvent(event);
             }}
             setTimeout(autoResizeTextarea, 1000)
-            alert('{st.session_state.sample_query}')
+            console.log('{st.session_state.sample_query}')
             </script>
             """
     html(js_code)
