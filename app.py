@@ -327,6 +327,7 @@ if st.session_state.sample_query:
     st.markdown(st.session_state.sample_query)
     js_code = f"""
             <script>
+            console.log("=====> 100");
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
