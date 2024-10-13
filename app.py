@@ -329,7 +329,8 @@ if st.session_state.sample_query:
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
-            chatInput.value = '{st.session_state.sample_query}';                
+            chatInput.value = '{st.session_state.sample_query}';   
+            console.log('{st.session_state.sample_query}')
             function autoResizeTextarea() {{
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
@@ -338,8 +339,7 @@ if st.session_state.sample_query:
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
             }}
-            setTimeout(autoResizeTextarea, 3000)
-            console.log('{st.session_state.sample_query}')
+            setTimeout(autoResizeTextarea, 0)
             </script>
             """
     html(js_code)
