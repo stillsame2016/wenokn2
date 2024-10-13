@@ -193,7 +193,7 @@ with col2:
                     chatInput.style.height = 'auto';
                     chatInput.style.height = chatInput.scrollHeight + 'px';
                 }}
-                setTimeout(autoResizeTextarea, 2000)
+                setTimeout(autoResizeTextarea, 1000)
                 </script>
                 """
         html(js_code)
