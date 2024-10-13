@@ -324,6 +324,7 @@ if st.session_state.rerun:
     st.rerun()
 
 if st.session_state.sample_query:
+    st.markdown(st.session_state.sample_query)
     js_code = f"""
             <script>
             const doc = window.parent.document;
