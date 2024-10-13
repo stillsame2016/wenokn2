@@ -153,6 +153,25 @@ with col2:
     user_input = st.chat_input("What can I help you with?", key="main_chat_input")
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
+    if st.session_state.sample_query:
+        js_code = f"""
+                <script>
+                const doc = window.parent.document;
+                const chatInput = doc.querySelector('.stChatInput textarea');
+                chatInput.focus();
+                chatInput.value = '{st.session_state.sample_query}';                
+                function autoResizeTextarea() {{
+                    chatInput.style.height = 'auto';
+                    chatInput.style.height = chatInput.scrollHeight + 'px';
+                    var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+                    nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query}");
+                    const event = new Event('input', {{ bubbles: true }});
+                    chatInput.dispatchEvent(event);
+                }}
+                setTimeout(autoResizeTextarea, 1000)
+                </script>
+                """
+        html(js_code)
 
     sample_queries = [
         'Find Ross county.', 
