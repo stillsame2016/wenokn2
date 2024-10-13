@@ -184,15 +184,16 @@ with col2:
                 <script>
                 const doc = window.parent.document;
                 const chatInput = doc.querySelector('.stChatInput textarea');
-                console.log('100 =====> {selected_item}');
-                console.log('200 =====> ' + chatInput.value);
                 chatInput.focus();
                 chatInput.value = '{selected_item}';
+                chatInput.style.height = 'auto';
+                chatInput.style.height = textarea.scrollHeight + 'px';
+                
                 function autoResizeTextarea() {{
                     chatInput.style.height = 'auto';
                     chatInput.style.height = textarea.scrollHeight + 'px';
                 }}
-                setTimeout(autoResizeTextarea, 2000)
+                // setTimeout(autoResizeTextarea, 2000)
                 </script>
                 """
         html(js_code)
