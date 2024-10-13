@@ -185,7 +185,7 @@ with col2:
                 const doc = window.parent.document;
                 const chatInput = doc.querySelector('.stChatInputContainer input');
                 console.log('{selected_item}');
-                console.log(chatInput)
+                console.log(chatInput);
                 </script>
                 """
         html(js_code)
