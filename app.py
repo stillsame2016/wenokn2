@@ -154,6 +154,7 @@ with col2:
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
     if st.session_state.sample_query:
+        st.markdown(st.session_state.sample_query)
         js_code = f"""
                 <script>
                 const doc = window.parent.document;
@@ -202,7 +203,6 @@ with col2:
                                  placeholder="Sample Queries")
     if selected_item:
         st.session_state.sample_query = selected_item
-        st.markdown(st.session_state.sample_query)
         
         # js_code = f"""
         #         <script>
