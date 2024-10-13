@@ -186,6 +186,7 @@ with col2:
                 const chatInput = doc.querySelector('.stChatInput textarea');
                 console.log('100 =====> {selected_item}');
                 console.log('200 =====> ' + chatInput.value);
+                chatInput.value = '{selected_item}';
                 </script>
                 """
         html(js_code)
