@@ -150,7 +150,7 @@ with col2:
                 st.markdown(message['content'])
 
     # Get user input
-    user_input = st.chat_input("What can I help you with?", key="main_chat_input")
+    user_input = st.text_input("What can I help you with?", key="main_chat_input")
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
     
@@ -343,7 +343,7 @@ if st.session_state.sample_query:
             </script>
             """
     html(js_code)
-    st.markdown(st.session_state.sample_query)
+    
 
 
 # if map_config:
