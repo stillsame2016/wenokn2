@@ -184,8 +184,8 @@ with col2:
                 <script>
                 const doc = window.parent.document;
                 const chatInput = doc.querySelector('.stChatInputContainer input');
-                console.log('{selected_item}');
-                console.log(chatInput);
+                console.log('100 =====> {selected_item}');
+                console.log('200 =====> ' + chatInput);
                 </script>
                 """
         html(js_code)
