@@ -188,6 +188,8 @@ with col2:
                 console.log('200 =====> ' + chatInput.value);
                 chatInput.focus();
                 chatInput.value = '{selected_item}';
+                chatInput.style.height = 'auto';
+                chatInput.style.height = textarea.scrollHeight + 'px';
                 </script>
                 """
         html(js_code)
