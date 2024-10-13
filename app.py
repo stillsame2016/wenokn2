@@ -192,7 +192,7 @@ with col2:
                     chatInput.style.height = 'auto';
                     chatInput.style.height = chatInput.scrollHeight + 'px';
                     var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                    nativeInputValueSetter.call(chatInput, " ");
+                    nativeInputValueSetter.call(chatInput, "{selected_item}");
                     const event = new Event('input', {{ bubbles: true }});
                     chatInput.dispatchEvent(event);
                 }}
