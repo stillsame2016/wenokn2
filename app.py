@@ -68,7 +68,7 @@ if "sparqls" not in st.session_state:
     st.session_state.sparqls = []
 
 if "sample_query" not in st.session_state:
-    st.session_state.sample_query = None
+    st.session_state.sample_query = []
 
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
@@ -182,7 +182,7 @@ with col2:
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
     if selected_item:
-        st.session_state.sample_query = selected_item
+        st.session_state.sample_query = [ selected_item ]
         
         # js_code = f"""
         #         <script>
@@ -331,8 +331,8 @@ if st.session_state.sample_query:
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
-            chatInput.value = '{st.session_state.sample_query}';   
-            console.log('{st.session_state.sample_query}')
+            chatInput.value = '{st.session_state.sample_query[0]}';   
+            console.log('{st.session_state.sample_query[0]}')
             function autoResizeTextarea() {{
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
