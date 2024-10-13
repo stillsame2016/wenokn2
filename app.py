@@ -191,6 +191,8 @@ with col2:
                 function autoResizeTextarea() {{
                     chatInput.style.height = 'auto';
                     chatInput.style.height = chatInput.scrollHeight + 'px';
+                    var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+                    nativeInputValueSetter.call(chatInput, " ");
                     const event = new Event('input', {{ bubbles: true }});
                     chatInput.dispatchEvent(event);
                 }}
