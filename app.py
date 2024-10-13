@@ -147,7 +147,7 @@ with col2:
                 st.markdown(message['content'])
 
     # Get user input
-    user_input = st.chat_input("What can I help you with?")
+    user_input = st.chat_input("What can I help you with?", key="main_chat_input")
     if init_query and len(st.session_state.chat) == 0:
         user_input = init_query
 
@@ -184,6 +184,7 @@ with col2:
                 <script>
                 const doc = window.parent.document;
                 const chatInput = doc.querySelector('.stChatInputContainer input');
+                #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stMainBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div.stHorizontalBlock.st-emotion-cache-ocqkz7.e1f1d6gn5 > div.stColumn.st-emotion-cache-1yycg8b.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > div > div.st-ae.st-af.st-ag.st-ah.st-ai.st-aj.st-ak.st-al.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-av.st-aw.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5 > div > textarea
                 console.log('100 =====> {selected_item}');
                 console.log('200 =====> ' + chatInput);
                 </script>
