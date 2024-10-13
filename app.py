@@ -343,6 +343,7 @@ if st.session_state.sample_query:
             </script>
             """
     html(js_code)
+    st.markdown(st.session_state.sample_query)
 
 
 # if map_config:
