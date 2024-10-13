@@ -172,6 +172,7 @@ with col2:
                 </script>
                 """
         html(js_code)
+        st.session_state.rerun = False
 
     sample_queries = [
         'Find Ross county.', 
