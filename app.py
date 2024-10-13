@@ -337,7 +337,7 @@ if st.session_state.sample_query:
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query}");
+                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]}");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
             }}
