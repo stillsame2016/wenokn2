@@ -203,6 +203,7 @@ with col2:
                                  placeholder="Sample Queries")
     if selected_item:
         st.session_state.sample_query = selected_item
+        st.session_state.rerun = True
         
         # js_code = f"""
         #         <script>
