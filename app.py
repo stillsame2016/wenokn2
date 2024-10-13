@@ -172,7 +172,6 @@ with col2:
                 </script>
                 """
         html(js_code)
-        st.session_state.rerun = False
 
     sample_queries = [
         'Find Ross county.', 
@@ -203,7 +202,6 @@ with col2:
                                  placeholder="Sample Queries")
     if selected_item:
         st.session_state.sample_query = selected_item
-        st.session_state.rerun = True
         
         # js_code = f"""
         #         <script>
