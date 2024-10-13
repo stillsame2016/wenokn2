@@ -179,11 +179,13 @@ with col2:
                                  index=None,
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
-
     if selected_item:
         js_code = f"""
                 <script>
-                alert('{selected_item}');
+                const doc = window.parent.document;
+                const chatInput = doc.querySelector('.stChatInputContainer input');
+                console.log('{selected_item}');
+                console.log(chatInput)
                 </script>
                 """
         html(js_code)
