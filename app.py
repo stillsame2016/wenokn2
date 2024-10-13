@@ -191,6 +191,8 @@ with col2:
                 function autoResizeTextarea() {{
                     chatInput.style.height = 'auto';
                     chatInput.style.height = chatInput.scrollHeight + 'px';
+                    const event = new Event('input', {{ bubbles: true }});
+                    chatInput.dispatchEvent(event);
                 }}
                 setTimeout(autoResizeTextarea, 1000)
                 </script>
