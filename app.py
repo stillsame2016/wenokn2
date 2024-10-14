@@ -323,7 +323,7 @@ def clear_selection():
 def on_change():
     st.session_state.selected_option = st.session_state.temp_select
 
-options = ["Option 1", "Option 2", "Option 3"]
+options = sample_queries
 
 # Create a selectbox with a dynamic key
 option = st.selectbox(
