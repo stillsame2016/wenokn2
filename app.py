@@ -326,7 +326,8 @@ if st.session_state.sample_query:
             </script>
             """
     html(js_code)
-    
+
+
 # Initialize the clear flag in session state if it doesn't exist
 if 'clear_selectbox' not in st.session_state:
     st.session_state.clear_selectbox = False
@@ -339,7 +340,7 @@ def clear_selection():
 options = ["Option 1", "Option 2", "Option 3"]
 default_index = 0 if not st.session_state.clear_selectbox else None
 
-option = st.selectbox("Choose an option", options, index=default_index, key="my_selectbox")
+option = st.selectbox("Choose an option", sample_queries, index=default_index, key="my_selectbox")
 
 # Create a button to clear the selectbox
 if st.button("Clear Selection", on_click=clear_selection):
