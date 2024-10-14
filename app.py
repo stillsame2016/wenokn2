@@ -348,7 +348,7 @@ if option != st.session_state.last_selected_option:
     st.session_state.clear_selectbox = False
 
 # Create a button to clear the selectbox
-if st.button("Clear Selection"):
+if st.button("Clear Selection", on_click=clear_selection):
     clear_selection()
     st.rerun()
 
