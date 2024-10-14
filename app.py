@@ -322,8 +322,29 @@ def clear_selection():
 
 def on_change():
     st.session_state.selected_option = st.session_state.temp_select
+    update_chat_input(st.session_state.selected_option)
 
-options = sample_queries
+def update_chat_input(option):
+    if option:
+        js_code = f"""
+        <script>
+        const doc = window.parent.document;
+        const chatInput = doc.querySelector('.stChatInput textarea');
+        chatInput.focus();
+        function autoResizeTextarea() {{
+            chatInput.style.height = 'auto';
+            chatInput.style.height = chatInput.scrollHeight + 'px';
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+            nativeInputValueSetter.call(chatInput, "{option} ");
+            const event = new Event('input', {{ bubbles: true }});
+            chatInput.dispatchEvent(event);
+        }}
+        setTimeout(autoResizeTextarea, 100);
+        </script>
+        """
+        html(js_code)
+
+options = sample_queries  # Assuming sample_queries is defined elsewhere
 
 # Create a selectbox with a dynamic key
 option = st.selectbox(
@@ -345,27 +366,31 @@ st.button("Clear Selection", on_click=clear_selection)
 # Display the current selection
 st.write("You selected:", option)
 
-# if st.session_state.sample_query:
+# Initial update of chat input if an option is selected
 if option:
-    # st.markdown(st.session_state.sample_query)
-    js_code = f"""
-            <script>
-            const doc = window.parent.document;
-            const chatInput = doc.querySelector('.stChatInput textarea');
-            chatInput.focus();
-            function autoResizeTextarea() {{
-                // chatInput.value = '{st.session_state.sample_query[0]}';   
-                chatInput.style.height = 'auto';
-                chatInput.style.height = chatInput.scrollHeight + 'px';
-                var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{option} ");
-                const event = new Event('input', {{ bubbles: true }});
-                chatInput.dispatchEvent(event);
-            }}
-            setTimeout(autoResizeTextarea, 100);
-            </script>
-            """
-    html(js_code)
+    update_chat_input(option)
+
+# if st.session_state.sample_query:
+# if option:
+#     # st.markdown(st.session_state.sample_query)
+#     js_code = f"""
+#             <script>
+#             const doc = window.parent.document;
+#             const chatInput = doc.querySelector('.stChatInput textarea');
+#             chatInput.focus();
+#             function autoResizeTextarea() {{
+#                 // chatInput.value = '{st.session_state.sample_query[0]}';   
+#                 chatInput.style.height = 'auto';
+#                 chatInput.style.height = chatInput.scrollHeight + 'px';
+#                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+#                 nativeInputValueSetter.call(chatInput, "{option} ");
+#                 const event = new Event('input', {{ bubbles: true }});
+#                 chatInput.dispatchEvent(event);
+#             }}
+#             setTimeout(autoResizeTextarea, 100);
+#             </script>
+#             """
+#     html(js_code)
 
 
 # if map_config:
