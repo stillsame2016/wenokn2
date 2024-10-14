@@ -311,7 +311,7 @@ st.markdown("")
 st.markdown("")
 
 # Get query parameters
-query_params = st.get_query_params()
+query_params = st.query_params()
 selected_query = query_params.get("query", [None])[0]
 
 # Initialize the session state variables
