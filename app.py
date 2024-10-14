@@ -320,7 +320,7 @@ if st.session_state.sample_query:
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
             }}
-            setTimeout(autoResizeTextarea, 200)
+            setTimeout(autoResizeTextarea, 100);
             </script>
             """
     html(js_code)
