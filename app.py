@@ -341,7 +341,7 @@ def clear_selection():
 # Create a selectbox
 options = ["Option 1", "Option 2", "Option 3"]
 # default_index = 0 if not st.session_state.clear_selectbox else None
-default_index = None if st.session_state.clear_selectbox else default_index
+default_index = None if st.session_state.clear_selectbox else 0
 
 option = st.selectbox("Choose an option", 
                       sample_queries, 
