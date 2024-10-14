@@ -359,6 +359,8 @@ option = st.selectbox("Choose an option",
                       label_visibility='hidden',
                       placeholder="Sample Queries",
                       key="my_selectbox")
+if option:
+    st.session_state.sample_query = [ option ]
 
 # Update the last selected option
 if option != st.session_state.last_selected_option:
