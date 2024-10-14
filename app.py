@@ -70,6 +70,9 @@ if "sparqls" not in st.session_state:
 if "sample_query" not in st.session_state:
     st.session_state.sample_query = None
 
+if "selection_index" not in st.session_state:
+    st.session_state.selection_index = None
+
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
 def add_map():
@@ -184,6 +187,7 @@ with col2:
                                  key='selection_index')
     if selected_item:
         st.session_state.sample_query = selected_item 
+        st.session_state.selection_index = None
         
         
     if user_input:
