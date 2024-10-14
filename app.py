@@ -344,12 +344,9 @@ st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
 st.write("You selected:", option)
-if option:
-    st.session_state.sample_query = [ option ]
-    time.sleep(5)
-#     st.session_state.selected_option = None
 
-if st.session_state.sample_query:
+# if st.session_state.sample_query:
+if option:
     # st.markdown(st.session_state.sample_query)
     js_code = f"""
             <script>
@@ -361,7 +358,7 @@ if st.session_state.sample_query:
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]} ");
+                nativeInputValueSetter.call(chatInput, "{option} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
             }}
