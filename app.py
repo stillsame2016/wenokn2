@@ -310,39 +310,24 @@ if st.session_state.rerun:
 st.markdown("")
 st.markdown("")
 
+# Get query parameters
+query_params = st.experimental_get_query_params()
+selected_query = query_params.get("query", [None])[0]
+
 # Initialize the session state variables
 if 'selectbox_key' not in st.session_state:
     st.session_state.selectbox_key = 0
-if 'selected_option' not in st.session_state:
-    st.session_state.selected_option = None
 
 def clear_selection():
     st.session_state.selectbox_key += 1
-    st.session_state.selected_option = None
+    st.experimental_set_query_params(query=None)
+    st.experimental_rerun()
 
 def on_change():
-    st.session_state.selected_option = st.session_state.temp_select
-    update_chat_input(st.session_state.selected_option)
-
-def update_chat_input(option):
-    if option:
-        js_code = f"""
-        <script>
-        const doc = window.parent.document;
-        const chatInput = doc.querySelector('.stChatInput textarea');
-        chatInput.focus();
-        function autoResizeTextarea() {{
-            chatInput.style.height = 'auto';
-            chatInput.style.height = chatInput.scrollHeight + 'px';
-            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-            nativeInputValueSetter.call(chatInput, "{option} ");
-            const event = new Event('input', {{ bubbles: true }});
-            chatInput.dispatchEvent(event);
-        }}
-        setTimeout(autoResizeTextarea, 100);
-        </script>
-        """
-        html(js_code)
+    selected_option = st.session_state.sample_query_select
+    if selected_option:
+        st.experimental_set_query_params(query=selected_option)
+        st.experimental_rerun()
 
 options = sample_queries  # Assuming sample_queries is defined elsewhere
 
@@ -350,25 +335,38 @@ options = sample_queries  # Assuming sample_queries is defined elsewhere
 option = st.selectbox(
     "Choose an option",
     options,
-    key=f"my_selectbox_{st.session_state.selectbox_key}",
-    index=None if st.session_state.selected_option is None else options.index(st.session_state.selected_option),
+    key="sample_query_select",
+    index=None if selected_query is None else options.index(selected_query),
     label_visibility='hidden',
     placeholder="Sample Queries",
     on_change=on_change
 )
 
-# Update the selected_option in session state
-st.session_state.temp_select = option
-
 # Create a button to clear the selectbox
 st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
-st.write("You selected:", option)
+st.write("You selected:", selected_query if selected_query else "No selection")
 
-# Initial update of chat input if an option is selected
-if option:
-    update_chat_input(option)
+# Update chat input if a query is selected
+if selected_query:
+    js_code = f"""
+    <script>
+    const doc = window.parent.document;
+    const chatInput = doc.querySelector('.stChatInput textarea');
+    chatInput.focus();
+    function autoResizeTextarea() {{
+        chatInput.style.height = 'auto';
+        chatInput.style.height = chatInput.scrollHeight + 'px';
+        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+        nativeInputValueSetter.call(chatInput, "{selected_query} ");
+        const event = new Event('input', {{ bubbles: true }});
+        chatInput.dispatchEvent(event);
+    }}
+    setTimeout(autoResizeTextarea, 100);
+    </script>
+    """
+    html(js_code)
 
 # if st.session_state.sample_query:
 # if option:
