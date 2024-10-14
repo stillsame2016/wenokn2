@@ -186,9 +186,7 @@ with col2:
                                  placeholder="Sample Queries",
                                  key='selection_index')
     if selected_item:
-        st.session_state.sample_query = selected_item 
-        st.session_state.selection_index = None
-        
+        st.session_state.sample_query = selected_item  
         
     if user_input:
         with chat_container:
@@ -321,6 +319,9 @@ if st.session_state.sample_query:
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
+
+            const selectBox = doc.querySelector('select[data-testid="stSelectbox"]');
+            console.log("=====> 100 " + selectBox)
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
                 chatInput.style.height = 'auto';
@@ -329,6 +330,7 @@ if st.session_state.sample_query:
                 nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
+
             }}
             setTimeout(autoResizeTextarea, 100);
 
