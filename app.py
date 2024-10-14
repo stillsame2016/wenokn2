@@ -319,8 +319,8 @@ if 'selectbox_key' not in st.session_state:
 
 def clear_selection():
     st.session_state.selectbox_key += 1
-    st.experimental_set_query_params(query=None)
-    st.experimental_rerun()
+    st.set_query_params(query=None)
+    st.rerun()
 
 def on_change():
     selected_option = st.session_state.sample_query_select
