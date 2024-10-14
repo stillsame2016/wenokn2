@@ -311,8 +311,7 @@ st.markdown("")
 st.markdown("")
 
 # Get query parameters
-query_params = st.query_params()
-selected_query = query_params.get("query", [None])[0]
+selected_query = st.query_params.get("query", [None])[0]
 
 # Initialize the session state variables
 if 'selectbox_key' not in st.session_state:
