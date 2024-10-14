@@ -327,26 +327,18 @@ if st.session_state.sample_query:
             """
     html(js_code)
     
-# Initialize session state for selectbox
-if 'selectbox_value' not in st.session_state:
-    st.session_state['selectbox_value'] = "Select an option"
+# Create a selectbox
+option = st.selectbox("Choose an option", ["Option 1", "Option 2", "Option 3"], key="my_selectbox")
 
-# Define a callback to reset the selectbox value
-def reset_selectbox():
-    st.session_state['selectbox_value'] = "Select an option"
+# Create a button to clear the selectbox
+if st.button("Clear Selection"):
+    # Clear the selectbox value in session state
+    st.session_state.my_selectbox = None
+    # Rerun the app to reflect the changes
+    st.experimental_rerun()
 
-# Display the selectbox with the session state value
-selected_option = st.selectbox(
-    "Choose an option", 
-    ["Select an option", "Option 1", "Option 2", "Option 3"], 
-    key='selectbox_value'
-)
-
-# Button to reset the selectbox using the callback function
-if st.button("Reset"):
-    reset_selectbox()
-
-st.write("Selected option:", selected_option)
+# Display the current selection
+st.write("You selected:", option)
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
