@@ -189,6 +189,7 @@ with col2:
         st.session_state.sample_query = selected_item  
         
     if user_input:
+        st.session_state.sample_query = None
         with chat_container:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
