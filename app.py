@@ -336,10 +336,6 @@ option = st.selectbox(
     on_change=on_change
 )
 
-# if option:
-#     st.session_state.sample_query = [ option ]
-#     clear_selection()
-
 # Update the selected_option in session state
 st.session_state.temp_select = option
 
@@ -348,6 +344,9 @@ st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
 st.write("You selected:", option)
+if option:
+    st.session_state.sample_query = [ option ]
+    setTimeout(clear_selection, 2000)
 
 
 if st.session_state.sample_query:
