@@ -341,7 +341,7 @@ st.session_state.temp_select = option
 st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
-st.write("You selected:", st.session_state.selected_option if st.session_state.selected_option else "No selection")
+st.write("You selected:", option)
 
 
 if st.session_state.sample_query:
