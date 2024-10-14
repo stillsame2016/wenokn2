@@ -359,6 +359,7 @@ if st.session_state.clear_selectbox:
     st.session_state.clear_selectbox = False
 
 # Display the current selection
+st.write("default_index:", default_index)
 st.write("You selected:", option)
 
 # if map_config:
