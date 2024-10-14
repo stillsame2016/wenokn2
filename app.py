@@ -69,8 +69,6 @@ if "sparqls" not in st.session_state:
 
 if "sample_query" not in st.session_state:
     st.session_state.sample_query = []
-if "selection_index" not in st.session_state:
-    st.session_state.selection_index = None
 
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
@@ -185,7 +183,6 @@ with col2:
                                  placeholder="Sample Queries",
                                  key='selection_index')
     if selected_item:
-        st.markdown(st.session_state.selected_item)
         st.session_state.sample_query = [ selected_item ]
         
         
