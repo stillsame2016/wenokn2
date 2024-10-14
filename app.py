@@ -320,8 +320,6 @@ if st.session_state.sample_query:
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
 
-            const selectBox = doc.querySelector('select[data-testid="stSelectbox"]');
-            console.log("=====> 100 " + selectBox)
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
                 chatInput.style.height = 'auto';
@@ -330,6 +328,20 @@ if st.session_state.sample_query:
                 nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
+
+                const observer = new MutationObserver((mutations, obs) => {{
+                    const selectBox = doc.querySelector('select[data-testid="stSelectbox"]');
+                    if (selectBox) {{
+                        selectBox.value = '';
+                        selectBox.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        obs.disconnect(); // Stop observing
+                    }}
+                }});
+                
+                observer.observe(doc.body, {{
+                    childList: true,
+                    subtree: true
+                }});
 
             }}
             setTimeout(autoResizeTextarea, 100);
