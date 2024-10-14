@@ -324,16 +324,16 @@ if st.session_state.rerun:
     st.rerun()
 
 if st.session_state.sample_query:
-    st.markdown(st.session_state.sample_query)
+    # st.markdown(st.session_state.sample_query)
     js_code = f"""
             <script>
             console.log("=====> 100");
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
-            chatInput.value = '{st.session_state.sample_query[0]}';   
             console.log('{st.session_state.sample_query[0]}')
             function autoResizeTextarea() {{
+                chatInput.value = '{st.session_state.sample_query[0]}';   
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
