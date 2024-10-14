@@ -327,11 +327,11 @@ if st.session_state.sample_query:
             """
     html(js_code)
     
-# Initialize selectbox state if not already done
+# Check if the key 'selectbox_value' exists in session_state, if not, initialize it
 if 'selectbox_value' not in st.session_state:
     st.session_state.selectbox_value = "Select an option"
 
-# Display selectbox using session state
+# Display the selectbox
 selected_option = st.selectbox("Choose an option", 
                                ["Select an option", "Option 1", "Option 2", "Option 3"], 
                                key="selectbox_value")
