@@ -346,7 +346,7 @@ option = st.selectbox("Choose an option", options, index=default_index, key="my_
 
 # Create a button to clear the selectbox
 if st.button("Clear Selection", on_click=clear_selection):
-    st.experimental_rerun()
+    st.rerun()
 
 # Reset the clear flag after use
 if st.session_state.clear_selectbox:
