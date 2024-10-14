@@ -187,7 +187,7 @@ with col2:
                                  key='selection_index')
     if selected_item:
         st.session_state.sample_query = selected_item 
-        # st.session_state.selection_index = None
+        st.session_state.selection_index = None
         
         
     if user_input:
