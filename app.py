@@ -331,6 +331,8 @@ option = st.selectbox(
     options,
     key=f"my_selectbox_{st.session_state.selectbox_key}",
     index=None if st.session_state.selected_option is None else options.index(st.session_state.selected_option),
+    label_visibility='hidden',
+    placeholder="Sample Queries",
     on_change=on_change
 )
 
