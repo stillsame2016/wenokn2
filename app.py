@@ -331,7 +331,11 @@ if st.session_state.sample_query:
 
                 const observer = new MutationObserver((mutations, obs) => {{
                     const clearButton = doc.querySelector('svg[title="Clear value"]');
-                    console.log("====> 100 " + clearButton);            
+                    console.log("====> 100 " + clearButton);      
+                     if (clearButton) {{
+                        clearButton.click();
+                        obs.disconnect(); // Stop observing
+                    }}
                 }});
                 
                 observer.observe(doc.body, {{
