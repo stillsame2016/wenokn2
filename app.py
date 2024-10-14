@@ -306,26 +306,6 @@ if st.session_state.rerun:
     st.session_state.rerun = False
     st.rerun()
 
-if st.session_state.sample_query:
-    # st.markdown(st.session_state.sample_query)
-    js_code = f"""
-            <script>
-            const doc = window.parent.document;
-            const chatInput = doc.querySelector('.stChatInput textarea');
-            chatInput.focus();
-            function autoResizeTextarea() {{
-                // chatInput.value = '{st.session_state.sample_query[0]}';   
-                chatInput.style.height = 'auto';
-                chatInput.style.height = chatInput.scrollHeight + 'px';
-                var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]} ");
-                const event = new Event('input', {{ bubbles: true }});
-                chatInput.dispatchEvent(event);
-            }}
-            setTimeout(autoResizeTextarea, 100);
-            </script>
-            """
-    html(js_code)
 
 st.markdown("")
 st.markdown("")
@@ -373,6 +353,28 @@ if st.button("Clear Selection", on_click=clear_selection):
 
 # Display the current selection
 st.write("You selected:", option if not st.session_state.clear_selectbox else "No selection")
+
+if st.session_state.sample_query:
+    # st.markdown(st.session_state.sample_query)
+    js_code = f"""
+            <script>
+            const doc = window.parent.document;
+            const chatInput = doc.querySelector('.stChatInput textarea');
+            chatInput.focus();
+            function autoResizeTextarea() {{
+                // chatInput.value = '{st.session_state.sample_query[0]}';   
+                chatInput.style.height = 'auto';
+                chatInput.style.height = chatInput.scrollHeight + 'px';
+                var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
+                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]} ");
+                const event = new Event('input', {{ bubbles: true }});
+                chatInput.dispatchEvent(event);
+            }}
+            setTimeout(autoResizeTextarea, 100);
+            </script>
+            """
+    html(js_code)
+
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
