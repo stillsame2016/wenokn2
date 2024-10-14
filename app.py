@@ -334,16 +334,6 @@ if st.session_state.sample_query:
             }}
             setTimeout(autoResizeTextarea, 100);
 
-            // Clear the selectbox
-            setTimeout(() => {{
-                const selectElement = doc.querySelector('select[aria-label="Sample Queries"]');
-                console.log("=====> 200 " + selectElement);
-
-                if (selectElement) {{
-                    selectElement.value = '';
-                    selectElement.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                }}
-            }}, 200);
             </script>
             """
     html(js_code)
