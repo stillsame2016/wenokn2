@@ -328,31 +328,30 @@ if st.session_state.sample_query:
     html(js_code)
 
 
-# Initialize the clear flag in session state if it doesn't exist
-if 'clear_selectbox' not in st.session_state:
-    st.session_state.clear_selectbox = False
+# # Initialize the clear flag in session state if it doesn't exist
+# if 'clear_selectbox' not in st.session_state:
+#     st.session_state.clear_selectbox = False
 
-# Function to set the clear flag
-def clear_selection():
-    st.session_state.clear_selectbox = True
+# # Function to set the clear flag
+# def clear_selection():
+#     st.session_state.clear_selectbox = True
 
-# Create a selectbox
-options = ["Option 1", "Option 2", "Option 3"]
+# # Create a selectbox
+# options = ["Option 1", "Option 2", "Option 3"]
 # default_index = 0 if not st.session_state.clear_selectbox else None
-default_index = None
 
-option = st.selectbox("Choose a sample query", sample_queries, index=default_index, key="my_selectbox")
+# option = st.selectbox("Choose a sample query", sample_queries, index=default_index, key="my_selectbox")
 
-# Create a button to clear the selectbox
-if st.button("Clear Selection", on_click=clear_selection):
-    st.rerun()
+# # Create a button to clear the selectbox
+# if st.button("Clear Selection", on_click=clear_selection):
+#     st.rerun()
 
-# Reset the clear flag after use
-if st.session_state.clear_selectbox:
-    st.session_state.clear_selectbox = False
+# # Reset the clear flag after use
+# if st.session_state.clear_selectbox:
+#     st.session_state.clear_selectbox = False
 
-# Display the current selection
-st.write("You selected:", option)
+# # Display the current selection
+# st.write("You selected:", option)
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
