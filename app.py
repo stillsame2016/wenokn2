@@ -310,49 +310,36 @@ if st.session_state.rerun:
 st.markdown("")
 st.markdown("")
 
-# Initialize the clear flag and last selected option in session state if they don't exist
-if 'clear_selectbox' not in st.session_state:
-    st.session_state.clear_selectbox = False
-if 'last_selected_option' not in st.session_state:
-    st.session_state.last_selected_option = None
+# Initialize the session state variables
+if 'selectbox_key' not in st.session_state:
+    st.session_state.selectbox_key = 0
+if 'selected_option' not in st.session_state:
+    st.session_state.selected_option = None
 
-# Function to set the clear flag
 def clear_selection():
-    st.session_state.clear_selectbox = True
-    st.session_state.last_selected_option = None
+    st.session_state.selectbox_key += 1
+    st.session_state.selected_option = None
 
-# Create a selectbox
-# options = ["Option 1", "Option 2", "Option 3"]
-options = sample_queries
+def on_change():
+    st.session_state.selected_option = st.session_state.temp_select
 
-# Determine the index to use
-if st.session_state.clear_selectbox:
-    default_index = None
-elif st.session_state.last_selected_option in options:
-    default_index = options.index(st.session_state.last_selected_option)
-else:
-    default_index = 0
+options = ["Option 1", "Option 2", "Option 3"]
 
-option = st.selectbox("Choose an option", 
-                      sample_queries, 
-                      index=default_index, 
-                      label_visibility='hidden',
-                      placeholder="Sample Queries",
-                      key="my_selectbox")
-if option:
-    st.session_state.sample_query = [ option ]
-
-# Update the last selected option
-if option != st.session_state.last_selected_option:
-    st.session_state.last_selected_option = option
-    st.session_state.clear_selectbox = False
+# Create a selectbox with a dynamic key
+option = st.selectbox(
+    "Choose an option",
+    options,
+    key=f"my_selectbox_{st.session_state.selectbox_key}",
+    index=None if st.session_state.selected_option is None else options.index(st.session_state.selected_option),
+    on_change=on_change,
+    key="temp_select"
+)
 
 # Create a button to clear the selectbox
-if st.button("Clear Selection", on_click=clear_selection):
-    st.rerun()
+st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
-st.write("You selected:", option if not st.session_state.clear_selectbox else "No selection")
+st.write("You selected:", st.session_state.selected_option if st.session_state.selected_option else "No selection")
 
 if st.session_state.sample_query:
     # st.markdown(st.session_state.sample_query)
