@@ -325,8 +325,8 @@ def clear_selection():
 def on_change():
     selected_option = st.session_state.sample_query_select
     if selected_option:
-        st.experimental_set_query_params(query=selected_option)
-        st.experimental_rerun()
+        st.set_query_params(query=selected_option)
+        st.rerun()
 
 options = sample_queries  # Assuming sample_queries is defined elsewhere
 
