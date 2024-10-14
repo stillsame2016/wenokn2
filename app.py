@@ -330,38 +330,6 @@ if st.session_state.sample_query:
 st.markdown("")
 st.markdown("")
 
-# # Initialize the clear flag in session state if it doesn't exist
-# if 'clear_selectbox' not in st.session_state:
-#     st.session_state.clear_selectbox = False
-
-# # Function to set the clear flag
-# def clear_selection():
-#     st.session_state.clear_selectbox = True
-
-# # Create a selectbox
-# options = ["Option 1", "Option 2", "Option 3"]
-# # default_index = 0 if not st.session_state.clear_selectbox else None
-# default_index = len(sample_queries)-1 if not st.session_state.clear_selectbox else None
-
-# option = st.selectbox("Choose an option", 
-#                       sample_queries, 
-#                       index=default_index, 
-#                       label_visibility='hidden',
-#                       placeholder="Sample Queries",
-#                       key="my_selectbox")
-
-# # Create a button to clear the selectbox
-# if st.button("Clear Selection", on_click=clear_selection):
-#     st.rerun()
-
-# # Reset the clear flag after use
-# if st.session_state.clear_selectbox:
-#     st.session_state.clear_selectbox = False
-
-# # Display the current selection
-# st.write("default_index:", default_index)
-# st.write("You selected:", option)
-
 # Initialize the clear flag and last selected option in session state if they don't exist
 if 'clear_selectbox' not in st.session_state:
     st.session_state.clear_selectbox = False
@@ -374,7 +342,8 @@ def clear_selection():
     st.session_state.last_selected_option = None
 
 # Create a selectbox
-options = ["Option 1", "Option 2", "Option 3"]
+# options = ["Option 1", "Option 2", "Option 3"]
+options = sample_queries
 
 # Determine the index to use
 if st.session_state.clear_selectbox:
@@ -384,7 +353,6 @@ elif st.session_state.last_selected_option in options:
 else:
     default_index = 0
 
-# option = st.selectbox("Choose an option", options, index=default_index, key="my_selectbox")
 option = st.selectbox("Choose an option", 
                       sample_queries, 
                       index=default_index, 
