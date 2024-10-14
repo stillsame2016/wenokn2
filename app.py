@@ -155,7 +155,6 @@ with col2:
         user_input = init_query
     
     sample_queries = [
-        None,
         'Find Ross county.', 
         'Find all counties in Ohio State.',
         'Find all counties Scioto River flow through.',
@@ -179,7 +178,7 @@ with col2:
         st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html=True)
     selected_item = st.selectbox("", 
                                  sample_queries,
-                                 index=0,
+                                 index=None,
                                  label_visibility='hidden',
                                  placeholder="Sample Queries")
     if selected_item:
