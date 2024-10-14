@@ -327,6 +327,15 @@ if st.session_state.sample_query:
                 chatInput.dispatchEvent(event);
             }}
             setTimeout(autoResizeTextarea, 100);
+
+            // Clear the selectbox
+            setTimeout(() => {{
+                const selectElement = doc.querySelector('select[aria-label="Sample Queries"]');
+                if (selectElement) {{
+                    selectElement.value = '';
+                    selectElement.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                }}
+            }}, 200);
             </script>
             """
     html(js_code)
