@@ -346,7 +346,7 @@ st.button("Clear Selection", on_click=clear_selection)
 st.write("You selected:", option)
 if option:
     st.session_state.sample_query = [ option ]
-    time.sleep(3)
+    time.sleep(5)
 #     st.session_state.selected_option = None
 
 if st.session_state.sample_query:
