@@ -327,18 +327,26 @@ if st.session_state.sample_query:
             """
     html(js_code)
     
-# Check if the key 'selectbox_value' exists in session_state, if not, initialize it
+# Initialize session state for selectbox
 if 'selectbox_value' not in st.session_state:
-    st.session_state.selectbox_value = "Select an option"
+    st.session_state['selectbox_value'] = "Select an option"
 
-# Display the selectbox
-selected_option = st.selectbox("Choose an option", 
-                               ["Select an option", "Option 1", "Option 2", "Option 3"], 
-                               key="selectbox_value")
+# Define a callback to reset the selectbox value
+def reset_selectbox():
+    st.session_state['selectbox_value'] = "Select an option"
 
-# Button to reset selectbox to default
+# Display the selectbox with the session state value
+selected_option = st.selectbox(
+    "Choose an option", 
+    ["Select an option", "Option 1", "Option 2", "Option 3"], 
+    key='selectbox_value'
+)
+
+# Button to reset the selectbox using the callback function
 if st.button("Reset"):
-    st.session_state.selectbox_value = "Select an option"
+    reset_selectbox()
+
+st.write("Selected option:", selected_option)
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
