@@ -180,9 +180,11 @@ with col2:
                                  sample_queries,
                                  index=None,
                                  label_visibility='hidden',
-                                 placeholder="Sample Queries")
+                                 placeholder="Sample Queries",
+                                 key='selection_index')
     if selected_item:
         st.session_state.sample_query = [ selected_item ]
+        st.session_state.selection_index = None
         
     if user_input:
         with chat_container:
