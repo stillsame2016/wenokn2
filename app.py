@@ -331,15 +331,18 @@ option = st.selectbox(
     options,
     key=f"my_selectbox_{st.session_state.selectbox_key}",
     index=None if st.session_state.selected_option is None else options.index(st.session_state.selected_option),
-    on_change=on_change,
-    key="temp_select"
+    on_change=on_change
 )
+
+# Update the selected_option in session state
+st.session_state.temp_select = option
 
 # Create a button to clear the selectbox
 st.button("Clear Selection", on_click=clear_selection)
 
 # Display the current selection
 st.write("You selected:", st.session_state.selected_option if st.session_state.selected_option else "No selection")
+
 
 if st.session_state.sample_query:
     # st.markdown(st.session_state.sample_query)
