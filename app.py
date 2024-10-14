@@ -333,11 +333,11 @@ if st.session_state.sample_query:
             chatInput.focus();
             console.log('{st.session_state.sample_query[0]}')
             function autoResizeTextarea() {{
-                chatInput.value = '{st.session_state.sample_query[0]}===';   
+                // chatInput.value = '{st.session_state.sample_query[0]}';   
                 chatInput.style.height = 'auto';
                 chatInput.style.height = chatInput.scrollHeight + 'px';
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]}");
+                nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query[0]} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
             }}
