@@ -184,25 +184,6 @@ with col2:
     if selected_item:
         st.session_state.sample_query = [ selected_item ]
         
-        # js_code = f"""
-        #         <script>
-        #         const doc = window.parent.document;
-        #         const chatInput = doc.querySelector('.stChatInput textarea');
-        #         chatInput.focus();
-        #         chatInput.value = '{st.session_state.sample_query}';                
-        #         function autoResizeTextarea() {{
-        #             chatInput.style.height = 'auto';
-        #             chatInput.style.height = chatInput.scrollHeight + 'px';
-        #             var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-        #             nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query}");
-        #             const event = new Event('input', {{ bubbles: true }});
-        #             chatInput.dispatchEvent(event);
-        #         }}
-        #         setTimeout(autoResizeTextarea, 300)
-        #         </script>
-        #         """
-        # html(js_code)
-
     if user_input:
         with chat_container:
             st.chat_message("user").markdown(user_input)
