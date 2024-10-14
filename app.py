@@ -349,7 +349,6 @@ if option != st.session_state.last_selected_option:
 
 # Create a button to clear the selectbox
 if st.button("Clear Selection", on_click=clear_selection):
-    clear_selection()
     st.rerun()
 
 # Display the current selection
