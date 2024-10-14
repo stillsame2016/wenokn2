@@ -384,7 +384,13 @@ elif st.session_state.last_selected_option in options:
 else:
     default_index = 0
 
-option = st.selectbox("Choose an option", options, index=default_index, key="my_selectbox")
+# option = st.selectbox("Choose an option", options, index=default_index, key="my_selectbox")
+option = st.selectbox("Choose an option", 
+                      sample_queries, 
+                      index=default_index, 
+                      label_visibility='hidden',
+                      placeholder="Sample Queries",
+                      key="my_selectbox")
 
 # Update the last selected option
 if option != st.session_state.last_selected_option:
