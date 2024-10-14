@@ -327,15 +327,27 @@ if st.session_state.sample_query:
             """
     html(js_code)
     
+# Initialize the clear flag in session state if it doesn't exist
+if 'clear_selectbox' not in st.session_state:
+    st.session_state.clear_selectbox = False
+
+# Function to set the clear flag
+def clear_selection():
+    st.session_state.clear_selectbox = True
+
 # Create a selectbox
-option = st.selectbox("Choose an option", ["Option 1", "Option 2", "Option 3"], key="my_selectbox")
+options = ["Option 1", "Option 2", "Option 3"]
+default_index = 0 if not st.session_state.clear_selectbox else None
+
+option = st.selectbox("Choose an option", options, index=default_index, key="my_selectbox")
 
 # Create a button to clear the selectbox
-if st.button("Clear Selection"):
-    # Clear the selectbox value in session state
-    st.session_state.my_selectbox = None
-    # Rerun the app to reflect the changes
+if st.button("Clear Selection", on_click=clear_selection):
     st.experimental_rerun()
+
+# Reset the clear flag after use
+if st.session_state.clear_selectbox:
+    st.session_state.clear_selectbox = False
 
 # Display the current selection
 st.write("You selected:", option)
