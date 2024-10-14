@@ -337,7 +337,7 @@ option = st.selectbox(
 )
 
 if option:
-    st.session_state.sample_query = [ selected_item ]
+    st.session_state.sample_query = [ option ]
 
 # Update the selected_option in session state
 st.session_state.temp_select = option
