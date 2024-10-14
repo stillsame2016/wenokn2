@@ -330,13 +330,8 @@ if st.session_state.sample_query:
                 chatInput.dispatchEvent(event);
 
                 const observer = new MutationObserver((mutations, obs) => {{
-                    const selectBox = doc.querySelector('select[data-testid="stSelectbox"]');
-                    console.log("====> 100 " + selectBox);            
-                    if (selectBox) {{
-                        selectBox.value = '';
-                        selectBox.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                        obs.disconnect(); // Stop observing
-                    }}
+                    const clearButton = doc.querySelector('svg[title="Clear value"]');
+                    console.log("====> 100 " + clearButton);            
                 }});
                 
                 observer.observe(doc.body, {{
