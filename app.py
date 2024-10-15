@@ -167,6 +167,10 @@ with col2:
         'Find all rivers flow through Ross county.',
         'What rivers flow through Dane County in Wisconsin?',
         'What stream gages are on the Yahara river in Madison WI?',
+
+        'Find populations for all counties in Ohio',
+        'Find lifespan for Ross county and Scioto County',
+        
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
     st.markdown(
