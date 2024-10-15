@@ -169,7 +169,8 @@ with col2:
         'What stream gages are on the Yahara river in Madison WI?',
 
         'Find populations for all counties in Ohio',
-        'Find lifespan for Ross county and Scioto County',
+        'Find median individual income for Ross county and Scioto County',
+        'Find number of people employed for all counties Scioto River flows through.',
         
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
