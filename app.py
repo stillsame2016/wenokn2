@@ -173,6 +173,9 @@ with col2:
         ######## Gages ########
         'What stream gages are on the Yahara River in Madison, WI?',  
 
+        ######## Dam ########
+        'Find all dams on the Ohio River.', 
+        
         ######## Data Commons ########
         'Find the populations for all counties in Ohio State.', 
         'Find the median individual income for Ross County and Scioto County.', 
