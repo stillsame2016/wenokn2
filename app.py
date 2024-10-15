@@ -174,9 +174,9 @@ with col2:
         'What stream gages are on the Yahara river in Madison WI?',
 
         ######## Data Commons ########
-        'Find populations for all counties in Ohio',
-        'Find median individual income for Ross county and Scioto County',
-        'Find number of people employed for all counties Scioto River flows through.',
+        'Find the populations for all counties in Ohio',
+        'Find the median individual income for Ross county and Scioto County',
+        'Find the number of people employed for all counties Scioto River flows through.',
 
         ######## Energy Atlas ########
         'Show all coal mines in Ohio State',
