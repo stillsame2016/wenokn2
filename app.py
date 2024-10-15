@@ -160,11 +160,12 @@ with col2:
     sample_queries = [
         'Find Ross county.', 
         'Find all counties in Ohio State.',
-        'Find all counties Scioto River flow through.',
+        'Find all counties Scioto River flows through.',
         'Find all counties downstream of Ross county on Scioto River.',
+        'Find all counties both Ohio River and Muskingum River flow through.',
         'Find Ohio River.', 
         'Find all rivers flow through Ross county.',
-        'Find flood event counts for all counties downstream of Ross county on Scioto River.',
+        # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
     st.markdown(
         """
