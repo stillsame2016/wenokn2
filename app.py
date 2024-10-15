@@ -158,20 +158,27 @@ with col2:
         user_input = init_query
     
     sample_queries = [
+        ######## County ########
         'Find Ross county.', 
         'Find all counties in Ohio State.',
         'Find all counties Scioto River flows through.',
         'Find all counties downstream of Ross county on Scioto River.',
         'Find all counties both Ohio River and Muskingum River flow through.',
+
+        ######## River ########
         'Find Ohio River.', 
         'Find all rivers flow through Ross county.',
         'What rivers flow through Dane County in Wisconsin?',
+
+        ######## Gages ########
         'What stream gages are on the Yahara river in Madison WI?',
 
+        ######## Data Commons ########
         'Find populations for all counties in Ohio',
         'Find median individual income for Ross county and Scioto County',
         'Find number of people employed for all counties Scioto River flows through.',
 
+        ######## Energy Atlas ########
         'Show all coal mines in Ohio State',
         'Load all wind power plants with Total megawatt greater than 100 in California',
         
