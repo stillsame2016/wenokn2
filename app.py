@@ -224,7 +224,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                st.code(code)
+                # st.code(code)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
@@ -235,6 +235,7 @@ with col2:
                             st.session_state.table_chat_histories.append([])
                             st.session_state.chart_types.append("bar_chart")
                             message = f"""
+                                    {code} 
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
