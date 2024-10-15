@@ -235,7 +235,6 @@ with col2:
                             st.session_state.table_chat_histories.append([])
                             st.session_state.chart_types.append("bar_chart")
                             message = f"""
-                                    {code} 
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
