@@ -171,6 +171,9 @@ with col2:
         'Find populations for all counties in Ohio',
         'Find median individual income for Ross county and Scioto County',
         'Find number of people employed for all counties Scioto River flows through.',
+
+        'Show all coal mines in Ohio State',
+        'Load all wind power plants in California',
         
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
