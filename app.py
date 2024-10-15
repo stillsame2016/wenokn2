@@ -345,7 +345,7 @@ if st.session_state.sample_query:
                             clearButton.dispatchEvent(mouseDown);
                             clearButton.dispatchEvent(mouseUp);
                             clearButton.dispatchEvent(click);
-                        }}, 1000);
+                        }}, 1500);
                         obs.disconnect();
                     }}
                 }});
