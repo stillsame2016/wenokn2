@@ -18,6 +18,7 @@ def get_question_route(llm, question):
           6. Dams: Information regarding dams' locations in USA.
           7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
           8. Hospitals: Details about hospital locations and information in USA.
+          9. Stream Gages: Information of gages' locations and names in USA.
         You do not need to be stringent with the keywords in the question related to these topics. 
         
         Use NPDES regulation for questions related to permits or permit applications of discharges pollutants into 
