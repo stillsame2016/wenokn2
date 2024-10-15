@@ -173,7 +173,7 @@ with col2:
         'Find number of people employed for all counties Scioto River flows through.',
 
         'Show all coal mines in Ohio State',
-        'Load all wind power plants in California',
+        'Load all wind power plants with Total megawatt greater than 100 in California',
         
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
