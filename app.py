@@ -165,6 +165,8 @@ with col2:
         'Find all counties both Ohio River and Muskingum River flow through.',
         'Find Ohio River.', 
         'Find all rivers flow through Ross county.',
+        'What rivers flow through Dane County in Wisconsin?',
+        'What stream gages are on the Yahara river in Madison WI?',
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
     st.markdown(
