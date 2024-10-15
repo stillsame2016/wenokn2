@@ -159,28 +159,28 @@ with col2:
     
     sample_queries = [
         ######## County ########
-        'Find Ross county.', 
-        'Find all counties in Ohio State.',
-        'Find all counties Scioto River flows through.',
-        'Find all counties downstream of Ross county on Scioto River.',
-        'Find all counties both Ohio River and Muskingum River flow through.',
+        'Find Ross County.', 
+        'Find all counties in Ohio State.', 
+        'Find all counties the Scioto River flows through.',
+        'Find all counties downstream of Ross County on the Scioto River.',  
+        'Find all counties both the Ohio River and the Muskingum River flow through.',  
 
         ######## River ########
-        'Find Ohio River.', 
-        'Find all rivers flow through Ross county.',
-        'What rivers flow through Dane County in Wisconsin?',
+        'Find the Ohio River.', 
+        'Find all rivers that flow through Ross County.', 
+        'What rivers flow through Dane County in Wisconsin?', 
 
         ######## Gages ########
-        'What stream gages are on the Yahara river in Madison WI?',
+        'What stream gages are on the Yahara River in Madison, WI?',  
 
         ######## Data Commons ########
-        'Find the populations for all counties in Ohio State.',
-        'Find the median individual income for Ross County and Scioto County.',
-        'Find the number of people employed for all counties the Scioto River flows through.',
+        'Find the populations for all counties in Ohio State.', 
+        'Find the median individual income for Ross County and Scioto County.', 
+        'Find the number of people employed in all counties the Scioto River flows through.', 
 
         ######## Energy Atlas ########
-        'Show all coal mines in Ohio State',
-        'Load all wind power plants with Total megawatt greater than 100 in California',
+        'Show all coal mines in Ohio State.', 
+        'Load all wind power plants with total megawatt capacity greater than 100 in California.' 
         
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
     ]
