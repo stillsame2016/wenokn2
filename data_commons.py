@@ -13,7 +13,9 @@ def get_time_series_dataframe_for_dcid(dcid_list, variable_name):
     _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
     _df['Name'] = _df['Name'].str[0]    
     
-    columns = _df.columns.to_list().remove('Name')
+    # columns = _df.columns.to_list().remove('Name')
+    columns = _df.columns.to_list()
+    columns.remove('Name')
     _df = _df.melt(
         ['Name'],
         columns,
