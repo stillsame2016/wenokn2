@@ -321,7 +321,11 @@ with col2:
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
                                 query_plan = response.json
-                                message = response.text
+                                if len(query_plan) > 1:
+                                    for query in query_plan:
+                                        if query["data_source"] == "WEN-OKN Database":
+                                            message = query["request"]
+                                # message = response.text
                     
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
