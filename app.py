@@ -273,7 +273,7 @@ with col2:
 
                             st.markdown("Find Ohio River")
                             count_start = len(st.session_state.datasets)
-                            process_data_request("Find Ohio River", None)
+                            process_data_request("Find Ohio River", chat_container)
                             count_end = len(st.session_state.datasets)   
                             for idx in range(count_start, count_end):
                                 st.session_state.datasets[idx].time = time.time()
