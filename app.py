@@ -270,6 +270,13 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
+
+                            count_start = len(st.session_state.datasets)
+                            process_data_request("Find Ohio River", chat_container)
+                            count_end = len(st.session_state.datasets)   
+                            for idx in range(count_start, count_end):
+                                st.session_state.datasets[idx].time = time.time()
+                            
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
                             # st.code(code)
