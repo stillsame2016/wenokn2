@@ -323,7 +323,6 @@ with col2:
                                                 st.session_state.datasets[idx].time = time.time()
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
-                                            code = f"====={code}====={}"
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
