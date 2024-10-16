@@ -328,9 +328,8 @@ with col2:
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
                                                 code = data[start_index:end_index].strip()
-                                            st.code(f"======> 200 {code}")
+                                            st.code(f"======> {code}")
                                             exec(code)
-                                            time.sleep(100)
                                             if gdf.shape[0] > 0:
                                                 if hasattr(gdf, 'answer'):
                                                     message = gdf.answer
@@ -353,7 +352,8 @@ with col2:
                                                             Please refine your request and try again if you think
                                                             this is a mistake.
                                                             """
-                    
+                                    st.markdown("=====> 200")
+                                    time.sleep(100)
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
