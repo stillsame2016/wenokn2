@@ -8,6 +8,7 @@ import geopandas as gpd
 import datacommons_pandas as dc
 from keplergl import keplergl
 from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
 
 from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request
 from refine_request import get_refined_question
@@ -23,12 +24,16 @@ from streamlit.components.v1 import html
 # Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
+OpenAI_KEY = st.secrets["OpenAI_KEY"]
 
 # llm = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY)
 # llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
 
 llm = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY)
 llm2 = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY_2)
+
+llm = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
+llm2 = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
