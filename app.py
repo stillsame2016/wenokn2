@@ -257,18 +257,18 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            message = f"""
-                                       {code} 
-                                       {str(e)}
-                                       """               
-                            # message = f"""We are not able to process your request. Please refine your 
-                            #               request and try it again. \n\nError: {str(e)}"""
+                            # message = f"""
+                            #            {code} 
+                            #            {str(e)}
+                            #            """               
+                            message = f"""We are not able to process your request. Please refine your 
+                                          request and try it again. \n\nError: {str(e)}"""
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
-                    with st.spinner("Loading data 100 ..."):
+                    with st.spinner("Loading data ..."):
                         try:
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
@@ -296,12 +296,12 @@ with col2:
                                             this is a mistake.
                                             """
                         except Exception as e:
-                            # message = f"""
-                            #            {code} 
-                            #            {str(e)}
-                            #            """  
-                            message = f"""We are not able to process your request. Please refine your 
-                                              request and try it again. \n\nError: {str(e)}"""
+                            message = f"""
+                                       {code} 
+                                       {str(e)}
+                                       """  
+                            # message = f"""We are not able to process your request. Please refine your 
+                            #                   request and try it again. \n\nError: {str(e)}"""
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
