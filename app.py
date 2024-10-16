@@ -277,10 +277,6 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:                            
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
-                            if code.startswith("\"```python"):
-                                start_index = python.find("```python") + len("```python")
-                                end_index = python.find("```", start_index)
-                                code = data[start_index:end_index].strip()
                             exec(code)
                             # st.code(code)
                             if gdf.shape[0] > 0:
@@ -327,6 +323,10 @@ with col2:
                                                 st.session_state.datasets[idx].time = time.time()
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
+                                            if code.startswith("\"```python"):
+                                                start_index = python.find("```python") + len("```python")
+                                                end_index = python.find("```", start_index)
+                                                code = data[start_index:end_index].strip()
                                             # exec(code)
                                             st.code(code)
                                             time.sleep(100)
