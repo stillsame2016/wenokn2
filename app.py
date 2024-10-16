@@ -324,7 +324,8 @@ with col2:
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                             exec(code)
-                                            message = code
+                                            st.code(code)
+                                            time.sleep(100)
                                             # if gdf.shape[0] > 0:
                                             #     if hasattr(gdf, 'answer'):
                                             #         message = gdf.answer
