@@ -275,15 +275,7 @@ with col2:
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        try:
-
-                            # count_start = len(st.session_state.datasets)
-                            # process_data_request("Find Ohio River", chat_container)
-                            # count_end = len(st.session_state.datasets)   
-                            # for idx in range(count_start, count_end):
-                            #     st.session_state.datasets[idx].time = time.time()
-
-                            
+                        try:                            
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
                             # st.code(code)
@@ -330,6 +322,7 @@ with col2:
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
                                         elif query["data_source"] == "Energy Atlas":
+                                            code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                             exec(code)
                                             if gdf.shape[0] > 0:
                                                 if hasattr(gdf, 'answer'):
