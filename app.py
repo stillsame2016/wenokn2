@@ -271,11 +271,13 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
 
+                            st.markdown("Find Ohio River")
                             count_start = len(st.session_state.datasets)
-                            process_data_request("Find Ohio River", chat_container)
+                            process_data_request("Find Ohio River", None)
                             count_end = len(st.session_state.datasets)   
                             for idx in range(count_start, count_end):
                                 st.session_state.datasets[idx].time = time.time()
+
                             
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
