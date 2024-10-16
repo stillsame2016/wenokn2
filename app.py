@@ -268,7 +268,7 @@ with col2:
                         st.rerun()
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
-                    with st.spinner("Loading data ..."):
+                    with st.spinner("Loading data 100 ..."):
                         try:
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                             exec(code)
