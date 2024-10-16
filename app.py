@@ -327,31 +327,29 @@ with col2:
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
                                                 code = data[start_index:end_index].strip()
-                                            # exec(code)
-                                            st.code(code)
-                                            time.sleep(100)
-                                            # if gdf.shape[0] > 0:
-                                            #     if hasattr(gdf, 'answer'):
-                                            #         message = gdf.answer
-                                            #     else:
-                                            #         gdf.label = gdf.title
-                                            #         gdf.id = str(uuid.uuid4())[:8]
-                                            #         gdf.time = time.time()
-                                            #         st.session_state.requests.append(user_input)
-                                            #         st.session_state.sparqls.append("")
-                                            #         st.session_state.datasets.append(gdf)
-                                            #         st.session_state.rerun = True
-                                            #         message = f"""
-                                            #                     Your request has been processed. {gdf.shape[0]} 
-                                            #                     { "items are" if gdf.shape[0] > 1 else "item is"}
-                                            #                     loaded on the map.
-                                            #                     """
-                                            # else:
-                                            #     message = f"""
-                                            #                 Your request has been processed. Nothing was found.
-                                            #                 Please refine your request and try again if you think
-                                            #                 this is a mistake.
-                                            #                 """
+                                            exec(code)
+                                            if gdf.shape[0] > 0:
+                                                if hasattr(gdf, 'answer'):
+                                                    message = gdf.answer
+                                                else:
+                                                    gdf.label = gdf.title
+                                                    gdf.id = str(uuid.uuid4())[:8]
+                                                    gdf.time = time.time()
+                                                    st.session_state.requests.append(user_input)
+                                                    st.session_state.sparqls.append("")
+                                                    st.session_state.datasets.append(gdf)
+                                                    st.session_state.rerun = True
+                                                    message = f"""
+                                                                Your request has been processed. {gdf.shape[0]} 
+                                                                { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                                loaded on the map.
+                                                                """
+                                            else:
+                                                message = f"""
+                                                            Your request has been processed. Nothing was found.
+                                                            Please refine your request and try again if you think
+                                                            this is a mistake.
+                                                            """
                     
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
