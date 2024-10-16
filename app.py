@@ -323,7 +323,7 @@ with col2:
                                                 st.session_state.datasets[idx].time = time.time()
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
-                                            exec(code)
+                                            # exec(code)
                                             st.code(code)
                                             time.sleep(100)
                                             # if gdf.shape[0] > 0:
