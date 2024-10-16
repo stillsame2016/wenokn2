@@ -104,9 +104,5 @@ def process_wenokn_use_energy_atlas(llm, user_input):
     )
     df_code_chain = prompt | llm | StrOutputParser()
     code = df_code_chain.invoke({"question": user_input})
-    if code.startswith("\"```python"):
-        start_index = code.find("```python") + len("```python")
-        end_index = code.find("```", start_index)
-        code = code[start_index:end_index].strip()
     return code
 
