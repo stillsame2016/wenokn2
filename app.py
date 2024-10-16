@@ -317,15 +317,19 @@ with col2:
                             message = f"""We are not able to process your request. Please refine your 
                                               request and try it again. \n\nError: {str(e)}"""
 
-                            response = requests.get(
-                                f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
-                            if response.status_code == 200:
-                                query_plan = json.loads(response.text)
-                                if len(query_plan) > 1:
-                                    for query in query_plan:
-                                        if query["data_source"] == "WEN-OKN Database":
-                                            message = query["request"]
-                                # message = response.text
+                            # response = requests.get(
+                            #     f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
+                            # if response.status_code == 200:
+                            #     query_plan = json.loads(response.text)
+                            #     if len(query_plan) > 1:
+                            #         for query in query_plan:
+                            #             if query["data_source"] == "WEN-OKN Database":
+                            #                 count_start = len(st.session_state.datasets)
+                            #                 process_data_request("Find Ohio River", chat_container)
+                            #                 count_end = len(st.session_state.datasets)   
+                            #                 for idx in range(count_start, count_end):
+                            #                     st.session_state.datasets[idx].time = time.time()
+                                        
                     
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
