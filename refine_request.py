@@ -49,6 +49,7 @@ def get_refined_question(llm, question):
               6. Dams: Information regarding dams' locations in USA.
               7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
               8. Hospitals: Details about hospital locations and information in USA.
+              9. Stream Gages: Information of gages' locations and names in USA.
     
             Please never say "I cannot" or "I could not". 
     
