@@ -320,7 +320,7 @@ with col2:
                             response = requests.get(
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
-                                query_plan = response.json
+                                query_plan = json.loads(response.text)
                                 if len(query_plan) > 1:
                                     for query in query_plan:
                                         if query["data_source"] == "WEN-OKN Database":
