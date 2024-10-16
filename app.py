@@ -306,7 +306,7 @@ with col2:
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
                 with st.chat_message("assistant"):
-                    with st.spinner("Loading data 100 ..."):
+                    with st.spinner("Loading data ..."):
                         code = process_wenokn_use_energy_atlas(llm, user_input)
                         # st.code(code)
                         exec(code)
