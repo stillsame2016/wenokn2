@@ -6,6 +6,7 @@ google-generativeai
 sparql_dataframe
 langchain
 langchain_groq
+langchain-openai
 groq
 datacommons-pandas
 datacommons
