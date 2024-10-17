@@ -322,7 +322,7 @@ with col2:
                                     for query in query_plan:
                                         with chat_container:
                                             with st.chat_message("assistant"):
-                                                st.markdown(f"Executing the query plan and process the query: *{query}*")
+                                                st.markdown(f"Executing the query plan and process the query: **{query["request"]}**")
                                                 if query["data_source"] == "WEN-OKN Database":
                                                     process_data_request(query["request"], chat_container)
                                                 elif query["data_source"] == "Energy Atlas":
