@@ -333,6 +333,7 @@ with col2:
                                                 code = data[start_index:end_index].strip()
                                             st.code(code)
                                             exec(code)
+                                            time.sleep(10)
                                             if gdf.shape[0] > 0:
                                                 if hasattr(gdf, 'answer'):
                                                     message = gdf.answer
