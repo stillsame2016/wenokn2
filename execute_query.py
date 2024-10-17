@@ -6,6 +6,7 @@ import streamlit as st
 
 from util import process_data_request, process_regulation_request, process_data_commons_request
 from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
+from energy_atlas import *
 
 
 def execute_query(user_input, chat_container):
