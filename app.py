@@ -313,8 +313,8 @@ with col2:
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
                                 query_plan = json.loads(response.text)
-                                st.code(query_plan)
-                                time.sleep(20)
+                                st.code(json.dumps(query_plan, indent=4))
+                                time.sleep(10)
                                 if len(query_plan) > 1:
                                     for query in query_plan:
                                         st.markdown(f"======> 100 {query}")
@@ -325,8 +325,11 @@ with col2:
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
+                                            st.markdown(f"======> 102 {query["data_source"]}")
+                                            time.sleep(10)
                                         elif query["data_source"] == "Energy Atlas":
-                                            code = process_energy_atlas_request(llm, query["request", st.session_state.datasets)
+                                            st.markdown(f"======> 111 {query["data_source"]}")
+                                            code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
