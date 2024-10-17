@@ -313,17 +313,19 @@ with col2:
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
                                 query_plan = json.loads(response.text)
+                                st.code(query_plan)
+                                time.sleep(20)
                                 if len(query_plan) > 1:
                                     for query in query_plan:
+                                        st.markdown(f"======> 100 {query}")
                                         if query["data_source"] == "WEN-OKN Database":
                                             count_start = len(st.session_state.datasets)
-                                            process_data_request("Find Ohio River", chat_container)
+                                            process_data_request(query, chat_container)
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
-                                            st.markdown("======> 100 ")
                                         elif query["data_source"] == "Energy Atlas":
-                                            code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
+                                            code = process_energy_atlas_request(llm, query, st.session_state.datasets)
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
