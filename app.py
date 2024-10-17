@@ -139,8 +139,7 @@ def execute_query(user_input, chat_container):
                             st.code(code)
                             st.code(f"check: {len(st.session_state.datasets)}")
                             namespace = {}
-                            exec(code, { "st": st, "load_coal_mines": load_coal_mines}, namespace)
-                            gdf = namespace['gdf'] 
+                            exec(code, globas(), locals())
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
