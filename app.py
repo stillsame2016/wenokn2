@@ -316,8 +316,7 @@ with col2:
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
                                 query_plan = json.loads(response.text)
-                                st.code(json.dumps(query_plan, indent=4))
-                                time.sleep(10)
+                                st.code(json.dumps(query_plan, indent=4)）
                                 if len(query_plan) > 1:
                                     count_start = len(st.session_state.datasets)
                                     for query in query_plan:
@@ -325,7 +324,6 @@ with col2:
                                         if query["data_source"] == "WEN-OKN Database":
                                             process_data_request(query["request"], chat_container)
                                             st.markdown(f"check 1: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
-                                            time.sleep(20)
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
@@ -338,7 +336,6 @@ with col2:
                                                 code = code[start_index:end_index].strip()
                                             st.code(code)
                                             exec(code)
-                                            time.sleep(10)
                                             if gdf.shape[0] > 0:
                                                 if hasattr(gdf, 'answer'):
                                                     message = gdf.answer
@@ -363,7 +360,6 @@ with col2:
                                                             """
                                     st.markdown("=====> 200")
                                     st.markdown(f"check 2: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
-                                    time.sleep(20)
                                     count_end = len(st.session_state.datasets)   
                                     for idx in range(count_start, count_end):
                                         st.session_state.datasets[idx].time = time.time()
