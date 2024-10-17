@@ -324,7 +324,7 @@ with col2:
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
-                                            time.sleep(10)
+                                            time.sleep(20)
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
