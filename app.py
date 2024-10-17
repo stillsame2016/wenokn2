@@ -143,6 +143,7 @@ def execute_query(user_input, chat_container):
                                 'load_coal_mines': load_coal_mines,
                             }
                             exec(code, globals_dict)
+                            gdf = globals_dict['gdf']
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
