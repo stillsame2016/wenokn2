@@ -96,9 +96,6 @@ def add_map():
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
                 
-        st.markdown(f"REMOVE: {indices_to_remove}")
-        time.sleep(10)
-        
         deleted = False
         for i in reversed(indices_to_remove):
             # the returnd map config may have several seconds delay 
@@ -352,7 +349,7 @@ with col2:
                                                     st.session_state.requests.append(query["request"])
                                                     st.session_state.sparqls.append("")
                                                     st.session_state.datasets.append(gdf)
-                                                    st.session_state.rerun = True
+                                                    # st.session_state.rerun = True
                                                     message = f"""
                                                                 Your request has been processed. {gdf.shape[0]} 
                                                                 { "items are" if gdf.shape[0] > 1 else "item is"}
