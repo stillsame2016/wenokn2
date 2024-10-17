@@ -133,6 +133,7 @@ if st.session_state.wen_datasets:
         render_interface_for_table(llm, llm2, index, pivot_table)
 
 # Show all requests and generated SPARQL queries
+st.markdown(f"SPARQL: {len(st.session_state.sparqls)}")
 if len(st.session_state.sparqls) > 0:
     ''
     st.write(f"<div class='tableTitle'>Spatial Requests and SPARQL queries</div>", unsafe_allow_html=True)
