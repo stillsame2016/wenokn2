@@ -319,13 +319,14 @@ with col2:
                                     for query in query_plan:
                                         st.markdown(f"======> 100 {query}")
                                         if query["data_source"] == "WEN-OKN Database":
+                                            st.markdown(f"======> 101 {query["data_source"]}")
                                             count_start = len(st.session_state.datasets)
-                                            process_data_request(query, chat_container)
+                                            process_data_request(query["request"], chat_container)
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
                                         elif query["data_source"] == "Energy Atlas":
-                                            code = process_energy_atlas_request(llm, query, st.session_state.datasets)
+                                            code = process_energy_atlas_request(llm, query["request", st.session_state.datasets)
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
