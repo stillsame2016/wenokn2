@@ -149,7 +149,7 @@ if len(st.session_state.sparqls) > 0:
                 st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
                 st.code(sparql)
 
-st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)})
+st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
 
 # Set up the Kepler map
 with col1:
