@@ -113,7 +113,7 @@ def add_map():
     return _map_config
 
 
-def execute_query(user_input, chat_container, llm):
+def execute_query(user_input, chat_container):
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
     if response.status_code == 200:
         query_plan = json.loads(response.text)
@@ -369,7 +369,7 @@ with col2:
                             message = f"""We are not able to process your request. Please refine your 
                                               request and try it again. \n\nError: {str(e)}"""
 
-                            execute_query(user_input, chat_container, llm)
+                            execute_query(user_input, chat_container)
                             # response = requests.get(
                             #     f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             # if response.status_code == 200:
