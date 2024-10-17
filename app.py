@@ -112,6 +112,11 @@ def add_map():
              st.rerun()
     return _map_config
 
+def ordinal(n):
+    suffix = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
+    if n % 100 in [11, 12, 13]:  # Special case for 11th, 12th, 13th
+        return f"{n}th"
+    return f"{n}{suffix[n % 10]}"
 
 def execute_query(user_input, chat_container):
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
@@ -128,10 +133,10 @@ def execute_query(user_input, chat_container):
             st.markdown(query_plan_text)
             
             count_start = len(st.session_state.datasets)
-            for query in query_plan:
+            for i, query in enumerate(query_plan, 1):
                 with chat_container:
                     with st.chat_message("assistant"):
-                        st.markdown(f"Processing the query in the query plan: **{query['request']}**")
+                        st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Energy Atlas":
