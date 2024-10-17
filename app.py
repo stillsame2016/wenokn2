@@ -331,6 +331,7 @@ with col2:
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
                                                 code = data[start_index:end_index].strip()
+                                            st.code(code)
                                             exec(code)
                                             if gdf.shape[0] > 0:
                                                 if hasattr(gdf, 'answer'):
