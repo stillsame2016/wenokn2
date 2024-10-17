@@ -102,10 +102,7 @@ def add_map():
         deleted = False
         for i in reversed(indices_to_remove):
             # the returnd map config may have several seconds delay 
-            if time.time() - st.session_state.datasets[i].time > 3:
-
-                st.session_state.delete_history.append(f"{time.time()}, {st.session_state.datasets[i].time}, {st.session_state.datasets[i].title}")
-                
+            if time.time() - st.session_state.datasets[i].time > 3:                
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
@@ -322,14 +319,11 @@ with col2:
                                 st.code(json.dumps(query_plan, indent=4))
                                 time.sleep(10)
                                 if len(query_plan) > 1:
+                                    count_start = len(st.session_state.datasets)
                                     for query in query_plan:
                                         st.markdown(f"======> 100 {query}")
                                         if query["data_source"] == "WEN-OKN Database":
-                                            count_start = len(st.session_state.datasets)
                                             process_data_request(query["request"], chat_container)
-                                            count_end = len(st.session_state.datasets)   
-                                            for idx in range(count_start, count_end):
-                                                st.session_state.datasets[idx].time = time.time()
                                             st.markdown(f"check 1: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
                                             time.sleep(20)
                                         elif query["data_source"] == "Energy Atlas":
@@ -370,6 +364,9 @@ with col2:
                                     st.markdown("=====> 200")
                                     st.markdown(f"check 2: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
                                     time.sleep(20)
+                                    count_end = len(st.session_state.datasets)   
+                                    for idx in range(count_start, count_end):
+                                        st.session_state.datasets[idx].time = time.time()
                                     st.session_state.rerun = True
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
@@ -448,8 +445,6 @@ if st.session_state.sample_query:
             </script>
             """
     html(js_code)
-
-st.code(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
