@@ -141,6 +141,17 @@ def execute_query(user_input, chat_container):
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
+                                'load_coal_power_plants': load_coal_power_plants,
+                                'load_wind_power_plants': load_wind_power_plants,
+                                'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
+                                'load_battery_storage_plants': load_battery_storage_plants,
+                                'load_geothermal_power_plants': load_geothermal_power_plants,
+                                'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
+                                'load_natural_gas_power_plants': load_natural_gas_power_plants,
+                                'load_nuclear_power_plants': load_nuclear_power_plants,
+                                'load_petroleum_power_plants': load_petroleum_power_plants,
+                                'load_solar_power_plants': load_solar_power_plants,
+                                'load_biodiesel_plants': load_biodiesel_plants
                             }
                             exec(code, globals_dict)
                             gdf = globals_dict['gdf']
