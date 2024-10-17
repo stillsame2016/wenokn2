@@ -313,7 +313,7 @@ with col2:
                             message = f"""We are not able to process your request. Please refine your 
                                               request and try it again. \n\nError: {str(e)}"""
 
-                            execute_query(user_input, chat_container)
+                            execute_query(user_input, chat_container, llm)
                             # response = requests.get(
                             #     f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             # if response.status_code == 200:
