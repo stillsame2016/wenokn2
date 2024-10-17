@@ -123,6 +123,12 @@ def execute_query(user_input, chat_container):
             st.markdown("We use the following query plan for your request:")
             for i, query in enumerate(query_plan, 1):
                 st.markdown(f"{i}. {query['request']}")
+
+            markdown_text = "We use the following query plan for your request:\n"
+            for i, query in enumerate(queries, 1):
+                markdown_text += f"     {i}. {query}\n\n"
+            # Display the markdown
+            st.markdown(markdown_text)
             
             count_start = len(st.session_state.datasets)
             for query in query_plan:
