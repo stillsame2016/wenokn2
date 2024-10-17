@@ -324,6 +324,7 @@ with col2:
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
+                                            st.markdown(f"check 1: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
                                             time.sleep(20)
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
@@ -341,7 +342,7 @@ with col2:
                                                     gdf.label = gdf.title
                                                     gdf.id = str(uuid.uuid4())[:8]
                                                     gdf.time = time.time()
-                                                    st.session_state.requests.append(user_input)
+                                                    st.session_state.requests.append(query["request"])
                                                     st.session_state.sparqls.append("")
                                                     st.session_state.datasets.append(gdf)
                                                     st.session_state.rerun = True
@@ -357,7 +358,8 @@ with col2:
                                                             this is a mistake.
                                                             """
                                     st.markdown("=====> 200")
-                                    time.sleep(10)
+                                    st.markdown(f"check 2: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
+                                    time.sleep(20)
                                     st.session_state.rerun = True
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
