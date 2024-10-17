@@ -319,30 +319,23 @@ with col2:
                                     for query in query_plan:
                                         st.markdown(f"======> 100 {query}")
                                         if query["data_source"] == "WEN-OKN Database":
-                                            st.markdown(f"======> 101 {query['data_source']}")
                                             count_start = len(st.session_state.datasets)
                                             process_data_request(query["request"], chat_container)
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
-                                            st.markdown(f"======> 102 {query['data_source']}")
                                             time.sleep(10)
                                         elif query["data_source"] == "Energy Atlas":
-                                            st.markdown(f"======> 111 {query['data_source']}")
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
                                                 end_index = python.find("```", start_index)
                                                 code = data[start_index:end_index].strip()
-                                            st.code(f"======> {code}")
                                             exec(code)
                                             if gdf.shape[0] > 0:
-                                                st.markdown("=====> 120")
                                                 if hasattr(gdf, 'answer'):
-                                                    st.markdown("=====> 121")
                                                     message = gdf.answer
                                                 else:
-                                                    st.markdown("=====> 122")
                                                     gdf.label = gdf.title
                                                     gdf.id = str(uuid.uuid4())[:8]
                                                     gdf.time = time.time()
@@ -356,7 +349,6 @@ with col2:
                                                                 loaded on the map.
                                                                 """
                                             else:
-                                                st.markdown("=====> 130")
                                                 message = f"""
                                                             Your request has been processed. Nothing was found.
                                                             Please refine your request and try again if you think
