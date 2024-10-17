@@ -120,10 +120,9 @@ def execute_query(user_input, chat_container):
         # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
-            markdown_text = "We use the following query plan for your request:\n"
+            st.markdown("We use the following query plan for your request:")
             for i, query in enumerate(query_plan, 1):
-                markdown_text += f"     * {query['request']}\n"
-            st.markdown(markdown_text)
+                st.markdown(f"- {query['request']}"
             
             count_start = len(st.session_state.datasets)
             for query in query_plan:
