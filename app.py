@@ -117,8 +117,14 @@ def execute_query(user_input, chat_container):
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
     if response.status_code == 200:
         query_plan = json.loads(response.text)
-        st.code(json.dumps(query_plan, indent=4))
+        # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
+            # show the query plan
+            markdown_text = "We use the following query plan for your request:\n"
+            for i, query in enumerate(query_plan, 1):
+                markdown_text += f"     {i}. {query['request']}\n"
+            st.markdown(markdown_text)
+            
             count_start = len(st.session_state.datasets)
             for query in query_plan:
                 with chat_container:
@@ -136,8 +142,6 @@ def execute_query(user_input, chat_container):
                                 start_index = code.find("```") + len("```")
                                 end_index = code.find("```", start_index)
                                 code = code[start_index:end_index].strip()
-                            st.code(code)
-                            st.code(f"check: {len(st.session_state.datasets)}")
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
