@@ -79,6 +79,9 @@ if "sample_query" not in st.session_state:
 if "selection_index" not in st.session_state:
     st.session_state.selection_index = None
 
+if "delete_history" not in st.session_state:
+    st.session_state.delete_history = []
+
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
 def add_map():
@@ -100,6 +103,9 @@ def add_map():
         for i in reversed(indices_to_remove):
             # the returnd map config may have several seconds delay 
             if time.time() - st.session_state.datasets[i].time > 3:
+
+                st.session_state.delete_history.append(f"{time}, {st.session_state.datasets[i].time}, {st.session_state.datasets[i].title}")
+                
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
                 del st.session_state.sparqls[i]
@@ -142,6 +148,8 @@ if len(st.session_state.sparqls) > 0:
             if st.session_state.sparqls[idx] != "":
                 st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
                 st.code(sparql)
+
+st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)})
 
 # Set up the Kepler map
 with col1:
