@@ -34,7 +34,7 @@ def execute_query(user_input, chat_container, llm):
                                 code = code[start_index:end_index].strip()
                             st.code(code)
                             st.code(f"check: {len(st.session_state.datasets)}")
-                            exec(code, globals(), locals())
+                            exec(code, { "st": st, "load_coal_mines": load_coal_mines})
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
