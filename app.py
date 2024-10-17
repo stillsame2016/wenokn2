@@ -319,16 +319,16 @@ with col2:
                                     for query in query_plan:
                                         st.markdown(f"======> 100 {query}")
                                         if query["data_source"] == "WEN-OKN Database":
-                                            st.markdown(f"======> 101 {query["data_source"]}")
+                                            st.markdown(f"======> 101 {query['data_source']}")
                                             count_start = len(st.session_state.datasets)
                                             process_data_request(query["request"], chat_container)
                                             count_end = len(st.session_state.datasets)   
                                             for idx in range(count_start, count_end):
                                                 st.session_state.datasets[idx].time = time.time()
-                                            st.markdown(f"======> 102 {query["data_source"]}")
+                                            st.markdown(f"======> 102 {query['data_source']}")
                                             time.sleep(10)
                                         elif query["data_source"] == "Energy Atlas":
-                                            st.markdown(f"======> 111 {query["data_source"]}")
+                                            st.markdown(f"======> 111 {query['data_source']}")
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
                                                 start_index = python.find("```python") + len("```python")
@@ -337,12 +337,12 @@ with col2:
                                             st.code(f"======> {code}")
                                             exec(code)
                                             if gdf.shape[0] > 0:
-                                                st.markdown("=====> 100")
+                                                st.markdown("=====> 120")
                                                 if hasattr(gdf, 'answer'):
-                                                    st.markdown("=====> 110")
+                                                    st.markdown("=====> 121")
                                                     message = gdf.answer
                                                 else:
-                                                    st.markdown("=====> 120")
+                                                    st.markdown("=====> 122")
                                                     gdf.label = gdf.title
                                                     gdf.id = str(uuid.uuid4())[:8]
                                                     gdf.time = time.time()
@@ -363,7 +363,7 @@ with col2:
                                                             this is a mistake.
                                                             """
                                     st.markdown("=====> 200")
-                                    time.sleep(100)
+                                    time.sleep(20)
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
