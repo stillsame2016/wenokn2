@@ -331,9 +331,12 @@ with col2:
                                             st.code(f"======> {code}")
                                             exec(code)
                                             if gdf.shape[0] > 0:
+                                                st.markdown("=====> 100")
                                                 if hasattr(gdf, 'answer'):
+                                                    st.markdown("=====> 110")
                                                     message = gdf.answer
                                                 else:
+                                                    st.markdown("=====> 120")
                                                     gdf.label = gdf.title
                                                     gdf.id = str(uuid.uuid4())[:8]
                                                     gdf.time = time.time()
@@ -347,6 +350,7 @@ with col2:
                                                                 loaded on the map.
                                                                 """
                                             else:
+                                                st.markdown("=====> 130")
                                                 message = f"""
                                                             Your request has been processed. Nothing was found.
                                                             Please refine your request and try again if you think
