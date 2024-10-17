@@ -332,11 +332,11 @@ with col2:
                                             if code.startswith("```python"):
                                                 start_index = code.find("```python") + len("```python")
                                                 end_index = code.find("```", start_index)
-                                                code = data[start_index:end_index].strip()
+                                                code = code[start_index:end_index].strip()
                                             elif code.startswith("```"):
                                                 start_index = code.find("```") + len("```")
                                                 end_index = code.find("```", start_index)
-                                                code = data[start_index:end_index].strip()
+                                                code = code[start_index:end_index].strip()
                                             st.code(code)
                                             exec(code)
                                             time.sleep(10)
