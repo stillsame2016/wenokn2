@@ -449,7 +449,7 @@ if st.session_state.sample_query:
             """
     html(js_code)
 
-st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
+# st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
