@@ -329,8 +329,8 @@ with col2:
                                         elif query["data_source"] == "Energy Atlas":
                                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                                             if code.startswith("```python"):
-                                                start_index = python.find("```python") + len("```python")
-                                                end_index = python.find("```", start_index)
+                                                start_index = code.find("```python") + len("```python")
+                                                end_index = code.find("```", start_index)
                                                 code = data[start_index:end_index].strip()
                                             st.code(code)
                                             exec(code)
