@@ -95,7 +95,10 @@ def add_map():
         # check if any datasets were deleted
         map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
         indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
-
+                
+        st.markdown(f"REMOVE: {indices_to_remove}")
+        time.sleep(10)
+        
         deleted = False
         for i in reversed(indices_to_remove):
             # the returnd map config may have several seconds delay 
@@ -133,7 +136,6 @@ if st.session_state.wen_datasets:
         render_interface_for_table(llm, llm2, index, pivot_table)
 
 # Show all requests and generated SPARQL queries
-st.markdown(f"SPARQL: {len(st.session_state.sparqls)}")
 if len(st.session_state.sparqls) > 0:
     ''
     st.write(f"<div class='tableTitle'>Spatial Requests and SPARQL queries</div>", unsafe_allow_html=True)
