@@ -321,7 +321,7 @@ with col2:
                                     count_start = len(st.session_state.datasets)
                                     for query in query_plan:
                                         with chat_container:
-                                            st.markdown(f"======> 100 {query}")
+                                            st.markdown(f"Executing the query plan and process the query: *{query}*")
                                             if query["data_source"] == "WEN-OKN Database":
                                                 process_data_request(query["request"], chat_container)
                                             elif query["data_source"] == "Energy Atlas":
