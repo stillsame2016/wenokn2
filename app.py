@@ -320,46 +320,44 @@ with col2:
                                 if len(query_plan) > 1:
                                     count_start = len(st.session_state.datasets)
                                     for query in query_plan:
-                                        st.markdown(f"======> 100 {query}")
-                                        if query["data_source"] == "WEN-OKN Database":
-                                            process_data_request(query["request"], chat_container)
-                                            st.markdown(f"check 1: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
-                                        elif query["data_source"] == "Energy Atlas":
-                                            code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
-                                            if code.startswith("```python"):
-                                                start_index = code.find("```python") + len("```python")
-                                                end_index = code.find("```", start_index)
-                                                code = code[start_index:end_index].strip()
-                                            elif code.startswith("```"):
-                                                start_index = code.find("```") + len("```")
-                                                end_index = code.find("```", start_index)
-                                                code = code[start_index:end_index].strip()
-                                            st.code(code)
-                                            exec(code)
-                                            if gdf.shape[0] > 0:
-                                                if hasattr(gdf, 'answer'):
-                                                    message = gdf.answer
+                                        with chat_container:
+                                            st.markdown(f"======> 100 {query}")
+                                            if query["data_source"] == "WEN-OKN Database":
+                                                process_data_request(query["request"], chat_container)
+                                            elif query["data_source"] == "Energy Atlas":
+                                                code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
+                                                if code.startswith("```python"):
+                                                    start_index = code.find("```python") + len("```python")
+                                                    end_index = code.find("```", start_index)
+                                                    code = code[start_index:end_index].strip()
+                                                elif code.startswith("```"):
+                                                    start_index = code.find("```") + len("```")
+                                                    end_index = code.find("```", start_index)
+                                                    code = code[start_index:end_index].strip()
+                                                st.code(code)
+                                                exec(code)
+                                                if gdf.shape[0] > 0:
+                                                    if hasattr(gdf, 'answer'):
+                                                        message = gdf.answer
+                                                    else:
+                                                        gdf.label = gdf.title
+                                                        gdf.id = str(uuid.uuid4())[:8]
+                                                        gdf.time = time.time()
+                                                        st.session_state.requests.append(query["request"])
+                                                        st.session_state.sparqls.append("")
+                                                        st.session_state.datasets.append(gdf)
+                                                        # st.session_state.rerun = True
+                                                        message = f"""
+                                                                    Your request has been processed. {gdf.shape[0]} 
+                                                                    { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                                    loaded on the map.
+                                                                    """
                                                 else:
-                                                    gdf.label = gdf.title
-                                                    gdf.id = str(uuid.uuid4())[:8]
-                                                    gdf.time = time.time()
-                                                    st.session_state.requests.append(query["request"])
-                                                    st.session_state.sparqls.append("")
-                                                    st.session_state.datasets.append(gdf)
-                                                    # st.session_state.rerun = True
                                                     message = f"""
-                                                                Your request has been processed. {gdf.shape[0]} 
-                                                                { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                                loaded on the map.
+                                                                Your request has been processed. Nothing was found.
+                                                                Please refine your request and try again if you think
+                                                                this is a mistake.
                                                                 """
-                                            else:
-                                                message = f"""
-                                                            Your request has been processed. Nothing was found.
-                                                            Please refine your request and try again if you think
-                                                            this is a mistake.
-                                                            """
-                                    st.markdown("=====> 200")
-                                    st.markdown(f"check 2: {len(st.session_state.datasets)} ==== {len(st.session_state.requests)} ==== {len(st.session_state.sparqls)}")
                                     count_end = len(st.session_state.datasets)   
                                     for idx in range(count_start, count_end):
                                         st.session_state.datasets[idx].time = time.time()
