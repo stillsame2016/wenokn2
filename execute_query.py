@@ -9,7 +9,7 @@ from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 from energy_atlas import *
 
 
-def execute_query(user_input, chat_container):
+def execute_query(user_input, chat_container, llm):
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
     if response.status_code == 200:
         query_plan = json.loads(response.text)
