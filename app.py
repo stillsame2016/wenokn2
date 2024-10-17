@@ -104,7 +104,7 @@ def add_map():
             # the returnd map config may have several seconds delay 
             if time.time() - st.session_state.datasets[i].time > 3:
 
-                st.session_state.delete_history.append(f"{time}, {st.session_state.datasets[i].time}, {st.session_state.datasets[i].title}")
+                st.session_state.delete_history.append(f"{time.time()}, {st.session_state.datasets[i].time}, {st.session_state.datasets[i].title}")
                 
                 del st.session_state.datasets[i]
                 del st.session_state.requests[i]
