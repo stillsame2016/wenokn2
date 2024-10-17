@@ -126,7 +126,7 @@ def execute_query(user_input, chat_container):
 
             markdown_text = "We use the following query plan for your request:\n"
             for i, query in enumerate(query_plan, 1):
-                markdown_text += f"     {i}. {query['request']}\n\n"
+                markdown_text += f"{i}. {query['request']}\n"
             # Display the markdown
             st.markdown(markdown_text)
             
