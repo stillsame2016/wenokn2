@@ -316,7 +316,7 @@ with col2:
                                 f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
                             if response.status_code == 200:
                                 query_plan = json.loads(response.text)
-                                st.code(json.dumps(query_plan, indent=4)）
+                                st.code(json.dumps(query_plan, indent=4))
                                 if len(query_plan) > 1:
                                     count_start = len(st.session_state.datasets)
                                     for query in query_plan:
