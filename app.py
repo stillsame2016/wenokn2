@@ -120,9 +120,9 @@ def execute_query(user_input, chat_container):
         # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
-            st.markdown("We use the following query plan for your request:")
-            for i, query in enumerate(query_plan, 1):
-                st.markdown(f"{i}. {query['request']}")
+            # st.markdown("We use the following query plan for your request:")
+            # for i, query in enumerate(query_plan, 1):
+            #     st.markdown(f"{i}. {query['request']}")
 
             markdown_text = "We use the following query plan for your request:\n"
             for i, query in enumerate(query_plan, 1):
