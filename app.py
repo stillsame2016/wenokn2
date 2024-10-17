@@ -363,7 +363,8 @@ with col2:
                                                             this is a mistake.
                                                             """
                                     st.markdown("=====> 200")
-                                    time.sleep(20)
+                                    time.sleep(10)
+                                    st.session_state.rerun = True
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
