@@ -115,20 +115,17 @@ def add_map():
 
 def execute_query(user_input, chat_container):
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
+    query_plan_text = None
+    message = None
     if response.status_code == 200:
         query_plan = json.loads(response.text)
         # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
-            # st.markdown("We use the following query plan for your request:")
-            # for i, query in enumerate(query_plan, 1):
-            #     st.markdown(f"{i}. {query['request']}")
-
-            markdown_text = "We use the following query plan for your request:\n"
+            query_plan_text = "We use the following query plan for your request:\n"
             for i, query in enumerate(query_plan, 1):
-                markdown_text += f"{i}. {query['request']}\n"
-            # Display the markdown
-            st.markdown(markdown_text)
+                query_plan_text += f"{i}. {query['request']}\n"
+            st.markdown(query_plan_text)
             
             count_start = len(st.session_state.datasets)
             for query in query_plan:
@@ -181,16 +178,13 @@ def execute_query(user_input, chat_container):
                                                 loaded on the map.
                                                 """
                             else:
-                                message = f"""
-                                            Your request has been processed. Nothing was found.
-                                            Please refine your request and try again if you think
-                                            this is a mistake.
-                                            """
+                                raise ValueError(f'The request {query["request"]} has been processed. Nothing was found.')
             count_end = len(st.session_state.datasets)   
             for idx in range(count_start, count_end):
                 st.session_state.datasets[idx].time = time.time()
             st.session_state.rerun = True
 
+    return query_plan_text, message
 
 # Set up CSS for tables
 st.markdown("""
