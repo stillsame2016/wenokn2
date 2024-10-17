@@ -149,8 +149,6 @@ if len(st.session_state.sparqls) > 0:
                 st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
                 st.code(sparql)
 
-st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
-
 # Set up the Kepler map
 with col1:
     map_config = add_map()
@@ -451,6 +449,7 @@ if st.session_state.sample_query:
             """
     html(js_code)
 
+st.markdown(f"st.session_state.delete_history \n {json.dumps(st.session_state.delete_history, indent=4)}")
 
 # if map_config:
 #     map_config_json = json.loads(map_config)
