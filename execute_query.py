@@ -33,6 +33,7 @@ def execute_query(user_input, chat_container, llm):
                                 end_index = code.find("```", start_index)
                                 code = code[start_index:end_index].strip()
                             st.code(code)
+                            st.code(f"check: {len(st.session_state.datasets)"})
                             exec(code)
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
