@@ -148,8 +148,28 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         The following are the variables with the data:
             {variables}
               
-        The following function call can fetch some variables data for some dcid from Data Commons:  
-            get_time_series_dataframe_for_dcid(dcid_list, variable_name)
+        The following code can fetch some variables data for some dcid from Data Commons:
+                
+            import datacommons_pandas as dc
+            
+            def get_time_series_dataframe_for_dcid(dcid_list, variable_name):
+                _df = dc.build_time_series_dataframe(dcid_list, variable_name)    
+                _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
+                _df['Name'] = _df['Name'].str[0]    
+                
+                # columns = _df.columns.to_list().remove('Name')
+                columns = _df.columns.to_list()
+                columns.remove('Name')
+                _df = _df.melt(
+                    ['Name'],
+                    columns,
+                    'Date',
+                     variable_name,
+                )
+                _df = _df.dropna()     
+                _df = _df.drop_duplicates(keep='first')
+                _df.variable_name = variable_name
+                return _df
                 
         [Example 1] 
         Find the populations for all counties in Ohio, we can run the following code:
