@@ -351,6 +351,10 @@ with col2:
                             #            """               
                             message = f"""We are not able to process your request. Please refine your 
                                           request and try it again. \n\nError: {str(e)}"""
+                            
+                            query_plan_text, message = execute_query(user_input, chat_container)
+                            time.sleep(20)
+                        
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
