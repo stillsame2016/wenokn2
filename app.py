@@ -161,6 +161,7 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
                             st.code(code)
+                            st.code(f"check: {len(st.session_state.datasets)}")
                             time.sleep(code)
                             
                             exec(code, globals_dict)
