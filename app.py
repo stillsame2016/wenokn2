@@ -10,7 +10,7 @@ from keplergl import keplergl
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, strip_code
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, strip_code, normalize_query_plan
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
@@ -123,7 +123,8 @@ def execute_query(user_input, chat_container):
     message = None
     if response.status_code == 200:
         query_plan = json.loads(response.text)
-        # st.code(json.dumps(query_plan, indent=4))
+        query_plan = normalize_query_plan(query_plan)
+        st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
             query_plan_text = "We use the following query plan for your request:\n"
@@ -142,14 +143,6 @@ def execute_query(user_input, chat_container):
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
                             # st.code(code)
-                            # if code.startswith("```python"):
-                            #     start_index = code.find("```python") + len("```python")
-                            #     end_index = code.find("```", start_index)
-                            #     code = code[start_index:end_index].strip()
-                            # elif code.startswith("```"):
-                            #     start_index = code.find("```") + len("```")
-                            #     end_index = code.find("```", start_index)
-                            #     code = code[start_index:end_index].strip()
                             globals_dict = {
                                 'st': st,
                                 "get_variables_for_dcid": get_variables_for_dcid,
@@ -173,14 +166,6 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
-                            # if code.startswith("```python"):
-                            #     start_index = code.find("```python") + len("```python")
-                            #     end_index = code.find("```", start_index)
-                            #     code = code[start_index:end_index].strip()
-                            # elif code.startswith("```"):
-                            #     start_index = code.find("```") + len("```")
-                            #     end_index = code.find("```", start_index)
-                            #     code = code[start_index:end_index].strip()
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
