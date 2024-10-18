@@ -539,5 +539,14 @@ def create_new_geodataframe(gdfs, df):
     
     return new_gdf
 
-
+def strip_code(code):
+    if code.startswith("```python"):
+        start_index = code.find("```python") + len("```python")
+        end_index = code.find("```", start_index)
+        code = code[start_index:end_index].strip()
+    elif code.startswith("```"):
+        start_index = code.find("```") + len("```")
+        end_index = code.find("```", start_index)
+        code = code[start_index:end_index].strip()
+    return code
     
