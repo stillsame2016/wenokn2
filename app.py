@@ -383,11 +383,11 @@ with col2:
                                     """
                         except Exception as e:
                             message = None
-                            try:
-                                query_plan_text, message = execute_query(user_input, chat_container)
-                            except Exception as error:
-                                st.code(f"{str(error)}")
-                                time.sleep(10)
+                            # try:
+                            #     query_plan_text, message = execute_query(user_input, chat_container)
+                            # except Exception as error:
+                            #     st.code(f"{str(error)}")
+                            #     time.sleep(10)
 
                             if message is None:
                                 # message = f"""
