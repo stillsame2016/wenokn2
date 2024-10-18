@@ -148,86 +148,66 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         The following are the variables with the data:
             {variables}
               
-        The following code can fetch some variables data for some dcid from Data Commons:
+        The following function call can fetch some variables data for some dcid from Data Commons:  
+            get_time_series_dataframe_for_dcid(dcid_list, variable_name)
                 
-            import datacommons_pandas as dc
-            
-            def get_time_series_dataframe_for_dcid(dcid_list, variable_name):
-                _df = dc.build_time_series_dataframe(dcid_list, variable_name)    
-                _df.insert(0, 'Name', _df.index.map(dc.get_property_values(_df.index, 'name')))
-                _df['Name'] = _df['Name'].str[0]    
-                
-                # columns = _df.columns.to_list().remove('Name')
-                columns = _df.columns.to_list()
-                columns.remove('Name')
-                _df = _df.melt(
-                    ['Name'],
-                    columns,
-                    'Date',
-                     variable_name,
-                )
-                _df = _df.dropna()     
-                _df = _df.drop_duplicates(keep='first')
-                _df.variable_name = variable_name
-                return _df
-                
-            [Example 1] 
-            Find the populations for all counties in Ohio, we can run the following code:
-            
-                # Get dcid for all counties in Ohio
-                ohio_county_dcid = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
-                
-                # Get Count_Person (i.e., population) for all counties in Ohio
-                df = get_time_series_dataframe_for_dcid(ohio_county_dcid, "Count_Person")
-                df.title = "The Populations for All Counties in Ohio"
-                    
-            [Example 2]
-            Find the populations for the Ross county and Pike county in Ohio, we can run the 
-            following code:
-            
-                ross_pike_dcid = ['geoId/39131', 'geoId/39141']
-                df = get_time_series_dataframe_for_dcid(ross_pike_dcid, "Count_Person")
-                df.title = "The Populations for the Ross county and Pike county in Ohio"
-                     
-            [Example 3]
-            Find the populations of Ross county and Scioto county
-            
-                ross_scioto_dcid = [ get_dcid_from_county_name('Ross County'), get_dcid_from_county_name('Scioto County') ]
-                df = get_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
-                df.title = "The Populations for the Ross county and Scioto county in Ohio"
-                 
-            [Example 4]   
-            Given a geodataframe gdf containing all counties Scioto River passes through with a column
-            "name" for county names. Find the populations of all counties where Scioto River flows through.
-            
-                scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
-                df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
-                df.title = "The Populations for All Counties where Scioto River Flows Through"
-
-            [Example 5]
-            If a geodataframe gdf containing all counties downstream of the coal mine with the name "Century Mine" 
-            along Ohio River and gdf has a column "Name" for county names, to find the social vulnerability for all 
-            counties downstream of the coal mine with the name "Century Mine" along Ohio River, return the following 
-            code:
-
-                counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
-                df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
-                df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
+        [Example 1] 
+        Find the populations for all counties in Ohio, we can run the following code:
         
-            Note that gdf should be st.session_state.datasets[i] for an integer i. 
-
-            If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
-            it to 'Ross County' to call get_dcid_from_county_name.
+            # Get dcid for all counties in Ohio
+            ohio_county_dcid = dc.get_places_in(["geoId/39"], 'County')["geoId/39"]
+            
+            # Get Count_Person (i.e., population) for all counties in Ohio
+            df = get_time_series_dataframe_for_dcid(ohio_county_dcid, "Count_Person")
+            df.title = "The Populations for All Counties in Ohio"
+                    
+        [Example 2]
+        Find the populations for the Ross county and Pike county in Ohio, we can run the 
+        following code:
+        
+            ross_pike_dcid = ['geoId/39131', 'geoId/39141']
+            df = get_time_series_dataframe_for_dcid(ross_pike_dcid, "Count_Person")
+            df.title = "The Populations for the Ross county and Pike county in Ohio"
                      
-            [ Question ]
-            The following is the question from the user:
-            {question}
+        [Example 3]
+        Find the populations of Ross county and Scioto county
+        
+            ross_scioto_dcid = [ get_dcid_from_county_name('Ross County'), get_dcid_from_county_name('Scioto County') ]
+            df = get_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
+            df.title = "The Populations for the Ross county and Scioto county in Ohio"
+                 
+        [Example 4]   
+        Given a geodataframe gdf containing all counties Scioto River passes through with a column
+        "name" for county names. Find the populations of all counties where Scioto River flows through.
+            
+            scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
+            df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
+            df.title = "The Populations for All Counties where Scioto River Flows Through"
 
-            Please use pd.merge(df1, df2, on=df1.columns.to_list[:-1]) to merge two dataframes if needed. 
+        [Example 5]
+        If a geodataframe gdf containing all counties downstream of the coal mine with the name "Century Mine" 
+        along Ohio River and gdf has a column "Name" for county names, to find the social vulnerability for all 
+        counties downstream of the coal mine with the name "Century Mine" along Ohio River, return the following 
+        code:
 
-            Please return the complete Python code only to implement the user's request without preamble or 
-            explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
-            save the title in df.title. 
+            counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
+            df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
+            df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
+    
+        Note that gdf should be st.session_state.datasets[i] for an integer i. 
+
+        If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
+        it to 'Ross County' to call get_dcid_from_county_name.
+                 
+        [ Question ]
+        The following is the question from the user:
+        {question}
+
+        Please use pd.merge(df1, df2, on=df1.columns.to_list[:-1]) to merge two dataframes if needed. 
+
+        Please return the complete Python code only to implement the user's request without preamble or 
+        explanation. Don't include any print statement. Don't add ``` around the code. Make a title and
+        save the title in df.title. 
     
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
