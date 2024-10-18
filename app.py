@@ -141,7 +141,7 @@ def execute_query(user_input, chat_container):
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                            st.code(code)
+                            # st.code(code)
                             if code.startswith("```python"):
                                 start_index = code.find("```python") + len("```python")
                                 end_index = code.find("```", start_index)
