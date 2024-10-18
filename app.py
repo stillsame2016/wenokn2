@@ -365,15 +365,19 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            # message = f"""
-                            #            {code} 
-                            #            {str(e)}
-                            #            """               
-                            message = f"""We are not able to process your request. Please refine your 
-                                          request and try it again. \n\nError: {str(e)}"""
-                            
-                            query_plan_text, message = execute_query(user_input, chat_container)
-                            time.sleep(20)
+                            try:
+                                query_plan_text, message = execute_query(user_input, chat_container)
+                            except Exception as error:
+                                st.code(f"{str(error)}")
+                                time.sleep(10)
+
+                            if message is None:
+                                # message = f"""
+                                #            {code} 
+                                #            {str(e)}
+                                #            """               
+                                message = f"""We are not able to process your request. Please refine your 
+                                              request and try it again. \n\nError: {str(e)}"""
                         
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
