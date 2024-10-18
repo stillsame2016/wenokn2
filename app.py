@@ -388,10 +388,12 @@ with col2:
                             #            {str(e)}
                             #            """  
                             message = f"""We are not able to process your request. Please refine your 
-                                              request and try it again. \n\nError: {str(e)}"""
-
-                            query_plan_text, message = execute_query(user_input, chat_container)
-                            
+                                          request and try it again. \n\nError: {str(e)}"""
+                            try:
+                                query_plan_text, message = execute_query(user_input, chat_container)
+                            except:
+                                pass
+             
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
