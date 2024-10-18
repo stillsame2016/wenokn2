@@ -550,6 +550,11 @@ def strip_code(code):
         code = code[start_index:end_index].strip()
     return code
 
-def normalize_query_plan(query_plan):
-    return query_plan
+def normalize_query_plan(data):
+    for i in range(1, len(data)):
+        # Check if the current item has 'WEN-OKN Database' and the previous has 'Energy Atlas'
+        if data[i]["data_source"] == "WEN-OKN Database" and data[i-1]["data_source"] == "Energy Atlas":
+            # Update the current item's data_source
+            data[i]["data_source"] = "WEN-KEN database use Energy Atlas"
+    return data
     
