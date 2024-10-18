@@ -67,6 +67,10 @@ def process_data_request(message, chat_container):
                             start_index = data.find("```code") + len("```code")
                             end_index = data.find("```", start_index)
                             sparql_query = data[start_index:end_index].strip()
+                        elif data.startswith("```sql"):
+                            start_index = data.find("```sql") + len("```sql")
+                            end_index = data.find("```", start_index)
+                            sparql_query = data[start_index:end_index].strip()
                         elif data.startswith("\"```"):
                             start_index = data.find("```") + len("```")
                             end_index = data.find("```", start_index)
