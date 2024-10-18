@@ -18,7 +18,6 @@ from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name, get_variables_for_dcid
 from energy_atlas import *
 from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
-# from execute_query import execute_query
 
 from streamlit.components.v1 import html
 
@@ -335,8 +334,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
-            time.sleep(20)
+            # st.markdown(route)
+            # time.sleep(20)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
