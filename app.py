@@ -168,13 +168,31 @@ def execute_query(user_input, chat_container):
                             code = strip_code(code)
                             st.code(code)
                             time.sleep(20)
-                            exec(code)
+                            globals_dict = {
+                                'st': st,
+                                'load_coal_mines': load_coal_mines,
+                                'load_coal_power_plants': load_coal_power_plants,
+                                'load_wind_power_plants': load_wind_power_plants,
+                                'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
+                                'load_battery_storage_plants': load_battery_storage_plants,
+                                'load_geothermal_power_plants': load_geothermal_power_plants,
+                                'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
+                                'load_natural_gas_power_plants': load_natural_gas_power_plants,
+                                'load_nuclear_power_plants': load_nuclear_power_plants,
+                                'load_petroleum_power_plants': load_petroleum_power_plants,
+                                'load_solar_power_plants': load_solar_power_plants,
+                                'load_biodiesel_plants': load_biodiesel_plants
+                            }
+                            exec(code, globals_dict)
+                            converted_request = globals_dict['converted_request']
                             st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
                     
                             process_data_request(converted_request, chat_container)
                             st.session_state.datasets[-1].label = query["request"]
                             st.session_state.requests[-1] = query["request"]
 
+                            st.code("CHECK POINT")
+                            time.sleep(20)
                         
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
