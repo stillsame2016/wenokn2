@@ -164,9 +164,18 @@ def execute_query(user_input, chat_container):
                                     found and displayed.
                                     """
                         elif query["data_source"] == "WEN-KEN database use Energy Atlas":
-                            st.code("Check Point: WEN-KEN database use Energy Atlas")
+                            code = process_wenokn_use_energy_atlas(llm, query["request"])
+                            code = strip_code(code)
+                            st.code(code)
                             time.sleep(20)
-                            raise ValueError("OOPS")
+                            exec(code)
+                            st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
+                    
+                            process_data_request(converted_request, chat_container)
+                            st.session_state.datasets[-1].label = query["request"]
+                            st.session_state.requests[-1] = query["request"]
+
+                        
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
