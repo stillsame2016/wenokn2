@@ -149,16 +149,25 @@ def execute_query(user_input, chat_container):
                                 start_index = code.find("```") + len("```")
                                 end_index = code.find("```", start_index)
                                 code = code[start_index:end_index].strip()
-                                exec(code)
-                                df.id = user_input
-                                st.session_state.wen_datasets.append(df)
-                                st.session_state.wen_tables.append(df.copy())
-                                st.session_state.table_chat_histories.append([])
-                                st.session_state.chart_types.append("bar_chart")
-                                message = f"""
-                                        Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
-                                        found and displayed.
-                                        """
+                            globals_dict = {
+                                'st': st,
+                                "get_variables_for_dcid": get_variables_for_dcid,
+                                "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
+                                "get_dcid_from_county_name": get_dcid_from_county_name,
+                                "get_dcid_from_state_name": get_dcid_from_state_name,
+                                "get_dcid_from_country_name": get_dcid_from_country_name
+                            }
+                            exec(code, globals_dict)
+                            df = globals_dict['df']    
+                            df.id = user_input
+                            st.session_state.wen_datasets.append(df)
+                            st.session_state.wen_tables.append(df.copy())
+                            st.session_state.table_chat_histories.append([])
+                            st.session_state.chart_types.append("bar_chart")
+                            message = f"""
+                                    Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                                    found and displayed.
+                                    """
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             if code.startswith("```python"):
