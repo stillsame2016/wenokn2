@@ -10,7 +10,7 @@ from keplergl import keplergl
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, strip_code
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
@@ -442,6 +442,7 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         code = process_wenokn_use_energy_atlas(llm, user_input)
+                        code = strip_code(code)
                         # st.code(code)
                         exec(code)
                         st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
