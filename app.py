@@ -157,6 +157,9 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_state_name": get_dcid_from_state_name,
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
+                            st.code(code)
+                            time.sleep(code)
+                            
                             exec(code, globals_dict)
                             df = globals_dict['df']    
                             df.id = user_input
@@ -374,6 +377,7 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
+                            message = None
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
