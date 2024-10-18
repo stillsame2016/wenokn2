@@ -143,10 +143,7 @@ def execute_query(user_input, chat_container):
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                            st.code("======> Data Commons")
                             st.code(code)
-                            st.code(f"check: {len(st.session_state.datasets)}")
-                            time.sleep(20)
                             if code.startswith("```python"):
                                 start_index = code.find("```python") + len("```python")
                                 end_index = code.find("```", start_index)
@@ -381,15 +378,12 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            message = None
-
-                            query_plan_text, message = execute_query(user_input, chat_container)
-                            
-                            # try:
-                            #     query_plan_text, message = execute_query(user_input, chat_container)
-                            # except Exception as error:
-                            #     st.code(f"{str(error)}")
-                            #     time.sleep(10)
+                            message = None                           
+                            try:
+                                query_plan_text, message = execute_query(user_input, chat_container)
+                            except Exception as error:
+                                st.code(f"{str(error)}")
+                                pass
 
                             if message is None:
                                 message = f"""
