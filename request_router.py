@@ -104,6 +104,10 @@ def get_question_route(llm, question):
               "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'"
             }}
 
+        [ Example 6 ]
+        Return 'WEN-KEN database' for following request: Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
+        The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
+
         Question to route: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
