@@ -163,6 +163,10 @@ def execute_query(user_input, chat_container):
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
+                        elif query["data_source"] == "WEN-KEN database use Energy Atlas":
+                            st.code("Check Point: WEN-KEN database use Energy Atlas")
+                            time.sleep(20)
+                            raise ValueError("OOPS")
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
