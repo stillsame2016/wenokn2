@@ -383,6 +383,9 @@ with col2:
                                     """
                         except Exception as e:
                             message = None
+
+                            query_plan_text, message = execute_query(user_input, chat_container)
+                            
                             # try:
                             #     query_plan_text, message = execute_query(user_input, chat_container)
                             # except Exception as error:
