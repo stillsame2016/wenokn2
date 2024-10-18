@@ -124,7 +124,7 @@ def execute_query(user_input, chat_container):
     message = None
     if response.status_code == 200:
         query_plan = json.loads(response.text)
-        st.code(json.dumps(query_plan, indent=4))
+        # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
             query_plan_text = "We use the following query plan for your request:\n"
@@ -137,8 +137,6 @@ def execute_query(user_input, chat_container):
                 with chat_container:
                     with st.chat_message("assistant"):
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
-                        time.sleep(10)
-                        
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
