@@ -19,6 +19,7 @@ def get_question_route(llm, question):
           7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
           8. Hospitals: Details about hospital locations and information in USA.
           9. Stream Gages: Information of gages' locations and names in USA.
+          10. Power Plants: Information about power plants in Ohio.
         You do not need to be stringent with the keywords in the question related to these topics. 
         
         Use NPDES regulation for questions related to permits or permit applications of discharges pollutants into 
@@ -67,6 +68,8 @@ def get_question_route(llm, question):
 
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
+
+        Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
         [ Example 1 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
