@@ -162,7 +162,7 @@ def execute_query(user_input, chat_container):
                             }
                             st.code(code)
                             st.code(f"check: {len(st.session_state.datasets)}")
-                            time.sleep(code)
+                            time.sleep(20)
                             
                             exec(code, globals_dict)
                             df = globals_dict['df']    
