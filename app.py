@@ -140,15 +140,16 @@ def execute_query(user_input, chat_container):
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
+                            code = strip_code(code)
                             # st.code(code)
-                            if code.startswith("```python"):
-                                start_index = code.find("```python") + len("```python")
-                                end_index = code.find("```", start_index)
-                                code = code[start_index:end_index].strip()
-                            elif code.startswith("```"):
-                                start_index = code.find("```") + len("```")
-                                end_index = code.find("```", start_index)
-                                code = code[start_index:end_index].strip()
+                            # if code.startswith("```python"):
+                            #     start_index = code.find("```python") + len("```python")
+                            #     end_index = code.find("```", start_index)
+                            #     code = code[start_index:end_index].strip()
+                            # elif code.startswith("```"):
+                            #     start_index = code.find("```") + len("```")
+                            #     end_index = code.find("```", start_index)
+                            #     code = code[start_index:end_index].strip()
                             globals_dict = {
                                 'st': st,
                                 "get_variables_for_dcid": get_variables_for_dcid,
@@ -171,14 +172,15 @@ def execute_query(user_input, chat_container):
                                     """
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
-                            if code.startswith("```python"):
-                                start_index = code.find("```python") + len("```python")
-                                end_index = code.find("```", start_index)
-                                code = code[start_index:end_index].strip()
-                            elif code.startswith("```"):
-                                start_index = code.find("```") + len("```")
-                                end_index = code.find("```", start_index)
-                                code = code[start_index:end_index].strip()
+                            code = strip_code(code)
+                            # if code.startswith("```python"):
+                            #     start_index = code.find("```python") + len("```python")
+                            #     end_index = code.find("```", start_index)
+                            #     code = code[start_index:end_index].strip()
+                            # elif code.startswith("```"):
+                            #     start_index = code.find("```") + len("```")
+                            #     end_index = code.find("```", start_index)
+                            #     code = code[start_index:end_index].strip()
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
