@@ -549,4 +549,7 @@ def strip_code(code):
         end_index = code.find("```", start_index)
         code = code[start_index:end_index].strip()
     return code
+
+def normalize_query_plan(query_plan):
+    return query_plan
     
