@@ -139,6 +139,26 @@ def execute_query(user_input, chat_container):
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
+                        elif query["data_source"] == "Data Commons":
+                            code = process_data_commons_request(llm, user_input, st.session_state.datasets)
+                            if code.startswith("```python"):
+                                start_index = code.find("```python") + len("```python")
+                                end_index = code.find("```", start_index)
+                                code = code[start_index:end_index].strip()
+                            elif code.startswith("```"):
+                                start_index = code.find("```") + len("```")
+                                end_index = code.find("```", start_index)
+                                code = code[start_index:end_index].strip()
+                                exec(code)
+                                df.id = user_input
+                                st.session_state.wen_datasets.append(df)
+                                st.session_state.wen_tables.append(df.copy())
+                                st.session_state.table_chat_histories.append([])
+                                st.session_state.chart_types.append("bar_chart")
+                                message = f"""
+                                        Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                                        found and displayed.
+                                        """
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             if code.startswith("```python"):
