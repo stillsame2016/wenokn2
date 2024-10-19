@@ -326,7 +326,6 @@ with col2:
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
         'What types of power infrastructure needs a permit?',
         'How many power plants are in Kentucky?',
-        "Please help search Kentucky Public Service Commission's website to find out how many power plants are in Kentucky",
     ]
     st.markdown(
         """
