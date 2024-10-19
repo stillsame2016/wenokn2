@@ -317,7 +317,7 @@ with col2:
         "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
 
         ######## Energy Atlas ########
-        'Show all coal mines in Ohio State.', 
+        'Could you please find all solar power plants in California?', 
         'Find all coal mines along the Ohio River.', 
         'Where are the coal-fired power plants in Kentucky?',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
