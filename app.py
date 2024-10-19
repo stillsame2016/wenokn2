@@ -320,7 +320,13 @@ with col2:
         'Show all coal mines in Ohio State.', 
         'Find all coal mines along the Ohio River.', 
         'Where are the coal-fired power plants in Kentucky?',
-        'Load all wind power plants with total megawatt capacity greater than 100 in California.' 
+        'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
+
+        ######## NPDES ########
+        'How do I determine if my facility is subject to NPDES regulations in Ohio?',
+        'What types of power infrastructure needs a permit?',
+        'How many power plants are in Kentucky?',
+        "Please help search Kentucky Public Service Commission's website to find out how many power plants are in Kentucky",
     ]
     st.markdown(
         """
