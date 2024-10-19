@@ -320,7 +320,7 @@ with col2:
         'Could you please find all solar power plants in California?', 
         'Find all coal mines along the Ohio River.', 
         'Where are the coal-fired power plants in Kentucky?',
-        'I am interested in natural gas power plants in Florida?',
+        'I am interested in natural gas power plants in Florida.',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
         ######## NPDES ########
