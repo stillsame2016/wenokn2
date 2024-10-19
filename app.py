@@ -319,6 +319,7 @@ with col2:
         ######## Energy Atlas ########
         'Show all coal mines in Ohio State.', 
         'Find all coal mines along the Ohio River.', 
+        'Where are the coal-fired power plants in Kentucky?',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' 
         
         # 'Find flood event counts for all counties downstream of Ross county on Scioto River.',
