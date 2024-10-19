@@ -381,6 +381,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
+                code = strip_code(code)
                 # st.code(code)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
@@ -419,6 +420,7 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:                            
                             code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
+                            code = strip_code(code)
                             exec(code)
                             # st.code(code)
                             if gdf.shape[0] > 0:
