@@ -324,7 +324,6 @@ with col2:
 
         ######## NPDES ########
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
-        'What types of power infrastructure needs a NPDES permit?',
         'How many power plants are in Kentucky?',
     ]
     st.markdown(
