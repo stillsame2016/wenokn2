@@ -299,7 +299,7 @@ with col2:
         'Show all counties downstream of the coal mine with the name Century Mine along Ohio River.',
 
         ######## River ########
-        'Find the Ohio River.', 
+        'Show the Ohio River.', 
         'Find all rivers that flow through Ross County.', 
         'What rivers flow through Dane County in Wisconsin?', 
 
@@ -311,7 +311,7 @@ with col2:
         'Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river',
         
         ######## Data Commons ########
-        'Find the populations for all counties in Ohio State.', 
+        'Load the populations for all counties in Ohio State.', 
         'Find the median individual income for Ross County and Scioto County.', 
         'Find the number of people employed in all counties the Scioto River flows through.', 
         "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
