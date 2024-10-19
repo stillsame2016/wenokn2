@@ -343,7 +343,7 @@ with col2:
                                  sample_queries,
                                  index=None,
                                  label_visibility='hidden',
-                                 placeholder="Select a sample query to edit and customize as needed",
+                                 placeholder="Select a sample query to edit and run as needed",
                                  key='selection_index')
     if selected_item:
         st.session_state.sample_query = selected_item  
