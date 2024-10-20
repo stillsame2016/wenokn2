@@ -221,10 +221,16 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         First check all the variables listed above to see which dataframe st.session_state.datasets[index] 
         contains all counties downstream of the coal mine with the name "Century Mine" along Ohio River, 
         with the column “name” indicating the county names. Assume that this st.session_state.datasets[index] is gdf.
+
+        If gdf exists, return the following code:
         
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
+
+        If gdf doesn't exist, return the following code:
+
+            raise ValueError("Please load all counties downstream of the coal mine with the name "Century Mine" along Ohio River first")
     
         Note that gdf should be st.session_state.datasets[i] for an integer i. 
 
