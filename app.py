@@ -413,7 +413,7 @@ with col2:
                                 #            {code} 
                                 #            {str(e)}
                                 #            """               
-                                message = f"""We are not able to process your request. Please refine your 
+                                message = f"""300 We are not able to process your request. Please refine your 
                                               request and try it again. \n\nError: {str(e)}"""
                         
                         st.markdown(message)
