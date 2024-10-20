@@ -383,7 +383,7 @@ with col2:
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                 code = strip_code(code)
-                st.code(f"Init Code: \n {code})
+                st.code(f"Init Code: \n {code}")
                 time.sleep(10)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
