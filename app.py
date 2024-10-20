@@ -398,12 +398,14 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            st.code(f"Check:\n{code}\n{str(e)}")
+                            st.code(f"Check 100:\n{code}\n{str(e)}")
+                            time.sleep(10)
                             message = None                           
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
-                                st.code(f"{str(error)}")
+                                st.code(f"Check 200:\n{str(error)}")
+                                time.sleep(10)
                                 pass
 
                             if message is None:
