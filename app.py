@@ -355,7 +355,7 @@ with col2:
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
             st.markdown(route)
-            time.sleep(20)
+            time.sleep(5)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
@@ -398,6 +398,7 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
+                            st.code(f"Check:\n{code}\n{str(e)}")
                             message = None                           
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
