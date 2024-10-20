@@ -206,20 +206,21 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         [Example 4]   
         Find the populations of all counties where Scioto River flows through.
 
-        You have to check each dataframe in the data repository to determine an index such that st.session_state.datasets[index] 
-        for "Find all counties where Scioto River flows through". Never assume an index.
+        It is your job to check each dataframe in the data repository listed above to determine an 
+        index such that st.session_state.datasets[index] for "Find all counties where Scioto River flows through". 
+        Never assume an index.
 
         If you find such index, return the following code A:
             # Note that following index must be replaced by an integer you find. 
-            gdf = st.session_state.datasets[index]
+            gdf = st.session_state.datasets[ insert index you find here ]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
-
+       
         If you could not find such index, return the following code B:
             raise ValueError('Please load all counties where Scioto River flows through first')
 
-        Please note that only return code A or code B. 
+        Please note that only return code A or code B. Never combine the code A and code B together
 
         [Example 5]
         Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
