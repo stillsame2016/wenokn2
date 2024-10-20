@@ -406,12 +406,11 @@ with col2:
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
-                                # st.code(f"Check 200:\n{str(error)}")
-                                # time.sleep(10)
+                                st.code(f"Check 200:\n{str(error)}")
+                                time.sleep(10)
                                 # pass
                             message = 'OOPS'
-                            st.code(message)
-                            time.sleep(10)
+
 
                             if message is None:
                                 # message = f"""
