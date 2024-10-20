@@ -210,7 +210,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         contains "Find all counties where Scioto River flows through". 
 
         If index is found, return the following code, return the code:
-            # Note that following index must be replaced by an integer you find 
+            # Note that following index must be replaced by an integer you find. 
+            # Please look at each dataframe in the data repository to determine which index should be used. 
+            # You can't assume an index
             gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
@@ -229,6 +231,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
 
         If index is found, return the following code:
             # Note that following index must be replaced by an integer you find 
+            # Please look at each dataframe in the data repository to determine which index should be used. 
+            # You can't assume an index
             gdf = st.session_state.datasets[index]
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
