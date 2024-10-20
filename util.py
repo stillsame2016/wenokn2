@@ -152,7 +152,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Data Commons has the following statistical variables available for a particular place:
             {dc_variables}
 
-        The following are the dataframes in the data repository:
+        The following are all dataframes in the data repository:
             {variables}
               
         The following code can fetch some variables data for some dcid from Data Commons:
@@ -206,17 +206,17 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         [Example 4]   
         Find the populations of all counties where Scioto River flows through.
 
-        Check each dataframe in the data repository to determine an index such that st.session_state.datasets[index] 
-        contains "Find all counties where Scioto River flows through". Never assume an index.
+        You have to check each dataframe in the data repository to determine an index such that st.session_state.datasets[index] 
+        for "Find all counties where Scioto River flows through". Never assume an index.
 
-        If index is found, return the following code A:
+        If you find such index, return the following code A:
             # Note that following index must be replaced by an integer you find. 
             gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
 
-        Otherwise return the code B:
+        If you could not find such index, return the following code B:
             raise ValueError('Please load all counties where Scioto River flows through first')
 
         Please note that only return code A or code B. 
