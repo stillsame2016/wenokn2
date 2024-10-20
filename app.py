@@ -397,18 +397,10 @@ with col2:
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
-                        except Exception as e:
-                            
-                            st.code(f"Check 100:\n{code}\n{str(e)}")
-                            time.sleep(10)
-                                                    
+                        except Exception as e:                   
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
-                                st.code(f"Check 200:\n{str(error)}")
-                                time.sleep(10)
-                                # pass
-
                                 # message = f"""
                                 #            {code} 
                                 #            {str(e)}
