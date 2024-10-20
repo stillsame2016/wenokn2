@@ -220,7 +220,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         If you could not find such index, return the following code B:
             raise ValueError('Please load all counties where Scioto River flows through first')
 
-        Please note that only return code A or code B. Never combine the code A and code B together
+        Please note that only return code A or code B. Never combine the code A and code B together.
 
         [Example 5]
         Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
@@ -242,7 +242,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Otherwise return the code B:
             raise ValueError("Please all counties downstream of the coal mine with the name "Century Mine" along Ohio River")
 
-        Please note that only return code A or code B. 
+        Please note that only return code A or code B. Never combine the code A and code B together.
 
     
         If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
@@ -278,16 +278,16 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
             variables += f"""
-st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"
+    st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"
 
-The following is the columns of st.session_state.datasets[{index}]:
+    The following is the columns of st.session_state.datasets[{index}]:
         { st.session_state.datasets[index].dtypes }
 
-The following is the first 5 rows of the data:
+    The following is the first 5 rows of the data:
         { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }            
 """
-    st.code(variables)
-    time.sleep(10)
+    # st.code(variables)
+    # time.sleep(10)
     
     return df_code_chain.invoke({"question": user_input, "variables": variables, "dc_variables": dc_variables})
     
