@@ -204,8 +204,11 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df.title = "The Populations for the Ross county and Scioto county in Ohio"
                  
         [Example 4]   
-        Given a geodataframe gdf containing all counties Scioto River passes through with a column
-        "name" for county names. Find the populations of all counties where Scioto River flows through.
+        Find the populations of all counties where Scioto River flows through.
+
+        First check all the variables listed above to see which dataframe st.session_state.datasets[index] 
+        contains all the counties through which the Scioto River passes, with the column “name” indicating 
+        the county names. Assume that this st.session_state.datasets[index] is gdf.
             
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
