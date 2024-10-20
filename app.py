@@ -354,8 +354,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
-            time.sleep(5)
+            # st.markdown(route)
+            # time.sleep(5)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 if refined_request['is_request_data']:
@@ -398,23 +398,23 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:
-                            st.code(f"Check 100:\n{code}\n{str(e)}")
-                            time.sleep(10)
+                            # st.code(f"Check 100:\n{code}\n{str(e)}")
+                            # time.sleep(10)
                             message = None                           
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
-                                st.code(f"Check 200:\n{str(error)}")
-                                time.sleep(10)
+                                # st.code(f"Check 200:\n{str(error)}")
+                                # time.sleep(10)
                                 pass
 
                             if message is None:
-                                message = f"""
-                                           {code} 
-                                           {str(e)}
-                                           """               
-                                # message = f"""We are not able to process your request. Please refine your 
-                                #               request and try it again. \n\nError: {str(e)}"""
+                                # message = f"""
+                                #            {code} 
+                                #            {str(e)}
+                                #            """               
+                                message = f"""We are not able to process your request. Please refine your 
+                                              request and try it again. \n\nError: {str(e)}"""
                         
                         st.markdown(message)
                         st.session_state.chat.append({"role": "assistant", "content": message})
