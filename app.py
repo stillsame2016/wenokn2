@@ -401,18 +401,14 @@ with col2:
                             
                             st.code(f"Check 100:\n{code}\n{str(e)}")
                             time.sleep(10)
-                            
-                            message = None                           
+                                                    
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
                                 st.code(f"Check 200:\n{str(error)}")
                                 time.sleep(10)
                                 # pass
-                            message = 'OOPS'
 
-
-                            if message is None:
                                 # message = f"""
                                 #            {code} 
                                 #            {str(e)}
