@@ -50,8 +50,8 @@ def process_data_request(message, chat_container):
                           Depending on the complexity of the query and the volume of data, 
                           this may take a moment. We appreciate your patience."""):
 
-                # generate a sparql query. try up to 5 times because of the LLM limit
-                max_tries = 5
+                # generate a sparql query. try up to 8 times because of the LLM limit
+                max_tries = 8
                 tried = 0
                 gdf_empty = False
                 while tried < max_tries:
