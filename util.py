@@ -206,30 +206,30 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         [Example 4]   
         Find the populations of all counties where Scioto River flows through.
 
-        First check the dataframes in the data repository to find an index such that st.session_state.datasets[index] 
-        contains "Find all counties where Scioto River flows through". 
+        Check each dataframe in the data repository to determine an index such that st.session_state.datasets[index] 
+        contains "Find all counties where Scioto River flows through". Never assume an index.
 
-        If index is found, return the following code, return the code:
+        If index is found, return the following code A:
             # Note that following index must be replaced by an integer you find. 
-            # Please look at each dataframe in the data repository to determine which index should be used. 
-            # You can't assume an index
             gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
-            
-        Otherwise return the code:
+
+        Otherwise return the code B:
             raise ValueError('Please load all counties where Scioto River flows through first')
-        
+
+        Please note that only return code A or code B. 
 
         [Example 5]
         Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
         along Ohio River.
 
-        First check the dataframes in the data repository listed above to find an index such that st.session_state.datasets[index] 
-        contains 'Find all counties downstream of the coal mine with the name "Century Mine" along Ohio River'. 
+        Check each dataframe in the data repository listed above to find an index such that st.session_state.datasets[index] 
+        contains 'Find all counties downstream of the coal mine with the name "Century Mine" along Ohio River'.  
+        Never assume an index.
 
-        If index is found, return the following code:
+        If index is found, return the following code A:
             # Note that following index must be replaced by an integer you find 
             # Please look at each dataframe in the data repository to determine which index should be used. 
             # You can't assume an index
@@ -238,9 +238,10 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
 
-        Otherwise return the code:
+        Otherwise return the code B:
             raise ValueError("Please all counties downstream of the coal mine with the name "Century Mine" along Ohio River")
 
+        Please note that only return code A or code B. 
 
     
         If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
