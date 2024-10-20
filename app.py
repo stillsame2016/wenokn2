@@ -402,7 +402,9 @@ with col2:
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
+                                st.code("OOPS")
                                 st.code(f"{str(error)}")
+                                time.sleep(20)
                                 pass
 
                             if message is None:
