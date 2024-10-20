@@ -109,7 +109,8 @@ def get_question_route(llm, question):
         The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
 
         [ Example 7 ]
-        Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
+        Return 'WEN-KEN database' for following request: 
+            Find all neighboring states of Ohio State.
 
         Question to route: {question} 
         
