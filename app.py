@@ -292,11 +292,11 @@ with col2:
     sample_queries = [
         ######## County ########
         'Show Ross County.', 
-        'Display all counties in Ohio State.', 
+        'Show all counties in Ohio State.', 
         'Find all counties the Scioto River flows through.',
-        'Please find all counties downstream of Ross County on the Scioto River.',  
-        'I would like to study all counties both the Ohio River and the Muskingum River flow through.',  
-        'Show all counties downstream of the coal mine with the name Century Mine along Ohio River.',
+        'Find all counties downstream of Ross County on the Scioto River.',  
+        'Find all counties both the Ohio River and the Muskingum River flow through.',  
+        'Find all counties downstream of the coal mine with the name Century Mine along Ohio River.',
 
         ######## River ########
         'Show the Ohio River.', 
@@ -311,16 +311,16 @@ with col2:
         'Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river',
         
         ######## Data Commons ########
-        'Load the populations for all counties in Ohio State.', 
+        'Show the populations for all counties in Ohio State.', 
         'Find the median individual income for Ross County and Scioto County.', 
         'Find the number of people employed in all counties the Scioto River flows through.', 
         "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
 
         ######## Energy Atlas ########
-        'Could you please find all solar power plants in California?', 
+        'Find all solar power plants in California?', 
         'Find all coal mines along the Ohio River.', 
         'Where are the coal-fired power plants in Kentucky?',
-        'I am interested in natural gas power plants in Florida.',
+        'Show natural gas power plants in Florida.',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
         ######## NPDES ########
