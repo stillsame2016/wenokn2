@@ -397,7 +397,9 @@ with col2:
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
                                     """
-                        except Exception as e:                   
+                        except Exception as e:  
+                            st.code("CHECK")
+                            time.sleep(10)
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
