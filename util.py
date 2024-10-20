@@ -215,12 +215,12 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df.title = "The Populations for All Counties where Scioto River Flows Through"
 
         [Example 5]
-        Find the social vulnerability for all counties downstream of the coal mine with the name "Century Mine" 
-        along Ohio River
+        Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
+        along Ohio River.
 
-        First check all the variables listed above to see which dataframe st.session_state.datasets[index] 
-        contains all counties downstream of the coal mine with the name "Century Mine" along Ohio River, 
-        with the column “name” indicating the county names. Assume that this st.session_state.datasets[index] is gdf.
+        First check all the variables listed above to find an index such that st.session_state.datasets[index] 
+        contains 'all counties downstream of the coal mine with the name "Century Mine" along Ohio River', 
+        and has a column “name” indicating the county names. Assume that this st.session_state.datasets[index] as gdf.
 
         If gdf exists, return the following code:
         
@@ -228,12 +228,12 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
 
+        Note that gdf should be st.session_state.datasets[i] for an integer i. 
+                
         If gdf doesn't exist, return the following code:
 
             raise ValueError("Please load all counties downstream of the coal mine with the name "Century Mine" along Ohio River first")
     
-        Note that gdf should be st.session_state.datasets[i] for an integer i. 
-
         If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
         it to 'Ross County' to call get_dcid_from_county_name.
                  
@@ -275,7 +275,9 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                                  { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }
                                  
                           """
-    # st.code(variables)
+    st.code(variables)
+    time.sleep(10)
+    
     return df_code_chain.invoke({"question": user_input, "variables": variables, "dc_variables": dc_variables})
     
 
