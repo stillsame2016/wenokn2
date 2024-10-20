@@ -383,11 +383,11 @@ with col2:
             elif route['request_type'] == 'Data Commons':
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                 code = strip_code(code)
-                st.code(code)
+                st.code(f"Init Code: \n {code})
                 time.sleep(10)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        message = "OOPS"
+                        message = "We are not able to process your request. Please refine your request and try it again."
                         try:
                             exec(code)
                             df.id = user_input
@@ -400,7 +400,7 @@ with col2:
                                     found and displayed.
                                     """
                         except Exception as e:  
-                            st.code("CHECK")
+                            st.code("Init Code Failed. Generate and run a query plan")
                             time.sleep(10)
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
