@@ -297,7 +297,7 @@ with col2:
         'Find all counties downstream of Ross County on the Scioto River.',  
         'Find all counties both the Ohio River and the Muskingum River flow through.',  
         'Find all counties downstream of the coal mine with the name Century Mine along Ohio River.',
-        'Find all neighbour counties of Guernsey county.',
+        'Find all neighboring counties of Guernsey County.',
 
         ######## River ########
         'Show the Ohio River.', 
