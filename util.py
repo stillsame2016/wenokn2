@@ -207,32 +207,35 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Find the populations of all counties where Scioto River flows through.
 
         First check the dataframes in the data repository to find an index such that st.session_state.datasets[index] 
-        contains "all the counties through which the Scioto River passes" and has the column “name” indicating 
-        the county names. 
+        contains "Find all counties where Scioto River flows through". 
 
         If index is found, return the following code, return the code:
-
-            # Note that replace the following index by the real integer you found
+            # Note that following index must be replaced by an integer you find 
             gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
+            
+        Otherwise return the code:
+            raise ValueError('Please load all counties where Scioto River flows through first')
+        
 
         [Example 5]
         Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
         along Ohio River.
 
-        First check the dataframes in the data repository to find an index such that st.session_state.datasets[index] 
-        contains 'all counties downstream of the coal mine with the name "Century Mine" along Ohio River', 
-        and has a column “name” indicating the county names. 
+        First check the dataframes in the data repository listed above to find an index such that st.session_state.datasets[index] 
+        contains 'Find all counties downstream of the coal mine with the name "Century Mine" along Ohio River'. 
 
         If index is found, return the following code:
-
-            # Note that replace the following index by the real integer you found
+            # Note that following index must be replaced by an integer you find 
             gdf = st.session_state.datasets[index]
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
+
+        Otherwise return the code:
+            raise ValueError("Please all counties downstream of the coal mine with the name "Century Mine" along Ohio River")
 
 
     
