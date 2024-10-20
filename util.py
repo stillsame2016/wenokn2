@@ -215,11 +215,13 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df.title = "The Populations for All Counties where Scioto River Flows Through"
 
         [Example 5]
-        If a geodataframe gdf containing all counties downstream of the coal mine with the name "Century Mine" 
-        along Ohio River and gdf has a column "Name" for county names, to find the social vulnerability for all 
-        counties downstream of the coal mine with the name "Century Mine" along Ohio River, return the following 
-        code:
+        Find the social vulnerability for all counties downstream of the coal mine with the name "Century Mine" 
+        along Ohio River
 
+        First check all the variables listed above to see which dataframe st.session_state.datasets[index] 
+        contains all counties downstream of the coal mine with the name "Century Mine" along Ohio River, 
+        with the column “name” indicating the county names. Assume that this st.session_state.datasets[index] is gdf.
+        
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
