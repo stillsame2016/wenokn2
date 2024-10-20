@@ -211,7 +211,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         the county names. 
 
         If index is found, return the following code, return the code:
-        
+
+            # Note that replace the following index by the real integer you found
             gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
@@ -227,6 +228,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
 
         If index is found, return the following code:
 
+            # Note that replace the following index by the real integer you found
             gdf = st.session_state.datasets[index]
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
