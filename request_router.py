@@ -108,6 +108,9 @@ def get_question_route(llm, question):
         Return 'WEN-KEN database' for following request: Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
         The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
 
+        [ Example 7 ]
+        Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
+
         Question to route: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
