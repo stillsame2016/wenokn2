@@ -152,7 +152,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Data Commons has the following statistical variables available for a particular place:
             {dc_variables}
 
-        The following are the variables with the data:
+        The following are the dataframes in the data repository:
             {variables}
               
         The following code can fetch some variables data for some dcid from Data Commons:
@@ -206,10 +206,13 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         [Example 4]   
         Find the populations of all counties where Scioto River flows through.
 
-        First check all the variables listed above to see which dataframe st.session_state.datasets[index] 
-        contains all the counties through which the Scioto River passes, with the column “name” indicating 
-        the county names. Assume that this st.session_state.datasets[index] is gdf.
-            
+        First check the dataframes in the data repository to find an index such that st.session_state.datasets[index] 
+        contains "all the counties through which the Scioto River passes" and has the column “name” indicating 
+        the county names. 
+
+        If index is found, return the following code, return the code:
+        
+            gdf = st.session_state.datasets[index]
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
@@ -218,21 +221,18 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         Find social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' 
         along Ohio River.
 
-        First check all the variables listed above to find an index such that st.session_state.datasets[index] 
+        First check the dataframes in the data repository to find an index such that st.session_state.datasets[index] 
         contains 'all counties downstream of the coal mine with the name "Century Mine" along Ohio River', 
-        and has a column “name” indicating the county names. Assume that this st.session_state.datasets[index] as gdf.
+        and has a column “name” indicating the county names. 
 
-        If gdf exists, return the following code:
-        
+        If index is found, return the following code:
+
+            gdf = st.session_state.datasets[index]
             counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
 
-        Note that gdf should be st.session_state.datasets[i] for an integer i. 
-                
-        If gdf doesn't exist, return the following code:
 
-            raise ValueError("Please load all counties downstream of the coal mine with the name "Century Mine" along Ohio River first")
     
         If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
         it to 'Ross County' to call get_dcid_from_county_name.
@@ -267,7 +267,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
             variables += f"""
-st.session_state.datasets[{index}] is a geodataframe for { st.session_state.datasets[index].label}
+st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"
 
 The following is the columns of st.session_state.datasets[{index}]:
         { st.session_state.datasets[index].dtypes }
