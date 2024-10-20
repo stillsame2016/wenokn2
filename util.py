@@ -271,14 +271,18 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
     variables = ""
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
+#             variables += f"""
+# st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"
+
+# The following is the columns of st.session_state.datasets[{index}]:
+#         { st.session_state.datasets[index].dtypes }
+
+# The following is the first 5 rows of the data:
+#         { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }            
+# """
+
             variables += f"""
-st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"
-
-The following is the columns of st.session_state.datasets[{index}]:
-        { st.session_state.datasets[index].dtypes }
-
-The following is the first 5 rows of the data:
-        { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }            
+    st.session_state.datasets[{index}] is a geodataframe for "{st.session_state.datasets[index].label}"\n       
 """
 
     st.code(variables)
