@@ -387,6 +387,7 @@ with col2:
                 time.sleep(10)
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
+                        message = "OOPS"
                         try:
                             exec(code)
                             df.id = user_input
