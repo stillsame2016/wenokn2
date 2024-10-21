@@ -374,7 +374,8 @@ with col2:
                         if not spatial_dataset_exists(llm, request, st.session_state.datasets):
                             process_data_request(request, chat_container)
                         else:
-                            st.markdown(f"The data for **{request}** exists.")
+                            st.markdown(f"The data for **{request}** already exists.")
+                            time.sleep(3)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
                         st.session_state.datasets[idx].time = time.time()
