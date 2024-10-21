@@ -434,11 +434,11 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            st.code(f"{exist_json}")
+                            st.code(f"100 {exist_json}")
                             time.sleep(10)
                             if exist_json['existing']:
-                                    st.markdown(f"The data already exists:  **{user_input}**")
-                                    time.sleep(1)
+                                st.markdown(f"200 The data already exists:  **{user_input}**")
+                                time.sleep(1)
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
