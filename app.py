@@ -433,39 +433,39 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
-                            exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            st.code(f"100 {exist_json}")
-                            time.sleep(10)
-                            if exist_json['existing']:
-                                st.markdown(f"200 The data already exists:  **{user_input}**")
-                                time.sleep(1)
-                            else:
-                                code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
-                                code = strip_code(code)
-                                exec(code)
-                                # st.code(code)
-                                if gdf.shape[0] > 0:
-                                    if hasattr(gdf, 'answer'):
-                                        message = gdf.answer
-                                    else:
-                                        gdf.label = gdf.title
-                                        gdf.id = str(uuid.uuid4())[:8]
-                                        gdf.time = time.time()
-                                        st.session_state.requests.append(user_input)
-                                        st.session_state.sparqls.append("")
-                                        st.session_state.datasets.append(gdf)
-                                        st.session_state.rerun = True
-                                        message = f"""
-                                                    Your request has been processed. {gdf.shape[0]} 
-                                                    { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                    loaded on the map.
-                                                    """
+                            # exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
+                            # st.code(f"100 {exist_json}")
+                            # time.sleep(10)
+                            # if exist_json['existing']:
+                            #     st.markdown(f"200 The data already exists:  **{user_input}**")
+                            #     time.sleep(1)
+                            # else:
+                            code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
+                            code = strip_code(code)
+                            exec(code)
+                            # st.code(code)
+                            if gdf.shape[0] > 0:
+                                if hasattr(gdf, 'answer'):
+                                    message = gdf.answer
                                 else:
+                                    gdf.label = gdf.title
+                                    gdf.id = str(uuid.uuid4())[:8]
+                                    gdf.time = time.time()
+                                    st.session_state.requests.append(user_input)
+                                    st.session_state.sparqls.append("")
+                                    st.session_state.datasets.append(gdf)
+                                    st.session_state.rerun = True
                                     message = f"""
-                                                Your request has been processed. Nothing was found.
-                                                Please refine your request and try again if you think
-                                                this is a mistake.
+                                                Your request has been processed. {gdf.shape[0]} 
+                                                { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                loaded on the map.
                                                 """
+                            else:
+                                message = f"""
+                                            Your request has been processed. Nothing was found.
+                                            Please refine your request and try again if you think
+                                            this is a mistake.
+                                            """
                         except Exception as e:
                             st.code(f"{str(e)}")
                             time.sleep(10)
