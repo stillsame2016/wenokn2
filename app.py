@@ -371,9 +371,10 @@ with col2:
                     count_start = len(st.session_state.datasets)
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
-                        st.code(f"{type(spatial_dataset_exists(llm, request, st.session_state.datasets))}")
+                        exist_json = json.loads(spatial_dataset_exists(llm, request, st.session_state.datasets))
+                        st.code(f"{json.dump(exist_json, indent=4)}")
                         time.sleep(10)
-                        if spatial_dataset_exists(llm, request, st.session_state.datasets) == False:
+                        if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
