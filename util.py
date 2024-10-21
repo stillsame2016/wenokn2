@@ -585,7 +585,7 @@ def normalize_query_plan(data):
             data[i]["data_source"] = "WEN-KEN database use Energy Atlas"
     return data
 
-def spatial_dataset_exists(llm, request):
+def spatial_dataset_exists(llm, request, spatial_datasets):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
