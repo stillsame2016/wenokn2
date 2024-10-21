@@ -71,28 +71,33 @@ def get_question_route(llm, question):
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
-        [ Example 0 ]
+        [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
 
-        [ Example 1 ]
+        [ Example 2 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
             Find counties downstream of the coal mine with the name "Century Mine" on the Ohio River. 
         Because this request tries to find some counties (in WEN-KEN database) but with some conditions related to
         Ohio River (in WEN-KEN database) and the coal mine with the name "Century Mine" in Energy Atlas.
 
-        [ Example 2 ]
+        [ Example 3 ]
         Return "Energy Atlas" for the following request:
             Find all coal mines along Ohio River
         Because this request tries to find coal mines (in Energy Atlas rather than in WEN-KEN database)
 
-        [ Example 3 ]
+        [ Example 4 ]
+        Return "Energy Atlas" for the following request:
+            Find all coal mines in all counties the Scioto River flows through.
+        Because this request tries to find coal mines (in Energy Atlas rather than in WEN-KEN database)
+
+        [ Example 5 ]
         Return "Data Commons" for the following request:
             Find the social vulnerability for all counties downstream of the coal mine with the name "Century Mine" along Ohio River
         Because this request tries to find the social vulnerability of some counties which satisfy some conditions.
 
         Use "Other" for questions related to common knowledge. 
 
-        [ Example 4 ]
+        [ Example 6 ]
         Return "Other" for the following request:
             Please help search Kentucky Public Service Commission's website to find out how many power plants are in Kentucky
         
@@ -100,14 +105,14 @@ def get_question_route(llm, question):
         'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
         'request_type' and a key 'explanation' for reasons. 
 
-        [ Example 5 ]
+        [ Example 7 ]
         Return the following JSON string for the request "Could you please give me some example questions?":
             {{
               "request_type" : "Other",
               "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'"
             }}
 
-        [ Example 6 ]
+        [ Example 8 ]
         Return 'WEN-KEN database' for following request: Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
         The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
         
