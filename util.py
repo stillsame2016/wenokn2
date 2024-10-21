@@ -616,7 +616,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
         """,
         input_variables=["question", "variables"],
     )
-    df_code_chain = prompt | llm | StrOutputParser()
+    df_code_chain = prompt | llm | JsonOutputParser()
  
     variables = ""
     if spatial_datasets:
