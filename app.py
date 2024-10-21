@@ -372,14 +372,12 @@ with col2:
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
                         exist_json = json.loads(spatial_dataset_exists(llm, request, st.session_state.datasets))
-                        st.code(f"{json.dumps(exist_json, indent=4)}")
-                        time.sleep(10)
                         if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
                                 st.markdown(f"The data already exists:  **{request}**")
-                                time.sleep(3)
+                                time.sleep(1)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
                         st.session_state.datasets[idx].time = time.time()
