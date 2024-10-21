@@ -133,7 +133,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for all counties the Scioto River flows through if you found one>
             gdf2 = load_coal_mines("1 = 1")
-            gdf = gpd.sjoin(gdf2, gdf1, how="inner", op="within")
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="within")
             gdf = coal_mines_in_counties[gdf2.columns]
             gdf.title = "All solar power plants in all counties the Scioto River flows through"
 
