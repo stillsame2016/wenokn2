@@ -373,10 +373,7 @@ with col2:
                     for request in plan['requests']:
                         exist_result = spatial_dataset_exists(llm, request, st.session_state.datasets)
                         exist_result = strip_json(exist_result)
-                        st.code(f"100: {exist_result}")
                         exist_json = json.loads(exist_result)
-                        st.code(f"200: {json.dumps(exist_json)}")
-                        time.sleep(10)
                         if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
