@@ -395,6 +395,11 @@ with col2:
                 st.session_state.chat.append({"role": "assistant", "content": message})
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
+
+                exist_json = nonspatial_dataset_exists(llm, user_input, st.session_state.wen_datasets)
+                st.code(f"{exist_json}")
+                time.sleep(10)
+                
                 code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                 code = strip_code(code)
                 # st.code(f"Init Code: \n {code}")
