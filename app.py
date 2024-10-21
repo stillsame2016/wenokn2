@@ -371,9 +371,10 @@ with col2:
                     count_start = len(st.session_state.datasets)
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
-                        st.code(f"Exists: {spatial_dataset_exists(llm, request, st.session_state.datasets)}")
-                        time.sleep(20)
-                        process_data_request(request, chat_container)
+                        if not spatial_dataset_exists(llm, request, st.session_state.datasets):
+                            process_data_request(request, chat_container)
+                        else:
+                            st.markdown(f"The data for **{request}** exists.")
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
                         st.session_state.datasets[idx].time = time.time()
