@@ -376,7 +376,7 @@ with col2:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
-                                st.markdown(f"The data already exists:  **{request}**")
+                                st.markdown(f"The data already exists for the request: **{request}**")
                                 time.sleep(1)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
@@ -435,7 +435,7 @@ with col2:
                         try:
                             exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
                             if exist_json['existing']:
-                                message = f"Your request has been processed. The data already exists:  **{user_input}**"
+                                message = f"Your request has been processed. The data already exists for the request: **{user_input}**"
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
