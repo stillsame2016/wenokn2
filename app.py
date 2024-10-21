@@ -461,7 +461,8 @@ with col2:
                                           request and try it again. \n\nError: {str(e)}"""
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
-                            except:
+                            except Exception as error:
+                                message = f"{str(error)}"
                                 pass
              
                     st.markdown(message)
