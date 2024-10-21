@@ -441,7 +441,9 @@ with col2:
                             #     time.sleep(1)
                             # else:
 
-                            if not exist_json['existing']:
+                            if exist_json['existing']:
+                                message = f"The data already exists:  **{user_input}**"
+                            else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
                                 exec(code)
