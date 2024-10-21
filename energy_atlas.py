@@ -127,7 +127,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         If none of the available variables are geodataframes containing all counties the Scioto River flows through, 
         then return the following code:
-            raise Exception("The data for all counties the Scioto River flows through. Please it first.")
+            raise Exception("The data for all counties the Scioto River flows through is missing. Please it first.")
         
         If you found a variable which is a geodataframe containing all counties the Scioto River flows through, then return 
         the valid Python code in the following format:
