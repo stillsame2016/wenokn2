@@ -615,5 +615,5 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
                  the request: { st.session_state.datasets[index].label}                                
                           """
     # st.code(variables)
-    return df_code_chain.invoke({"question": user_input, "variables": variables})
+    return df_code_chain.invoke({"question": request, "variables": variables})
     
