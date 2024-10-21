@@ -399,41 +399,47 @@ with col2:
                 exist_json = nonspatial_dataset_exists(llm, user_input, st.session_state.wen_datasets)
                 st.code(f"{exist_json}")
                 time.sleep(10)
-                
-                code = process_data_commons_request(llm, user_input, st.session_state.datasets)
-                code = strip_code(code)
-                # st.code(f"Init Code: \n {code}")
-                # time.sleep(10)
-                with st.chat_message("assistant"):
-                    with st.spinner("Loading data ..."):
-                        message = "We are not able to process your request. Please refine your request and try it again."
-                        try:
-                            exec(code)
-                            df.id = user_input
-                            st.session_state.wen_datasets.append(df)
-                            st.session_state.wen_tables.append(df.copy())
-                            st.session_state.table_chat_histories.append([])
-                            st.session_state.chart_types.append("bar_chart")
-                            message = f"""
-                                    Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
-                                    found and displayed.
-                                    """
-                        except Exception as e:  
-                            # st.code("Init Code Failed. Generate and run a query plan")
-                            # time.sleep(10)
-                            try:
-                                query_plan_text, message = execute_query(user_input, chat_container)
-                            except Exception as error:
-                                # message = f"""
-                                #            {code} 
-                                #            {str(e)}
-                                #            """               
-                                message = f"""We are not able to process your request. Please refine your 
-                                              request and try it again. \n\nError: {str(e)}"""
-                        
-                        st.markdown(message)
+
+                if exist_json['existing']:
+                    with st.chat_message("assistant"):
+                        message = f"Your request has been processed. The data already exists for the request: **{user_input}**"
                         st.session_state.chat.append({"role": "assistant", "content": message})
                         st.rerun()
+                else:
+                    code = process_data_commons_request(llm, user_input, st.session_state.datasets)
+                    code = strip_code(code)
+                    # st.code(f"Init Code: \n {code}")
+                    # time.sleep(10)
+                    with st.chat_message("assistant"):
+                        with st.spinner("Loading data ..."):
+                            message = "We are not able to process your request. Please refine your request and try it again."
+                            try:
+                                exec(code)
+                                df.id = user_input
+                                st.session_state.wen_datasets.append(df)
+                                st.session_state.wen_tables.append(df.copy())
+                                st.session_state.table_chat_histories.append([])
+                                st.session_state.chart_types.append("bar_chart")
+                                message = f"""
+                                        Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                                        found and displayed.
+                                        """
+                            except Exception as e:  
+                                # st.code("Init Code Failed. Generate and run a query plan")
+                                # time.sleep(10)
+                                try:
+                                    query_plan_text, message = execute_query(user_input, chat_container)
+                                except Exception as error:
+                                    # message = f"""
+                                    #            {code} 
+                                    #            {str(e)}
+                                    #            """               
+                                    message = f"""We are not able to process your request. Please refine your 
+                                                  request and try it again. \n\nError: {str(e)}"""
+                            
+                            st.markdown(message)
+                            st.session_state.chat.append({"role": "assistant", "content": message})
+                            st.rerun()
             elif route['request_type'] == 'US Energy Atlas':
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
