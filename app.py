@@ -372,7 +372,7 @@ with col2:
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
                         st.code(f"Exists: {spatial_dataset_exists(request)}")
-                        st.sleep(20)
+                        time.sleep(20)
                         process_data_request(request, chat_container)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
