@@ -627,4 +627,36 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
                           """
     # st.code(variables)
     return df_code_chain.invoke({"question": request, "variables": variables})
-    
+
+
+def nonspatial_dataset_exists(llm, request, nonspatial_datasets):
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+
+        [ Available Data ]
+        The following are the variables with the data:
+            {variables}
+                        
+        [ Question ]
+        The following is the requested from the user:
+            {question}
+
+        Please check whether a varable contains the user's requested data. Return a valid Python JSON string
+        with a boolean field 'existing' to indicate if it exists. Please return JSON only 
+        without any explanations.  without preamble or explanation. 
+        
+        <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question", "variables"],
+    )
+    df_code_chain = prompt | llm | JsonOutputParser()
+ 
+    variables = ""
+    if nonspatial_datasets:
+        for index, dataset in enumerate(nonspatial_datasets):
+            variables += f"""
+                 st.session_state.wen_datasets[{index}] holds a dataframe after processing 
+                 the request: { st.session_state.wen_datasets[index].label}                                
+                          """
+    st.code(variables)
+    return df_code_chain.invoke({"question": request, "variables": variables})
