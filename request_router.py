@@ -71,6 +71,9 @@ def get_question_route(llm, question):
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
+        [ Example 0 ]
+        Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
+
         [ Example 1 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
             Find counties downstream of the coal mine with the name "Century Mine" on the Ohio River. 
@@ -107,10 +110,7 @@ def get_question_route(llm, question):
         [ Example 6 ]
         Return 'WEN-KEN database' for following request: Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
         The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
-
-        [ Example 7 ]
-        Return 'WEN-KEN database' for following request: 
-            Find all neighboring states of Ohio State.
+        
 
         Question to route: {question} 
         
