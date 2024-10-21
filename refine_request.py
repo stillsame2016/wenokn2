@@ -60,7 +60,18 @@ def get_refined_question(llm, question):
             "Beehive State" to "Utah", etc.  
     
             Never deny a user's request. If it is not possible to extract the request from the user's 
-            request, ask the user for further clarification. <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            request, ask the user for further clarification. 
+
+            [ Example ]
+            Return the following for the request: Find all neighboring states of Ohio State.
+                {
+                 'is_request_data': True, 
+                 'request': 'Find all neighboring states of Ohio State', 
+                 'alternative_answer': ''
+                 }     
+            Note that the WEN-OKN knowledge database contains the spatial infromation of USA States.
+            
+            <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
     )
