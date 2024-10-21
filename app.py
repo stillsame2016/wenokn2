@@ -314,6 +314,7 @@ with col2:
         
         ######## Data Commons ########
         'Show the populations for all counties in Ohio State.', 
+        'Find populations for all adjacent states to the state of Ohio.',
         'Find the median individual income for Ross County and Scioto County.', 
         'Find the number of people employed in all counties the Scioto River flows through.', 
         "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
