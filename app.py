@@ -373,7 +373,7 @@ with col2:
                     for request in plan['requests']:
                         st.code(f"{spatial_dataset_exists(llm, request, st.session_state.datasets)}")
                         time.sleep(10)
-                        if spatial_dataset_exists(llm, request, st.session_state.datasets) == false:
+                        if spatial_dataset_exists(llm, request, st.session_state.datasets) == False:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
