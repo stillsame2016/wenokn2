@@ -375,7 +375,7 @@ with col2:
                         # exist_result = strip_json(exist_result)
                         # exist_json = json.loads(exist_result)
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
-                        if not exist_json['existing']:
+                        if not exist_json.existing:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
