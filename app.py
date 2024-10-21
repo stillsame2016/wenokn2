@@ -468,6 +468,8 @@ with col2:
                                             this is a mistake.
                                             """
                         except Exception as e:
+                            st.code(f"{str(e)}")
+                            time.sleep(10)
                             # message = f"""
                             #            {code} 
                             #            {str(e)}
