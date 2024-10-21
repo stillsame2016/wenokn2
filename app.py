@@ -359,6 +359,8 @@ with col2:
             time.sleep(5)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
+                st.code(refined_request)
+                time.sleep(10)
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
                     count_start = len(st.session_state.datasets)
