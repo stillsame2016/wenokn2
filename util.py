@@ -577,6 +577,17 @@ def strip_code(code):
         code = code[start_index:end_index].strip()
     return code
 
+def strip_json(code):
+    if code.startswith("```json"):
+        start_index = code.find("```json") + len("```json")
+        end_index = code.find("```", start_index)
+        code = code[start_index:end_index].strip()
+    elif code.startswith("```"):
+        start_index = code.find("```") + len("```")
+        end_index = code.find("```", start_index)
+        code = code[start_index:end_index].strip()
+    return code
+
 def normalize_query_plan(data):
     for i in range(1, len(data)):
         # Check if the current item has 'WEN-OKN Database' and the previous has 'Energy Atlas'
