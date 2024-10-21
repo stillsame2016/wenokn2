@@ -298,6 +298,7 @@ with col2:
         'Find all counties both the Ohio River and the Muskingum River flow through.',  
         'Find all counties downstream of the coal mine with the name Century Mine along Ohio River.',
         'Find all neighboring counties of Guernsey County.',
+        'Find all adjacent states to the state of Ohio.',
 
         ######## River ########
         'Show the Ohio River.', 
