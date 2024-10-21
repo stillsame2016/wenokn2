@@ -598,7 +598,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
             {question}
 
         Please check whether a varable contains the user's requested data. Return a valid Python JSON string
-        with a boolean field 'existing' to indicate if it exists by True or False. Please return JSON only 
+        with a boolean field 'existing' to indicate if it exists. Please return JSON only 
         without any explanations.  without preamble or explanation. 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
