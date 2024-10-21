@@ -656,7 +656,7 @@ def nonspatial_dataset_exists(llm, request, nonspatial_datasets):
         for index, dataset in enumerate(nonspatial_datasets):
             variables += f"""
                  st.session_state.wen_datasets[{index}] holds a dataframe after processing 
-                 the request: { st.session_state.wen_datasets[index].label}                                
+                 the request: { st.session_state.wen_datasets[index].title}                                
                           """
     st.code(variables)
     return df_code_chain.invoke({"question": request, "variables": variables})
