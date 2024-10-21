@@ -378,7 +378,7 @@ with col2:
                         st.code(f"{type(exist_json)}")
                         st.code(f"{exist_json}")
                         time.sleep(10)
-                        if not exist_json.existing:
+                        if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
