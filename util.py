@@ -584,4 +584,7 @@ def normalize_query_plan(data):
             # Update the current item's data_source
             data[i]["data_source"] = "WEN-KEN database use Energy Atlas"
     return data
+
+def spatial_dataset_exists(request):
+    return True
     
