@@ -119,6 +119,24 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Use pandas.concat to concatenate two geodataframe gdf1 and gdf2:
             gdf = pd.concat([gdf1, gdf2], ignore_index=True)
             gdf = gpd.GeoDataFrame(gdf, geometry='geometry')
+
+        [ Example 4 ]
+        Find all solar power plants in all counties the Scioto River flows through.
+
+        Find out if one of the available variables is a geodataframe containing all counties the Scioto River flows through.
+
+        If none of the available variables are geodataframes containing all counties the Scioto River flows through, 
+        then return the following code:
+            raise Exception("The data for all counties the Scioto River flows through. Please it first.")
+        
+        If you found a variable which is a geodataframe containing all counties the Scioto River flows through, then return 
+        the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for all counties the Scioto River flows through if you found one>
+            gdf2 = load_coal_mines("1 = 1")
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", op="within")
+            gdf = coal_mines_in_counties[gdf2.columns]
+            gdf.title = "All solar power plants in all counties the Scioto River flows through"
+
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
