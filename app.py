@@ -10,7 +10,7 @@ from keplergl import keplergl
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
-from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, strip_code, normalize_query_plan, spatial_dataset_exists
+from util import process_data_request, process_regulation_request, process_off_topic_request, process_data_commons_request, strip_code, strip_json, normalize_query_plan, spatial_dataset_exists
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
@@ -372,6 +372,7 @@ with col2:
                     # st.code(json.dumps(plan, indent=4))
                     for request in plan['requests']:
                         exist_result = spatial_dataset_exists(llm, request, st.session_state.datasets)
+                        exist_result = strip_json(exist_result)
                         st.code(f"100: {exist_result}")
                         exist_json = json.loads(exist_result)
                         st.code(f"200: {json.dumps(exist_json)}")
