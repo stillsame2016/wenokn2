@@ -375,7 +375,7 @@ with col2:
                             process_data_request(request, chat_container)
                         else:
                             with st.chat_message("assistant"):
-                                st.markdown(f"The data for **{request}** already exists.")
+                                st.markdown(f"The data already exists:  **{request}**")
                                 time.sleep(3)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
