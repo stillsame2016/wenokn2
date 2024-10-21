@@ -194,8 +194,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
-                            st.code(code)
-                            time.sleep(20)
+                            # st.code(code)
+                            # time.sleep(20)
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
@@ -359,8 +359,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
-            time.sleep(5)
+            # st.markdown(route)
+            # time.sleep(5)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 st.code(refined_request)
