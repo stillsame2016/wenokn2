@@ -586,5 +586,34 @@ def normalize_query_plan(data):
     return data
 
 def spatial_dataset_exists(request):
-    return True
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+
+        [ Available Data ]
+        The following are the variables with the data:
+            {variables}
+                        
+        [ Question ]
+        The following is the requested from the user:
+            {question}
+
+        Please check whether a varable contains the user's requested data. Return JSON string
+        with a boolean field 'existing' to indicate if it exists. Please return JSON only 
+        without any explanations.  without preamble or explanation. 
+        
+        <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question", "variables"],
+    )
+    df_code_chain = prompt | llm | StrOutputParser()
+ 
+    variables = ""
+    if spatial_datasets:
+        for index, dataset in enumerate(spatial_datasets):
+            variables += f"""
+                 st.session_state.datasets[{index}] holds a geodataframe after processing 
+                 the request: { st.session_state.datasets[index].label}                                
+                          """
+    # st.code(variables)
+    return df_code_chain.invoke({"question": user_input, "variables": variables})
     
