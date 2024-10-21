@@ -434,15 +434,8 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            st.code(f"100 {exist_json}")
-                            time.sleep(10)
-                            # if exist_json['existing']:
-                            #     st.markdown(f"200 The data already exists:  **{user_input}**")
-                            #     time.sleep(1)
-                            # else:
-
                             if exist_json['existing']:
-                                message = f"The data already exists:  **{user_input}**"
+                                message = f"Your request has been processed. The data already exists:  **{user_input}**"
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
@@ -471,8 +464,6 @@ with col2:
                                                 this is a mistake.
                                                 """
                         except Exception as e:
-                            st.code(f"300: {str(e)}")
-                            time.sleep(10)
                             # message = f"""
                             #            {code} 
                             #            {str(e)}
