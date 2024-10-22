@@ -383,7 +383,15 @@ with col2:
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
                         st.session_state.datasets[idx].time = time.time()
-                    
+
+                    append_message = ""
+                    if len(existed_requests) == 1:
+                        append_message = f"The data for the request \"{existed_requests[0]}\" already exists."
+                    elif len(existed_requests) > 1:
+                        append_message = f"The data for the following requests already exists."
+                        for existed_request in existed_requests:
+                            append_message = f"{append_message}\n - {existed_request} "
+                        
                     st.session_state.chat.append({"role": "assistant",
                                                   "content": f"Your request has been processed. {existed_requests}"})
                     st.rerun()
