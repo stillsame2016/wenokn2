@@ -380,7 +380,7 @@ with col2:
                             existed_requests.append(request)
                             existed_requests.append(request)
                             with st.chat_message("assistant"):
-                                st.markdown(f"Your request has been processed. The data for the request \"{request}\" already exists.")
+                                st.markdown(f"Your request has been processed. The data for the request \"**{request}**\" already exists.")
                                 time.sleep(1)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
