@@ -386,7 +386,7 @@ with col2:
 
                     append_message = ""
                     if len(existed_requests) == 1:
-                        append_message = f"The data for the request \"**{existed_requests[0]}**\" already exists."
+                        append_message = f"The data for the request \"{existed_requests[0]}\" already exists."
                     elif len(existed_requests) > 1:
                         append_message = f"The data for the following requests already exists.\n"
                         for i, existed_request in enumerate(existed_requests):
