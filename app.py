@@ -393,7 +393,7 @@ with col2:
                             append_message = f"{append_message}\n - {existed_request} "
                         
                     st.session_state.chat.append({"role": "assistant",
-                                                  "content": f"Your request has been processed. {existed_requests}"})
+                                                  "content": f"Your request has been processed. {append_message}"})
                     st.rerun()
                     # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
