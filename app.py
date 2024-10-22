@@ -377,6 +377,8 @@ with col2:
                             process_data_request(request, chat_container)
                         else:
                             existed_requests.append(request)
+                            existed_requests.append(request)
+                            existed_requests.append(request)
                             with st.chat_message("assistant"):
                                 st.markdown(f"Your request has been processed. The data for the request \"{request}\" already exists.")
                                 time.sleep(1)
