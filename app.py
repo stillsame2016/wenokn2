@@ -370,19 +370,22 @@ with col2:
                     plan = get_request_plan(llm, refined_request['request'])
                     count_start = len(st.session_state.datasets)
                     # st.code(json.dumps(plan, indent=4))
+                    existed_requests = []
                     for request in plan['requests']:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
                         if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
+                            existed_requests.append(request)
                             with st.chat_message("assistant"):
                                 st.markdown(f"Your request has been processed. The data for the request \"{request}\" already exists.")
                                 time.sleep(1)
                     count_end = len(st.session_state.datasets)   
                     for idx in range(count_start, count_end):
                         st.session_state.datasets[idx].time = time.time()
+                    
                     st.session_state.chat.append({"role": "assistant",
-                                                  "content": "Your request has been processed."})
+                                                  "content": f"Your request has been processed. {existed_requests}"})
                     st.rerun()
                     # process_data_request(f"{refined_request['request']}", chat_container)
                 else:
