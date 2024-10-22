@@ -391,8 +391,8 @@ with col2:
                         append_message = f"The data for the request \"{existed_requests[0]}\" already exists."
                     elif len(existed_requests) > 1:
                         append_message = f"The data for the following requests already exists."
-                        for existed_request in existed_requests:
-                            append_message = f"{append_message}\n - {existed_request} "
+                        for i, existed_request in enumerate(existed_requests):
+                            append_message = f"{append_message}\n {i}. {existed_request} "
                         
                     st.session_state.chat.append({"role": "assistant",
                                                   "content": f"Your request has been processed. {append_message}"})
