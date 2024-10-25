@@ -295,7 +295,7 @@ with col2:
     sample_queries = [
         ######## County ########
         'Show Ross County in Ohio State.', 
-        'Show all counties in Ohio State.', 
+        'Show all counties in Kentucky State.', 
         'Find all counties the Scioto River flows through.',
         'Find all counties downstream of Ross County on the Scioto River.',  
         'Find all counties both the Ohio River and the Muskingum River flow through.',  
