@@ -313,6 +313,7 @@ with col2:
 
         ######## Dam ########
         'Find all dams on the Ohio River.', 
+        'Find all dams in Kentucky State.',
         'Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river',
         
         ######## Data Commons ########
