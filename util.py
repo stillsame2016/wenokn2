@@ -663,3 +663,10 @@ def nonspatial_dataset_exists(llm, request, nonspatial_datasets):
                           """
     # st.code(variables)
     return df_code_chain.invoke({"question": request, "variables": variables})
+
+def normal_print(sparql):
+    iow_graph = "GRAPH <http://iow.org>"
+    iow_service = "SERVICE <https://graph.geoconnex.us/repositories/iow>"
+    sparql = sparql.replace(iow_graph, iow_service)
+    return sparql
+
