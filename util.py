@@ -668,5 +668,10 @@ def normal_print(sparql):
     iow_graph = "GRAPH <http://iow.org>"
     iow_service = "SERVICE <https://graph.geoconnex.us/repositories/iow>"
     sparql = sparql.replace(iow_graph, iow_service)
+
+    kwg_graph = "GRAPH <http://kwg.org>"
+    kwg_service = "SERVICE <https://stko-kwg.geog.ucsb.edu/graphdb/repositories/KWG>"
+    sparql = sparql.replace(iow_graph, iow_service)
+    
     return sparql
 
