@@ -309,6 +309,8 @@ with col2:
         'What rivers flow through Dane County in Wisconsin?', 
 
         ######## Gages ########
+        'Show all stream gauges on Muskingum River', 
+        'Show all stream gages in Ross county in Ohio',
         'What stream gages are on the Yahara River in Madison, WI?',  
 
         ######## Dam ########
