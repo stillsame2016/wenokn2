@@ -95,7 +95,7 @@ def process_data_request(message, chat_container):
                             """,
                             unsafe_allow_html=True
                         )
-                        st.code(sparql_query)
+                        st.code(normal_print(sparql_query))
 
                         endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
                         df = sparql_dataframe.get(endpoint, sparql_query)
