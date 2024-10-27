@@ -611,7 +611,8 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
         The following is the requested from the user:
             {question}
 
-        Please check whether a varable contains the user's requested data. Return a valid Python JSON string
+       Checks whether the user's current request is semantically fully equivalent to the processed 
+       request of a geodataframe contained in a certain variable. Return a valid Python JSON string
         with a boolean field 'existing' to indicate if it exists. Please return JSON only 
         without any explanations.  without preamble or explanation. 
         
