@@ -597,6 +597,9 @@ def normalize_query_plan(data):
     return data
 
 def spatial_dataset_exists(llm, request, spatial_datasets):
+    if len(spatial_datasets) == 0:
+         return { 'existing': False }
+         
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
