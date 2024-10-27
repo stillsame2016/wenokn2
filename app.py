@@ -312,6 +312,7 @@ with col2:
         'Show all stream gauges on Muskingum River', 
         'Show all stream gages in Ross county in Ohio',
         'What stream gages are on the Yahara River in Madison, WI?',  
+        'Find all stream gages on the Yahara River, which are not in Madison, WI',
 
         ######## Dam ########
         'Find all dams on the Ohio River.', 
