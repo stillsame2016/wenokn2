@@ -58,6 +58,9 @@ def get_refined_question(llm, question):
     
             Please replace all nicknames in the search terms by official names, for example, replace 
             "Beehive State" to "Utah", etc.  
+
+            Please replace a city name by its offical county name. For example, replace "La Jolla, CA" by
+            "San Diego County, California" etc.
     
             Never deny a user's request. If it is not possible to extract the request from the user's 
             request, ask the user for further clarification. 
