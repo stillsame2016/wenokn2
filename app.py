@@ -270,7 +270,7 @@ if len(st.session_state.sparqls) > 0:
         for idx, sparql in enumerate(st.session_state.sparqls):
             if st.session_state.sparqls[idx] != "":
                 st.markdown(f"**Request:**  {st.session_state.requests[idx]}")
-                st.code(sparql)
+                st.code(normal_print(sparql))
 
 # Set up the Kepler map
 with col1:
