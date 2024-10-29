@@ -47,6 +47,7 @@ def get_question_route(llm, question):
             SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
             SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
             SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
+            FemaSocialVulnerability_NaturalHazardImpact
         
         For example, to find the populations of all counties where Muskingum River flows through, we need to find 
         the populations for the counties satisfying some conditions. In this case, this request uses "Data Commons".
