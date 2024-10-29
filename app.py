@@ -137,8 +137,8 @@ def execute_query(user_input, chat_container):
                 with chat_container:
                     with st.chat_message("assistant"):
 
-                        st.code(f"Check: Process {json.dumps(query, indent=4)}")
-                        time.sleep(5)
+                        # st.code(f"Check: Process {json.dumps(query, indent=4)}")
+                        # time.sleep(5)
                         
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                         if query["data_source"] == "WEN-OKN Database":
@@ -146,8 +146,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Data Commons":
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
-                            st.code(code)
-                            time.sleep(10)
+                            # st.code(code)
+                            # time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 "get_variables_for_dcid": get_variables_for_dcid,
