@@ -137,7 +137,7 @@ def execute_query(user_input, chat_container):
                 with chat_container:
                     with st.chat_message("assistant"):
 
-                        st.code(f"Check: Process {query['request']} ")
+                        st.code(f"Check: Process {json.dumps(query, indent=4)")
                         time.sleep(5)
                         
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
