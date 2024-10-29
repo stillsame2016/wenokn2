@@ -243,10 +243,6 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             raise ValueError("Please all counties downstream of the coal mine with the name "Century Mine" along Ohio River")
 
         Please note that only return code A or code B. Never combine the code A and code B together.
-
-    
-        If the sample data from st.session.datasets has a county name like 'Ross', then need to convert 
-        it to 'Ross County' to call get_dcid_from_county_name.
                  
         [ Question ]
         The following is the question from the user:
