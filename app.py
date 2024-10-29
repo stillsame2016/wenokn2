@@ -142,8 +142,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Data Commons":
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
-                            st.code(code)
-                            time.sleep(10)
+                            # st.code(code)
+                            # time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 "get_variables_for_dcid": get_variables_for_dcid,
@@ -152,8 +152,13 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_state_name": get_dcid_from_state_name,
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
-                            
-                            exec(code, globals_dict)
+
+                            try:
+                                exec(code, globals_dict)
+                            except Exception err:
+                                st.code(f"Counter an error: str(err)")
+                                time.sleep(10)
+                                
                             df = globals_dict['df']    
                             df.id = user_input
                             st.session_state.wen_datasets.append(df)
