@@ -40,6 +40,7 @@ def get_question_route(llm, question):
             Count_HeatTemperatureEvent
             Count_HeatWaveEvent
             Count_HeavyRainEvent
+            Count_Person_Employed
             Median_Income_Person
             CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
             Max_Rainfall
