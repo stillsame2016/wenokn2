@@ -136,12 +136,14 @@ def execute_query(user_input, chat_container):
             for i, query in enumerate(query_plan, 1):
                 with chat_container:
                     with st.chat_message("assistant"):
+
+                        st.code(f"Check: Process {query['request']} ")
+                        time.sleep(5)
+                        
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
-                            st.code("Process Data Commons ... ")
-                            time.sleep(5)
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
                             st.code(code)
