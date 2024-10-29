@@ -153,12 +153,7 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
 
-                            try:
-                                exec(code, globals_dict)
-                            except Exception as err:
-                                st.code(f"{code} \n\n Counter an error: {str(err)} ")
-                                time.sleep(20)
-                                
+                            exec(code, globals_dict)    
                             df = globals_dict['df']    
                             df.id = user_input
                             st.session_state.wen_datasets.append(df)
