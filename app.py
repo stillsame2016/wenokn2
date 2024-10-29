@@ -143,6 +143,7 @@ def execute_query(user_input, chat_container):
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
                             # st.code(code)
+                        
                             globals_dict = {
                                 'st': st,
                                 "get_variables_for_dcid": get_variables_for_dcid,
