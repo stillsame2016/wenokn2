@@ -157,7 +157,7 @@ def execute_query(user_input, chat_container):
                                 exec(code, globals_dict)
                             except Exception as err:
                                 st.code(f"{code} \n\n Counter an error: {str(err)} ")
-                                time.sleep(10)
+                                time.sleep(20)
                                 
                             df = globals_dict['df']    
                             df.id = user_input
