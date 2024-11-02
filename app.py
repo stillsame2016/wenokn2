@@ -85,31 +85,36 @@ if "delete_history" not in st.session_state:
 # @st.experimental_fragment
 @st.fragment(run_every=60*5)
 def add_map():
-    # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
-    options = {"keepExistingConfig": True}
-    _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=460)
-    time.sleep(0.5)
-
-    # Sync datasets saved in the session with the map
-    if _map_config:
-        map_config_json = json.loads(_map_config)
-        # st.code(json.dumps(map_config_json, indent=4))
-
-        # check if any datasets were deleted
-        map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
-        indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
-                
-        deleted = False
-        for i in reversed(indices_to_remove):
-            # the returnd map config may have several seconds delay 
-            if time.time() - st.session_state.datasets[i].time > 3:                
-                del st.session_state.datasets[i]
-                del st.session_state.requests[i]
-                del st.session_state.sparqls[i]
-                deleted = True
-        if deleted:
-             st.rerun()
-    return _map_config
+    try:
+        # st.markdown(f"st.session_state.datasets: {len(st.session_state.datasets)}")
+        options = {"keepExistingConfig": True}
+        _map_config = keplergl(st.session_state.datasets, options=options, config=None, height=460)
+        time.sleep(0.5)
+    
+        # Sync datasets saved in the session with the map
+        if _map_config:
+            map_config_json = json.loads(_map_config)
+            # st.code(json.dumps(map_config_json, indent=4))
+    
+            # check if any datasets were deleted
+            map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
+            indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
+                    
+            deleted = False
+            for i in reversed(indices_to_remove):
+                # the returnd map config may have several seconds delay 
+                if time.time() - st.session_state.datasets[i].time > 3:                
+                    del st.session_state.datasets[i]
+                    del st.session_state.requests[i]
+                    del st.session_state.sparqls[i]
+                    deleted = True
+            if deleted:
+                 st.rerun()
+        return _map_config
+    except Exception as e:
+        logging.error(f"Error in add_map fragment: {str(e)}")
+        st.error("The session expired. Please reload the web app to start.")
+        return None
 
 def ordinal(n):
     suffix = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
