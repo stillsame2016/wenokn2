@@ -609,8 +609,10 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
 
        Checks whether the user's current request is semantically fully equivalent to the processed 
        request of a geodataframe contained in a certain variable. Return a valid Python JSON string
-        with a boolean field 'existing' to indicate if it exists. Please return JSON only 
-        without any explanations.  without preamble or explanation. 
+       with a boolean field 'existing' to indicate if it exists. Please return JSON only 
+       without any explanations.  without preamble or explanation. 
+
+       Note: Please note that “Find San Diego County” is not equivalent to “Find Southern San Diego County”.
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
@@ -630,6 +632,9 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
 
 
 def nonspatial_dataset_exists(llm, request, nonspatial_datasets):
+    if len(nonspatial_datasets) == 0:
+         return { 'existing': False }
+
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
