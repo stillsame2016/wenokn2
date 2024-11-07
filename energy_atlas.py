@@ -229,7 +229,10 @@ def load_biodiesel_plants(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-
+def load_watersheds(where):
+    self_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Watershed_Boundary_Dataset_HUC_10s/FeatureServer/0"
+    wkid = "3857"
+    return load_features(self_url, where, wkid)  
 
 
 
