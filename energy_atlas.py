@@ -67,6 +67,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         To get all coal mines/coal power plants/wind power plants/renewable diesel fuel and 
         other biofuel plants and etc, call the correspondent function with "1 = 1" as where_condition.
 
+        [ Definition 4 ]
+        We have the following function to get watersheds from an ArcGIS Feature Service as a GeoDataFrame:
+            load_watersheds(where_condition)
+
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE'
+            
         [ Available Data ]
         The following are the variables with the data:
             {variables}
