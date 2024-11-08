@@ -2,6 +2,7 @@ import time
 import json
 import uuid
 import requests
+import traceback
 import streamlit as st
 import pandas as pd
 import geopandas as gpd
@@ -219,8 +220,13 @@ def execute_query(user_input, chat_container):
                                 'load_biodiesel_plants': load_biodiesel_plants,
                                 'load_watersheds': load_watersheds
                             }
-                            exec(code, globals_dict)
-                            st.code("Executing the code is done")
+                            try:
+                                exec(code, globals_dict)
+                                st.code("Executing the code is done")
+                            except Exception as e:
+                                error_stack = traceback.format_exc()    
+                                st.code(error_stack)
+                                time.sleep(20)
                             gdf = globals_dict['gdf']
                             st.code(f"GDF Shape: {gdf.shape}")
                             time.sleep(10)
