@@ -201,8 +201,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
-                            st.code(code)
-                            time.sleep(20)
+                            # st.code(code)
+                            # time.sleep(20)
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
@@ -220,16 +220,10 @@ def execute_query(user_input, chat_container):
                                 'load_biodiesel_plants': load_biodiesel_plants,
                                 'load_watersheds': load_watersheds
                             }
-                            try:
-                                exec(code, globals_dict)
-                                st.code("Executing the code is done")
-                            except Exception as e:
-                                error_stack = traceback.format_exc()    
-                                st.code(error_stack)
-                                time.sleep(20)
+                            exec(code, globals_dict)
                             gdf = globals_dict['gdf']
-                            st.code(f"GDF Shape: {gdf.shape}")
-                            time.sleep(10)
+                            # st.code(f"GDF Shape: {gdf.shape}")
+                            # time.sleep(10)
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
