@@ -343,6 +343,10 @@ with col2:
         'Show natural gas power plants in Florida.',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
+        ######## Watershed ########
+        'Find all watersheds feed into Muskingum River',
+        'Find the watershed with the name "Bokes Creek-Scioto River"',
+
         ######## NPDES ########
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
     ]
