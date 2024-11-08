@@ -268,7 +268,7 @@ def load_petroleum_power_plants(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_solar_power_pl<ants(where):
+def load_solar_power_plants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Solar_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
