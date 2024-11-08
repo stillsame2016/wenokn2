@@ -216,10 +216,14 @@ def execute_query(user_input, chat_container):
                                 'load_nuclear_power_plants': load_nuclear_power_plants,
                                 'load_petroleum_power_plants': load_petroleum_power_plants,
                                 'load_solar_power_plants': load_solar_power_plants,
-                                'load_biodiesel_plants': load_biodiesel_plants
+                                'load_biodiesel_plants': load_biodiesel_plants,
+                                'load_watersheds': load_watersheds
                             }
                             exec(code, globals_dict)
+                            st.code("Executing the code is done")
                             gdf = globals_dict['gdf']
+                            st.code(f"GDF Shape: {gdf.shape}")
+                            time.sleep(10)
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
