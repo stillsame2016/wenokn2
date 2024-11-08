@@ -211,7 +211,7 @@ def get_arcgis_features(self_url, where, bbox=None):
         "resultRecordCount": 2000  # Increase this if needed                                                                                                         
     }
 
-    response = requests.get(self_url, params=params)
+    response = requests.get(self_url + "/query", params=params)
     st.code(f"Requested URL: {response.url}")
     st.code(f"Response: response.text[0:1000]")
     data = response.json()
