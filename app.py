@@ -476,7 +476,7 @@ with col2:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
                                 st.code(code)
-                                time.sleep(20)
+                                # time.sleep(20)
                                 try:
                                     exec(code)
                                 except Exception as e:
