@@ -217,6 +217,8 @@ def get_arcgis_features(self_url, where, bbox=None):
 
     response = requests.get(self_url + "/query", params=params)
     data = response.json()
+    st.code(response.url)
+    st.code(data)
     if data['features']:
         return gpd.GeoDataFrame.from_features(data['features'])
     else:
