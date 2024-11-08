@@ -70,7 +70,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 4 ]
         We have the following function to get watersheds from an ArcGIS Feature Service as a GeoDataFrame:
             load_watersheds(where_condition, bbox)
-        where bbox is optional with the USA bbox as the default bbox. 
+        where bbox is for a bounding box. Use None if bbox is unknown or not needed. 
 
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE'
