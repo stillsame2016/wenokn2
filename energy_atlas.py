@@ -70,11 +70,15 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 4 ]
         We have the following function to get watersheds from an ArcGIS Feature Service as a GeoDataFrame:
             load_watersheds(where_condition, bbox)
-        where bbox is optional with the USA bbox as the default bbox.
+        where bbox is optional with the USA bbox as the default bbox. 
 
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE'
-            
+
+        Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
+            NAME LIKE '%Headwaters Scioto River%'
+        The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
+        
         [ Available Data ]
         The following are the variables with the data:
             {variables}
