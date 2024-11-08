@@ -69,7 +69,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         [ Definition 4 ]
         We have the following function to get watersheds from an ArcGIS Feature Service as a GeoDataFrame:
-            load_watersheds(where_condition)
+            get_watersheds(where_condition, bbox)
+        where bbox is optional with the USA bbox as the default bbox.
 
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE'
@@ -144,6 +145,22 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf[gdf2.columns]
             gdf.title = "All solar power plants in all counties the Scioto River flows through"
 
+        [ Example 5 ]
+        Find all the watersheds that feed into the Scioto River.
+        
+        Find out if one of the available variables is a geodataframe containing all counties the Scioto River flows through.
+
+        If none of the available variables are geodataframes containing all counties the Scioto River flows through, 
+        then return the following code:
+            raise Exception("The data for all counties the Scioto River flows through is missing. Please it first.")
+        
+        If you found a variable which is a geodataframe containing all counties the Scioto River flows through, then return 
+        the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for all counties the Scioto River flows through if you found one>
+            gdf2 = load_watersheds("1 = 1", gdf1.total_bounds)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            gdf = gdf[gdf2.columns]
+            gdf.title = "All the watersheds that feed into the Scioto River"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
@@ -175,6 +192,31 @@ def load_features(self_url, where, wkid):
         return gpd.GeoDataFrame.from_features(data['features'], crs=f'EPSG:{wkid}')
     else:
         return gpd.GeoDataFrame(columns=['geometry'], crs=f'EPSG:{wkid}')
+
+
+def get_arcgis_features(self_url, where, bbox=None):
+    if bbox is None:
+        bbox = [-125.0, 24.396308, -66.93457, 49.384358]
+    minx, miny, maxx, maxy = bbox
+    params = {
+        "where": "1=1",
+        "geometry": f"{minx},{miny},{maxx},{maxy}",
+        "geometryType": "esriGeometryEnvelope",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "*",
+        "returnGeometry": "true",
+        "f": "geojson",
+        "outSR": "4326",  # Ensure output is in WGS84                                                                                                                
+        "resultOffset": 0,
+        "resultRecordCount": 2000  # Increase this if needed                                                                                                         
+    }
+
+    response = requests.get(self_url, params=params)
+    data = response.json()
+    if data['features']:
+        return gpd.GeoDataFrame.from_features(data['features'])
+    else:
+        return gpd.GeoDataFrame(columns=['geometry'])
 
 def load_coal_mines(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
@@ -226,7 +268,7 @@ def load_petroleum_power_plants(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_solar_power_plants(where):
+def load_solar_power_pl<ants(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Solar_Power_Plants/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)  
@@ -236,10 +278,10 @@ def load_biodiesel_plants(where):
     wkid = "3857"
     return load_features(self_url, where, wkid)  
 
-def load_watersheds(where):
+def load_watersheds(where, bbox):
     self_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Watershed_Boundary_Dataset_HUC_10s/FeatureServer/0"
     wkid = "3857"
-    return load_features(self_url, where, wkid)  
+    return get_arcgis_features(self_url, where, bbox)  
 
 
 
