@@ -477,7 +477,12 @@ with col2:
                                 code = strip_code(code)
                                 st.code(code)
                                 time.sleep(20)
-                                exec(code)
+                                try:
+                                    exec(code)
+                                except Exception as e:
+                                    error_stack = traceback.format_exc()
+                                    st.code(error_stack)
+                                    time.sleep(20)
                                 if gdf.shape[0] > 0:
                                     if hasattr(gdf, 'answer'):
                                         message = gdf.answer
