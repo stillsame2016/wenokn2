@@ -378,8 +378,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            # st.markdown(route)
-            # time.sleep(15)
+            st.markdown(route)
+            time.sleep(15)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 # st.code(refined_request)
@@ -476,8 +476,8 @@ with col2:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
                                 exec(code)
-                                st.code(code)
-                                time.sleep(20)
+                                # st.code(code)
+                                # time.sleep(20)
                                 if gdf.shape[0] > 0:
                                     if hasattr(gdf, 'answer'):
                                         message = gdf.answer
