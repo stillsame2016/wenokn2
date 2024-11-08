@@ -203,7 +203,7 @@ def get_arcgis_features(self_url, where, bbox=None):
         bbox = [-125.0, 24.396308, -66.93457, 49.384358]
     minx, miny, maxx, maxy = bbox
     params = {
-        "where": "1=1",
+        "where": where,
         "geometry": f"{minx},{miny},{maxx},{maxy}",
         "geometryType": "esriGeometryEnvelope",
         "spatialRel": "esriSpatialRelIntersects",
