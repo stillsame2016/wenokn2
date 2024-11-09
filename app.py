@@ -112,8 +112,8 @@ def add_map():
                     del st.session_state.sparqls[i]
                     deleted = True
             if deleted:
-                st.code(oops)
-                time.sleep(20)
+                # st.code(oops)
+                # time.sleep(20)
                 st.rerun()
         return _map_config
     except Exception as e:
