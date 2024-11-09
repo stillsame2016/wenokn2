@@ -578,10 +578,6 @@ if st.session_state.sample_query:
                         const mouseUp = new MouseEvent('mouseup', {{ bubbles: true }});
                         const click = new MouseEvent('click', {{ bubbles: true }});
 
-                        clearButton.dispatchEvent(mouseDown);
-                        clearButton.dispatchEvent(mouseUp);
-                        clearButton.dispatchEvent(click);
-
                         setTimeout(() => {{
                             clearButton.dispatchEvent(mouseDown);
                             clearButton.dispatchEvent(mouseUp);
