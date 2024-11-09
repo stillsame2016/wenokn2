@@ -583,32 +583,8 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(mouseUp);
                     clearButton.dispatchEvent(click);
                 }}
-
-                /*
-                const observer = new MutationObserver((mutations, obs) => {{
-                    const clearButton = doc.querySelector('svg[title="Clear value"]');  
-                    console.log(clearButton);
-                    if (clearButton) {{
-                        // Create and dispatch custom events
-                        const mouseDown = new MouseEvent('mousedown', {{ bubbles: true }});
-                        const mouseUp = new MouseEvent('mouseup', {{ bubbles: true }});
-                        const click = new MouseEvent('click', {{ bubbles: true }});
-
-                        setTimeout(() => {{
-                            clearButton.dispatchEvent(mouseDown);
-                            clearButton.dispatchEvent(mouseUp);
-                            clearButton.dispatchEvent(click);
-                        }}, 100);
-                        obs.disconnect();
-                    }}
-                }});
-                
-                observer.observe(doc.body, {{
-                    childList: true,
-                    subtree: true
-                }});
-                */
             }}
+
             setTimeout(autoResizeTextarea, 0);
 
             </script>
