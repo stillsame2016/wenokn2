@@ -593,7 +593,7 @@ if st.session_state.sample_query:
                 }});
 
             }}
-            setTimeout(autoResizeTextarea, 100);
+            setTimeout(autoResizeTextarea, 0);
 
             </script>
             """
