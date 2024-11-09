@@ -109,6 +109,7 @@ def add_map():
                     del st.session_state.requests[i]
                     del st.session_state.sparqls[i]
                     deleted = True
+                    st.code(f"DELETE: {i}")
             if deleted:
                  st.rerun()
         return _map_config
