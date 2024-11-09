@@ -162,8 +162,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for the Scioto River if you found one>
             gdf2 = load_watersheds("1 = 1", gdf1.total_bounds)
-            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
-            gdf = gdf[gdf2.columns]
+            buffer_distance = 0.001 
+            gdf1_buffered = gdf1.copy()
+            gdf1_buffered['geometry'] = gdf1_buffered['geometry'].buffer(buffer_distance)
+            gdf = gdf2[gdf2.intersects(gdf1_buffered.union_all())]
             gdf.title = "All the watersheds that feed into the Scioto River"
 
         [ Example 6 ]
