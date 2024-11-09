@@ -475,15 +475,15 @@ with col2:
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
-                                # exec(code)
-                                st.code(code)
-                                time.sleep(10)
-                                try:
-                                    exec(code)
-                                except Exception as e:
-                                    error_stack = traceback.format_exc()
-                                    st.code(error_stack)
-                                    time.sleep(20)
+                                exec(code)
+                                # st.code(code)
+                                # time.sleep(10)
+                                # try:
+                                #     exec(code)
+                                # except Exception as e:
+                                #     error_stack = traceback.format_exc()
+                                #     st.code(error_stack)
+                                #     time.sleep(20)
                                 if gdf.shape[0] > 0:
                                     if hasattr(gdf, 'answer'):
                                         message = gdf.answer
