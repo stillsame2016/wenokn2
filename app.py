@@ -570,14 +570,8 @@ if st.session_state.sample_query:
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
 
-                const selects = doc.querySelectorAll('select');
-                console.log("selects: "+selects.length)
-                selects.forEach(select => {{
-                    if (select.value) {{
-                        select.value = '';
-                        select.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                    }}
-                }});
+                 const clearButton = doc.querySelector('svg[title="Clear value"]');  
+                console.log("clearButton: " +clearButton);
 
                 /*
                 const observer = new MutationObserver((mutations, obs) => {{
