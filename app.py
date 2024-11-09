@@ -100,7 +100,9 @@ def add_map():
             # check if any datasets were deleted
             map_data_ids = [layer["config"]["dataId"] for layer in map_config_json["visState"]["layers"]]
             indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
-                    
+            st.code(f"{indices_to_remove}")
+            time.sleep(10)
+            
             deleted = False
             for i in reversed(indices_to_remove):
                 # the returnd map config may have several seconds delay 
@@ -109,7 +111,6 @@ def add_map():
                     del st.session_state.requests[i]
                     del st.session_state.sparqls[i]
                     deleted = True
-                    st.code(f"DELETE: {i}")
             if deleted:
                  st.rerun()
         return _map_config
