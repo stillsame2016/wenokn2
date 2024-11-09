@@ -559,10 +559,16 @@ if st.session_state.sample_query:
             <script>
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
-
-            const selects = doc.querySelectorAll('select');
-            console.log("selects: "+selects)
             chatInput.focus();
+            
+            const selects = doc.querySelectorAll('select');
+            console.log("selects: "+selects.length)
+            selects.forEach(select => {{
+                if (select.value) {{
+                    select.value = '';
+                    select.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                }}
+            }});
 
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
