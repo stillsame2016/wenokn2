@@ -362,7 +362,7 @@ with col2:
     )
 
     if "selectbox_key" not in st.session_state:
-    st.session_state.selectbox_key = 0
+        st.session_state.selectbox_key = 0
     
     with open( "./style.css" ) as css:
         st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html=True)
