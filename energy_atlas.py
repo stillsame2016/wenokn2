@@ -212,7 +212,7 @@ def get_arcgis_features(self_url, where, bbox=None):
         "f": "geojson",
         "outSR": "4326",  # Ensure output is in WGS84                                                                                                                
         "resultOffset": 0,
-        "resultRecordCount": 2000  # Increase this if needed                                                                                                         
+        "resultRecordCount": 1000  # Increase this if needed                                                                                                         
     }
 
     response = requests.get(self_url + "/query", params=params)
