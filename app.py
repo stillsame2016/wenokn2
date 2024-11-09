@@ -572,6 +572,7 @@ if st.session_state.sample_query:
 
                 const observer = new MutationObserver((mutations, obs) => {{
                     const clearButton = doc.querySelector('svg[title="Clear value"]');  
+                    console.log(clearButton);
                     if (clearButton) {{
                         // Create and dispatch custom events
                         const mouseDown = new MouseEvent('mousedown', {{ bubbles: true }});
