@@ -561,15 +561,6 @@ if st.session_state.sample_query:
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
             
-            const selects = doc.querySelectorAll('select');
-            console.log("selects: "+selects.length)
-            selects.forEach(select => {{
-                if (select.value) {{
-                    select.value = '';
-                    select.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                }}
-            }});
-
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
                 chatInput.style.height = 'auto';
@@ -578,6 +569,15 @@ if st.session_state.sample_query:
                 nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
+
+                const selects = doc.querySelectorAll('select');
+                console.log("selects: "+selects.length)
+                selects.forEach(select => {{
+                    if (select.value) {{
+                        select.value = '';
+                        select.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                    }}
+                }});
 
                 /*
                 const observer = new MutationObserver((mutations, obs) => {{
