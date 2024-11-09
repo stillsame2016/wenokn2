@@ -574,6 +574,7 @@ if st.session_state.sample_query:
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
 
+                /*
                 const observer = new MutationObserver((mutations, obs) => {{
                     const clearButton = doc.querySelector('svg[title="Clear value"]');  
                     console.log(clearButton);
@@ -596,7 +597,7 @@ if st.session_state.sample_query:
                     childList: true,
                     subtree: true
                 }});
-
+                */
             }}
             setTimeout(autoResizeTextarea, 0);
 
