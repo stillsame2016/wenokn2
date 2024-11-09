@@ -559,6 +559,8 @@ if st.session_state.sample_query:
             <script>
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
+            const selectbox = doc.querySelector('select[aria-label="Select a sample query to edit and run as needed"]');
+            console.log("selectBox: "+selectBox)
             chatInput.focus();
 
             function autoResizeTextarea() {{
