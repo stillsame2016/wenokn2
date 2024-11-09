@@ -73,7 +73,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         where bbox is for a bounding box. Use None if bbox is unknown or not needed. 
 
         The returned GeoDataFrame has the following columns:
-            'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE'
+            'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE', 'Shape__Area', 'Shape__Length'
 
         Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
             NAME LIKE '%Headwaters Scioto River%'
