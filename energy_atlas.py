@@ -169,7 +169,19 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Example 6 ]
         Find all the watersheds in Ohio State.
 
-        Use the same way as Example 5 to solve this request. 
+        Find out if one of the available variables is a geodataframe containing Ohio State.
+
+        If none of the available variables are geodataframes containing Ohio State, 
+        then return the following code:
+            raise Exception("The data for the Ohio State is missing. Please load it first.")
+        
+        If you found a variable which is a geodataframe containing Ohio State, then return 
+        the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for the Ohio State if you found one>
+            gdf2 = load_watersheds("1 = 1", gdf1.total_bounds)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            gdf = gdf[gdf2.columns]
+            gdf.title = "All the watersheds in Ohio State"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
