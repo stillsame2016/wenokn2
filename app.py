@@ -360,9 +360,6 @@ with col2:
         """,
         unsafe_allow_html=True,
     )
-
-    if "selectbox_key" not in st.session_state:
-        st.session_state.selectbox_key = 0
     
     with open( "./style.css" ) as css:
         st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html=True)
@@ -374,7 +371,6 @@ with col2:
                                  key='selection_index')
     if selected_item:
         st.session_state.sample_query = selected_item  
-        st.session_state.selectbox_key += 1
         
     if user_input:
         st.session_state.sample_query = None
