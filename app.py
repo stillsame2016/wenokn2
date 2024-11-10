@@ -529,26 +529,17 @@ with col2:
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        try:
-                            code = process_wenokn_use_energy_atlas(llm, user_input)
-                            code = strip_code(code)
-                            # st.code(code)
-                            # time.sleep(20)
-                            exec(code)
-                            st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
+                        code = process_wenokn_use_energy_atlas(llm, user_input)
+                        code = strip_code(code)
+                        # st.code(code)
+                        # time.sleep(20)
+                        exec(code)
+                        st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
                             
-                            process_data_request(converted_request, chat_container)
-                            st.session_state.datasets[-1].label = user_input
-                            st.session_state.requests[-1] = user_input
-                            message = "Your request has been processed."
-                        except Exception as e:  
-                            try:
-                                query_plan_text, message = execute_query(user_input, chat_container)
-                            except Exception as error:
-                                message = f"""
-                                           {code} 
-                                           {str(e)}
-                                           """               
+                    process_data_request(converted_request, chat_container)
+                    st.session_state.datasets[-1].label = user_input
+                    st.session_state.requests[-1] = user_input
+                    message = "Your request has been processed."         
                     
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
