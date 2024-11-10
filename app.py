@@ -180,7 +180,7 @@ def execute_query(user_input, chat_container):
                             code = process_wenokn_use_energy_atlas(llm, query["request"])
                             code = strip_code(code)
                             st.code(code)
-                            time.sleep(10)
+                            # time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
@@ -196,7 +196,12 @@ def execute_query(user_input, chat_container):
                                 'load_solar_power_plants': load_solar_power_plants,
                                 'load_biodiesel_plants': load_biodiesel_plants
                             }
-                            exec(code, globals_dict)
+                            try:
+                                exec(code, globals_dict)
+                            except Exception as e:
+                                error_stack = traceback.format_exc()
+                                st.code(error_stack)
+                                time.sleep(20)
                             converted_request = globals_dict['converted_request']
                             st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
                     
