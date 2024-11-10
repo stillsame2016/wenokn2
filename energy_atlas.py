@@ -186,7 +186,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf[gdf2.columns]
             gdf.title = "All the watersheds in Ohio State"
 
-         [ Example 7 ]
+        [ Example 7 ]
         Find all the watersheds in Ross County in Ohio State.
 
         Find out if one of the available variables is a geodataframe containing Ross County in Ohio State.
