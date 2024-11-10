@@ -112,10 +112,15 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             converted_request = f"Find all counties downstream of the coal mine with the location({{latitude}}, {{longitude}}) along Ohio River."
 
         [ Example 2 ]
-        Find all stream gages within the watershed with the name Headwaters Black Fork Mohican River
+        Find all stream gages within the watershed with the name Headwaters Black Fork Mohican River.
 
         Return the following code:
-             raise Exception("The data for the watershed 'Headwaters Black Fork Mohican River' is missing. Please load it first.")
+            where_condition = "Name like '%Headwaters Black Fork Mohican River%'"
+            watersheds = load_watersheds(where_condition, None)
+            minx, miny, maxx, maxy = watersheds.total_bounds
+            watersheds_bbox = box(minx, miny, maxx, maxy)
+            watersheds_bbox_wkt = watersheds_bbox.wkt
+            converted_request = f"Find all stream gages within {{watersheds_bbox_wkt}})."
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
