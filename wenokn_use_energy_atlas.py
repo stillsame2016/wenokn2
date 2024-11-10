@@ -78,7 +78,18 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         
         To get all coal mines/coal power plants/wind power plants/renewable diesel fuel and 
         other biofuel plants and etc, call the correspondent function with "1 = 1" as where_condition.
-        
+
+        [ Definition 4 ]
+        We have the following function to get watersheds from an ArcGIS Feature Service as a GeoDataFrame:
+            load_watersheds(where_condition, bbox)
+        where bbox is for a bounding box. Use None if bbox is unknown or not needed. 
+
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE', 'Shape__Area', 'Shape__Length'
+
+        Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
+            NAME LIKE '%Headwaters Scioto River%'
+        The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
 
         The following is the user request:
         {question}
@@ -89,7 +100,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         to energy Atlas as a Python variable converted_request. Please return the Python code only 
         without any explanation. Don't include any print statement. Don't add ``` around the code.
 
-        [ Example ]
+        [ Example 1 ]
         Find all counties downstream of the coal mine with the name "Century Mine" along Ohio River.
 
         First we find the latitude and longitude of the coal mine with the name "Century Mine". Then convert the original 
@@ -99,6 +110,12 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             latitude = gdf.iloc[0]['Latitude']
             longitude = gdf.iloc[0]['Longitude']
             converted_request = f"Find all counties downstream of the coal mine with the location({{latitude}}, {{longitude}}) along Ohio River."
+
+        [ Example 2 ]
+        Find 100 buildings in the watershed with the name Headwaters Black Fork Mohican River.
+
+        Return the following code:
+             raise Exception("The data for the watersheds is missing. Please load it first.")
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
