@@ -10,6 +10,8 @@ import datacommons_pandas as dc
 from keplergl import keplergl
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
+from shapely import wkt
+from shapely.geometry import box
 
 from util import *
 from refine_request import get_refined_question
