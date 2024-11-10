@@ -183,6 +183,7 @@ def execute_query(user_input, chat_container):
                             # time.sleep(10)
                             globals_dict = {
                                 'st': st,
+                                'box': box,
                                 'load_coal_mines': load_coal_mines,
                                 'load_coal_power_plants': load_coal_power_plants,
                                 'load_wind_power_plants': load_wind_power_plants,
