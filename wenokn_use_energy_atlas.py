@@ -91,10 +91,6 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             NAME LIKE '%Headwaters Scioto River%'
         The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
 
-        [ Available Data ]
-        The following are the variables with the data:
-            {variables}
-
         [ Question ]
         The following is the user request:
         {question}
@@ -146,6 +142,6 @@ def process_wenokn_use_energy_atlas(llm, user_input):
                                  
                           """
             
-    code = df_code_chain.invoke({"question": user_input, "variables": variables})
+    code = df_code_chain.invoke({"question": user_input})
     return code
 
