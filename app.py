@@ -531,8 +531,8 @@ with col2:
                     with st.spinner("Loading data ..."):
                         code = process_wenokn_use_energy_atlas(llm, user_input)
                         code = strip_code(code)
-                        # st.code(code)
-                        # time.sleep(20)
+                        st.code(code)
+                        time.sleep(20)
                         exec(code)
                         st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
                     
