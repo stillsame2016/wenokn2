@@ -106,7 +106,7 @@ def add_map():
             for i in reversed(indices_to_remove):
                 # the returnd map config may have several seconds delay 
                 oops = f"{oops}\n{i} : {time.time() - st.session_state.datasets[i].time}"
-                if time.time() - st.session_state.datasets[i].time > 15:                
+                if time.time() - st.session_state.datasets[i].time > 3:                
                     del st.session_state.datasets[i]
                     del st.session_state.requests[i]
                     del st.session_state.sparqls[i]
