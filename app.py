@@ -535,7 +535,7 @@ with col2:
                             # st.code(code)
                             # time.sleep(20)
                             exec(code)
-                            st.markdown(f"Loaded data from Energy Atlas and converted the request to: {converted_request}")
+                            st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
                                 
                             process_data_request(converted_request, chat_container)
                             st.session_state.datasets[-1].label = user_input
