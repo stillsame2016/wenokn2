@@ -91,7 +91,6 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             NAME LIKE '%Headwaters Scioto River%'
         The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
 
-        [ Question ]
         The following is the user request:
         {question}
 
@@ -128,19 +127,6 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         input_variables=["question", "variables"],
     )
     df_code_chain = prompt | llm | StrOutputParser()
-
-    variables = ""
-    if spatial_datasets:
-        for index, dataset in enumerate(spatial_datasets):
-            variables += f"""
-                             st.session_state.datasets[{index}] holds a geodataframe after processing 
-                             the request: { st.session_state.datasets[index].label}
-                             The following is the columns of st.session_state.datasets[{index}]:
-                                 { st.session_state.datasets[index].dtypes }
-                             The following is the first 5 rows of the data:
-                                 { st.session_state.datasets[index].head(5).drop(columns='geometry').to_csv(index=False) }
-                                 
-                          """
             
     code = df_code_chain.invoke({"question": user_input})
     return code
