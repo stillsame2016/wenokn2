@@ -95,6 +95,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         The following are the variables with the data:
             {variables}
 
+        [ User Request ]
         The following is the user request:
         {question}
 
