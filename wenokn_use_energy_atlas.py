@@ -123,7 +123,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
 
         If none of the available variables are geodataframes containing the watershed with the name Headwaters Black Fork Mohican River, 
         then return the following code:
-            raise Exception("The data for the watershed with the name Headwaters Black Fork Mohican River. Please load it first.")
+            raise Exception("The data for the watershed with the name Headwaters Black Fork Mohican River is missing. Please load it first.")
 
         If you found a variable which is a geodataframe containing the watershed with the name Headwaters Black Fork Mohican River, then return 
         the valid Python code in the following format:
