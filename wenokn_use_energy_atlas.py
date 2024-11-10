@@ -134,6 +134,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
     df_code_chain = prompt | llm | StrOutputParser()
 
     variables = ""
+    spatial_datasets = st.session_state.datasets
     if spatial_datasets:
         for index, dataset in enumerate(spatial_datasets):
             variables += f"""
