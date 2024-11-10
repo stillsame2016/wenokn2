@@ -146,6 +146,6 @@ def process_wenokn_use_energy_atlas(llm, user_input):
                                  
                           """
             
-    code = df_code_chain.invoke({"question": user_input, "variables": variables}})
+    code = df_code_chain.invoke({"question": user_input, "variables": variables})
     return code
 
