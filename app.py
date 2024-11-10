@@ -541,7 +541,7 @@ with col2:
                             st.session_state.datasets[-1].label = user_input
                             st.session_state.requests[-1] = user_input
                             message = "Your request has been processed."
-                         except Exception as e:  
+                        except Exception as e:  
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
