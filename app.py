@@ -179,8 +179,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "WEN-KEN database use Energy Atlas":
                             code = process_wenokn_use_energy_atlas(llm, query["request"])
                             code = strip_code(code)
-                            # st.code(code)
-                            # time.sleep(20)
+                            st.code(code)
+                            time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 'load_coal_mines': load_coal_mines,
