@@ -213,7 +213,7 @@ def execute_query(user_input, chat_container):
                                 converted_request = globals_dict['converted_request']
                                 st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
                                 process_data_request(converted_request, chat_container)
-                            else:
+                            elif "gdf" in globals_dict:
                                 gdf = globals_dict['gdf']
                                 st.code(f"CHECK POINT: {gdf.shape}")
                                 time.sleep(20)
