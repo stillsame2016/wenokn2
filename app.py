@@ -104,18 +104,14 @@ def add_map():
             indices_to_remove = [i for i, dataset in enumerate(st.session_state.datasets) if not dataset.id in map_data_ids]    
 
             deleted = False
-            oops = ""
             for i in reversed(indices_to_remove):
                 # the returnd map config may have several seconds delay 
-                oops = f"{oops}\n{i} : {time.time() - st.session_state.datasets[i].time}"
                 if time.time() - st.session_state.datasets[i].time > 3:                
                     del st.session_state.datasets[i]
                     del st.session_state.requests[i]
                     del st.session_state.sparqls[i]
                     deleted = True
             if deleted:
-                # st.code(oops)
-                # time.sleep(20)
                 st.rerun()
         return _map_config
     except Exception as e:
@@ -386,6 +382,7 @@ with col2:
         'Find all watersheds feed into Muskingum River',
         'Find all watersheds in Ross County in Ohio State',
         'Find the watershed with the name Headwaters Black Fork Mohican River',
+        'Find all stream gages in the watershed with the name Headwaters Black Fork Mohican River',
 
         ######## NPDES ########
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
