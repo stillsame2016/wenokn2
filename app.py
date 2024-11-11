@@ -180,7 +180,7 @@ def execute_query(user_input, chat_container):
                             code = process_wenokn_use_energy_atlas(llm, query["request"])
                             code = strip_code(code)
                             st.code(code)
-                            # time.sleep(10)
+                            time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 'box': box,
