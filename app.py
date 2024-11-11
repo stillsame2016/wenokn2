@@ -215,9 +215,8 @@ def execute_query(user_input, chat_container):
                                 process_data_request(converted_request, chat_container)
                             else:
                                 gdf = globals_dict['gdf']
-                                if gdf is not None:
-                                    st.code(f"CHECK POINT: {gdf.shape}")
-                                    time.sleep(20)
+                                st.code(f"CHECK POINT: {gdf.shape}")
+                                time.sleep(20)
                             st.session_state.datasets[-1].label = query["request"]
                             st.session_state.requests[-1] = query["request"]
                         
