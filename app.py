@@ -180,7 +180,7 @@ def execute_query(user_input, chat_container):
                             code = process_wenokn_use_energy_atlas(llm, query["request"])
                             code = strip_code(code)
                             st.code(code)
-                            time.sleep(10)
+                            # time.sleep(10)
                             globals_dict = {
                                 'st': st,
                                 'box': box,
@@ -227,10 +227,7 @@ def execute_query(user_input, chat_container):
                                     st.session_state.requests.append(query["request"])
                                     st.session_state.sparqls.append("")
                                     st.session_state.datasets.append(gdf)
-                                    
-                                    st.code(f"CHECK POINT: {gdf.shape}")
-                                    time.sleep(20)
-                                
+                                                                    
                             # st.session_state.datasets[-1].label = query["request"]
                             # st.session_state.requests[-1] = query["request"]
                         
