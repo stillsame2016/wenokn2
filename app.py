@@ -185,6 +185,7 @@ def execute_query(user_input, chat_container):
                                 'st': st,
                                 'box': box,
                                 'process_data_request': process_data_request,
+                                'chat_container': chat_container,
                                 'load_coal_mines': load_coal_mines,
                                 'load_coal_power_plants': load_coal_power_plants,
                                 'load_wind_power_plants': load_wind_power_plants,
