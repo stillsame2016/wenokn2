@@ -137,7 +137,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
                 st.code("DO Intersection")
                 intersections = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
                 gdf = intersections[gdf2.columns].drop_duplicates()
-                st.code(f"DO Intersection RESULT: {gdf}")
+                st.code(f"DO Intersection RESULT: {{gdf}}")
             else:
                 gdf = None
             converted_request = None
