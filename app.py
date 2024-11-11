@@ -220,6 +220,9 @@ def execute_query(user_input, chat_container):
                                 if gdf is not None and not gdf.empty: 
                                     st.code(f"CHECK POINT: {gdf.shape}")
                                     time.sleep(20)
+                                else:
+                                    st.code(f"OOPS: None or empty")
+                                    time.sleep(20)
 
                             if "converted_request" not in globals_dict and "gdf" in globals_dict:
                                 st.code(f"NOTHING FOUND")
