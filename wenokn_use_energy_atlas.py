@@ -128,10 +128,12 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         If you found a variable which is a geodataframe containing the watershed with the name Headwaters Black Fork Mohican River, then return 
         the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for the watershed with the name Headwaters Black Fork Mohican River if you found one>
+            # Get stream gages in the bounding box the watershed
             minx, miny, maxx, maxy = gdf1.total_bounds
-            watersheds_bbox = box(minx, miny, maxx, maxy)
-            watersheds_bbox_wkt = watersheds_bbox.wkt
-            converted_request = f"Find all stream gages within {{watersheds_bbox_wkt}})."
+            gdf1_bbox = box(minx, miny, maxx, maxy)
+            gdf1_bbox_wkt = gdf1_bbox.wkt 
+            process_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
+            
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
