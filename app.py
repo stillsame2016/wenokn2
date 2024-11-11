@@ -560,7 +560,9 @@ with col2:
                             except Exception as error:
                                 message = f"""
                                            {code} 
-                                           {str(e)}
+                                            
+                                           
+                                           {str(error)}
                                            """               
                                 
                     st.markdown(message)
