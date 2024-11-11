@@ -210,7 +210,7 @@ def execute_query(user_input, chat_container):
                                 time.sleep(20)
 
                             st.code("CHECK")
-                            time.sleep(10)
+                            time.sleep(20)
                             
                             converted_request = globals_dict['converted_request']  
                             if converted_request:
