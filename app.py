@@ -222,6 +222,8 @@ def execute_query(user_input, chat_container):
                                 gdf = globals_dict['gdf']
                                 if gdf is not None and not gdf.empty: 
                                     gdf.label = query["request"]
+                                    gdf.id = str(uuid.uuid4())[:8]
+                                    gdf.time = time.time()
                                     st.session_state.requests.append(query["request"])
                                     st.session_state.sparqls.append("")
                                     st.session_state.datasets.append(gdf)
