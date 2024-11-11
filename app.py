@@ -382,7 +382,7 @@ with col2:
         'Find all watersheds feed into Muskingum River',
         'Find all watersheds in Ross County in Ohio State',
         'Find the watershed with the name Headwaters Black Fork Mohican River',
-        'Find all stream gages in the watershed with the name Headwaters Black Fork Mohican River',
+        'Find all stream gages in the watershed with the name Meigs Creek',
 
         ######## NPDES ########
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
