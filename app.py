@@ -209,6 +209,9 @@ def execute_query(user_input, chat_container):
                                 st.code(error_stack)
                                 time.sleep(20)
 
+                            st.code("CHECK")
+                            time.sleep(10)
+                            
                             converted_request = globals_dict['converted_request']  
                             if converted_request:
                                 converted_request = globals_dict['converted_request']
