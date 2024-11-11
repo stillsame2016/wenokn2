@@ -132,7 +132,12 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             minx, miny, maxx, maxy = gdf1.total_bounds
             gdf1_bbox = box(minx, miny, maxx, maxy)
             gdf1_bbox_wkt = gdf1_bbox.wkt 
-            gdf = get_gdf_from_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
+            gdf2 = get_gdf_from_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
+            if gdf2:
+                intersections = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+                gdf = intersections[gages.columns].drop_duplicates()
+            else:
+                gdf = None
             converted_request = None
             
         
