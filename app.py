@@ -567,7 +567,7 @@ with col2:
                                            {error_stack}
                                            """               
                                 
-                    st.code(message)
+                    st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     st.rerun()
             else:
