@@ -184,6 +184,7 @@ def execute_query(user_input, chat_container):
                             globals_dict = {
                                 'st': st,
                                 'box': box,
+                                'gpd': gpd,
                                 'process_data_request': process_data_request,
                                 'get_gdf_from_data_request': get_gdf_from_data_request,
                                 'chat_container': chat_container,
