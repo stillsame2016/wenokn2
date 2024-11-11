@@ -221,6 +221,7 @@ def execute_query(user_input, chat_container):
                             if "gdf" in globals_dict:
                                 gdf = globals_dict['gdf']
                                 if gdf is not None and not gdf.empty: 
+                                    gdf.label = query["request"]
                                     st.session_state.requests.append(query["request"])
                                     st.session_state.sparqls.append("")
                                     st.session_state.datasets.append(gdf)
