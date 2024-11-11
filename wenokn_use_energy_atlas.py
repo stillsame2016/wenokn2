@@ -133,6 +133,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             gdf1_bbox = box(minx, miny, maxx, maxy)
             gdf1_bbox_wkt = gdf1_bbox.wkt 
             process_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
+            converted_request = None
             
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
