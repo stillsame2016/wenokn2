@@ -134,7 +134,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             gdf1_bbox_wkt = gdf1_bbox.wkt 
             gdf2 = get_gdf_from_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
-            gdf = intersections[gdf2.columns].drop_duplicates()
+            gdf = gdf[gdf2.columns].drop_duplicates()
             converted_request = None
             
         
