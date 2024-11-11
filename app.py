@@ -207,6 +207,7 @@ def execute_query(user_input, chat_container):
                                 st.code(error_stack)
                                 time.sleep(20)
 
+                            converted_request = globals_dict['converted_request']  
                             if converted_request:
                                 converted_request = globals_dict['converted_request']
                                 st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
