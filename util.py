@@ -677,3 +677,74 @@ def normal_print(sparql):
     
     return sparql
 
+def get_gdf_from_data_request(message, chat_container):
+    with chat_container:
+        with st.chat_message("assistant"):
+            with st.spinner(f"""We're currently processing your request:
+                                **{message}{'' if message.endswith('.') else '.'}**
+                          Depending on the complexity of the query and the volume of data, 
+                          this may take a moment. We appreciate your patience."""):
+
+                # generate a sparql query. try up to 8 times because of the LLM limit
+                max_tries = 8
+                tried = 0
+                gdf_empty = False
+                while tried < max_tries:
+                    try:
+                        response = requests.get(
+                            f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={message}")
+                        data = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
+                        if data.startswith("\"```sparql"):
+                            start_index = data.find("```sparql") + len("```sparql")
+                            end_index = data.find("```", start_index)
+                            sparql_query = data[start_index:end_index].strip()
+                        elif data.startswith("\"```code"):
+                            start_index = data.find("```code") + len("```code")
+                            end_index = data.find("```", start_index)
+                            sparql_query = data[start_index:end_index].strip()
+                        elif data.startswith("```sql"):
+                            start_index = data.find("```sql") + len("```sql")
+                            end_index = data.find("```", start_index)
+                            sparql_query = data[start_index:end_index].strip()
+                        elif data.startswith("sql"):
+                            start_index = data.find("sql") + len("sql")
+                            sparql_query = data[start_index:].strip()
+                        elif data.startswith("\"```"):
+                            start_index = data.find("```") + len("```")
+                            end_index = data.find("```", start_index)
+                            sparql_query = data[start_index:end_index].strip()
+                        elif data.startswith('"') and data.endswith('"'):
+                            # Remove leading and trailing double quotes
+                            sparql_query = data[1:-1]
+                        else:
+                            sparql_query = data
+                        sparql_query = sparql_query.replace("\n\n\n", "\n\n")
+
+                        st.markdown(
+                            """
+                            <style>
+                            .st-code > pre {
+                                font-size: 0.4em;
+                            }
+                            </style>
+                            """,
+                            unsafe_allow_html=True
+                        )
+                        st.code(normal_print(sparql_query))
+
+                        endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
+                        df = sparql_dataframe.get(endpoint, sparql_query)
+                        gdf = df_to_gdf(df, message)
+                        if gdf.shape[0] == 0:
+                            # double check
+                            if not gdf_empty:
+                                gdf_empty = True
+                                tried += 1
+                                continue
+
+                        tried = max_tries + 10
+                        if gdf.shape[0] > 0:
+                            return gdf
+                    except Exception as e:
+                        return None
+               return None
