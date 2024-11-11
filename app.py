@@ -211,13 +211,17 @@ def execute_query(user_input, chat_container):
 
                             if "converted_request" in globals_dict:
                                 converted_request = globals_dict['converted_request']
-                                st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
-                                process_data_request(converted_request, chat_container)
-                            elif "gdf" in globals_dict:
+                                if converted_request:
+                                    st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
+                                    process_data_request(converted_request, chat_container)
+                                    
+                            if "gdf" in globals_dict:
                                 gdf = globals_dict['gdf']
-                                st.code(f"CHECK POINT: {gdf.shape}")
-                                time.sleep(20)
-                            else:
+                                if gdf is not None and not gdf.empty: 
+                                    st.code(f"CHECK POINT: {gdf.shape}")
+                                    time.sleep(20)
+
+                            if "converted_request" not in globals_dict and "gdf" in globals_dict:
                                 st.code(f"NOTHING FOUND")
                                 st.code(code)
                                 time.sleep(20)
