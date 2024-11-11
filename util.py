@@ -747,4 +747,4 @@ def get_gdf_from_data_request(message, chat_container):
                             return gdf
                     except Exception as e:
                         return None
-               return None
+            return None
