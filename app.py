@@ -227,6 +227,12 @@ def execute_query(user_input, chat_container):
                                     st.session_state.requests.append(query["request"])
                                     st.session_state.sparqls.append("")
                                     st.session_state.datasets.append(gdf)
+
+                                    message = f"""
+                                                Your request has been processed. {gdf.shape[0]} 
+                                                { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                loaded on the map.
+                                                """
                                                                     
                             # st.session_state.datasets[-1].label = query["request"]
                             # st.session_state.requests[-1] = query["request"]
