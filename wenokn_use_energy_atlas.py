@@ -132,7 +132,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             minx, miny, maxx, maxy = gdf1.total_bounds
             gdf1_bbox = box(minx, miny, maxx, maxy)
             gdf1_bbox_wkt = gdf1_bbox.wkt 
-            gdf = process_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
+            gdf = get_geodataframe_from_data_request(f"Find all stream gages within {{gdf1_bbox_wkt}}).", chat_container)
             converted_request = None
             
         
