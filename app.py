@@ -217,6 +217,11 @@ def execute_query(user_input, chat_container):
                                 gdf = globals_dict['gdf']
                                 st.code(f"CHECK POINT: {gdf.shape}")
                                 time.sleep(20)
+                            else:
+                                st.code(f"NOTHING FOUND")
+                                st.code(code)
+                                time.sleep(20)
+                                
                             st.session_state.datasets[-1].label = query["request"]
                             st.session_state.requests[-1] = query["request"]
                         
