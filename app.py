@@ -204,6 +204,7 @@ def execute_query(user_input, chat_container):
                             try:
                                 exec(code, globals_dict)
                             except Exception as e:
+                                st.code(code)
                                 error_stack = traceback.format_exc()
                                 st.code(error_stack)
                                 time.sleep(20)
