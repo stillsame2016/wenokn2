@@ -567,10 +567,10 @@ with col2:
                             code = strip_code(code)
                             # st.code(code)
                             # time.sleep(20)
-                            exec(code)
-                            st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
-
-                            if converted_request:
+                            
+                            if "converted_request = None" not in converted_request:
+                                exec(code)
+                                st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
                                 process_data_request(converted_request, chat_container)
                                 st.session_state.datasets[-1].label = user_input
                                 st.session_state.requests[-1] = user_input
@@ -578,19 +578,13 @@ with col2:
                             else:
                                 try:
                                     query_plan_text, message = execute_query(user_input, chat_container)
-                                    st.session_state.rerun = True
                                 except Exception as error:
+                                    # error_stack = traceback.format_exc()
+                                    # message = f"""
+                                    #            {code} 
+                                    #            {error_stack}
+                                    #            """               
                                     message = f"{str(error)}"
-                        except Exception as e:  
-                            try:
-                                query_plan_text, message = execute_query(user_input, chat_container)
-                            except Exception as error:
-                                # error_stack = traceback.format_exc()
-                                # message = f"""
-                                #            {code} 
-                                #            {error_stack}
-                                #            """               
-                                message = f"{str(error)}"
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     st.rerun()
