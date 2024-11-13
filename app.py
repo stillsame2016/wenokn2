@@ -132,7 +132,7 @@ def execute_query(user_input, chat_container):
     if response.status_code == 200:
         query_plan = json.loads(response.text)
         query_plan = normalize_query_plan(query_plan)
-        st.code(json.dumps(query_plan, indent=4))
+        # st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
             query_plan_text = "The following query plan has been designed to address your request:\n"
@@ -175,7 +175,7 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "WEN-KEN database use Energy Atlas":
                             code = process_wenokn_use_energy_atlas(llm, query["request"])
                             code = strip_code(code)
-                            st.code(code)
+                            # st.code(code)
                             # time.sleep(10)
                             globals_dict = {
                                 'st': st,
@@ -197,14 +197,14 @@ def execute_query(user_input, chat_container):
                                 'load_solar_power_plants': load_solar_power_plants,
                                 'load_biodiesel_plants': load_biodiesel_plants
                             }
-                            # exec(code, globals_dict)
-                            try:
-                                exec(code, globals_dict)
-                            except Exception as e:
-                                st.code(code)
-                                error_stack = traceback.format_exc()
-                                st.code(error_stack)
-                                time.sleep(20)
+                            exec(code, globals_dict)
+                            # try:
+                            #     exec(code, globals_dict)
+                            # except Exception as e:
+                            #     st.code(code)
+                            #     error_stack = traceback.format_exc()
+                            #     st.code(error_stack)
+                            #     time.sleep(20)
 
                             if "converted_request" in globals_dict:
                                 converted_request = globals_dict['converted_request']
