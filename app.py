@@ -578,14 +578,12 @@ with col2:
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
                             except Exception as error:
-                                error_stack = traceback.format_exc()
-                                message = f"""
-                                           {code} 
-                                            
-                                           
-                                           {error_stack}
-                                           """               
-                                
+                                # error_stack = traceback.format_exc()
+                                # message = f"""
+                                #            {code} 
+                                #            {error_stack}
+                                #            """               
+                                message = f"{str(error)}"
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     st.rerun()
