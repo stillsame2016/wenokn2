@@ -562,29 +562,28 @@ with col2:
             elif route['request_type'] == "WEN-KEN database use Energy Atlas":
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        try:
-                            code = process_wenokn_use_energy_atlas(llm, user_input)
-                            code = strip_code(code)
-                            # st.code(code)
-                            # time.sleep(20)
-                            
-                            if "converted_request = None" not in converted_request:
-                                exec(code)
-                                st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
-                                process_data_request(converted_request, chat_container)
-                                st.session_state.datasets[-1].label = user_input
-                                st.session_state.requests[-1] = user_input
-                                message = "Your request has been processed."   
-                            else:
-                                try:
-                                    query_plan_text, message = execute_query(user_input, chat_container)
-                                except Exception as error:
-                                    # error_stack = traceback.format_exc()
-                                    # message = f"""
-                                    #            {code} 
-                                    #            {error_stack}
-                                    #            """               
-                                    message = f"{str(error)}"
+                        code = process_wenokn_use_energy_atlas(llm, user_input)
+                        code = strip_code(code)
+                        # st.code(code)
+                        # time.sleep(20)
+                        
+                        if "converted_request = None" not in converted_request:
+                            exec(code)
+                            st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
+                            process_data_request(converted_request, chat_container)
+                            st.session_state.datasets[-1].label = user_input
+                            st.session_state.requests[-1] = user_input
+                            message = "Your request has been processed."   
+                        else:
+                            try:
+                                query_plan_text, message = execute_query(user_input, chat_container)
+                            except Exception as error:
+                                # error_stack = traceback.format_exc()
+                                # message = f"""
+                                #            {code} 
+                                #            {error_stack}
+                                #            """               
+                                message = f"{str(error)}"
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     st.rerun()
