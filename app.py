@@ -569,11 +569,17 @@ with col2:
                             # time.sleep(20)
                             exec(code)
                             st.markdown(f"Loaded data from ArcGIS Feature Service and converted the request to: {converted_request}")
-                                
-                            process_data_request(converted_request, chat_container)
-                            st.session_state.datasets[-1].label = user_input
-                            st.session_state.requests[-1] = user_input
-                            message = "Your request has been processed."   
+
+                            if converted_request:
+                                process_data_request(converted_request, chat_container)
+                                st.session_state.datasets[-1].label = user_input
+                                st.session_state.requests[-1] = user_input
+                                message = "Your request has been processed."   
+                            else:
+                                try:
+                                    query_plan_text, message = execute_query(user_input, chat_container)
+                                except Exception as error:
+                                    message = f"{str(error)}"
                         except Exception as e:  
                             try:
                                 query_plan_text, message = execute_query(user_input, chat_container)
