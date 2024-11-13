@@ -578,6 +578,7 @@ with col2:
                             else:
                                 try:
                                     query_plan_text, message = execute_query(user_input, chat_container)
+                                    st.session_state.rerun = True
                                 except Exception as error:
                                     message = f"{str(error)}"
                         except Exception as e:  
