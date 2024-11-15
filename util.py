@@ -608,20 +608,12 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
             {question}
 
        Checks whether the user's current request is semantically fully equivalent to the processed 
-       request of a geodataframe contained in a certain variable. 
-
-       If there is a variable which is associated with a processed request with the exactly the same semantics as
-       the user's request, then return 
-            {{
-               'existing': true,
-               'variable: <the associated request>
-            }}
-       Otherwise return
-            {{
-               'existing': false,
-               'variable: <the associated request>
-            }}
-       Please return JSON only without any explanations.  without preamble or explanation. 
+       request of a geodataframe contained in a certain variable. Return a valid Python JSON string 
+       with a boolean field 'existing' to indicate if it exists. Please return JSON only without any 
+       explanations and without preamble or explanation. 
+       
+       Please note that the user request and the processed request of the found variable must have
+       the same semantics.
 
        Note: Please note that “Find San Diego County” is not equivalent to “Find Southern San Diego County”.
         
