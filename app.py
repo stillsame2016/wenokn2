@@ -548,10 +548,10 @@ with col2:
                                                 this is a mistake.
                                                 """
                         except Exception as e:
-                            # message = f"""
-                            #            {code} 
-                            #            {str(e)}
-                            #            """  
+                            message = f"""
+                                       {str(e)}
+                                       """  
+                            time.sleep(20)
                             message = f"""We are not able to process your request. Please refine your 
                                           request and try it again. \n\nError: {str(e)}"""
                             try:
