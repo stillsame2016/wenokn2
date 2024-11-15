@@ -566,6 +566,8 @@ with col2:
                         try:
                             code = process_wenokn_use_energy_atlas(llm, user_input)
                             code = strip_code(code)
+                            if "converted_request = None" in code:
+                                raise ValueError("Found no converted request.")
                             # st.code(code)
                             # time.sleep(20)
                             exec(code)
