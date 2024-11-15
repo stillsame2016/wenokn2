@@ -613,12 +613,12 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        If there is a variable which is associated with a processed request with the exactly the same semantics as
        the user's request, then return 
             {{
-               'existing': True,
+               'existing': true,
                'variable: <the associated request>
             }}
        Otherwise return
             {{
-               'existing': False,
+               'existing': false,
                'variable: <the associated request>
             }}
        Please return JSON only without any explanations.  without preamble or explanation. 
