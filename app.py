@@ -549,7 +549,7 @@ with col2:
                                                 """
                         except Exception as e:
                             message = f"""
-                                       {str(e)}
+                                       ERROR: {str(e)}
                                        """  
                             time.sleep(20)
                             message = f"""We are not able to process your request. Please refine your 
