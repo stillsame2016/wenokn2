@@ -75,6 +75,14 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'HUC10', 'NAME', 'HUTYPE', 'Shape__Area', 'Shape__Length'
 
+        [ Definition 5 ]
+        We have the following function to get basins from an ArcGIS Feature Service as a GeoDataFrame:
+            load_basins(where_condition, bbox)
+        where bbox is for a bounding box. Use None if bbox is unknown or not needed. 
+
+        The returned GeoDataFrame has the following columns:
+            'geometry', 'OBJECTID', 'HUC6', 'NAME', 'Shape__Area', 'Shape__Length'
+
         Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
             NAME LIKE '%Headwaters Scioto River%'
         The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
@@ -326,5 +334,9 @@ def load_watersheds(where, bbox):
     wkid = "3857"
     return get_arcgis_features(self_url, where, bbox)  
 
+def load_basins(where, bbox):
+    self_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Watershed_Boundary_Dataset_HUC_6s/FeatureServer/0"
+    wkid = "3857"
+    return get_arcgis_features(self_url, where, bbox)  
 
 
