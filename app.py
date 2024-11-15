@@ -512,7 +512,7 @@ with col2:
                                 exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
                                 st.code(exists_json)
                                 time.sleep(10)
-                             except Exception as e:
+                            except Exception as e:
                                 error_stack = traceback.format_exc()
                                 st.code(error_stack)
                                 time.sleep(20)
