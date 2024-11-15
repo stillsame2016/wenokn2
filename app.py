@@ -227,7 +227,7 @@ def execute_query(user_input, chat_container):
                                     message = f"""
                                                 Your request has been processed. {gdf.shape[0]} 
                                                 { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                loaded on the map 100.
+                                                loaded on the map.
                                                 """
                                                                     
                             # st.session_state.datasets[-1].label = query["request"]
@@ -586,7 +586,8 @@ with col2:
                                 message = f"{str(error)}"
                     st.markdown(message)
                     st.session_state.chat.append({"role": "assistant", "content": message})
-                    st.rerun()
+                    # st.rerun()
+                    st.session_state.rerun = True
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
