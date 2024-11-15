@@ -68,6 +68,7 @@ def get_question_route(llm, question):
             Solar Power Plant
             Biodiesel Plant
             Watershed
+            Basin
 
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
