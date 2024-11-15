@@ -273,7 +273,7 @@ def execute_query(user_input, chat_container):
                                     message = f"""
                                                 Your request has been processed. {gdf.shape[0]} 
                                                 { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                loaded on the map 200.
+                                                loaded on the map.
                                                 """
                             else:
                                 raise ValueError(f'The request {query["request"]} has been processed. Nothing was found.')
@@ -537,7 +537,7 @@ with col2:
                                         message = f"""
                                                     Your request has been processed. {gdf.shape[0]} 
                                                     { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                    loaded on the map 3.
+                                                    loaded on the map.
                                                     """
                                 else:
                                     message = f"""
