@@ -379,6 +379,9 @@ with col2:
         'Show natural gas power plants in Florida.',
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
+        ######## Basin ########
+        'Find all rivers flow through the basin Roanoke',
+        
         ######## Watershed ########
         'Find all watersheds feed into Muskingum River',
         'Find all watersheds in Ross County in Ohio State',
