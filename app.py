@@ -380,7 +380,7 @@ with col2:
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
         ######## Basin ########
-        'Find all rivers flow through the basin Roanoke',
+        'Find all rivers that flow through the Roanoke basin.',
         
         ######## Watershed ########
         'Find all watersheds feed into Muskingum River',
