@@ -106,14 +106,14 @@ def add_map():
             deleted = False
             for i in reversed(indices_to_remove):
                 # the returnd map config may have several seconds delay 
-                if time.time() - st.session_state.datasets[i].time > 3:  
-                    st.code(f"{time.time() - st.session_state.datasets[i].time}")
+                if time.time() - st.session_state.datasets[i].time > 5:  
+                    # st.code(f"{time.time() - st.session_state.datasets[i].time}")
                     del st.session_state.datasets[i]
                     del st.session_state.requests[i]
                     del st.session_state.sparqls[i]
                     deleted = True
             if deleted:
-                time.sleep(10)    
+                # time.sleep(10)    
                 st.rerun()
         return _map_config
     except Exception as e:
