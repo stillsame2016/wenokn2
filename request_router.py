@@ -123,6 +123,12 @@ def get_question_route(llm, question):
         [ Example 9 ]
         Return 'WEN-KEN database' for following request: Find the Ohio State. The WEN-KEN database contains all USA states and geometries.
 
+        [ Example 10 ]
+        Return "WEN-KEN database use Energy Atlas" for the following request: 
+            Find all rivers that flow through the Roanoke basin. 
+        Because this request tries to find some rivers (in WEN-KEN database) but with some conditions related to
+        the Roanoke basin in Energy Atlas.
+
         Question to route: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
