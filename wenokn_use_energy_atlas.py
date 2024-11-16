@@ -128,7 +128,7 @@ def process_wenokn_use_energy_atlas(llm, user_input):
         If you found a variable which is a geodataframe containing the watershed with the name Headwaters Black Fork Mohican River, then return 
         the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for the watershed with the name Headwaters Black Fork Mohican River if you found one>
-            # Get stream gages in the bounding box the watershed
+            # Get stream gages in the bounding box of the watershed
             minx, miny, maxx, maxy = gdf1.total_bounds
             gdf1_bbox = box(minx, miny, maxx, maxy)
             gdf1_bbox_wkt = gdf1_bbox.wkt 
@@ -137,6 +137,25 @@ def process_wenokn_use_energy_atlas(llm, user_input):
             gdf = gdf[gdf2.columns].drop_duplicates()
             converted_request = None
             
+        [ Example 3 ]
+        Find all rivers that flow through the Roanoke basin.
+
+        Find out if one of the available variables is a geodataframe containing the Roanoke basin.
+
+        If none of the available variables are geodataframes containing the Roanoke basin, then return the following code:
+            raise Exception("The data for the Roanoke basin is missing. Please load it first.")
+
+        If you found a variable which is a geodataframe containing the Roanoke basin, then return the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for the Roanoke basin if you found one>
+            # Get rivers in the bounding box of the Roanoke basin
+            minx, miny, maxx, maxy = gdf1.total_bounds
+            gdf1_bbox = box(minx, miny, maxx, maxy)
+            gdf1_bbox_wkt = gdf1_bbox.wkt 
+            gdf2 = get_gdf_from_data_request(f"Find all rivers that flow through {{gdf1_bbox_wkt}}).", chat_container)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            gdf = gdf[gdf2.columns].drop_duplicates()
+            converted_request = None
+        
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
