@@ -236,8 +236,8 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
-                            st.code(code)
-                            time.sleep(20)
+                            # st.code(code)
+                            # time.sleep(20)
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
