@@ -92,12 +92,12 @@ def get_question_route(llm, question):
         [ Example 4 ]
         Return "Energy Atlas" for the following request:
             Find all coal mines in all counties the Scioto River flows through.
-        Because this request tries to find coal mines (in Energy Atlas rather than in WEN-KEN database)
+        Because this request tries to find coal mines which is contained in Energy Atlas.
 
         [ Example 5 ]
         Return "Data Commons" for the following request:
             Find the social vulnerability for all counties downstream of the coal mine with the name "Century Mine" along Ohio River
-        Because this request tries to find the social vulnerability of some counties which satisfy some conditions.
+        Because this request tries to find the social vulnerability of some counties which is contained in Data Commons.
 
         Use "Other" for questions related to common knowledge. 
 
@@ -117,17 +117,19 @@ def get_question_route(llm, question):
             }}
 
         [ Example 8 ]
-        Return 'WEN-KEN database' for following request: Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
-        The WEN-KEN database contains power stations and US Energy Atlas contains power plants.
+        Return 'WEN-KEN database' for following request: 
+            Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river.
+        Because this request tried to find dams which are contained in the WEN-KEN database.
 
         [ Example 9 ]
-        Return 'WEN-KEN database' for following request: Find the Ohio State. The WEN-KEN database contains all USA states and geometries.
+        Return 'WEN-KEN database' for following request: 
+            Find the Ohio State 
+        Because this request tries to find a state which is contained in the WEN-KEN database.
 
         [ Example 10 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
             Find all rivers that flow through the Roanoke basin. 
-        Because this request tries to find some rivers (in WEN-KEN database) but with some conditions related to
-        the Roanoke basin in Energy Atlas.
+        Because this request tries to find some rivers (in WEN-KEN database) but with some conditions related to the Roanoke basin in Energy Atlas.
 
         Question to route: {question} 
         
