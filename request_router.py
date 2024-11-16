@@ -131,6 +131,11 @@ def get_question_route(llm, question):
             Find all rivers that flow through the Roanoke basin. 
         Because this request tries to find some rivers (in WEN-KEN database) but with some conditions related to the Roanoke basin in Energy Atlas.
 
+        [ Example 11 ]
+        Return "Energy Atlas" for the following request:
+            Find all basins of the Scioto River
+        Because this request tried to find basins which are contained in Energy Atlas.
+
         Question to route: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
