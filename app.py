@@ -380,7 +380,7 @@ with col2:
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
         ######## Basin ########
-        'Find the basin French Broad-Holston',
+        'Find the basin Lower Ohio-Salt',
         'Find all rivers that flow through the Roanoke basin.',
         
         ######## Watershed ########
