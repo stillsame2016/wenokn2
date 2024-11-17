@@ -518,8 +518,13 @@ with col2:
                         try:
                             st.code("Checking point 100")
                             time.sleep(10)
-                            
-                            exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
+
+                            try:
+                                exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
+                            except Exception as e:
+                                error_stack = traceback.format_exc()
+                                st.code(error_stack)
+                                time.sleep(10)
                             
                             st.code(exists_json)
                             time.sleep(10)    
