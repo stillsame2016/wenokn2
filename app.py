@@ -385,6 +385,7 @@ with col2:
         'Find the basin Lower Ohio-Salt',
         'Find all basins through which the Scioto River flows.',
         'Find all rivers that flow through the Roanoke basin.',
+        'Find all watersheds in the Kanawha basin.',
         
         ######## Watershed ########
         'Find all watersheds feed into Muskingum River',
