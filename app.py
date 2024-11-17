@@ -636,11 +636,11 @@ if st.session_state.sample_query:
             chatInput.focus();
 
             const element = document.getElementById("bui8val-38");
-            if (element) {
+            if (element) {{
                 element.style.backgroundColor = 'yellow';
-            } else {
+            }} else {{
                 console.error("Element not found");
-            }
+            }}
 
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
