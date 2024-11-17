@@ -528,8 +528,8 @@ with col2:
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
-                                st.code(code)
-                                time.sleep(10)
+                                # st.code(code)
+                                # time.sleep(10)
                                 exec(code)
                                 # try:
                                 #     exec(code)
