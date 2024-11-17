@@ -383,7 +383,7 @@ with col2:
 
         ######## Basin ########
         'Find the basin Lower Ohio-Salt',
-        'Find all basins that Scioto River flows through',
+        'Find all basins through which the Scioto River flows.',
         'Find all rivers that flow through the Roanoke basin.',
         
         ######## Watershed ########
