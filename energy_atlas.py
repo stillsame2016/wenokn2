@@ -154,6 +154,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf1 = <replace by the variable of the geodataframe for all counties the Scioto River flows through if you found one>
             gdf2 = load_solar_power_plants("1 = 1")
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            # Ensure all columns from gdf2 are retained
+            for col in gdf2.columns:
+                if col not in gdf.columns:
+                    gdf[col] = gdf2[col]
             gdf = gdf[gdf2.columns]
             gdf.title = "All solar power plants in all counties the Scioto River flows through"
 
@@ -174,6 +178,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf1_buffered = gdf1.copy()
             gdf1_buffered['geometry'] = gdf1_buffered['geometry'].buffer(buffer_distance)
             gdf = gpd.sjoin(gdf2, gdf1_buffered, how="inner", predicate="intersects")
+            # Ensure all columns from gdf2 are retained
+            for col in gdf2.columns:
+                if col not in gdf.columns:
+                    gdf[col] = gdf2[col]
             gdf = gdf[gdf2.columns]
             gdf.title = "All the watersheds that feed into the Scioto River"
 
@@ -191,6 +199,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf1 = <replace by the variable of the geodataframe for the Ohio State if you found one>
             gdf2 = load_watersheds("1 = 1", gdf1.total_bounds)
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            # Ensure all columns from gdf2 are retained
+            for col in gdf2.columns:
+                if col not in gdf.columns:
+                    gdf[col] = gdf2[col]
             gdf = gdf[gdf2.columns]
             gdf.title = "All the watersheds in Ohio State"
 
