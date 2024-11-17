@@ -634,6 +634,8 @@ if st.session_state.sample_query:
             const doc = window.parent.document;
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
+
+            doc.getElementById("bui8val-33").style.backgroundColor = 'yellow';
             
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
@@ -643,8 +645,6 @@ if st.session_state.sample_query:
                 nativeInputValueSetter.call(chatInput, "{st.session_state.sample_query} ");
                 const event = new Event('input', {{ bubbles: true }});
                 chatInput.dispatchEvent(event);
-
-                doc.getElementById("bui8val-33").style.backgroundColor = 'yellow';
 
                 const clearButton = doc.querySelector('svg[title="Clear value"]');  
                 console.log("clearButton: " +clearButton);
