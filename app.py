@@ -635,13 +635,6 @@ if st.session_state.sample_query:
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
 
-            const element = document.getElementById("bui8val-38");
-            if (element) {{
-                element.style.backgroundColor = 'yellow';
-            }} else {{
-                console.error("Element not found");
-            }}
-
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
                 chatInput.style.height = 'auto';
@@ -664,6 +657,8 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(mouseUp);
                     clearButton.dispatchEvent(click);
                 }}
+
+                alert(100)
             }}
 
             setTimeout(autoResizeTextarea, 0);
