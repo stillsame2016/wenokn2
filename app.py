@@ -106,6 +106,14 @@ def add_map():
             deleted = False
             for i in reversed(indices_to_remove):
                 # the returnd map config may have several seconds delay 
+                # If a DataFrame in the cache is not on the map, that DataFrame is considered likely to have been deleted.
+                #
+                # However, newly stored DataFrames in the cache do not appear on the map immediately, and such newly stored 
+                # DataFrames are also mistakenly recognized as deleted.
+                #
+                # In order to distinguish between the above two cases, each DataFrame is timestamped with the time it was 
+                # deposited, and we stipulate that a DataFrame will not be deleted for 10 seconds after it has been deposited.
+                #
                 if time.time() - st.session_state.datasets[i].time > 10:  
                     # st.code(f"{time.time() - st.session_state.datasets[i].time}")
                     del st.session_state.datasets[i]
