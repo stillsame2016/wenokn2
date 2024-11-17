@@ -438,6 +438,7 @@ with col2:
                     existed_requests = []
                     for request in plan['requests']:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
+                        st.code(exist_json)
                         if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
