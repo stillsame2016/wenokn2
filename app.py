@@ -386,6 +386,7 @@ with col2:
         'Find all basins through which the Scioto River flows.',
         'Find all rivers that flow through the Roanoke basin.',
         'Find all watersheds in the Kanawha basin.',
+        'Find all basins with an area greater than 200,000 square kilometers',
         
         ######## Watershed ########
         'Find all watersheds feed into Muskingum River',
