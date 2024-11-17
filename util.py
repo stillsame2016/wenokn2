@@ -632,6 +632,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
         return df_code_chain.invoke({"question": request, "variables": variables})
     except Exception as e:
         st.code(f"{str(e)}")
+        time.sleep(10)
         return None
 
 def nonspatial_dataset_exists(llm, request, nonspatial_datasets):
