@@ -657,8 +657,6 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(mouseUp);
                     clearButton.dispatchEvent(click);
                 }}
-
-                alert(100)
             }}
 
             setTimeout(autoResizeTextarea, 0);
