@@ -84,7 +84,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'geometry', 'OBJECTID', 'HUC6', 'NAME', 'Shape__Area', 'Shape__Length'
 
         Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
-            NAME LIKE '%Headwaters Scioto River%'
+            UPPER(NAME) = UPPER('Headwaters Scioto River')
         The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
         
         [ Available Data ]
