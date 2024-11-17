@@ -635,7 +635,7 @@ if st.session_state.sample_query:
             const chatInput = doc.querySelector('.stChatInput textarea');
             chatInput.focus();
 
-            doc.getElementById("bui8val-33").style.backgroundColor = 'yellow';
+            document.getElementById("bui8val-38").style.backgroundColor = 'yellow';
             
             function autoResizeTextarea() {{
                 // chatInput.value = '{st.session_state.sample_query}';   
