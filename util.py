@@ -613,8 +613,8 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        an explanation. Please return JSON only without any preamble or other explanation. 
 
        Note: Please note that “Find San Diego County” is not equivalent to “Find Southern San Diego County”.
-
-       Note: Please note that "Find Scioto River" is semantically equivalent to the processed request 
+       
+       Note: Please note that "Find Scioto River" is NOT semantically equivalent to the processed request 
        "All basins that Scioto River flows through" because "Find Scioto River" tries to find a river with 
        the name "Scioto" and "All basins that Scioto River flows through" tries to find all basins that the
        Scioto River flows through".
