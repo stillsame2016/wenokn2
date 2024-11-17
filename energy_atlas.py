@@ -224,8 +224,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.title = "All the watersheds in Ross County in Ohio State"
 
         [ Example 7]
-        Find all basins that Scioto River flows through. 
-        This request tries to find all basins which are intersecting with the Scioto River
+        Find all basins through which the Scioto River flows. This request means "find all basins which are 
+        intersecting with the Scioto River".
         
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
