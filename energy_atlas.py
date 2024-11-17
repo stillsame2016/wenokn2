@@ -204,6 +204,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                 if col not in gdf.columns:
                     gdf[col] = gdf2[col]
             gdf = gdf[gdf2.columns]
+            gdf["geometry"] = gdf["geometry"].simplify(tolerance=0.1, preserve_topology=True)
             gdf.title = "All the watersheds in Ohio State"
 
         [ Example 7 ]
