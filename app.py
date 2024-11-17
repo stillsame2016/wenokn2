@@ -516,19 +516,11 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
-                            st.code("Checking point 100")
-                            time.sleep(10)
-
-                            try:
-                                exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            except Exception as e:
-                                st.code(f"Error: {str(e)}")
-                                time.sleep(10)
+                            exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
+                            # st.code(exists_json)
+                            # time.sleep(10)    
                             
-                            st.code(exists_json)
-                            time.sleep(10)    
-                            
-                            if exist_json['existing']:
+                            if exist_json and exist_json['existing']:
                                 message = f"Your request has been processed. The data for the request \"{user_input}\" already exists."
                             else:
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
