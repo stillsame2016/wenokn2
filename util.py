@@ -627,7 +627,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
                  st.session_state.datasets[{index}] holds a geodataframe after processing 
                  the request: { st.session_state.datasets[index].label}                                
                           """
-    # st.code(variables)
+    st.code(variables)
     return df_code_chain.invoke({"question": request, "variables": variables})
 
 
