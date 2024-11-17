@@ -630,7 +630,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
     # st.code(variables)
     try:
         return df_code_chain.invoke({"question": request, "variables": variables})
-    except Exception e:
+    except Exception as e:
         st.code(f"{str(e)}")
         return None
 
