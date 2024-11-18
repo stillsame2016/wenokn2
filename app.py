@@ -306,6 +306,11 @@ st.markdown("""
             .stDataFrame {
                 margin-left: 50px;
             }
+
+            #bui8val-38 {
+                background-color: yellow;
+            }
+
             </style>
         """, unsafe_allow_html=True)
 
