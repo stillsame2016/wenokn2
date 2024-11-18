@@ -311,6 +311,14 @@ st.markdown("""
                 background-color: lightblue;
             }
 
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(2) {
+                background-color: lightblue;
+            }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(3) {
+                background-color: lightblue;
+            }
+            
             </style>
         """, unsafe_allow_html=True)
 
