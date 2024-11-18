@@ -321,6 +321,37 @@ st.markdown("""
                 background-color: lightblue;
                 border-bottom: 1px solid white;
             }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(4) {
+                background-color: lightblue;
+                border-bottom: 1px solid white;
+            }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(5) {
+                background-color: lightblue;
+                border-bottom: 1px solid white;
+            }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(6) {
+                background-color: lightblue;
+                border-bottom: 1px solid white;
+            }
+      
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(7) {
+                background-color: lightblue;
+                border-bottom: 1px solid white;
+            }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(8) {
+                background-color: lightblue;
+                border-bottom: 1px solid white;
+            }
+
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(9) {
+                background-color: lightgreen;
+                border-bottom: 1px solid white;
+            }
+            
             
             </style>
         """, unsafe_allow_html=True)
