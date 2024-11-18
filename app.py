@@ -308,7 +308,7 @@ st.markdown("""
             }
 
             ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(1) {
-                background-color: lightblue;
+                background-color: #D4F1F4;
             }
 
             </style>
