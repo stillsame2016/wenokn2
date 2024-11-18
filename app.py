@@ -668,7 +668,7 @@ function onSelectBoxClick() {{
 }}
 
 const observer = new MutationObserver((mutations, obs) => {{
-    const select = document.querySelector('div[data-testid="stSelectboxVirtualDropdown"]');
+    const select = document.querySelector('ul[data-testid="stSelectboxVirtualDropdown"]');
     if (select) {{
         select.addEventListener('click', onSelectBoxClick);
         obs.disconnect();
