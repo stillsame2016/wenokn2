@@ -658,6 +658,13 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(mouseUp);
                     clearButton.dispatchEvent(click);
                 }}
+
+                document.querySelectorAll('div').forEach(div => {
+                  if (div.textContent === 'Show the Ohio River.') {
+                    div.style.color = 'red';
+                  }
+                });
+
             }}
 
             setTimeout(autoResizeTextarea, 0);
