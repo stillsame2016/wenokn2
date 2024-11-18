@@ -659,6 +659,17 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(click);
                 }}
 
+const listItems = document.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"] li');
+
+// Loop through each <li> and apply a background color
+listItems.forEach((li, index) => {
+    // Define a set of colors (or generate them dynamically)
+    const colors = ['#f0f0f0', '#d9f0d9', '#e0e0ff', '#ffe0e0', '#f8f8d8', '#e0ffe0', '#f9e0ff', '#f0e0e0', '#e0e0f0', '#d0f0f0'];
+
+    // Apply a background color based on the index
+    li.style.backgroundColor = colors[index % colors.length]; // Modulo to cycle through colors
+});
+
             }}
 
             setTimeout(autoResizeTextarea, 0);
