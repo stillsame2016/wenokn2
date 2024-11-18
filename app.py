@@ -310,6 +310,10 @@ st.markdown("""
             #bui8val-0 {
                 background-color: #D4F1F4;
             }
+            
+            #bui8val-1 {
+                background-color: #D4F1F4;
+            }
 
             </style>
         """, unsafe_allow_html=True)
