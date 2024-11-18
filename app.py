@@ -658,16 +658,6 @@ if st.session_state.sample_query:
                     clearButton.dispatchEvent(mouseUp);
                     clearButton.dispatchEvent(click);
                 }}
-
-                const listItems = document.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"] li');
-                console.log(listItems)
-                
-                listItems.forEach((li, index) => {{
-                    const colors = ['#f0f0f0', '#d9f0d9', '#e0e0ff', '#ffe0e0', '#f8f8d8', '#e0ffe0', '#f9e0ff', '#f0e0e0', '#e0e0f0', '#d0f0f0'];
-                
-                    li.style.backgroundColor = colors[index % colors.length]; // Modulo to cycle through colors
-                }});
-
             }}
 
             setTimeout(autoResizeTextarea, 0);
