@@ -662,27 +662,6 @@ if st.session_state.sample_query:
 
             setTimeout(autoResizeTextarea, 0);
 
-
-function onSelectBoxClick() {{
-    console.log("Select box options are displayed!");
-}}
-
-const observer = new MutationObserver((mutations, obs) => {{
-    const select = document.querySelector('ul[data-testid="stSelectboxVirtualDropdown"]');
-    if (select) {{
-        select.addEventListener('click', onSelectBoxClick);
-        obs.disconnect();
-    }}
-}});
-
-observer.observe(document, {{
-    childList: true,
-    subtree: true
-}});
-
-
-
-
             </script>
             """
     html(js_code)
