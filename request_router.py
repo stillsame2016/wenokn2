@@ -134,12 +134,12 @@ def get_question_route(llm, question):
         [ Example 11 ]
         Return "Energy Atlas" for the following request:
             Find all basins through which the Scioto River flows. 
-        Because this request tried to find basins which are contained in Energy Atlas.
+        Because this request tried to find some basins which are contained in Energy Atlas.
 
         [ Example 12 ]
         Return "Energy Atlas" for the following request:
             Find all basins that intersect with Ohio River. 
-        Because this request tried to find basins which are contained in Energy Atlas.
+        Because this request tried to find some basins which are contained in Energy Atlas.
 
         Question to route: {question} 
         
