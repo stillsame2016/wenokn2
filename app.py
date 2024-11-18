@@ -307,7 +307,7 @@ st.markdown("""
                 margin-left: 50px;
             }
 
-            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(-n+10) {
+            ul[data-testid="stSelectboxVirtualDropdown"] li:nth-child(-n+8) {
                 background-color: lightblue;
             }
 
