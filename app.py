@@ -451,7 +451,7 @@ with col2:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
                         st.code(exist_json)
                         time.sleep(10)
-                        if exist_json['existing']:
+                        if not exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
                             existed_requests.append(request)
