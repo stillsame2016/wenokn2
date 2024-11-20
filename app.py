@@ -391,7 +391,7 @@ with col2:
         'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
 
         ######## Basin ########
-        # 'Find the basin Lower Ohio-Salt',
+        'Find the basin Lower Ohio-Salt',
         'Find all basins through which the Scioto River flows.',
         'Find all rivers that flow through the Roanoke basin.',
         'Find all watersheds in the Kanawha basin.',
