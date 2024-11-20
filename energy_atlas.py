@@ -230,7 +230,25 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Example 7]
         Find all basins through which the Scioto River flows. This request means "find all basins which are 
         intersecting with the Scioto River".
-        
+
+        Find out if one of the available variables is a geodataframe containing the Scioto River.
+
+        If none of the available variables are geodataframes containing the Scioto River, 
+        then return the following code:
+            raise Exception("The data for the Scioto River is missing. Please load it first.")
+
+        If you found a variable which is a geodataframe containing the Scioto River, then return 
+        the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for the Scioto River if you found one>
+            gdf2 = load_basins("1 = 1", None)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            gdf = gdf[~gdf.geometry.apply(lambda geom: geom.touches(gdf1.unary_union))]
+            # Ensure all columns from gdf2 are retained
+            for col in gdf2.columns:
+                if col not in gdf.columns:
+                    gdf[col] = gdf2[col]
+            gdf = gdf[gdf2.columns]
+            gdf.title = "All the basins in Ohio State"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
