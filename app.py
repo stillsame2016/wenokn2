@@ -451,7 +451,7 @@ with col2:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
                         # st.code(exist_json)
                         # time.sleep(10)
-                        if exist_json and exist_json['existing']:
+                        if exist_json['existing']:
                             process_data_request(request, chat_container)
                         else:
                             existed_requests.append(request)
@@ -485,7 +485,7 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'Data Commons':
                 exist_json = nonspatial_dataset_exists(llm, user_input, st.session_state.wen_datasets)
-                if exist_json and exist_json['existing']:
+                if exist_json['existing']:
                     with st.chat_message("assistant"):
                         message = f"Your request has been processed. The data for the request \"{user_input}\" already exists."
                         st.session_state.chat.append({"role": "assistant", "content": message})
