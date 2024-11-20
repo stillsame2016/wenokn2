@@ -240,7 +240,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         If you found a variable which is a geodataframe containing the Scioto River, then return 
         the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for the Scioto River if you found one>
-            gdf2 = load_basins("1 = 1", None)
+            gdf2 = load_basins("1 = 1", gdf1.total_bounds)
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
             gdf = gdf[~gdf.geometry.apply(lambda geom: geom.touches(gdf1.unary_union))]
             # Ensure all columns from gdf2 are retained
