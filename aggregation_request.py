@@ -1,5 +1,6 @@
 
 import requests
+from util import strip_sparql
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 
