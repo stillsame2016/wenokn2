@@ -89,7 +89,7 @@ def get_aggregation_plan(llm, question):
         Preconditions and Postconditions from the input request.
 
         Example 1:   
-            For the request: "Find the number of rivers flow through each county in Ohio." or "Find how many rivers flow through each county in Ohio"
+            For the request: "Find the number of rivers flow through each county in Ohio."
             Answer: {{
                        "grouping_object": "county",
                        "summarizing_object": "river",
