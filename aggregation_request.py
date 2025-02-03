@@ -126,6 +126,6 @@ User Request:
 
 def get_code_for_grouping_object(llm, request):
     if request["data_source"] == "WEN-OKN database":
-        response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request["request"]}")
+        response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']}")
         return response.text
     return "OKAY"
