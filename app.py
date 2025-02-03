@@ -617,9 +617,11 @@ with col2:
             elif route['request_type'] == 'Aggregation':
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        aggregation_plan = get_aggregation_plan(llm, user_input)
-                        st.code(json.dumps(aggregation_plan, indent=4))
-                        time.sleep(20)
+                        aggregation_info = get_aggregation_plan(llm, user_input)
+                        group_object_request = aggregation_info["query_plan"][0]
+                        summarizing_object_request = aggregation_info["query_plan"][0]
+                        st.code(json.dumps(group_object_request, indent=4))
+                        st.code(json.dumps(summarizing_object_request, indent=4))
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
