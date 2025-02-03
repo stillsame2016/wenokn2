@@ -126,9 +126,12 @@ def get_aggregation_plan(llm, question):
             Return only a valid JSON object with the keys above.
             Use null for missing pre/postconditions.
             Use uppercase for aggregation functions (e.g., COUNT, not count).
+            "grouping_object" and "summarizing_object" can't be null.
 
         User Request:
         {question}
+
+        
 
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
