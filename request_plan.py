@@ -101,14 +101,14 @@ Example Extraction
 User Request: "Find the number of rivers for each county it flows through in Ohio State."
 
 Extraction Output:
-{
+{{
   "grouping_object": "county",
   "summarizing_object": "river",
   "association_conditions": "river flows through county",
   "aggregation_function": "COUNT",
   "preconditions": "county in Ohio state",
   "postconditions": null
-}
+}}
 
 Strict Guidelines for Extraction
     - Do not return generic placeholders like "aggregation".
