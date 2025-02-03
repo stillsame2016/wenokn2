@@ -624,6 +624,21 @@ with col2:
                         grouping_object_request = aggregation_info["query_plan"][0]
                         code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
                         st.code(code_for_grouping_object)
+
+                        globals_dict = {
+                            'st': st,
+                            "get_variables_for_dcid": get_variables_for_dcid,
+                            "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
+                            "get_dcid_from_county_name": get_dcid_from_county_name,
+                            "get_dcid_from_state_name": get_dcid_from_state_name,
+                            "get_dcid_from_country_name": get_dcid_from_country_name
+                        }
+
+                        try:
+                            exec(code_for_grouping_object, globals_dict)    
+                            grouping_gdf = globals_dict['grouping_gdf']   
+                        except Exception as e:
+                            st.code(str(e))
                         
                         # create the code for fetching summarizing objecr
                         summarizing_object_request = aggregation_info["query_plan"][1]
