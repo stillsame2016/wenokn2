@@ -623,7 +623,8 @@ with col2:
                         # create the code for fetching group_object
                         grouping_object_request = aggregation_info["query_plan"][0]
                         code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
-
+                        st.code(code_for_grouping_object)
+                        
                         # create the code for fetching summarizing objecr
                         summarizing_object_request = aggregation_info["query_plan"][1]
 
