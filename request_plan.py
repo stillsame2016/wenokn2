@@ -78,7 +78,7 @@ def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
-        User request is an aggregation query. Your task is to identify the following components from the user request:
+        Your task is to identify the following components from the user request which is an aggregation query:
             1. Grouping Object (e.g., county, state): Entities to group data by.
             2. Summarizing Object (e.g., river, hospital): Entities being aggregated.
             3. Association Conditions: Relationships between grouping/summarizing objects (e.g., flows through, located in).
