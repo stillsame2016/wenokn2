@@ -76,7 +76,7 @@ def get_question_route(llm, question):
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
         Use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
-        A aggregation request may involve 5 core components:
+        An aggregation request may involve 5 core components:
             1) Grouping Objects: Entities to partition data by (e.g., counties, basins).
             2) Summarizing Objects: Entities to aggregate (e.g., rivers, dams).
             3) Association Conditions: Relationships between grouping and summarizing objects (e.g., spatial containment, spatail intersection).
