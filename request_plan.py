@@ -112,7 +112,6 @@ The object used in "GROUP BY" is the grouping object. The object used to apply t
 
 Extraction Output:
 {{
-  "pseudo_query": ....,
   "grouping_object": "county",
   "summarizing_object": "river",
   "association_conditions": "river flows through county",
@@ -142,7 +141,3 @@ User Request:
     return result
 
 
-#####################################################################
-# Implement the Aggregation Planer
-def get_aggregation_plan(llm, question):
-    return question
