@@ -89,14 +89,21 @@ def get_aggregation_plan(llm, question):
         Preconditions and Postconditions from the input request.
 
         Example 1:   
-            For the request: "Find the number of rivers flow through each county in Ohio."
-            Answer: {{
-                       "grouping_object": "county",
-                       "summarizing_object": "river",
-                       "association_conditions:" "river flows through county",
-                       "aggregation_function": "count",
-                       "preconditions": "county in Ohio State"
-                    }}
+            For the request: "Find the number of rivers flow through each county in Ohio."  
+            This request is equivalent to the following pseudo query:
+                SELECT county.name, COUNT(river.id) AS river_count
+                  FROM county, river
+                 WHERE county.state = 'Ohio' 
+                   AND river.geometry INTERSECTS county.geometry 
+                 GROUP BY county.name
+            You can return the following JSON string:   
+               {{
+                   "grouping_object": "county",
+                   "summarizing_object": "river",
+                   "association_conditions:" "river flows through county",
+                   "aggregation_function": "count",
+                   "preconditions": "county in Ohio State"
+                }}
                         
          Example 2:
             For the request: "Find How many dams are in each county of Ohio" or "Find the number of dams are in each county of Ohio State"
