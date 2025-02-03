@@ -127,7 +127,7 @@ User Request:
 def get_code_for_grouping_object(llm, request):
     if request["data_source"] == "WEN-OKN database":
         response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']}")
-        sparql_query = response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' ')
+        sparql_query = strip_sparql(response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' '))
         code = f"""
 endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
 df = sparql_dataframe.get(
