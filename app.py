@@ -7,6 +7,8 @@ import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import datacommons_pandas as dc
+import sparql_dataframe
+
 from keplergl import keplergl
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
