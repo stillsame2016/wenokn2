@@ -89,23 +89,23 @@ def get_aggregation_plan(llm, question):
 
         Example 1:   
             Original Request: "Find the number of rivers flow through each county in Ohio."
-            Answer: {
+            Answer: {{
                        "grouping_objects": "county",
                        "summarizing_objects": "river",
                        "association_conditions:" "river flows through county",
                        "aggregation_function": "count",
                        "preconditions": "county in Ohio State"
-                    }
+                    }}
                         
          Example 2:
             Original Request: "Find How many dams are in each county of Ohio"
-            Answer: {
+            Answer: {{
                        "grouping_objects": "county",
                        "summarizing_objects": "dam",
                        "association_conditions:" "county contains dam",
                        "aggregation_function": "count",
                        "preconditions": "county in Ohio State"
-                    }
+                    }}
                     
          Input
              User Request:
