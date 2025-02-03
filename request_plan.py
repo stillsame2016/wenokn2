@@ -88,7 +88,7 @@ def get_aggregation_plan(llm, question):
         Your task is to extract the Grouping Object, the Summarizing Object, the Association Conditions, the Aggregation Function and 
         Preconditions and Postconditions from the input request.
 
-        Example 1:   
+        [ Example 1 ]
             For the request: "Find the number of rivers flow through each county in Ohio."  
             This request is equivalent to the following pseudo query:
                 SELECT county.name, COUNT(river.id) AS river_count
@@ -105,12 +105,10 @@ def get_aggregation_plan(llm, question):
                    "preconditions": "county in Ohio State"
                 }}
                         
-         Input
-             User Request:
+         User Request:
              {question}
                     
-         Output
-             Return your answer in JSON format without preamble or explanation.
+         Return your answer in JSON format without preamble or explanation.
 
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
