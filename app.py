@@ -436,8 +436,8 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
-            st.markdown(route)
-            time.sleep(30)
+            # st.markdown(route)
+            # time.sleep(30)
             if route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 # st.code(refined_request)
@@ -614,6 +614,9 @@ with col2:
                     st.session_state.chat.append({"role": "assistant", "content": message})
                     # st.rerun()
                     st.session_state.rerun = True
+            elif route['request_type'] == 'Aggregation':
+                aggregation_plan = get_aggregation_plan(llm, route['request_type'])
+                st.code(aggregation_plan)
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
