@@ -77,31 +77,28 @@ def get_request_plan(llm, question):
 def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-        
-        Identify the 5 core components of an aggregation request:
-            - Grouping Object: Entities to partition data by (e.g., county, state).
-            - Summarizing Object: Entities to aggregate (e.g., river, hospital).
-            - Association Conditions: Relationships between grouping/summarizing objects (e.g., spatial containment, intersection).
-            - Aggregation Function: Operations like COUNT, SUM, MAX, AVG, or ARGMAX (for object-centric results).
-            - Pre-/Post-Conditions: Filters applied before/after aggregation (use null if absent).
-        
+
+        Identify these components from natural language requests:
+            Grouping Object (e.g., county, state): Entities to group data by.
+            Summarizing Object (e.g., river, hospital): Entities being aggregated.
+            Association Conditions: Relationships between grouping/summarizing objects (e.g., flows through, located in).
+            Aggregation Function (e.g., COUNT, ARGMAX(length)): Operation to apply.
+            Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
+            Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
+                
         Examples
         
-        [Example 1]
-        Request: "Find the number of rivers flowing through each county in Ohio."
-        Components:
-        {{  
+        // Example 1: "Find the number of rivers flowing through each county in Ohio"  
+        {{ 
           "grouping_object": "county",  
           "summarizing_object": "river",  
           "association_conditions": "river flows through county",  
           "aggregation_function": "COUNT",  
           "preconditions": "county is in Ohio",  
           "postconditions": null  
-        }} 
+        }}  
         
-        [Example 2]
-        Request: "List counties with more than 5 hospitals."  
-        Components:
+        // Example 2: "List counties with more than 5 hospitals"  
         {{  
           "grouping_object": "county",  
           "summarizing_object": "hospital",  
@@ -109,12 +106,10 @@ def get_aggregation_plan(llm, question):
           "aggregation_function": "COUNT",  
           "preconditions": null,  
           "postconditions": "COUNT > 5"  
-        }}  
+        }} 
         
-        [Example 3]
-        Request: "What is the longest river in each state?"
-        Components:
-        {{ 
+        // Example 3: "What is the longest river in each state?"  
+        {{  
           "grouping_object": "state",  
           "summarizing_object": "river",  
           "association_conditions": "river is located in state",  
@@ -123,15 +118,11 @@ def get_aggregation_plan(llm, question):
           "postconditions": null  
         }}  
         
-        Task
-        Extract the components from the user request below and return only a valid JSON object with the keys:
-            grouping_object
-            summarizing_object
-            association_conditions
-            aggregation_function
-            preconditions (use null if none)
-            postconditions (use null if none)
-        
+        Instructions
+            Return only a valid JSON object with the keys above.
+            Use null for missing pre/postconditions.
+            Use uppercase for aggregation functions (e.g., COUNT, not count).
+
         User Request:
         {question}
 
