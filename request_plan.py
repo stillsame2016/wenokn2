@@ -90,7 +90,12 @@ def get_aggregation_plan(llm, question):
         Examples
         
         Example 1: For the request "Find the number of rivers flowing through each county in Ohio",
-        You can return
+        This request needs to find the following:
+             1. Find all counties in Ohio (precondition)
+             2. Find all rivers flow thought the counties (association between counties and rivers)
+             3. Group by county  (The grouping object is county)
+             4. Apply the function count on rivers in each group.  (The summarizing object is river)  
+        So you can return
         {{ 
           "grouping_object": "county",  
           "summarizing_object": "river",  
