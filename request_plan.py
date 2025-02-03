@@ -169,9 +169,9 @@ Extraction Output:
   "preconditions": "county in Ohio state",
   "postconditions": null,
   "query_plan": [
-      { "request": "Find all counties in Ohio state",  "data_source": "WEN-OKN database"}
-      { "request": "Find all rivers intersects the proper bounding box", "data_source": "WEN-OKN database"}
-      { "request": "Find the number of rivers flowing through each county in Ohio state",  "data_source": "System"}
+      {{ "request": "Find all counties in Ohio state",  "data_source": "WEN-OKN database"}}
+      {{ "request": "Find all rivers intersects the proper bounding box", "data_source": "WEN-OKN database"}}
+      {{ "request": "Find the number of rivers flowing through each county in Ohio state",  "data_source": "System"}}
   ]
 }}
 
