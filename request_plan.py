@@ -78,13 +78,14 @@ def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
-        Identify these components from natural language requests:
-            Grouping Object (e.g., county, state): Entities to group data by.
-            Summarizing Object (e.g., river, hospital): Entities being aggregated.
-            Association Conditions: Relationships between grouping/summarizing objects (e.g., flows through, located in).
-            Aggregation Function (e.g., COUNT, ARGMAX(length)): Operation to apply.
-            Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
-            Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
+        User request is an aggregation query. Your task is to identify the following components from the user request:
+            1. Grouping Object (e.g., county, state): Entities to group data by.
+            2. Summarizing Object (e.g., river, hospital): Entities being aggregated.
+            3. Association Conditions: Relationships between grouping/summarizing objects (e.g., flows through, located in).
+            4. Aggregation Function (e.g., COUNT, ARGMAX(length)): Operation to apply.
+            5. Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
+            6. Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
+        Note that the Grouping Object and Summarizing Object are not null if it is a valid aggregation query.
                 
         Examples
         
