@@ -14,9 +14,10 @@ from shapely import wkt
 from shapely.geometry import box
 
 from util import *
+from aggregation_request import get_code_for_grouping_object, get_aggregation_plan
 from refine_request import get_refined_question
 from request_router import get_question_route
-from request_plan import get_request_plan, get_aggregation_plan
+from request_plan import get_request_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name, get_variables_for_dcid
 from energy_atlas import *
