@@ -75,6 +75,15 @@ def get_question_route(llm, question):
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
+        Use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
+        A aggregation request may involve 5 core components:
+            1) Grouping Objects: Entities to partition data by (e.g., counties, basins).
+            2) Summarizing Objects: Entities to aggregate (e.g., rivers, dams).
+            3) Association Conditions: Relationships between grouping and summarizing objects (e.g., spatial containment, spatail intersection).
+            4) Aggregation Function: Operations like COUNT, SUM, MAX, AVG, or ARGMAX (for object-centric results).
+            5) Pre-/Post-Conditions: Filters applied before/after aggregation (e.g., counties in Ohio State, result thresholds).
+        
+        
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
 
@@ -141,6 +150,19 @@ def get_question_route(llm, question):
             Find all basins that intersect with Ohio River. 
         Because this request tried to find some basins which are contained in Energy Atlas.
 
+        [ Example 13]
+        Return "Aggregation" for the following requests:
+            Find the number of rivers flow through each county in Ohio.
+            Find the number of dams in each county in Ohio.
+            Find the total number of coal mines in each basin. 
+            Find the total power generation capacity of gas power plants in each county in Ohio.
+            Find the longest river in county of Ohio.
+            Find the county with the the highest number of hospitals in Ohio .
+	        Find all counties with more than 5 hospitals in Ohio .
+	        Find all states where the total coal mine output exceeds 1 million tons.
+            Find the river in Ohio that has the highest number of dams.
+	        Find the watershed that has the highest total coal mine.
+		
         Question to route: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
