@@ -361,7 +361,8 @@ def process_off_topic_request(llm, user_input, chat_container):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert of following systems:
                1. The WEN-OKN knowledge database 
                2. National Pollution Discharge Elimination System (NPDES) and Kentucky Pollutant Discharge Elimination System (KPDES) 
-               3. Data Commons.
+               3. Data Commons
+               4. US Energy Atlas
 
             The WEN-KEN database contains the following entities: 
               1. Locations of buildings, power stations, and underground storage tanks in Ohio.
