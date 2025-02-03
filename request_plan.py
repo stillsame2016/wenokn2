@@ -259,6 +259,7 @@ User Request:
     print("=== Prompt Sent to LLM ===")
     print(formatted_prompt)
     print("==========================")
+    return formatted_prompt
 	
     question_planer = prompt | llm | StrOutputParser()
     result = question_planer.invoke({"question": question})
