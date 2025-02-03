@@ -85,11 +85,12 @@ def get_aggregation_plan(llm, question):
             4. Aggregation Function (e.g., COUNT, ARGMAX(length)): Operation to apply.
             5. Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
             6. Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
-        Note that the Grouping Object and Summarizing Object are not null if it is a valid aggregation query.
+        Note that the Grouping Object and Summarizing Object are not null.
                 
         Examples
         
-        // Example 1: "Find the number of rivers flowing through each county in Ohio"  
+        Example 1: For the request "Find the number of rivers flowing through each county in Ohio",
+        You can return
         {{ 
           "grouping_object": "county",  
           "summarizing_object": "river",  
@@ -99,7 +100,8 @@ def get_aggregation_plan(llm, question):
           "postconditions": null  
         }}  
         
-        // Example 2: "List counties with more than 5 hospitals"  
+        Example 2: For the request "List counties with more than 5 hospitals" , 
+        You can return
         {{  
           "grouping_object": "county",  
           "summarizing_object": "hospital",  
@@ -109,7 +111,8 @@ def get_aggregation_plan(llm, question):
           "postconditions": "COUNT > 5"  
         }} 
         
-        // Example 3: "What is the longest river in each state?"  
+        Example 3: For the request, "What is the longest river in each state?"  
+        You can return
         {{  
           "grouping_object": "state",  
           "summarizing_object": "river",  
