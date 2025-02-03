@@ -79,16 +79,17 @@ def get_aggregation_plan(llm, question):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
         An aggregation request may involve 5 core components:
-            1) Grouping Objects: Entities to partition data by (e.g., counties, basins).
-            2) Summarizing Objects: Entities to aggregate (e.g., rivers, dams).
+            1) Grouping Object: Entities to partition data by (e.g., counties, basins).
+            2) Summarizing Object: Entities to aggregate (e.g., rivers, dams).
             3) Association Conditions: Relationships between grouping and summarizing objects (e.g., spatial containment, spatail intersection).
             4) Aggregation Function: Operations like COUNT, SUM, MAX, AVG, or ARGMAX (for object-centric results).
             5) Pre-/Post-Conditions: Filters applied before/after aggregation (e.g., counties in Ohio State, result thresholds).
         
-        Your task is to extract these 5 components for the input request. Please return the result in JSON string.
+        Your task is to extract the Grouping Object, the Summarizing Object, the Association Conditions, the Aggregation Function and 
+        Preconditions and Postconditions from the input request.
 
         Example 1:   
-            Original Request: "Find the number of rivers flow through each county in Ohio."
+            Original Request: "Find the number of rivers flow through each county in Ohio." or "Find how many rivers flow through each county in Ohio"
             Answer: {{
                        "grouping_objects": "county",
                        "summarizing_objects": "river",
@@ -98,7 +99,7 @@ def get_aggregation_plan(llm, question):
                     }}
                         
          Example 2:
-            Original Request: "Find How many dams are in each county of Ohio"
+            Original Request: "Find How many dams are in each county of Ohio" or "Find the number of dams are in each county of Ohio State"
             Answer: {{
                        "grouping_objects": "county",
                        "summarizing_objects": "dam",
