@@ -1,5 +1,5 @@
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 
 
 #####################################################################
@@ -74,7 +74,7 @@ def get_request_plan(llm, question):
 
 #####################################################################
 # Implement the Aggregation Planer
-def get_aggregation_plan(llm, question):
+def get_aggregation_plan_2(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
@@ -100,7 +100,7 @@ Extraction Rules
 Example Extraction
 User Request: "For each county in Ohio, find the number of rivers flowing through the county."
 
-This request can be expressed as the following pseudo query:
+This request can be defined as the following query:
 
     SELECT county, COUNT(river) AS river_count   
     FROM county, river
@@ -138,5 +138,122 @@ User Request:
         input_variables=["question"],
     )
     question_planer = prompt | llm | JsonOutputParser()
+    result = question_planer.invoke({"question": question})
+    return result
+
+
+#####################################################################
+# Implement the Aggregation Planer
+def get_aggregation_plan(llm, question):
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+
+You are an expert in query analysis. Your task is to convert the user request into a query in the following pseduo query format.
+
+Example 1.1  "How many rivers flow through each county in Ohio?"
+
+SELECT county.name, COUNT(river.id) AS river_count
+FROM county, river
+WHERE county.state = 'Ohio' 
+  AND river.geometry INTERSECTS county.geometry 
+GROUP BY county.name
+     
+Example 1.2  "How many dams are in each county of Ohio?"
+
+SELECT county.name, COUNT(dam.id) AS dam_count
+FROM county, dam
+WHERE dam.geometry INSIDE county.geometry  
+GROUP BY county.name
+
+Example 1.3  "How many coal mines are in each basin?"
+
+SELECT basin.name, COUNT(coalmine.id) AS coalmine_count
+FROM basin, coalmine
+WHERE coalmine.geometry INSIDE basin.geometry  
+GROUP BY basin.name
+
+Example 2.1  "What is the total power generation capacity of power plants in each county?"
+
+SELECT county.name, SUM(powerplant.capacity) AS total_capacity
+FROM county, powerplant
+WHERE powerplant.geometry INSIDE county.geometry  
+GROUP BY county.name
+ 
+Example 3.1  "What is the longest river in each state?" (Object-centric aggregation)
+
+SELECT state.name, 
+  ARGMAX(river.name, SPATIAL_LENGTH(INTERSECTION(river.geometry, state.geometry))) AS longest_river
+FROM state, river
+WHERE river.geometry INTERSECTS state.geometry  -- Spatial overlap
+GROUP BY state.name
+	 
+Example 3.2 "Which county has the highest number of hospitals?"
+     
+SELECT county.name, COUNT(hospital.id) AS hospital_count
+FROM county, hospital
+WHERE hospital.geometry INSIDE county.geometry
+GROUP BY county.name
+ORDER BY hospital_count DESC
+LIMIT 1  -- Return the county with the maximum count
+  
+Example 4.1 "What is the average dam height per watershed?"
+
+SELECT watershed.name, AVG(dam.height) AS avg_dam_height
+FROM watershed, dam
+WHERE dam.geometry INSIDE watershed.geometry
+GROUP BY watershed.name
+
+Example 4.2 "What is the average discharge of rivers in each basin?"
+
+SELECT basin.name, AVG(river.discharge) AS avg_discharge
+FROM basin, river
+WHERE river.geometry INSIDE basin.geometry
+GROUP BY basin.name
+
+Example 5.1 "List all counties with more than 5 hospitals."
+
+SELECT county.name, COUNT(hospital.id) AS hospital_count
+FROM county, hospital
+WHERE hospital.geometry INSIDE county.geometry
+GROUP BY county.name
+HAVING hospital_count > 5  -- Post-aggregation filter
+
+Example 5.2 "Find all states where the total coal mine output exceeds 1 million tons."
+
+SELECT state.name, SUM(coalmine.output) AS total_output
+FROM state, coalmine
+WHERE coalmine.geometry INSIDE state.geometry
+GROUP BY state.name
+HAVING total_output > 1000000
+
+Example 6.1 "Which river has the highest number of dams?"
+
+SELECT river.name, COUNT(dam.id) AS dam_count
+FROM river, dam
+WHERE dam.geometry INTERSECTS river.geometry  -- Dams along the river
+GROUP BY river.name
+ORDER BY dam_count DESC
+LIMIT 1  -- Return the river with the maximum dam count
+
+Example 6.2 "Which watershed has the highest total coal mine production?"
+
+SELECT watershed.name, SUM(coalmine.production) AS total_production
+FROM watershed, coalmine
+WHERE coalmine.geometry INSIDE watershed.geometry
+GROUP BY watershed.name
+ORDER BY total_production DESC
+LIMIT 1  -- Return the watershed with the maximum production
+
+
+User Request:
+{question}
+
+
+
+         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question"],
+    )
+    question_planer = prompt | llm | StrOutputParser()
     result = question_planer.invoke({"question": question})
     return result
