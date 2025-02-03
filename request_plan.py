@@ -77,7 +77,56 @@ def get_request_plan(llm, question):
 def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are an expert in query analysis. Extract key components from the given user request, which describes an aggregation query.
+
+You are an expert of following systems:
+               1. The WEN-OKN knowledge database 
+               2. Data Commons
+               3. US Energy Atlas
+
+            The WEN-KEN database contains the following entities: 
+              1. Locations of buildings, power stations, and underground storage tanks in Ohio.
+              2. USA Counties: names and geometry boundaries.
+              3. USA States: names and geometry boundaries.
+              4. Earthquakes: Data pertaining to seismic events.
+              5. Rivers: Comprehensive geometries about rivers in USA.
+              6. Dams: Information regarding dams' locations in USA.
+              7. Drought Zones: Identification of drought-affected zones in the years 2020, 2021, and 2022 in USA.
+              8. Hospitals: Details about hospital locations and information in USA.
+              9. Stream Gages: Information of gages' locations and names in USA.
+
+            Data Commons has the following data for counties or states or countries. 
+                Area_FloodEvent
+                Count_Person (for population)
+                Count_FireEvent
+                Count_FlashFloodEvent
+                Count_FloodEvent
+                Count_HailEvent
+                Count_HeatTemperatureEvent
+                Count_HeatWaveEvent
+                Count_HeavyRainEvent
+                CountOfClaims_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+                Max_Rainfall
+                Max_Snowfall
+                SettlementAmount_NaturalHazardInsurance_BuildingContents_FloodEvent
+                SettlementAmount_NaturalHazardInsurance_BuildingStructureAndContents_FloodEvent
+                SettlementAmount_NaturalHazardInsurance_BuildingStructure_FloodEvent
+
+            The US Energy Atlas has the following data:
+                Battery Storage Plant
+                Coal Mine
+                Coal Power Plant
+                Geothermal Power Plant
+                Wind Power Plant
+                Renewable Diesel Fuel and Other Biofuel Plant
+                Wind Power Plant
+                Hydro Pumped Storage Power Plant
+                Natural Gas Power Plant
+                Nuclear Power Plant
+                Petroleum Power Plant
+                Solar Power Plant
+                Biodiesel Plant
+        
+You are also an expert in query analysis. Extract key components from the given user request, which describes an aggregation query.
 
 Extraction Rules
     - Grouping Object: The entity used for grouping (e.g., county, state).
@@ -120,9 +169,9 @@ Extraction Output:
   "preconditions": "county in Ohio state",
   "postconditions": null,
   "query_plan": [
-      "Find all counties in Ohio state",
-      "Find all rivers intersects the proper bounding box",
-      "Find the number of rivers flowing through each county in Ohio state"
+      { "request": "Find all counties in Ohio state",  "data_source": "WEN-OKN database"}
+      { "request": "Find all rivers intersects the proper bounding box", "data_source": "WEN-OKN database"}
+      { "request": "Find the number of rivers flowing through each county in Ohio state",  "data_source": "System"}
   ]
 }}
 
