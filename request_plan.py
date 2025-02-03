@@ -78,37 +78,62 @@ def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
         
-        An aggregation request may involve 5 core components:
-            1) Grouping Object: Entities to partition data by (e.g., counties, basins).
-            2) Summarizing Object: Entities to aggregate (e.g., rivers, dams).
-            3) Association Conditions: Relationships between grouping and summarizing objects (e.g., spatial containment, spatail intersection).
-            4) Aggregation Function: Operations like COUNT, SUM, MAX, AVG, or ARGMAX (for object-centric results).
-            5) Pre-/Post-Conditions: Filters applied before/after aggregation (e.g., counties in Ohio State, result thresholds).
+        Identify the 5 core components of an aggregation request:
+            - Grouping Object: Entities to partition data by (e.g., county, state).
+            - Summarizing Object: Entities to aggregate (e.g., river, hospital).
+            - Association Conditions: Relationships between grouping/summarizing objects (e.g., spatial containment, intersection).
+            - Aggregation Function: Operations like COUNT, SUM, MAX, AVG, or ARGMAX (for object-centric results).
+            - Pre-/Post-Conditions: Filters applied before/after aggregation (use null if absent).
         
-        Your task is to extract the Grouping Object, the Summarizing Object, the Association Conditions, the Aggregation Function and 
-        Preconditions and Postconditions from the input request.
-
-        [ Example 1 ]
-            For the request: "Find the number of rivers flow through each county in Ohio."  
-            This request is equivalent to the following pseudo query:
-                SELECT county.name, COUNT(river.id) AS river_count
-                  FROM county, river
-                 WHERE county.state = 'Ohio' 
-                   AND river.geometry INTERSECTS county.geometry 
-                 GROUP BY county.name
-            You can return the following JSON string:   
-               {{
-                   "grouping_object": "county",
-                   "summarizing_object": "river",
-                   "association_conditions:" "river flows through county",
-                   "aggregation_function": "count",
-                   "preconditions": "county in Ohio State"
-                }}
-                        
-         User Request:
-             {question}
-                    
-         Return your answer in JSON format without preamble or explanation.
+        Examples
+        
+        [Example 1]
+        Request: "Find the number of rivers flowing through each county in Ohio."
+        Components:
+        {{  
+          "grouping_object": "county",  
+          "summarizing_object": "river",  
+          "association_conditions": "river flows through county",  
+          "aggregation_function": "COUNT",  
+          "preconditions": "county is in Ohio",  
+          "postconditions": null  
+        }} 
+        
+        [Example 2]
+        Request: "List counties with more than 5 hospitals."  
+        Components:
+        {{  
+          "grouping_object": "county",  
+          "summarizing_object": "hospital",  
+          "association_conditions": "hospital is located in county",  
+          "aggregation_function": "COUNT",  
+          "preconditions": null,  
+          "postconditions": "COUNT > 5"  
+        }}  
+        
+        [Example 3]
+        Request: "What is the longest river in each state?"
+        Components:
+        {{ 
+          "grouping_object": "state",  
+          "summarizing_object": "river",  
+          "association_conditions": "river is located in state",  
+          "aggregation_function": "ARGMAX(length)",  
+          "preconditions": null,  
+          "postconditions": null  
+        }}  
+        
+        Task
+        Extract the components from the user request below and return only a valid JSON object with the keys:
+            grouping_object
+            summarizing_object
+            association_conditions
+            aggregation_function
+            preconditions (use null if none)
+            postconditions (use null if none)
+        
+        User Request:
+        {question}
 
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
