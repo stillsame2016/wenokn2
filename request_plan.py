@@ -97,11 +97,10 @@ Extraction Rules
     - Postconditions: Filters applied after aggregation (e.g., "COUNT > 5").
         * If none exist, return null.
 
-Example Extraction
+Example 1
 User Request: "For each county in Ohio, find the number of rivers flowing through the county."
 
 This request can be defined as the following query:
-
     SELECT county, COUNT(river) AS river_count   
     FROM county, river
     WHERE county in 'Ohio'  
