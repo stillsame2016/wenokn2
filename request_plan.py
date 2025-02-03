@@ -78,41 +78,42 @@ def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
-        Your task is to identify the following components from the user request which is an aggregation query:
-            1. Grouping Object (e.g., county, state): Entities to group data by.
-            2. Summarizing Object (e.g., river, hospital): Entities being aggregated.
-            3. Association Conditions: Relationships between grouping/summarizing objects (e.g., flows through, located in).
-            4. Aggregation Function (e.g., COUNT, ARGMAX(length)): Operation to apply.
-            5. Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
-            6. Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
-        Note that the Grouping Object and Summarizing Object are not null.
-                        
-        Example 1: For the request "Find the number of rivers flowing through each county in Ohio",
-        This request needs to find the following:
-             1. Find all counties in Ohio (precondition)
-             2. Find all rivers flow thought the counties (association between counties and rivers)
-             3. Group by county  (The grouping object is county)
-             4. Apply the function count on rivers in each group.  (The summarizing object is river)  
-        So you can return
-        {{ 
-          "grouping_object": "county",  
-          "summarizing_object": "river",  
-          "association_conditions": "river flows through county",  
-          "aggregation_function": "COUNT",  
-          "preconditions": "county is in Ohio",  
-          "postconditions": null  
-        }}  
-         
-        Instructions
-            Return only a valid JSON object with the keys above.
-            Use null for missing pre/postconditions.
-            Use uppercase for aggregation functions (e.g., COUNT, not count).
-            "grouping_object" and "summarizing_object" can't be null.
+You are an expert in query analysis. Your task is to extract and structure key components from a user’s aggregation query into a JSON object.
 
-        User Request:
-        {question}
+Identify the following:
 
-        
+Grouping Object: The entity used to group data (e.g., county, state). This must be present.
+Summarizing Object: The entity being aggregated (e.g., river, hospital). This must be present.
+Association Conditions: The explicit or implied relationship between the grouping and summarizing objects (e.g., "river flows through county").
+Aggregation Function: The mathematical/statistical operation applied (e.g., COUNT, SUM, ARGMAX(length)).
+Preconditions: Any filtering applied before aggregation (e.g., "county is in Ohio"). If none, return null.
+Postconditions: Any filtering applied after aggregation (e.g., "COUNT > 5"). If none, return null.
+
+Example Extraction
+User Request:
+"Find the number of rivers flowing through each county in Ohio."
+
+Extraction Output:
+{{
+  "grouping_object": "county",
+  "summarizing_object": "river",
+  "association_conditions": "river flows through county",
+  "aggregation_function": "COUNT",
+  "preconditions": "county is in Ohio",
+  "postconditions": null
+}}
+
+Instructions:
+Return only a valid JSON object (no extra text).
+"grouping_object" and "summarizing_object" cannot be null. If not explicit, infer from context.
+"aggregation_function" should always be uppercase (e.g., COUNT, SUM).
+If preconditions or postconditions are missing, explicitly return null.
+
+User Request:
+{question}
+
+
+
 
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
