@@ -618,8 +618,15 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         aggregation_info = get_aggregation_plan(llm, user_input)
-                        group_object_request = aggregation_info["query_plan"][0]
+
+                        # create the code for fetching group_object
+                        grouping_object_request = aggregation_info["query_plan"][0]
+                        code_for_grouping_object = get_code_for_grouping_object(group_object_request)
+
+                        # create the code for fetching summarizing objecr
                         summarizing_object_request = aggregation_info["query_plan"][1]
+
+                        
                         st.code(json.dumps(group_object_request, indent=4))
                         st.code(json.dumps(summarizing_object_request, indent=4))
             else:
