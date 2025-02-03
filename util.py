@@ -594,7 +594,7 @@ def strip_sparql(code):
         start_index = code.find("```") + len("```")
         end_index = code.find("```", start_index)
         code = code[start_index:end_index].strip()
-    elif code.startswith('"') and data.endswith('"'):
+    elif code.startswith('"') and code.endswith('"'):
         sparql_query = data[1:-1]
     return code
     
