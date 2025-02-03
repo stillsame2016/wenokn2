@@ -105,16 +105,6 @@ def get_aggregation_plan(llm, question):
                    "preconditions": "county in Ohio State"
                 }}
                         
-         Example 2:
-            For the request: "Find How many dams are in each county of Ohio" or "Find the number of dams are in each county of Ohio State"
-            Answer: {{
-                       "grouping_object": "county",
-                       "summarizing_object": "dam",
-                       "association_conditions:" "county contains dam",
-                       "aggregation_function": "count",
-                       "preconditions": "county in Ohio State"
-                    }}
-                    
          Input
              User Request:
              {question}
