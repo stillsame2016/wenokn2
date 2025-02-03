@@ -74,7 +74,7 @@ def get_request_plan(llm, question):
 
 #####################################################################
 # Implement the Aggregation Planer
-def get_aggregation_plan_2(llm, question):
+def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
