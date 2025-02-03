@@ -595,7 +595,7 @@ def strip_sparql(code):
         end_index = code.find("```", start_index)
         code = code[start_index:end_index].strip()
     elif code.startswith('"') and code.endswith('"'):
-        sparql_query = data[1:-1]
+        code = code[1:-1]
     return code
     
 def normalize_query_plan(data):
