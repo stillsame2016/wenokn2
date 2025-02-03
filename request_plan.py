@@ -98,7 +98,7 @@ Extraction Rules
         * If none exist, return null.
 
 Example Extraction
-User Request: "Find the number of rivers for each county it flows through in Ohio State."
+User Request: "For each county in Ohio, find the number of rivers flowing through the county."
 
 This request can be expressed as the following pseudo query:
 
