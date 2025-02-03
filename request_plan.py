@@ -248,8 +248,6 @@ LIMIT 1  -- Return the watershed with the maximum production
 User Request:
 {question}
 
-
-
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
