@@ -134,7 +134,7 @@ df = sparql_dataframe.get(
     endpoint,
     '''{sparql_query}'''  
 )
-grouping_gdf = df_to_gdf(df, {request['request']})
+grouping_gdf = df_to_gdf(df, "{request['request']}")
 grouping_bbox = grouping_gdf.total_bounds
         """.strip()  # .strip() removes leading/trailing whitespace
         return code
