@@ -100,6 +100,13 @@ Extraction Rules
 Example Extraction
 User Request: "Find the number of rivers for each county it flows through in Ohio State."
 
+This request can be expressed as:
+    SELECT county.name, COUNT(river.id) AS river_count   -- summarizing_object is river
+    FROM county, river
+    WHERE county.state = 'Ohio'  -- precondition
+      AND river.geometry INTERSECTS county.geometry   -- association_condition
+    GROUP BY county.name   -- grouping_object is county
+
 Extraction Output:
 {{
   "grouping_object": "county",
