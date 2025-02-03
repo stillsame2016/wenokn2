@@ -102,29 +102,7 @@ def get_aggregation_plan(llm, question):
           "preconditions": "county is in Ohio",  
           "postconditions": null  
         }}  
-        
-        Example 2: For the request "List counties with more than 5 hospitals" , 
-        You can return
-        {{  
-          "grouping_object": "county",  
-          "summarizing_object": "hospital",  
-          "association_conditions": "hospital is located in county",  
-          "aggregation_function": "COUNT",  
-          "preconditions": null,  
-          "postconditions": "COUNT > 5"  
-        }} 
-        
-        Example 3: For the request, "What is the longest river in each state?"  
-        You can return
-        {{  
-          "grouping_object": "state",  
-          "summarizing_object": "river",  
-          "association_conditions": "river is located in state",  
-          "aggregation_function": "ARGMAX(length)",  
-          "preconditions": null,  
-          "postconditions": null  
-        }}  
-        
+         
         Instructions
             Return only a valid JSON object with the keys above.
             Use null for missing pre/postconditions.
