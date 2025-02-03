@@ -252,6 +252,14 @@ User Request:
         """,
         input_variables=["question"],
     )
+
+        formatted_prompt = prompt.format(question=question)
+
+    # Print the exact text sent to the LLM
+    print("=== Prompt Sent to LLM ===")
+    print(formatted_prompt)
+    print("==========================")
+	
     question_planer = prompt | llm | StrOutputParser()
     result = question_planer.invoke({"question": question})
     return result
