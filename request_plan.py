@@ -112,6 +112,7 @@ The object used in "GROUP BY" is the grouping object. The object used to apply t
 
 Extraction Output:
 {{
+  "pseudo_query": ....,
   "grouping_object": "county",
   "summarizing_object": "river",
   "association_conditions": "river flows through county",
