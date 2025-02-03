@@ -86,9 +86,7 @@ def get_aggregation_plan(llm, question):
             5. Preconditions: Filters applied before aggregation (e.g., county is in Ohio).
             6. Postconditions: Filters applied after aggregation (e.g., COUNT > 5).
         Note that the Grouping Object and Summarizing Object are not null.
-                
-        Examples
-        
+                        
         Example 1: For the request "Find the number of rivers flowing through each county in Ohio",
         This request needs to find the following:
              1. Find all counties in Ohio (precondition)
