@@ -253,7 +253,7 @@ User Request:
         input_variables=["question"],
     )
 
-        formatted_prompt = prompt.format(question=question)
+    formatted_prompt = prompt.format(question=question)
 
     # Print the exact text sent to the LLM
     print("=== Prompt Sent to LLM ===")
