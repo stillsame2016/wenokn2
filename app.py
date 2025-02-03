@@ -628,7 +628,7 @@ with col2:
                         summarizing_object_request = aggregation_info["query_plan"][1]
 
                         
-                        st.code(json.dumps(group_object_request, indent=4))
+                        st.code(json.dumps(grouping_object_request, indent=4))
                         st.code(json.dumps(summarizing_object_request, indent=4))
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
