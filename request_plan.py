@@ -78,22 +78,29 @@ def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
-You are an expert in query analysis. Your task is to extract and structure key components from a user’s aggregation query into a JSON object.
+You are an expert in query analysis. Extract key components from the given user request, which describes an aggregation query. Follow these rules:
 
-Identify the following:
-
-Grouping Object: The entity used to group data (e.g., county, state). This must be present.
-Summarizing Object: The entity being aggregated (e.g., river, hospital). This must be present.
-Association Conditions: The explicit or implied relationship between the grouping and summarizing objects (e.g., "river flows through county").
-Aggregation Function: The mathematical/statistical operation applied (e.g., COUNT, SUM, ARGMAX(length)).
-Preconditions: Any filtering applied before aggregation (e.g., "county is in Ohio"). If none, return null.
-Postconditions: Any filtering applied after aggregation (e.g., "COUNT > 5"). If none, return null.
+Extraction Rules
+Grouping Object: The entity used for grouping (e.g., county, state).
+If not explicitly stated, infer from context.
+Never return null—pick the best possible match.
+Summarizing Object: The entity being aggregated (e.g., river, hospital).
+Never return null—pick the closest match even if implicit.
+Association Conditions: Describe the relationship between the grouping and summarizing objects.
+If unclear, assume a logical association (e.g., "located in", "flows through").
+Aggregation Function: The mathematical/statistical operation applied (e.g., COUNT, SUM, ARGMAX).
+Always return in uppercase.
+Infer from context if missing.
+Preconditions: Filters applied before aggregation (e.g., "county is in Ohio").
+Return null only if absolutely no filters exist.
+Postconditions: Filters applied after aggregation (e.g., "COUNT > 5").
+Return null only if absolutely no post-filters exist.
 
 Example Extraction
-User Request:
+User Request
 "Find the number of rivers flowing through each county in Ohio."
 
-Extraction Output:
+Extraction Output
 {{
   "grouping_object": "county",
   "summarizing_object": "river",
@@ -103,11 +110,21 @@ Extraction Output:
   "postconditions": null
 }}
 
-Instructions:
-Return only a valid JSON object (no extra text).
-"grouping_object" and "summarizing_object" cannot be null. If not explicit, infer from context.
-"aggregation_function" should always be uppercase (e.g., COUNT, SUM).
-If preconditions or postconditions are missing, explicitly return null.
+Step-by-Step Extraction Guide
+Follow this method to generate the response:
+
+Identify any grouping entities (places, categories) in the query.
+Identify the summarizing entity (the thing being counted or aggregated).
+Determine how they are related (association conditions).
+Identify any filters before aggregation (preconditions).
+Identify any filters after aggregation (postconditions).
+Structure the response only as a JSON object (no additional text).
+
+Return Format
+Only return JSON.
+Do not return null for grouping or summarizing objects—always infer a best guess.
+Ensure aggregation function is uppercase.
+If no pre/postconditions exist, return null explicitly.
 
 User Request:
 {question}
