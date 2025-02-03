@@ -615,7 +615,7 @@ with col2:
                     # st.rerun()
                     st.session_state.rerun = True
             elif route['request_type'] == 'Aggregation':
-                aggregation_plan = get_aggregation_plan(llm, route['request_type'])
+                aggregation_plan = get_aggregation_plan(llm, user_input)
                 st.code(json.dumps(aggregation_plan, indent=4))
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
