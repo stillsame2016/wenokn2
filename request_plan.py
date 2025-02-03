@@ -77,7 +77,6 @@ def get_request_plan(llm, question):
 def get_aggregation_plan(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-
 You are an expert in query analysis. Extract key components from the given user request, which describes an aggregation query.
 
 Extraction Rules
@@ -96,6 +95,9 @@ Extraction Rules
         * If none exist, return null.
     - Postconditions: Filters applied after aggregation (e.g., "COUNT > 5").
         * If none exist, return null.
+
+Also please create a query plan which first load grouping objects by using preconditions and then load 
+summarizing objects with proper bounding box and finally solve the request.
 
 Example 1
 User Request: "For each county in Ohio, find the number of rivers flowing through the county."
@@ -116,7 +118,12 @@ Extraction Output:
   "association_conditions": "river flows through county",
   "aggregation_function": "COUNT",
   "preconditions": "county in Ohio state",
-  "postconditions": null
+  "postconditions": null,
+  "query_plan": [
+      "Find all counties in Ohio state",
+      "Find all rivers intersects the proper bounding box",
+      "Find the number of rivers flowing through each county in Ohio state"
+  ]
 }}
 
 Strict Guidelines for Extraction
@@ -128,8 +135,6 @@ Strict Guidelines for Extraction
 
 User Request:
 {question}
-
-
 
          <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
