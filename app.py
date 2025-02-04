@@ -672,7 +672,12 @@ with col2:
                             st.code(user_input)
                             code_for_aggregation = get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input)
                             st.code(code_for_aggregation)
-                            
+                            globals_dict['grouping_gdf'] = grouping_gdf
+                            globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
+                            exec(code_for_aggregation, globals_dict)
+                            result_df = globals_dict['df']
+                            st.dataframe(result_df)
+                        
                         except Exception as e:
                             st.code(str(e))
             else:
