@@ -46,6 +46,7 @@ def to_gdf(df, dataset_name):
     df['geometry'] = df[geometry_column_names[0]].apply(wkt.loads)
     gdf = gpd.GeoDataFrame(df, geometry='geometry')
     gdf.drop(columns=[geometry_column_names[0]], inplace=True)
+    gdf.label = dataset_name
     return gdf
 
 # Function to add a new message to the chat
