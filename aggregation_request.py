@@ -116,6 +116,7 @@ Strict Guidelines for Extraction
     - If the user request is ambiguous, infer the most logical structure.
     - Only return a JSON object. No explanations, no additional text.
     - For association conditions, construct a meaningful relationship between the grouping and summarizing objects.
+    - Keep the phrase "the bounding box" as it is in the query_plan for loading the summarizing objects.
 
 User Request:
 {question}
