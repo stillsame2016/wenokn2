@@ -152,6 +152,7 @@ grouping_bbox = grouping_gdf.total_bounds
     if request["data_source"] == "US Energy Atlas":
         code = process_energy_atlas_request(llm, request['request'], [])
         code = strip_code(code)
+        return code
         
     raise ValueError(f"Unable processed request: {request['request']}")
 
