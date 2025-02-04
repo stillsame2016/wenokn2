@@ -639,7 +639,7 @@ with col2:
                                 'to_gdf': to_gdf,
                                 'gpd': gpd,
                                 'load_coal_mines': load_coal_mines,
-                                'load_basins': load_basins,
+                                'load_basins_2': load_basins_2,
                                 
                                 "get_variables_for_dcid": get_variables_for_dcid,
                                 "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
