@@ -141,7 +141,7 @@ grouping_gdf = to_gdf(df, "{request['request']}")
 grouping_bbox = grouping_gdf.total_bounds
         """.strip()  # .strip() removes leading/trailing whitespace
         return code
-    return "OKAY"
+    raise ValueError(f"Unable processed request: {request}")
 
 
 def get_code_for_summarizing_object(llm, request, grouping_bbox):
