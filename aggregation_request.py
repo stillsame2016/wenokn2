@@ -169,9 +169,9 @@ Given:
 
 Generate Python code to:
 1. Perform spatial join between grouping_gdf and summarizing_object_gdf
-2. Group the joined data by grouping_gdf's identity column
+2. Group the joined data by grouping_gdf's identity columns
 3. Apply appropriate aggregation to count/summarize features per group
-4. Return a dataframe with the grouping object identities and aggregation result column
+4. Return a dataframe (as a variable df) with the grouping object identities and aggregation result column only
 
 Return ONLY valid Python code implementing this workflow. No explanations.
 User request: {user_input}
