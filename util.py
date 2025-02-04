@@ -40,6 +40,13 @@ def df_to_gdf(df, dataset_name):
             #     gdf.rename(columns={column_name: name}, inplace=True)
     return gdf
 
+def df_to_gdf(df, dataset_name):
+    column_names = df.columns.tolist()
+    geometry_column_names = [x for x in column_names if x.endswith('Geometry')]
+    df['geometry'] = df[geometry_column_names[0]].apply(wkt.loads)
+    gdf = gpd.GeoDataFrame(df, geometry='geometry')
+    gdf.drop(columns=[geometry_column_names[0]], inplace=True)
+    return gdf
 
 # Function to add a new message to the chat
 def process_data_request(message, chat_container):
