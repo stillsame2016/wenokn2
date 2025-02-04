@@ -655,7 +655,7 @@ with col2:
                             st.code(grouping_gdf.shape)
                             st.dataframe(grouping_gdf.head(5))
                                                     
-                            grouping_bbox = globals_dict['grouping_bbox']
+                            grouping_bbox = grouping_gdf.total_bounds
                             st.code(str(grouping_bbox))
                             describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
                             st.code(describe_bbox(grouping_bbox))
