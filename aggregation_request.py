@@ -142,7 +142,7 @@ grouping_bbox = grouping_gdf.total_bounds
     return "OKAY"
 
 
-def get_code_for_summarizing_object(llm, request, bbox):
+def get_code_for_summarizing_object(llm, request, grouping_bbox):
     describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
     bbox_desc = describe_bbox(grouping_bbox)
     if request["data_source"] == "WEN-OKN database":
