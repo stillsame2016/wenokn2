@@ -141,7 +141,11 @@ grouping_gdf = to_gdf(df, "{request['request']}")
 grouping_bbox = grouping_gdf.total_bounds
         """.strip()  # .strip() removes leading/trailing whitespace
         return code
-    raise ValueError(f"Unable processed request: {request}")
+
+    if request["data_source"] == "US Energy Atlas":
+        pass
+        
+    raise ValueError(f"Unable processed request: {request['request']}")
 
 
 def get_code_for_summarizing_object(llm, request, grouping_bbox):
@@ -159,7 +163,7 @@ df = sparql_dataframe.get(
 summarizing_object_gdf = to_gdf(df, "{request['request']}")
         """.strip() 
         return code
-    return "OKAY"
+    raise ValueError(f"Unable processed request: {request['request']}")
 
 
 def get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input):
