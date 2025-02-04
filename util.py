@@ -40,7 +40,7 @@ def df_to_gdf(df, dataset_name):
             #     gdf.rename(columns={column_name: name}, inplace=True)
     return gdf
 
-def df_to_gdf(df, dataset_name):
+def to_gdf(df, dataset_name):
     column_names = df.columns.tolist()
     geometry_column_names = [x for x in column_names if x.endswith('Geometry')]
     df['geometry'] = df[geometry_column_names[0]].apply(wkt.loads)
