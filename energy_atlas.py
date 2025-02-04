@@ -496,4 +496,16 @@ def load_basins(where, bbox):
     wkid = "3857"
     return get_arcgis_features(self_url, where, bbox)  
 
+def load_basins_2(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd.GeoDataFrame:
+    """Load watershed boundary dataset using concurrent fetching."""
+    url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Watershed_Boundary_Dataset_HUC_6s/FeatureServer/0"
+    
+    loader = ArcGISFeatureLoader(
+        url=url,
+        batch_size=100,
+        max_workers=4,
+        max_retries=3
+    )   
+    gdf = loader.load_features(where=where, bbox=bbox)
+    return gdf
 
