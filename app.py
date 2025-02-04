@@ -645,7 +645,7 @@ with col2:
                             # fetch grouping objects and their bounding box
                             exec(code_for_grouping_object, globals_dict)    
                             grouping_gdf = globals_dict['grouping_gdf']
-                            st.code(grouping_gdf.shape)
+                            st.code(grouping_gdf.columns_to_list())
                                                     
                             grouping_bbox = globals_dict['grouping_bbox']
                             st.code(str(grouping_bbox))
@@ -663,7 +663,7 @@ with col2:
                             # fetch summarizing objects
                             exec(code_for_summarizing_object, globals_dict)    
                             summarizing_object_gdf = globals_dict['summarizing_object_gdf']
-                            st.code(summarizing_object_gdf.shape)
+                            st.code(summarizing_object_gdf.columns_to_list())
 
                             # -------------------------------------------
                             # resolve the aggregation request
