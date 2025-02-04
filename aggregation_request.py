@@ -160,6 +160,10 @@ grouping_bbox = grouping_gdf.total_bounds
 def get_code_for_summarizing_object(llm, request, grouping_bbox):
     describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
     bbox_desc = describe_bbox(grouping_bbox)
+    
+    # ----------------------------------------
+    # Process WEN-OKN request
+    # ----------------------------------------
     if request["data_source"] == "WEN-OKN database":
         response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']} {bbox_desc}")
         sparql_query = strip_sparql(response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' '))
@@ -172,6 +176,15 @@ df = sparql_dataframe.get(
 summarizing_object_gdf = to_gdf(df, "{request['request']}")
         """.strip() 
         return code
+    
+    # ----------------------------------------
+    # Process ArcGIS Feature Service request
+    # ----------------------------------------
+    if request["data_source"] == "US Energy Atlas":
+        code = process_energy_atlas_request(llm, request['request'], [])
+        code = strip_code(code)
+        return code
+        
     raise ValueError(f"Unable processed request: {request['request']}")
 
 
