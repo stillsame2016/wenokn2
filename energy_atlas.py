@@ -4,9 +4,10 @@ import streamlit as st
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
+import concurrent.futures
 import time
-import logging
 from typing import Optional, List, Dict, Any, Union
+import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -315,17 +316,19 @@ def get_arcgis_features(self_url, where, bbox=None):
         return gpd.GeoDataFrame(columns=['geometry'])
 
 class ArcGISFeatureLoader:
-    def __init__(self, url: str, batch_size: int = 100, max_retries: int = 3):
+    def __init__(self, url: str, batch_size: int = 100, max_workers: int = 4, max_retries: int = 3):
         """
         Initialize the ArcGIS Feature Service loader.
         
         Args:
             url: The base URL of the ArcGIS Feature Service
             batch_size: Number of records to fetch per request
+            max_workers: Maximum number of concurrent workers
             max_retries: Maximum number of retry attempts per failed request
         """
         self.url = url
         self.batch_size = batch_size
+        self.max_workers = max_workers
         self.max_retries = max_retries
 
     def get_total_record_count(self, where: str) -> int:
@@ -379,7 +382,7 @@ class ArcGISFeatureLoader:
 
     def load_features(self, where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd.GeoDataFrame:
         """
-        Load all features from the service sequentially, one batch at a time.
+        Load all features from the service using concurrent requests.
         
         Args:
             where: SQL where clause
@@ -394,18 +397,25 @@ class ArcGISFeatureLoader:
         if total_records == 0:
             return gpd.GeoDataFrame(columns=['geometry'])
 
+        offsets = range(0, total_records, self.batch_size)
         all_features = []
-        completed = 0
 
-        # Sequential loading
-        for offset in range(0, total_records, self.batch_size):
-            try:
-                features = self.fetch_batch(where, offset, bbox)
-                all_features.extend(features)
-                completed += len(features)
-                logger.info(f"Progress: {completed}/{total_records} features ({(completed/total_records)*100:.1f}%)")
-            except Exception as e:
-                logger.error(f"Failed to fetch batch at offset {offset}: {str(e)}")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            future_to_offset = {
+                executor.submit(self.fetch_batch, where, offset, bbox): offset 
+                for offset in offsets
+            }
+            
+            completed = 0
+            for future in concurrent.futures.as_completed(future_to_offset):
+                offset = future_to_offset[future]
+                try:
+                    features = future.result()
+                    all_features.extend(features)
+                    completed += len(features)
+                    logger.info(f"Progress: {completed}/{total_records} features ({(completed/total_records)*100:.1f}%)")
+                except Exception as e:
+                    logger.error(f"Failed to fetch batch at offset {offset}: {str(e)}")
 
         if not all_features:
             return gpd.GeoDataFrame(columns=['geometry'])
@@ -413,6 +423,7 @@ class ArcGISFeatureLoader:
         gdf = gpd.GeoDataFrame.from_features(all_features)
         logger.info(f"Successfully loaded {len(gdf)} features")
         return gdf
+
 
 def load_coal_mines(where):
     self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
