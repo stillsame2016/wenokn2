@@ -4,9 +4,9 @@ import streamlit as st
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-import concurrent.futures
+import threading
+import queue
 import time
-from typing import Optional, List, Dict, Any, Union
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -315,7 +315,6 @@ def get_arcgis_features(self_url, where, bbox=None):
     else:
         return gpd.GeoDataFrame(columns=['geometry'])
 
-
 class ArcGISFeatureLoader:
     def __init__(self, url: str, batch_size: int = 100, max_workers: int = 4, max_retries: int = 3):
         """
@@ -331,6 +330,11 @@ class ArcGISFeatureLoader:
         self.batch_size = batch_size
         self.max_workers = max_workers
         self.max_retries = max_retries
+        self.task_queue = queue.Queue()
+        self.result_queue = queue.Queue()
+        self.threads = []
+        self.total_completed = 0
+        self._lock = threading.Lock()
 
     def get_total_record_count(self, where: str) -> int:
         """Fetch the total number of records available."""
@@ -381,9 +385,31 @@ class ArcGISFeatureLoader:
                     raise
                 time.sleep(1 * (attempt + 1))  # Exponential backoff
 
+    def worker(self, where: str, bbox: Optional[List[float]], total_records: int):
+        """Worker thread function to process tasks from the queue."""
+        while True:
+            try:
+                offset = self.task_queue.get_nowait()
+            except queue.Empty:
+                break
+
+            try:
+                features = self.fetch_batch(where, offset, bbox)
+                self.result_queue.put((offset, features))
+                
+                with self._lock:
+                    self.total_completed += len(features)
+                    progress = (self.total_completed / total_records) * 100
+                    logger.info(f"Progress: {self.total_completed}/{total_records} features ({progress:.1f}%)")
+                    
+            except Exception as e:
+                logger.error(f"Failed to fetch batch at offset {offset}: {str(e)}")
+            finally:
+                self.task_queue.task_done()
+
     def load_features(self, where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd.GeoDataFrame:
         """
-        Load all features from the service using concurrent requests.
+        Load all features from the service using multiple threads.
         
         Args:
             where: SQL where clause
@@ -398,25 +424,34 @@ class ArcGISFeatureLoader:
         if total_records == 0:
             return gpd.GeoDataFrame(columns=['geometry'])
 
-        offsets = range(0, total_records, self.batch_size)
-        all_features = []
+        # Reset counters and queues
+        self.total_completed = 0
+        self.task_queue = queue.Queue()
+        self.result_queue = queue.Queue()
+        
+        # Fill task queue with offsets
+        for offset in range(0, total_records, self.batch_size):
+            self.task_queue.put(offset)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            future_to_offset = {
-                executor.submit(self.fetch_batch, where, offset, bbox): offset 
-                for offset in offsets
-            }
-            
-            completed = 0
-            for future in concurrent.futures.as_completed(future_to_offset):
-                offset = future_to_offset[future]
-                try:
-                    features = future.result()
-                    all_features.extend(features)
-                    completed += len(features)
-                    logger.info(f"Progress: {completed}/{total_records} features ({(completed/total_records)*100:.1f}%)")
-                except Exception as e:
-                    logger.error(f"Failed to fetch batch at offset {offset}: {str(e)}")
+        # Start worker threads
+        self.threads = []
+        for _ in range(min(self.max_workers, self.task_queue.qsize())):
+            thread = threading.Thread(
+                target=self.worker,
+                args=(where, bbox, total_records),
+                daemon=True
+            )
+            thread.start()
+            self.threads.append(thread)
+
+        # Wait for all tasks to complete
+        self.task_queue.join()
+        
+        # Collect results
+        all_features = []
+        while not self.result_queue.empty():
+            _, features = self.result_queue.get()
+            all_features.extend(features)
 
         if not all_features:
             return gpd.GeoDataFrame(columns=['geometry'])
