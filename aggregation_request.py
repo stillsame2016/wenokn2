@@ -57,6 +57,8 @@ You are an expert of following systems:
                 Petroleum Power Plant
                 Solar Power Plant
                 Biodiesel Plant
+                Watershed
+                Basin
         
 You are also an expert in query analysis. Extract key components from the given user request, which describes an aggregation query.
 
