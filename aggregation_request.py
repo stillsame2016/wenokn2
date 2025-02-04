@@ -168,13 +168,15 @@ Given:
 - `summarizing_object_gdf` (GeoDataFrame): Contains the data with the columns {summarizing_gdf_columns} for the request "{summarizing_gdf_request}"
 
 Generate Python code to:
-1. Perform spatial join between grouping_gdf and summarizing_object_gdf
-2. Group the joined data by grouping_gdf's identity columns
-3. Apply appropriate aggregation to count/summarize features per group
-4. Return a dataframe (as a variable df) with the grouping object identities and aggregation result column only
+1. Perform a spatial join between `grouping_gdf` and `summarizing_object_gdf` using an appropriate spatial predicate.
+2. Group the joined data **only by the identity columns** from `grouping_gdf`.
+3. Apply an appropriate aggregation function to count or summarize the features per group.
+4. Ensure the final result (`df`) contains **only the grouping object identities and aggregation result column**.
+5. Do **not** include additional attributes from `grouping_gdf` or `summarizing_object_gdf` in the final output.
 
-Return ONLY valid Python code implementing this workflow. No explanations.
-User request: {user_input}
+**Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
+
+**User request:** {user_input}
              <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
