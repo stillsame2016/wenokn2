@@ -630,7 +630,7 @@ with col2:
                             st.code(json.dumps(grouping_object_request, indent=4))
  
                             code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
-                            code_for_grouping_object = code_for_grouping_object.replace("load_basin(", "load_basin_2(")
+                            code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
                             st.code(code_for_grouping_object)
     
                             globals_dict = {
