@@ -172,8 +172,8 @@ Generate Python code to:
 2. Group the joined data only by the identity columns from `grouping_gdf`.
 3. Apply an appropriate aggregation function to count or summarize the features per group.
 4. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
-5. Do not include additional attributes from `grouping_gdf` or `summarizing_object_gdf` in the final output.
-6. Do include any "import" statements in the code.
+5. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
+6. Do not include any "import" statements in the code.
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
