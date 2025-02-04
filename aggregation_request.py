@@ -158,3 +158,23 @@ summarizing_object_gdf = df_to_gdf(df, "{request['request']}")
         """.strip() 
         return code
     return "OKAY"
+
+
+def get_code_for_aggregation(llm, grouping_object_request, summarizing_object_request, user_input):
+    prompt = PromptTemplate(
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>   
+The geodataframe grouping_gdf contains the data for the request "{grouping_object_request}"
+The geodataframe summarizing_object_gdf contains the data for the request "{summarizing_object_request}"
+
+Please generate the python code to resolve the following request: {user_input}
+
+Only return Python code. No explanations, no additional text.
+             <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+        """,
+        input_variables=["question"],
+    )
+    question_planer = prompt | llm | StrOutputParser()
+    result = question_planer.invoke({"grouping_object_request": grouping_object_request,
+                                     "summarizing_object_request": summarizing_object_request,
+                                     "user_input": summarizing_object_request})
+    return result
