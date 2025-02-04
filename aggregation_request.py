@@ -183,6 +183,6 @@ User request: {user_input}
     result = question_planer.invoke({"grouping_gdf_columns": str(grouping_gdf.columns.to_list()),
                                      "grouping_gdf_request": grouping_gdf.label,
                                      "summarizing_gdf_columns": str(summarizing_object_gdf.columns.to_list()),
-                                     "summarizing_request": summarizing_object_gdf.label,
+                                     "summarizing_gdf_request": summarizing_object_gdf.label,
                                      "user_input": user_input})
     return result
