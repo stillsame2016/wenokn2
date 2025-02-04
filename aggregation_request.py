@@ -174,6 +174,7 @@ Generate Python code to:
 4. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
 5. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
 6. Do not include any "import" statements in the code.
+7. Rename the most important identity columns from `grouping_gdf` as 'Name'.
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
