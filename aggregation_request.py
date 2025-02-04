@@ -140,3 +140,7 @@ grouping_bbox = grouping_gdf.total_bounds
         """.strip()  # .strip() removes leading/trailing whitespace
         return code
     return "OKAY"
+
+
+def get_code_for_summarizing_object(llm, request, bbox):
+    return request
