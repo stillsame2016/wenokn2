@@ -668,7 +668,7 @@ with col2:
                             # -------------------------------------------
                             # resolve the aggregation request
                             st.code(user_input)
-                            code_for_aggregation = get_code_for_aggregation(llm, grouping_object_request, summarizing_object_request, user_input)
+                            code_for_aggregation = get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input)
                             st.code(code_for_aggregation)
                             
                         except Exception as e:
