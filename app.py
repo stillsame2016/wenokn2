@@ -670,7 +670,7 @@ with col2:
                             # -------------------------------------------
                             # resolve the aggregation request
                             st.code(user_input)
-                            code_for_aggregation = get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input)
+                            code_for_aggregation = strip_code(get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input))
                             st.code(code_for_aggregation)
                             globals_dict['grouping_gdf'] = grouping_gdf
                             globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
