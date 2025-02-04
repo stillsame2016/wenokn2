@@ -491,7 +491,6 @@ def load_basins_2(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd
     loader = ArcGISFeatureLoader(
         url=url,
         batch_size=100,
-        max_workers=4,
         max_retries=3
     )   
     gdf = loader.load_features(where=where, bbox=bbox)
