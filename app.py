@@ -16,7 +16,7 @@ from shapely import wkt
 from shapely.geometry import box
 
 from util import *
-from aggregation_request import get_code_for_grouping_object, get_code_for_summarizing_object, get_aggregation_plan
+from aggregation_request import get_code_for_grouping_object, get_code_for_summarizing_object, get_aggregation_plan, get_code_for_aggregation
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
