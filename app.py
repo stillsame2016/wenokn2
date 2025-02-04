@@ -643,10 +643,13 @@ with col2:
 
                             exec(code_for_grouping_object, globals_dict)    
                             grouping_gdf = globals_dict['grouping_gdf']
-                            grouping_bbox = globals_dict['grouping_bbox']
                             st.code(grouping_gdf.shape)
+                                                    
+                            grouping_bbox = globals_dict['grouping_bbox']
                             st.code(str(grouping_bbox))
-
+                            describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
+                            st.code(describe_bbox(grouping_bbox))
+                            
                             # create the code for fetching summarizing objecr
                             summarizing_object_request = aggregation_info["query_plan"][1]
                             st.code(json.dumps(summarizing_object_request, indent=4))
