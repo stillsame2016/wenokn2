@@ -635,6 +635,8 @@ with col2:
                                 'st': st,
                                 'sparql_dataframe': sparql_dataframe,
                                 'to_gdf': to_gdf,
+                                'gpd': gpd,
+                                
                                 "get_variables_for_dcid": get_variables_for_dcid,
                                 "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
                                 "get_dcid_from_county_name": get_dcid_from_county_name,
