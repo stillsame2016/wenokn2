@@ -634,7 +634,7 @@ with col2:
                             globals_dict = {
                                 'st': st,
                                 'sparql_dataframe': sparql_dataframe,
-                                'df_to_gdf': df_to_gdf,
+                                'to_gdf': to_gdf,
                                 "get_variables_for_dcid": get_variables_for_dcid,
                                 "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
                                 "get_dcid_from_county_name": get_dcid_from_county_name,
