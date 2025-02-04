@@ -622,6 +622,7 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             aggregation_info = get_aggregation_plan(llm, user_input)
+                            st.code(aggregation_info)
 
                             # -------------------------------------------
                             # get the code for fetching group_object
