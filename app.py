@@ -675,9 +675,20 @@ with col2:
                             globals_dict['grouping_gdf'] = grouping_gdf
                             globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
                             exec(code_for_aggregation, globals_dict)
-                            result_df = globals_dict['df']
-                            st.dataframe(result_df)
-                        
+                            df = globals_dict['df']
+                            df.id = user_input
+                            st.session_state.wen_datasets.append(df)
+                            st.session_state.wen_tables.append(df.copy())
+                            st.session_state.table_chat_histories.append([])
+                            st.session_state.chart_types.append("bar_chart")
+                            message = f"""
+                                    Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
+                                    found and displayed.
+                                    """
+                            st.markdown(message)
+                            st.session_state.chat.append({"role": "assistant", "content": message})
+                            st.rerun()
+                            
                         except Exception as e:
                             st.code(str(e))
             else:
