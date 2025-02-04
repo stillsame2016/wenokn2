@@ -620,39 +620,39 @@ with col2:
             elif route['request_type'] == 'Aggregation':
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
-                        aggregation_info = get_aggregation_plan(llm, user_input)
-
-                        # create the code for fetching group_object
-                        grouping_object_request = aggregation_info["query_plan"][0]
-                        code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
-                        st.code(code_for_grouping_object)
-
-                        globals_dict = {
-                            'st': st,
-                            'sparql_dataframe': sparql_dataframe,
-                            'df_to_gdf': df_to_gdf,
-                            "get_variables_for_dcid": get_variables_for_dcid,
-                            "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
-                            "get_dcid_from_county_name": get_dcid_from_county_name,
-                            "get_dcid_from_state_name": get_dcid_from_state_name,
-                            "get_dcid_from_country_name": get_dcid_from_country_name
-                        }
-
                         try:
+                            aggregation_info = get_aggregation_plan(llm, user_input)
+    
+                            # create the code for fetching group_object
+                            grouping_object_request = aggregation_info["query_plan"][0]
+                            st.code(json.dumps(grouping_object_request, indent=4))
+ 
+                            code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
+                            st.code(code_for_grouping_object)
+    
+                            globals_dict = {
+                                'st': st,
+                                'sparql_dataframe': sparql_dataframe,
+                                'df_to_gdf': df_to_gdf,
+                                "get_variables_for_dcid": get_variables_for_dcid,
+                                "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
+                                "get_dcid_from_county_name": get_dcid_from_county_name,
+                                "get_dcid_from_state_name": get_dcid_from_state_name,
+                                "get_dcid_from_country_name": get_dcid_from_country_name
+                            }
+
                             exec(code_for_grouping_object, globals_dict)    
                             grouping_gdf = globals_dict['grouping_gdf']
                             grouping_bbox = globals_dict['grouping_bbox']
                             st.code(grouping_gdf.shape)
                             st.code(str(grouping_bbox))
+
+                            # create the code for fetching summarizing objecr
+                            summarizing_object_request = aggregation_info["query_plan"][1]
+                            st.code(json.dumps(summarizing_object_request, indent=4))
+                            
                         except Exception as e:
                             st.code(str(e))
-                        
-                        # create the code for fetching summarizing objecr
-                        summarizing_object_request = aggregation_info["query_plan"][1]
-
-                        
-                        st.code(json.dumps(grouping_object_request, indent=4))
-                        st.code(json.dumps(summarizing_object_request, indent=4))
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
