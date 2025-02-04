@@ -40,24 +40,15 @@ def render_interface_for_table(llm, llm2, index, pivot_table):
 
         st.write(f"<div styple='height: 30px'>&nbsp;</div>", unsafe_allow_html=True)
         if st.session_state.chart_types[index] == 'bar_chart':
-            if 'Name' in buffered_table.columns.to_list():
-                st.bar_chart(
-                    buffered_table, # filtered_pivot_table,
-                    # x='Date',
-                    # y=pivot_table.variable_name,
-                    x=buffered_table.columns[-2],
-                    y=buffered_table.columns[-1],
-                    color='Name',
-                    height=450
-                )
-            else:
-                st.bar_chart(
-                    buffered_table, # filtered_pivot_table,
-                    x=buffered_table.columns[0],
-                    y=buffered_table.columns[-1],
-                    color=buffered_table.columns.to_list()[0],
-                    height=450
-                )
+            st.bar_chart(
+                buffered_table, # filtered_pivot_table,
+                # x='Date',
+                # y=pivot_table.variable_name,
+                x=buffered_table.columns[-2],
+                y=buffered_table.columns[-1],
+                color='Name',
+                height=450
+            )
         elif st.session_state.chart_types[index] == 'scatter_chart':
             st.scatter_chart(
                 buffered_table, # filtered_pivot_table,
