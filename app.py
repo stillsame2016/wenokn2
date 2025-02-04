@@ -640,8 +640,10 @@ with col2:
 
                         try:
                             exec(code_for_grouping_object, globals_dict)    
-                            grouping_gdf = globals_dict['grouping_gdf']  
+                            grouping_gdf = globals_dict['grouping_gdf']
+                            grouping_bbox = globals_dict['grouping_bbox']
                             st.code(grouping_gdf.shape)
+                            st.code(str(grouping_bbox))
                         except Exception as e:
                             st.code(str(e))
                         
