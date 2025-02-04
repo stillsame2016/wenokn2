@@ -16,7 +16,7 @@ from shapely import wkt
 from shapely.geometry import box
 
 from util import *
-from aggregation_request import get_code_for_grouping_object, get_aggregation_plan
+from aggregation_request import get_code_for_grouping_object, get_code_for_summarizing_object, get_aggregation_plan
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
@@ -623,7 +623,7 @@ with col2:
                         try:
                             aggregation_info = get_aggregation_plan(llm, user_input)
     
-                            # create the code for fetching group_object
+                            # get the code for fetching group_object
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
  
@@ -641,6 +641,7 @@ with col2:
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
 
+                            # fetch grouping objects and their bounding box
                             exec(code_for_grouping_object, globals_dict)    
                             grouping_gdf = globals_dict['grouping_gdf']
                             st.code(grouping_gdf.shape)
@@ -650,9 +651,12 @@ with col2:
                             describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
                             st.code(describe_bbox(grouping_bbox))
                             
-                            # create the code for fetching summarizing objecr
+                            # get the code for fetching summarizing objecr
                             summarizing_object_request = aggregation_info["query_plan"][1]
                             st.code(json.dumps(summarizing_object_request, indent=4))
+
+                            code_for_summarizing_object = get_code_for_summarizing_object(llm, summarizing_object_request, grouping_bbox)
+                            st.code(code_for_summarizing_object)
                             
                         except Exception as e:
                             st.code(str(e))
