@@ -677,6 +677,7 @@ with col2:
                             exec(code_for_aggregation, globals_dict)
                             df = globals_dict['df']
                             df.id = user_input
+                            df.title = user_input
                             st.session_state.wen_datasets.append(df)
                             st.session_state.wen_tables.append(df.copy())
                             st.session_state.table_chat_histories.append([])
