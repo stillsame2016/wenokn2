@@ -165,7 +165,7 @@ def get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_inp
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>  
 Given:
 - `grouping_gdf` (GeoDataFrame): Contains the data with the columns {grouping_gdf_columns} for the request "{grouping_gdf_request}"
-- `summarizing_object_gdf` (GeoDataFrame): Contains the data with the columns {summarizing_gdf_columns} for the request "{summarizing_object_gdf_request}"
+- `summarizing_object_gdf` (GeoDataFrame): Contains the data with the columns {summarizing_gdf_columns} for the request "{summarizing_gdf_request}"
 
 Generate Python code to:
 1. Perform spatial join between grouping_gdf and summarizing_object_gdf
@@ -180,7 +180,9 @@ User request: {user_input}
         input_variables=["question"],
     )
     question_planer = prompt | llm | StrOutputParser()
-    result = question_planer.invoke({"grouping_object_request": grouping_object_request,
-                                     "summarizing_object_request": summarizing_object_request,
+    result = question_planer.invoke({"grouping_gdf_columns": str(grouping_gdf.columns.to_list()),
+                                     "grouping_gdf_request": grouping_gdf.label,
+                                     "summarizing_gdf_columns": str(summarizing_object_gdf.columns.to_list()),
+                                     "summarizing_request": summarizing_object_gdf.label,
                                      "user_input": summarizing_object_request})
     return result
