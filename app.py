@@ -622,7 +622,8 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             aggregation_info = get_aggregation_plan(llm, user_input)
-    
+
+                            # -------------------------------------------
                             # get the code for fetching group_object
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
@@ -650,8 +651,9 @@ with col2:
                             st.code(str(grouping_bbox))
                             describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
                             st.code(describe_bbox(grouping_bbox))
-                            
-                            # get the code for fetching summarizing objecr
+
+                            # -------------------------------------------
+                            # get the code for fetching summarizing object
                             summarizing_object_request = aggregation_info["query_plan"][1]
                             st.code(json.dumps(summarizing_object_request, indent=4))
 
@@ -662,6 +664,11 @@ with col2:
                             exec(code_for_summarizing_object, globals_dict)    
                             summarizing_object_gdf = globals_dict['summarizing_object_gdf']
                             st.code(summarizing_object_gdf.shape)
+
+                            # -------------------------------------------
+                            # resolve the aggregation request
+                            code_for_aggregation = get_code_for_aggregation(llm, grouping_object_request, summarizing_object_request, user_input)
+                            st.code(code_for_aggregation)
                             
                         except Exception as e:
                             st.code(str(e))
