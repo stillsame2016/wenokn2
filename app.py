@@ -651,6 +651,8 @@ with col2:
                             exec(code_for_grouping_object, globals_dict)    
                             grouping_gdf = globals_dict['grouping_gdf']
                             st.code(grouping_gdf.columns.to_list())
+                            st.code(grouping_gdf.shape)
+                            st.dataframe(grouping_gdf.head(5))
                                                     
                             grouping_bbox = globals_dict['grouping_bbox']
                             st.code(str(grouping_bbox))
