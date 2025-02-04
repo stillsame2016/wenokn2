@@ -162,13 +162,18 @@ summarizing_object_gdf = df_to_gdf(df, "{request['request']}")
 
 def get_code_for_aggregation(llm, grouping_object_request, summarizing_object_request, user_input):
     prompt = PromptTemplate(
-        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>   
-The geodataframe grouping_gdf contains the data for the request "{grouping_object_request}"
-The geodataframe summarizing_object_gdf contains the data for the request "{summarizing_object_request}"
+        template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>  
+Given:
+- `grouping_gdf` (GeoDataFrame): Contains geometries for grouping (e.g., counties). Columns: [geometry]
+- `summarizing_object_gdf` (GeoDataFrame): Contains candidate features to aggregate (e.g., rivers). Columns: [geometry]
 
-Please generate the python code to resolve the following request: {user_input}
+Generate Python code to:
+1. Perform spatial join between grouping_gdf and summarizing_object_gdf
+2. Group the joined data by grouping_gdf's geometries
+3. Apply appropriate aggregation to count/summarize features per group
 
-Only return Python code. No explanations, no additional text.
+Return ONLY valid Python code implementing this workflow. No explanations.
+User request: {user_input}
              <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question"],
