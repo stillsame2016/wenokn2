@@ -657,6 +657,11 @@ with col2:
 
                             code_for_summarizing_object = get_code_for_summarizing_object(llm, summarizing_object_request, grouping_bbox)
                             st.code(code_for_summarizing_object)
+
+                            # fetch summarizing objects
+                            exec(code_for_summarizing_object, globals_dict)    
+                            summarizing_object_gdf = globals_dict['summarizing_object_gdf']
+                            st.code(summarizing_object_gdf.shape)
                             
                         except Exception as e:
                             st.code(str(e))
