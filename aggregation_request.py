@@ -1,6 +1,7 @@
 
 import requests
-from util import strip_sparql
+from util import strip_sparql, strip_code
+from energy_atlas import *
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 
@@ -128,6 +129,9 @@ User Request:
     return result
 
 def get_code_for_grouping_object(llm, request):
+    # ----------------------------------------
+    # Process WEN-OKN request
+    # ----------------------------------------
     if request["data_source"] == "WEN-OKN database":
         response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']}")
         sparql_query = strip_sparql(response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' '))
@@ -142,8 +146,12 @@ grouping_bbox = grouping_gdf.total_bounds
         """.strip()  # .strip() removes leading/trailing whitespace
         return code
 
+    # ----------------------------------------
+    # Process ArcGIS Feature Service request
+    # ----------------------------------------
     if request["data_source"] == "US Energy Atlas":
-        pass
+        code = process_energy_atlas_request(llm, request['request'], [])
+        code = strip_code(code)
         
     raise ValueError(f"Unable processed request: {request['request']}")
 
