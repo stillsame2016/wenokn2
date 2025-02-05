@@ -649,8 +649,12 @@ with col2:
                             }
 
                             # fetch grouping objects and their bounding box
-                            exec(code_for_grouping_object, globals_dict)   
-                            grouping_gdf = globals_dict['grouping_gdf'] if 'grouping_gdf' in globals_dict.keys() else globals_dict['gdf']
+                            exec(code_for_grouping_object, globals_dict)  
+                            if 'grouping_gdf' in globals_dict.keys():
+                                grouping_gdf = globals_dict['grouping_gdf']  
+                            else:
+                                grouping_gdf = globals_dict['gdf']
+                                grouping_gdf.label = grouping_object_request
                             st.code(grouping_gdf.columns.to_list())
                             st.code(grouping_gdf.shape)
                             st.dataframe(grouping_gdf.head(5))
