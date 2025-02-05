@@ -255,6 +255,28 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                 if col not in gdf.columns:
                     gdf[col] = gdf2[col]
             gdf = gdf[gdf2.columns]
+            gdf.title = "All the basins through which the Scioto River flows"
+
+        [ Example 8 ]
+        Find all the basins in Ohio State.
+
+        Find out if one of the available variables is a geodataframe containing Ohio State.
+
+        If none of the available variables are geodataframes containing Ohio State, 
+        then return the following code:
+            raise Exception("The data for the Ohio State is missing. Please load it first.")
+        
+        If you found a variable which is a geodataframe containing Ohio State, then return 
+        the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for the Ohio State if you found one>
+            gdf2 = load_basins("1 = 1", gdf1.total_bounds)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="intersects")
+            gdf = gdf[~gdf.geometry.apply(lambda geom: geom.touches(gdf1.unary_union))]
+            # Ensure all columns from gdf2 are retained
+            for col in gdf2.columns:
+                if col not in gdf.columns:
+                    gdf[col] = gdf2[col]
+            gdf = gdf[gdf2.columns]
             gdf.title = "All the basins in Ohio State"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
