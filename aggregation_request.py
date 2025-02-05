@@ -198,6 +198,8 @@ Given:
 
 Generate Python code to:
 1. Perform a spatial join between `grouping_gdf` and `summarizing_object_gdf` using an appropriate spatial predicate.
+2. Based on the request, a left spatial join may be needed. 
+   For example, for each county in Ohio, to find the total number of dams it has, there may be a county without any dams. 
 2. Group the joined data only by the identity columns from `grouping_gdf`.
 3. Apply an appropriate aggregation function to count or summarize the features per group.
 4. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
