@@ -182,7 +182,7 @@ summarizing_object_gdf = to_gdf(df, "{request['request']}")
     # Process ArcGIS Feature Service request
     # ----------------------------------------
     if request["data_source"] == "US Energy Atlas":
-        code = process_energy_atlas_request(llm, f"{request['request']} {bbox_desc}", [])
+        code = process_energy_atlas_request(llm, f"{request['request']}", [])
         code = strip_code(code)
         return code
         
