@@ -686,6 +686,7 @@ with col2:
                             st.code(user_input)
                             code_for_aggregation = strip_code(get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input))
                             st.code(code_for_aggregation)
+                            time.sleep(30)
                             globals_dict['grouping_gdf'] = grouping_gdf
                             globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
                             exec(code_for_aggregation, globals_dict)
