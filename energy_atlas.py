@@ -504,12 +504,9 @@ def load_basins_2(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd
         batch_size=100,
         max_retries=3
     )   
-    bbox = [
-        -89.5,   # minx (westernmost longitude)
-        36.5,    # miny (southernmost latitude)
-        -80.5,   # maxx (easternmost longitude)
-        42.0     # maxy (northernmost latitude)
-    ]
+    if bbox is None and where == "1=1":
+        raise Exception("Fetch too many basins. Please add more conditions.")
+        # bbox = [ -89.5, 36.5, -80.5, 42.0 ]
     gdf = loader.load_features(where=where, bbox=bbox)
     return gdf
 
