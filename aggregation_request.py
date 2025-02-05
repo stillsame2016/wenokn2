@@ -159,14 +159,14 @@ grouping_bbox = grouping_gdf.total_bounds
 
 
 def get_code_for_summarizing_object(llm, request, grouping_bbox):
-    describe_bbox = lambda bbox: f"From ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
+    describe_bbox = lambda bbox: f"from ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
     bbox_desc = describe_bbox(grouping_bbox)
     
     # ----------------------------------------
     # Process WEN-OKN request
     # ----------------------------------------
     if request["data_source"] == "WEN-OKN database":
-        response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']} {bbox_desc}")
+        response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/wenokn_llama3?query_text={request['request']} intersects with the bounding box {bbox_desc}")
         sparql_query = strip_sparql(response.text.replace('\\n', '\n').replace('\\"', '"').replace('\\t', ' '))
         code = f"""
 endpoint = "http://132.249.238.155/repositories/wenokn_ohio_all"
