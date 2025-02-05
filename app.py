@@ -145,7 +145,7 @@ def execute_query(user_input, chat_container):
     if response.status_code == 200:
         query_plan = json.loads(response.text)
         query_plan = normalize_query_plan(query_plan)
-        # st.code(json.dumps(query_plan, indent=4))
+        st.code(json.dumps(query_plan, indent=4))
         if len(query_plan) > 1:
             # show the query plan
             query_plan_text = "The following query plan has been designed to address your request:\n"
