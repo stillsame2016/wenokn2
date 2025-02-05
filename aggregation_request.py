@@ -204,7 +204,8 @@ Generate Python code to:
 5. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
 6. Do not include any "import" statements in the code.
 7. Rename the most important identity columns from `grouping_gdf` as 'Name'.
-8. Please note that `grouping_gdf` and `summarizing_object_gdf` may have the same column names, for example, 'OBJECTID'
+8. Please note that `grouping_gdf` and `summarizing_object_gdf` may have the same column names, 
+   for example, 'OBJECTID'. Don't include the column 'OBJECTID' in the group-by.
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
