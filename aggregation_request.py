@@ -105,7 +105,7 @@ Extraction Output:
   "postconditions": null,
   "query_plan": [
       {{ "request": "Find all counties in Ohio state",  "data_source": "WEN-OKN database"}}
-      {{ "request": "Find 10000 rivers intersects the bounding box", "data_source": "WEN-OKN database"}}
+      {{ "request": "Find all rivers", "data_source": "WEN-OKN database"}}
       {{ "request": "Find the number of rivers flowing through each county in Ohio state",  "data_source": "System"}}
   ]
 }}
@@ -116,8 +116,7 @@ Strict Guidelines for Extraction
     - If the user request is ambiguous, infer the most logical structure.
     - Only return a JSON object. No explanations, no additional text.
     - For association conditions, construct a meaningful relationship between the grouping and summarizing objects.
-    - For loading the summarizing objects, keep the phrase "the bounding box" as it is in the query_plan.
-    - For loading the summarizing objects, replace "10000" by "all" in the query_plan if the data_source is not "WEN-OKN database".
+
 
 User Request:
 {question}
