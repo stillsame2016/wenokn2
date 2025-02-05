@@ -670,7 +670,7 @@ with col2:
 
                             # fetch summarizing objects
                             exec(code_for_summarizing_object, globals_dict)    
-                            summarizing_object_gdf = globals_dict['summarizing_object_gdf']
+                            summarizing_object_gdf = globals_dict['summarizing_object_gdf'] if 'summarizing_object_gdf' in globals_dict.keys() else globals_dict['gdf']
                             st.code(summarizing_object_gdf.columns.to_list())
 
                             # -------------------------------------------
