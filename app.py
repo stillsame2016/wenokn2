@@ -628,7 +628,12 @@ with col2:
                             # get the code for fetching group_object
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
- 
+
+                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
+                            st.code(query_plan_text)
+                            st.code(message)
+                            time.sleep(10)
+                            
                             code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
                             code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
                             st.code(code_for_grouping_object)
