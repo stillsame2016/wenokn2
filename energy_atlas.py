@@ -505,7 +505,7 @@ def load_basins_2(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd
         max_retries=3
     )   
     if bbox is None and where == "1 = 1":
-        raise Exception("Fetch too many basins. Please add more conditions.")
+        raise Exception("Your request returned a large number of basins. Please refine your search.")
         # bbox = [ -89.5, 36.5, -80.5, 42.0 ]
     gdf = loader.load_features(where=where, bbox=bbox)
     return gdf
