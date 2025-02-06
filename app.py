@@ -715,8 +715,8 @@ with col2:
 
                             # -------------------------------------------
                             # resolve the aggregation request
-                            logger.info(f"Aggregation step: {user_input}")
-                            st.markdown(f"**Aggregation step:** {user_input}")
+                            logger.info(f"Process aggregation: {user_input}")
+                            st.markdown(f"**Process aggregation:** {user_input}")
                             
                             code_for_aggregation = strip_code(get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input))
                             logger.info(code_for_aggregation)
