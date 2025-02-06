@@ -687,14 +687,18 @@ with col2:
                                                     
                             grouping_bbox = grouping_gdf.total_bounds
                             describe_bbox = lambda bbox: f"from ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
-                            st.markdown(f"**The bounding box of the grouping objects for optimizing:**\n{describe_bbox(grouping_bbox)}")
+                            st.markdown(f"**The bounding box of the grouping objects for optimizing:**")
+                            st.code(f"{describe_bbox(grouping_bbox)}")
 
                             # -------------------------------------------
                             # get the code for fetching summarizing object
                             summarizing_object_request = aggregation_info["query_plan"][1]
-                            st.code(json.dumps(summarizing_object_request, indent=4))
+                            logger.info(f"Process the summarizing request: {json.dumps(summarizing_object_request, indent=4)}")
+                            st.markdown(f"**Process the summarizing request**: {summarizing_object_request['request']}")
 
                             code_for_summarizing_object = get_code_for_summarizing_object(llm, summarizing_object_request, grouping_bbox)
+                            logger.info(code_for_summarizing_object)
+                            st.markdown(f"**Executing the following code:**")
                             st.code(code_for_summarizing_object)
 
                             # fetch summarizing objects
@@ -704,7 +708,10 @@ with col2:
                             else:
                                 summarizing_object_gdf = globals_dict['gdf']
                                 summarizing_object_gdf.label = summarizing_object_request
-                            st.code(summarizing_object_gdf.columns.to_list())
+
+                            logger.info(f"Columns for the summarizing grouping objects: {summarizing_object_gdf.columns.to_list()}")
+                            logger.info(f"The Shape for the summarizing grouping objects: {summarizing_object_gdf.shape}")
+                            st.markdown(f"**The summarizing obejcts are fetched:** {summarizing_object_gdf.shape} rows")
 
                             # -------------------------------------------
                             # resolve the aggregation request
