@@ -203,7 +203,8 @@ Generate Python code to:
 4. Based on the request, merge the aggregation result to `grouping_gdf`.  
    for example, for each county in Ohio, to find the total number of dams it has, there may be a county without any dams. 
 5. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
-6. Rename the most important identity column from `grouping_gdf` of `df` to 'Name'.
+6. Rename the most important identity column from `grouping_gdf` of `df` to 'Name'. 
+   Please prioritize the use of columns with the word `Name` as the most important identity column.
 7. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
 8. Do not include any "import" statements in the code.
 9. Please note that `grouping_gdf` and `summarizing_object_gdf` may have the same column names, 
