@@ -632,7 +632,7 @@ with col2:
                             logger.info(json.dumps(aggregation_info, indent=4))
                             
                             # show the aggregation plan
-                            aggregation_plan_text = "The following query plan has been designed to address your aggregation request:\n"
+                            aggregation_plan_text = "**The following query plan has been designed to address your aggregation request:**\n"
                             for i, query in enumerate(aggregation_info["query_plan"], 1):
                                 aggregation_plan_text += f"{i}. {query['request']}\n"
                             st.markdown(aggregation_plan_text)
@@ -715,10 +715,14 @@ with col2:
 
                             # -------------------------------------------
                             # resolve the aggregation request
-                            st.code(user_input)
+                            logger.info(f"Aggregation step: {user_input}")
+                            st.markdown(f"**Aggregation step:** {user_input}")
+                            
                             code_for_aggregation = strip_code(get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input))
+                            logger.info(code_for_aggregation)
+                            st.markdown(f"**Executing the following code:**")
                             st.code(code_for_aggregation)
-                            time.sleep(30)
+                            
                             globals_dict['grouping_gdf'] = grouping_gdf
                             globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
                             exec(code_for_aggregation, globals_dict)
