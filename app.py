@@ -630,22 +630,7 @@ with col2:
                             aggregation_info = get_aggregation_plan(llm, user_input)
                             st.code(json.dumps(aggregation_info, indent=4))
 
-                            # -------------------------------------------
-                            # get the code for fetching group_object
-                            grouping_object_request = aggregation_info["query_plan"][0]
-                            st.code(json.dumps(grouping_object_request, indent=4))
-
-                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
-                            logger.info(f"execute_query return: {query_plan_text}")
-                            logger.info(f"execute_query return: {message}")
-                            st.session_state.rerun = False
-                            logger.info(f"Great")
-                            
-                            code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
-                            code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
-                            st.code(code_for_grouping_object)
-    
-                            globals_dict = {
+                            globals_dict = {    
                                 'st': st,
                                 'sparql_dataframe': sparql_dataframe,
                                 'to_gdf': to_gdf,
@@ -659,14 +644,33 @@ with col2:
                                 "get_dcid_from_state_name": get_dcid_from_state_name,
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
+                            
+                            # -------------------------------------------
+                            # get the code for fetching group_object
+                            grouping_object_request = aggregation_info["query_plan"][0]
+                            st.code(json.dumps(grouping_object_request, indent=4))
 
-                            # fetch grouping objects and their bounding box
-                            exec(code_for_grouping_object, globals_dict)  
-                            if 'grouping_gdf' in globals_dict.keys():
-                                grouping_gdf = globals_dict['grouping_gdf']  
+                            # to run it via the query plan execution
+                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
+                            if query_plan_text:
+                                logger.info(f"execute_query return: {query_plan_text}")
+                                logger.info(f"execute_query return: {message}")
+                                st.session_state.rerun = False
+                                grouping_gdf = st.session_state.datasets[-1]
                             else:
-                                grouping_gdf = globals_dict['gdf']
-                                grouping_gdf.label = grouping_object_request
+                                # process the request
+                                code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
+                                code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
+                                st.code(code_for_grouping_object)
+    
+                                # fetch grouping objects and their bounding box
+                                exec(code_for_grouping_object, globals_dict)  
+                                if 'grouping_gdf' in globals_dict.keys():
+                                    grouping_gdf = globals_dict['grouping_gdf']  
+                                else:
+                                    grouping_gdf = globals_dict['gdf']
+                                    grouping_gdf.label = grouping_object_request
+                                    
                             st.code(grouping_gdf.columns.to_list())
                             st.code(grouping_gdf.shape)
                             st.dataframe(grouping_gdf.head(5))
