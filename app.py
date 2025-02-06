@@ -633,7 +633,7 @@ with col2:
                             try:
                                 query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
                                 st.code(f"plan: {query_plan_text}")
-                                st.code(f"message: {message})
+                                st.code(f"message: {message}")
                             except Exception as error:
                                 st.code(f"Error: {str(error)}")
                             st.code("=====> done")
