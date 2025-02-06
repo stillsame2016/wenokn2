@@ -255,8 +255,7 @@ def execute_query(user_input, chat_container):
                         elif query["data_source"] == "Energy Atlas":
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
-                            # st.code(code)
-                            # time.sleep(20)
+                            logger.info(f"created code: {code}")
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
@@ -277,8 +276,8 @@ def execute_query(user_input, chat_container):
                             }
                             exec(code, globals_dict)
                             gdf = globals_dict['gdf']
-                            # st.code(f"GDF Shape: {gdf.shape}")
-                            # time.sleep(10)
+                            logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
+                            logger.info(f"fetched geodataframe: {gdf.shape}")
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
@@ -300,6 +299,7 @@ def execute_query(user_input, chat_container):
             count_end = len(st.session_state.datasets)   
             for idx in range(count_start, count_end):
                 st.session_state.datasets[idx].time = time.time()
+                logger.info(f"reset st.session_state.datasets[{idx}].time: {st.session_state.datasets[idx].time}")
             st.session_state.rerun = True
     return query_plan_text, message
 
