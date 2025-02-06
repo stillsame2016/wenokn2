@@ -633,6 +633,7 @@ with col2:
                             query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
                             # st.code(query_plan_text)
                             # st.code(message)
+                            st.code("=====> done")
                             time.sleep(30)
                             
                             code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
