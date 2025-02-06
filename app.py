@@ -27,6 +27,10 @@ from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 
 from streamlit.components.v1 import html
 
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
@@ -145,6 +149,7 @@ def execute_query(user_input, chat_container):
     if response.status_code == 200:
         query_plan = json.loads(response.text)
         query_plan = normalize_query_plan(query_plan)
+        logger.info(json.dumps(query_plan, indent=4))
         # st.code(json.dumps(query_plan, indent=4))
         # time.sleep(10)
         if len(query_plan) > 1:
