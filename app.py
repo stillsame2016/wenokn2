@@ -295,7 +295,7 @@ def execute_query(user_input, chat_container):
             count_end = len(st.session_state.datasets)   
             for idx in range(count_start, count_end):
                 st.session_state.datasets[idx].time = time.time()
-            # st.session_state.rerun = True
+            st.session_state.rerun = True
     return query_plan_text, message
 
 # Set up CSS for tables
