@@ -655,8 +655,9 @@ with col2:
                             # -------------------------------------------
                             # get the code for fetching group_object
                             grouping_object_request = aggregation_info["query_plan"][0]
-                            st.code(json.dumps(grouping_object_request, indent=4))
-
+                            logger.info(f"process the grouping request: {json.dumps(grouping_object_request, indent=4)}")
+                            st.markdown(f"process the grouping request: {grouping_object_request['request']}")
+                            
                             # run it via the query plan execution
                             query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
                             if query_plan_text:
@@ -668,6 +669,8 @@ with col2:
                                 # process the request
                                 code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
                                 code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
+                                logger.info(code_for_grouping_object)
+                                st.markdown(f"Executing the followinf code:")
                                 st.code(code_for_grouping_object)
     
                                 # fetch grouping objects and their bounding box
@@ -680,7 +683,6 @@ with col2:
                                     
                             st.code(grouping_gdf.columns.to_list())
                             st.code(grouping_gdf.shape)
-                            st.dataframe(grouping_gdf.head(5))
                                                     
                             grouping_bbox = grouping_gdf.total_bounds
                             st.code(str(grouping_bbox))
