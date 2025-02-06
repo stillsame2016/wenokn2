@@ -143,7 +143,7 @@ def ordinal(n):
     return f"{n}{suffix[n % 10]}"
 
 def execute_query(user_input, chat_container):
-    logger.info("execute_query: {user_input}")
+    logger.info(f"execute_query: {user_input}")
     response = requests.get(f"https://sparcal.sdsc.edu/api/v1/Utility/plan?query={user_input}")
     query_plan_text = None
     message = None
