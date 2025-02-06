@@ -197,15 +197,15 @@ Given:
 - `summarizing_object_gdf` (GeoDataFrame): Contains the data with the columns {summarizing_gdf_columns} for the request "{summarizing_gdf_request}"
 
 Generate Python code to:
-1. Perform an inner spatial join between `grouping_gdf` and `summarizing_object_gdf` using an appropriate spatial predicate.
-2. Group the joined data only by the identity columns from `grouping_gdf`.
-3. Apply an appropriate aggregation function to count or summarize the features per group.
-4. Based on the request, merge the aggregation result to `grouping_gdf`.  
+1. Perform an inner spatial join between `grouping_gdf` and `summarizing_object_gdf` using an appropriate spatial predicate as `joined_gdf`.
+2. Group the joined data only by the identity columns from `grouping_gdf` as `grouped`.
+3. Rename the most important identity column of `grouped` to 'Name'.
+4. Apply an appropriate aggregation function to count or summarize the features per group.
+5. Based on the request, merge the aggregation result to `grouping_gdf`.  
    for example, for each county in Ohio, to find the total number of dams it has, there may be a county without any dams. 
-5. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
-6. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
-7. Do not include any "import" statements in the code.
-8. Rename the most important identity column of the grouping result to 'Name'.
+6. Ensure the final result (`df`) contains only the grouping object identities and aggregation result column.
+7. Do not include additional columns from `grouping_gdf` or `summarizing_object_gdf` in the final output.
+8. Do not include any "import" statements in the code.
 9. Please note that `grouping_gdf` and `summarizing_object_gdf` may have the same column names, 
    for example, 'OBJECTID'. Don't include the column 'OBJECTID' in the group-by.
 
