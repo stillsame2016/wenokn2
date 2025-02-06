@@ -272,8 +272,8 @@ def execute_query(user_input, chat_container):
                             }
                             exec(code, globals_dict)
                             gdf = globals_dict['gdf']
-                            st.code(f"GDF Shape: {gdf.shape}")
-                            time.sleep(10)
+                            # st.code(f"GDF Shape: {gdf.shape}")
+                            # time.sleep(10)
                             if gdf.shape[0] > 0:
                                 if hasattr(gdf, 'answer'):
                                     message = gdf.answer
