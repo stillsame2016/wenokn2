@@ -635,14 +635,11 @@ with col2:
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
 
-                            try:
-                                query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
-                                st.code(f"plan: {query_plan_text}")
-                                st.code(f"message: {message}")
-                            except Exception as error:
-                                st.code(f"Error: {str(error)}")
-                            st.code("=====> done")
-                            time.sleep(30)
+                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
+                            logger.info(f"execute_query return: {query_plan_text}")
+                            logger.info(f"execute_query return: {message}")
+                            st.session_state.rerun = False
+                            logger.info(f"Great")
                             
                             code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
                             code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
