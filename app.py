@@ -635,7 +635,7 @@ with col2:
                             aggregation_plan_text = "The following query plan has been designed to address your aggregation request:\n"
                             for i, query in enumerate(aggregation_info, 1):
                                 aggregation_plan_text += f"{i}. {query['request']}\n"
-                            st.markdown(query_plan_text)
+                            st.markdown(aggregation_plan_text)
             
                             globals_dict = {    
                                 'st': st,
