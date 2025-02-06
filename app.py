@@ -632,8 +632,8 @@ with col2:
 
                             try:
                                 query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
-                                # st.code(query_plan_text)
-                                # st.code(message)
+                                st.code(f"plan: {query_plan_text}")
+                                st.code(f"message: {message})
                             except Exception as error:
                                 st.code(f"Error: {str(error)}")
                             st.code("=====> done")
@@ -716,7 +716,7 @@ with col2:
                             st.rerun()
                             
                         except Exception as e:
-                            st.code(str(e))
+                            st.code(f"Error: {str(e)}")
             else:
                 message = process_off_topic_request(llm, user_input, chat_container)
                 st.chat_message("assistant").markdown(message)
