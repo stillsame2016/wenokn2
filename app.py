@@ -160,6 +160,7 @@ def execute_query(user_input, chat_container):
             
             count_start = len(st.session_state.datasets)
             for i, query in enumerate(query_plan, 1):
+                logger.info(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                 with chat_container:
                     with st.chat_message("assistant"):                   
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
