@@ -270,11 +270,7 @@ def execute_query(user_input, chat_container):
                                 'load_watersheds': load_watersheds,
                                 'load_basins': load_basins,
                             }
-                            try:
-                                exec(code, globals_dict)
-                            except Exception as err:
-                                st.code(str(err))
-                                time.sleep(30)
+                            exec(code, globals_dict)
                             gdf = globals_dict['gdf']
                             # st.code(f"GDF Shape: {gdf.shape}")
                             # time.sleep(10)
