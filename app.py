@@ -633,7 +633,7 @@ with col2:
                             
                             # show the aggregation plan
                             aggregation_plan_text = "The following query plan has been designed to address your aggregation request:\n"
-                            for i, query in enumerate(aggregation_info, 1):
+                            for i, query in enumerate(aggregation_info["query_plan"], 1):
                                 aggregation_plan_text += f"{i}. {query['request']}\n"
                             st.markdown(aggregation_plan_text)
             
