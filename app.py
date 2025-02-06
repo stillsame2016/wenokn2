@@ -630,9 +630,12 @@ with col2:
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
 
-                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
-                            # st.code(query_plan_text)
-                            # st.code(message)
+                            try:
+                                query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
+                                # st.code(query_plan_text)
+                                # st.code(message)
+                            except Exception as error:
+                                st.code(f"Error: {str(error)}")
                             st.code("=====> done")
                             time.sleep(30)
                             
