@@ -215,34 +215,30 @@ Suppose `grouping_gdf` contains all counties in Ohio State with the column `coun
 `summarizing_object_gdf` contains all rivers with the column `riverName` and `geometry`. To resolve the request
 "find the longest river in each county in Ohio",  the following code can be used:
     
-    # Rename river geometry to avoid collision during spatial join
-    summarizing_object_gdf = summarizing_object_gdf.rename(columns={{'geometry': 'river_geom'}}).set_geometry('river_geom')
-    
-    # Spatial join: Match rivers to counties they intersect
-    joined = gpd.sjoin(
-        grouping_gdf[['countyName', 'geometry']],  # Keep only relevant county columns
-        summarizing_object_gdf[['riverName', 'river_geom']],  # Keep only relevant river columns
-        how='inner',
-        predicate='intersects'
-    )
-    
-    # Calculate length of river segment within each county
-    joined['river_length'] = joined.apply(
-        lambda row: row.river_geom.intersection(row.geometry).length, 
-        axis=1
-    )
-    
-    # Group by county and river, sum lengths (for multi-part rivers), then keep the longest river per county
-    df = (
-        joined.groupby(['countyName', 'riverName'])['river_length']
-        .sum()
-        .reset_index()
-        .sort_values('river_length', ascending=False)
-        .drop_duplicates('countyName', keep='first')  # Keep the longest river for each county
-        [['countyName', 'riverName', 'river_length']]  # Select only the desired columns
-        .reset_index(drop=True)
-    )
+# Spatial join: Match rivers to counties they intersect
+joined = gpd.sjoin(
+    grouping_gdf[['countyName', 'geometry']],  # Left: counties with geometry
+    summarizing_object_gdf[['riverName', 'geometry']],  # Right: rivers with geometry
+    how='inner',
+    predicate='intersects'
+)
 
+# Calculate length of river segment within each county (use right geometry)
+joined['river_length'] = joined.apply(
+    lambda row: row.geometry_right.intersection(row.geometry).length,
+    axis=1
+)
+
+# Find the longest river per county
+df = (
+    joined.groupby(['countyName', 'riverName'])['river_length']
+    .sum()
+    .reset_index()
+    .sort_values('river_length', ascending=False)
+    .drop_duplicates('countyName', keep='first')  # Keep longest river per county
+    [['countyName', 'riverName', 'river_length']]  # Select desired columns
+    .reset_index(drop=True)
+)
 
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
