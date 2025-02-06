@@ -216,7 +216,7 @@ Suppose `grouping_gdf` contains all counties in Ohio State with the column `coun
 "find the longest river in each county in Ohio",  the following code can be used:
     
     # Rename river geometry to avoid collision during spatial join
-    summarizing_object_gdf = summarizing_object_gdf.rename(columns={'geometry': 'river_geom'}).set_geometry('river_geom')
+    summarizing_object_gdf = summarizing_object_gdf.rename(columns={{'geometry': 'river_geom'}}).set_geometry('river_geom')
     
     # Spatial join: Match rivers to counties they intersect
     joined = gpd.sjoin(
