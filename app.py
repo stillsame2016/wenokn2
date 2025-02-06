@@ -682,7 +682,7 @@ with col2:
                                     grouping_gdf.label = grouping_object_request
                                     
                             logger.info(f"Columns for the fetched grouping objects: {grouping_gdf.columns.to_list()}")
-                            logger.info(f"Shape for the fetched grouping objects: {grouping_gdf.shape})
+                            logger.info(f"The Shape for the fetched grouping objects: {grouping_gdf.shape}")
                             st.markdown(f"The grouping obejcts are fetched: {grouping_gdf.shape} rows")
                                                     
                             grouping_bbox = grouping_gdf.total_bounds
