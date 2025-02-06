@@ -656,7 +656,7 @@ with col2:
                             # get the code for fetching group_object
                             grouping_object_request = aggregation_info["query_plan"][0]
                             logger.info(f"Process the grouping request: {json.dumps(grouping_object_request, indent=4)}")
-                            st.markdown(f"Process the grouping request: {grouping_object_request['request']}")
+                            st.markdown(f"**Process the grouping request**: {grouping_object_request['request']}")
                             
                             # run it via the query plan execution
                             query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
@@ -670,7 +670,7 @@ with col2:
                                 code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
                                 code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
                                 logger.info(code_for_grouping_object)
-                                st.markdown(f"Executing the following code:")
+                                st.markdown(f"**Executing the following code:**")
                                 st.code(code_for_grouping_object)
     
                                 # fetch grouping objects and their bounding box
@@ -683,11 +683,11 @@ with col2:
                                     
                             logger.info(f"Columns for the fetched grouping objects: {grouping_gdf.columns.to_list()}")
                             logger.info(f"The Shape for the fetched grouping objects: {grouping_gdf.shape}")
-                            st.markdown(f"The grouping obejcts are fetched: {grouping_gdf.shape} rows")
+                            st.markdown(f"**The grouping obejcts are fetched:** {grouping_gdf.shape} rows")
                                                     
                             grouping_bbox = grouping_gdf.total_bounds
                             describe_bbox = lambda bbox: f"from ({bbox[0]:.4f}, {bbox[1]:.4f}) to ({bbox[2]:.4f}, {bbox[3]:.4f})"
-                            st.markdown(f"The bounding box of the grouping objects for optimizing: {describe_bbox(grouping_bbox)}")
+                            st.markdown(f"**The bounding box of the grouping objects for optimizing:**\n{describe_bbox(grouping_bbox)}")
 
                             # -------------------------------------------
                             # get the code for fetching summarizing object
