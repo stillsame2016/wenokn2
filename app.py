@@ -627,9 +627,16 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
+                            # get aggregation plan
                             aggregation_info = get_aggregation_plan(llm, user_input)
-                            st.code(json.dumps(aggregation_info, indent=4))
-
+                            logger.info(json.dumps(aggregation_info, indent=4))
+                            
+                            # show the aggregation plan
+                            aggregation_plan_text = "The following query plan has been designed to address your aggregation request:\n"
+                            for i, query in enumerate(aggregation_info, 1):
+                                aggregation_plan_text += f"{i}. {query['request']}\n"
+                            st.markdown(query_plan_text)
+            
                             globals_dict = {    
                                 'st': st,
                                 'sparql_dataframe': sparql_dataframe,
@@ -650,7 +657,7 @@ with col2:
                             grouping_object_request = aggregation_info["query_plan"][0]
                             st.code(json.dumps(grouping_object_request, indent=4))
 
-                            # to run it via the query plan execution
+                            # run it via the query plan execution
                             query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
                             if query_plan_text:
                                 logger.info(f"execute_query return: {query_plan_text}")
