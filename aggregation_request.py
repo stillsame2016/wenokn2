@@ -215,6 +215,12 @@ Suppose `grouping_gdf` contains all counties in Ohio State with the column `coun
 `summarizing_object_gdf` contains all rivers with the column `riverName` and `geometry`. To resolve the request
 "find the longest river in each county in Ohio",  the following code can be used:
 
+# First, ensure input data is in WGS84 (EPSG:4326)
+if grouping_gdf.crs is None:
+    grouping_gdf.set_crs(epsg=4326, inplace=True)
+if summarizing_object_gdf.crs is None:
+    summarizing_object_gdf.set_crs(epsg=4326, inplace=True)
+
 # Reproject counties and rivers to a USA-wide projected CRS (units: meters) because we want to show the river length in meters
 grouping_gdf = grouping_gdf.to_crs("EPSG:5070")  # Counties
 summarizing_object_gdf = summarizing_object_gdf.to_crs("EPSG:5070")  # Rivers
