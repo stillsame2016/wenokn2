@@ -243,10 +243,6 @@ df = (
     .reset_index(drop=True)
 )
 
-# Convert lengths to kilometers for better readability (optional)
-df['river_length_km'] = df['river_length'] / 1000
-
-
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
 **User request:** {user_input}
