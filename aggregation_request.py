@@ -217,15 +217,18 @@ Suppose `grouping_gdf` contains all counties in Ohio State with the column `coun
     
 # Spatial join: Match rivers to counties they intersect
 joined = gpd.sjoin(
-    grouping_gdf[['countyName', 'geometry']],  # Left: counties with geometry
-    summarizing_object_gdf[['riverName', 'geometry']],  # Right: rivers with geometry
+    grouping_gdf[['countyName', 'geometry']],  # Left: counties
+    summarizing_object_gdf[['riverName', 'geometry']],  # Right: rivers
     how='inner',
     predicate='intersects'
 )
 
-# Calculate length of river segment within each county (use right geometry)
+# After the spatial join, the geometries are named differently
+# The original geometry from the left dataset is named 'geometry'
+# The geometry from the right dataset is named 'geometry_'
+# Calculate length of river segment within each county
 joined['river_length'] = joined.apply(
-    lambda row: row.geometry_right.intersection(row.geometry).length,
+    lambda row: summarizing_object_gdf.loc[row.index_right, 'geometry'].intersection(row.geometry).length,
     axis=1
 )
 
@@ -239,6 +242,9 @@ df = (
     [['countyName', 'riverName', 'river_length']]  # Select desired columns
     .reset_index(drop=True)
 )
+
+# Convert lengths to kilometers for better readability (optional)
+df['river_length_km'] = df['river_length'] / 1000
 
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
