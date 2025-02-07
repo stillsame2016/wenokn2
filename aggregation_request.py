@@ -214,7 +214,11 @@ Generate Python code to:
 Suppose `grouping_gdf` contains all counties in Ohio State with the column `countyName` and `geometry`,  and
 `summarizing_object_gdf` contains all rivers with the column `riverName` and `geometry`. To resolve the request
 "find the longest river in each county in Ohio",  the following code can be used:
-    
+
+# Reproject counties and rivers to a USA-wide projected CRS (units: meters) because we want to show the river length in meters
+grouping_gdf = grouping_gdf.to_crs("EPSG:5070")  # Counties
+summarizing_object_gdf = summarizing_object_gdf.to_crs("EPSG:5070")  # Rivers
+
 # Spatial join: Match rivers to counties they intersect
 joined = gpd.sjoin(
     grouping_gdf[['countyName', 'geometry']],  # Left: counties
