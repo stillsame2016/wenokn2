@@ -707,7 +707,11 @@ with col2:
                             logger.info(f"Process the summarizing request: {json.dumps(summarizing_object_request, indent=4)}")
                             st.markdown(f"**Process the summarizing request**: {summarizing_object_request['request']}")
 
-                            code_for_summarizing_object = get_code_for_summarizing_object(llm, summarizing_object_request, grouping_bbox)
+                            request_copy = summarizing_object_request.copy()
+                            if request_copy["data_source"] == "WEN-OKN database":
+                                request_copy["request"] = request_copy["request"].replace("Find all", "Find 10000")
+                            
+                            code_for_summarizing_object = get_code_for_summarizing_object(llm, request_copy, grouping_bbox)
                             logger.info(code_for_summarizing_object)
                             st.markdown(f"**Executing the following code:**")
                             st.code(code_for_summarizing_object)
