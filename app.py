@@ -689,7 +689,7 @@ with col2:
                                     if current_try == max_tries:
                                         raise error
                                     else:
-                                        st.markdown(f"Encounter an error '{str(error}'. Try again.")
+                                        st.markdown(f"Encounter an error '{str(error)}'. Try again.")
                                     
                             logger.info(f"Columns for the fetched grouping objects: {grouping_gdf.columns.to_list()}")
                             logger.info(f"The Shape for the fetched grouping objects: {grouping_gdf.shape}")
