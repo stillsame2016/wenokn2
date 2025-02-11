@@ -710,19 +710,30 @@ with col2:
                             request_copy = summarizing_object_request.copy()
                             if request_copy["data_source"] == "WEN-OKN database":
                                 request_copy["request"] = request_copy["request"].replace("Find all", "Find 10000")
-                            
-                            code_for_summarizing_object = get_code_for_summarizing_object(llm, request_copy, grouping_bbox)
-                            logger.info(code_for_summarizing_object)
-                            st.markdown(f"**Executing the following code:**")
-                            st.code(code_for_summarizing_object)
 
-                            # fetch summarizing objects
-                            exec(code_for_summarizing_object, globals_dict)    
-                            if 'summarizing_object_gdf' in globals_dict.keys():
-                                summarizing_object_gdf = globals_dict['summarizing_object_gdf']   
-                            else:
-                                summarizing_object_gdf = globals_dict['gdf']
-                                summarizing_object_gdf.label = summarizing_object_request
+                            max_tries = 3
+                            current_try = 0
+                            while current_try < max_tries:
+                                try:
+                                    code_for_summarizing_object = get_code_for_summarizing_object(llm, request_copy, grouping_bbox)
+                                    logger.info(code_for_summarizing_object)
+                                    st.markdown(f"**Executing the following code:**")
+                                    st.code(code_for_summarizing_object)
+        
+                                    # fetch summarizing objects
+                                    exec(code_for_summarizing_object, globals_dict)    
+                                    if 'summarizing_object_gdf' in globals_dict.keys():
+                                        summarizing_object_gdf = globals_dict['summarizing_object_gdf']   
+                                    else:
+                                        summarizing_object_gdf = globals_dict['gdf']
+                                        summarizing_object_gdf.label = summarizing_object_request
+                                    break
+                                except Exception as error:
+                                    current_try += 1
+                                    if current_try == max_tries:
+                                        raise error
+                                    else:
+                                        st.markdown(f"Encounter an error '{str(error)}'. Try again.")
 
                             logger.info(f"Columns for the summarizing grouping objects: {summarizing_object_gdf.columns.to_list()}")
                             logger.info(f"The Shape for the summarizing grouping objects: {summarizing_object_gdf.shape}")
