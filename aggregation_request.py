@@ -254,7 +254,7 @@ df = (
 )
 
 # rename the most important column
-df = df.rename(columns={'countyName': 'Name'})
+df = df.rename(columns={{'countyName': 'Name'}})
 
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
