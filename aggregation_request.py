@@ -253,6 +253,9 @@ df = (
     .reset_index(drop=True)
 )
 
+# rename the most important column
+df = df.rename(columns={'countyName': 'Name'})
+
 **Return ONLY valid Python code implementing this workflow. Do not include explanations or comments.**  
 
 **User request:** {user_input}
