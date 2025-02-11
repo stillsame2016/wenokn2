@@ -249,7 +249,7 @@ df = (
     .reset_index()
     .sort_values('river_length', ascending=False)
     .drop_duplicates('countyName', keep='first')  # Keep longest river per county
-    [['countyName', 'riverName', 'river_length']]  # Select desired columns
+    [['countyName', 'riverName', 'river_length']]  # Select desired columns. Note that keep the column riverName
     .reset_index(drop=True)
 )
 
