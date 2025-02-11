@@ -658,28 +658,38 @@ with col2:
                             logger.info(f"Process the grouping request: {json.dumps(grouping_object_request, indent=4)}")
                             st.markdown(f"**Process the grouping request**: {grouping_object_request['request']}")
                             
-                            # run it via the query plan execution
-                            query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
-                            if query_plan_text:
-                                logger.info(f"execute_query return: {query_plan_text}")
-                                logger.info(f"execute_query return: {message}")
-                                st.session_state.rerun = False
-                                grouping_gdf = st.session_state.datasets[-1]
-                            else:
-                                # process the request
-                                code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
-                                code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
-                                logger.info(code_for_grouping_object)
-                                st.markdown(f"**Executing the following code:**")
-                                st.code(code_for_grouping_object)
-    
-                                # fetch grouping objects and their bounding box
-                                exec(code_for_grouping_object, globals_dict)  
-                                if 'grouping_gdf' in globals_dict.keys():
-                                    grouping_gdf = globals_dict['grouping_gdf']  
-                                else:
-                                    grouping_gdf = globals_dict['gdf']
-                                    grouping_gdf.label = grouping_object_request
+                            # execute the query plan for the grouping objects request
+                            max_tries = 3
+                            current_try = 0
+                            while current_try < max_tries:
+                                try:
+                                    query_plan_text, message = execute_query(grouping_object_request['request'], chat_container)
+                                    if query_plan_text:
+                                        logger.info(f"execute_query return: {query_plan_text}")
+                                        logger.info(f"execute_query return: {message}")
+                                        st.session_state.rerun = False
+                                        grouping_gdf = st.session_state.datasets[-1]
+                                    else:
+                                        # process the request
+                                        code_for_grouping_object = get_code_for_grouping_object(llm, grouping_object_request)
+                                        code_for_grouping_object = code_for_grouping_object.replace("load_basins(", "load_basins_2(")
+                                        logger.info(code_for_grouping_object)
+                                        st.markdown(f"**Executing the following code:**")
+                                        st.code(code_for_grouping_object)
+            
+                                        # fetch grouping objects and their bounding box
+                                        exec(code_for_grouping_object, globals_dict)  
+                                        if 'grouping_gdf' in globals_dict.keys():
+                                            grouping_gdf = globals_dict['grouping_gdf']  
+                                        else:
+                                            grouping_gdf = globals_dict['gdf']
+                                            grouping_gdf.label = grouping_object_request
+                                except Exception as error:
+                                    current_try += 1
+                                    if current_try == max_tries:
+                                        raise error
+                                    else:
+                                        st.markdown(f"Encounter an error '{str(error}'. Try again.")
                                     
                             logger.info(f"Columns for the fetched grouping objects: {grouping_gdf.columns.to_list()}")
                             logger.info(f"The Shape for the fetched grouping objects: {grouping_gdf.shape}")
