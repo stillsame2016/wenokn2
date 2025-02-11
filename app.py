@@ -684,6 +684,7 @@ with col2:
                                         else:
                                             grouping_gdf = globals_dict['gdf']
                                             grouping_gdf.label = grouping_object_request
+                                    break
                                 except Exception as error:
                                     current_try += 1
                                     if current_try == max_tries:
