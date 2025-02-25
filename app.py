@@ -416,6 +416,12 @@ with col2:
 
         ######## NPDES ########
         'How do I determine if my facility is subject to NPDES regulations in Ohio?',
+
+        ######## Aggregation ########
+        'How many rivers flow through each county in Ohio?',
+        'How many dams are in each county of Ohio?',
+        'How many coal mines are in each basin in Ohio?',
+        'What is the longest river in each county of Ohio state?',
     ]
     st.markdown(
         """
