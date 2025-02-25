@@ -777,6 +777,7 @@ with col2:
                             
                             # Keep only the original columns from summarizing_object_gdf
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns].copy()
+                            logger.info(f"gdf_intersect: {gdf_intersect.shape}")
                             
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
