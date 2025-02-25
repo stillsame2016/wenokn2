@@ -789,6 +789,8 @@ with col2:
                             logger.info(f"Columns in gdf_intersect before subsetting: {gdf_intersect.columns}")
                             logger.info(f"Shape before subsetting: {gdf_intersect.shape}")
 
+                            logger.info(f"Columns in summarizing_object_gdf before subsetting: {summarizing_object_gdf.columns}")
+
                             # Keep only the original columns from summarizing_object_gdf
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
 
