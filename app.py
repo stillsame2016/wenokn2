@@ -776,6 +776,7 @@ with col2:
                                 tmp_gdf = tmp_gdf.to_crs(grouping_gdf.crs)
                             gdf_intersect = gpd.sjoin(tmp_gdf, grouping_gdf, how="inner", predicate="intersects")
                             gdf_intersect = gdf_intersect[tmp_gdf.columns]
+                            logger.info("gdf_intersect", gdf_intersect.shape)
 
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
