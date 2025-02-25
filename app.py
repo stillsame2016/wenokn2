@@ -739,6 +739,10 @@ with col2:
                             logger.info(f"The Shape for the summarizing grouping objects: {summarizing_object_gdf.shape}")
                             st.markdown(f"**The summarizing obejcts are fetched:** {summarizing_object_gdf.shape} rows")
 
+                            # Fix CRS if it doesn't match the geometry
+                            if detect_4326_in_3857(summarizing_object_gdf) and summarizing_object_gdf.crs != "EPSG:4326":
+                                summarizing_object_gdf.set_crs("EPSG:4326", allow_override=True, inplace=True)
+
                             # -------------------------------------------
                             # resolve the aggregation request
                             logger.info(f"Process aggregation: {user_input}")
