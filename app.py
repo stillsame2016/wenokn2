@@ -774,7 +774,7 @@ with col2:
                             if tmp_gdf.crs is None:
                                 logger.info("================ check point 120 ================")
                                 tmp_gdf.set_crs(grouping_gdf.crs, inplace=True)  # Assign if missing
-                            elif tmp.crs != grouping_gdf.crs:
+                            elif tmp_gdf.crs != grouping_gdf.crs:
                                 logger.info("================ check point 130 ================")
                                 tmp_gdf = tmp_gdf.to_crs(grouping_gdf.crs)
                             logger.info("================ check point 200 ================")
