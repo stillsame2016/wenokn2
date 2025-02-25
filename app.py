@@ -805,6 +805,7 @@ with col2:
                             common_columns = gdf_intersect_columns.intersection(set(df.columns))
                             if len(list(common_columns)) == 1:
                                 columnA = list(common_columns)[0]
+                                logger.info(f"Unique common column: {columnA}")
                                 gdf_intersect = gdf_intersect[gdf_intersect[columnA].isin(df[columnA])]
 
                             # gdf_intersect = summarizing_object_gdf
