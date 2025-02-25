@@ -778,7 +778,7 @@ with col2:
                                 logger.info("================ check point 130 ================")
                                 tmp_gdf = tmp_gdf.to_crs(grouping_gdf.crs)
                             logger.info("================ check point 200 ================")
-                            gdf_intersect = gpd.sjoin(tmp_gdf, grouping_gdf, how="inner", predicate="intersects")
+                            gdf_intersect = gpd.sjoin(tmp_gdf, grouping_gdf, how="inner", predicate="within")
                             logger.info("================ check point 300 ================")
                             logger.info(f"gdf_intersect 1: {gdf_intersect.shape}")
                             gdf_intersect = gdf_intersect[tmp_gdf.columns]
