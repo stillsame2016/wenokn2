@@ -764,6 +764,9 @@ with col2:
                             st.session_state.table_chat_histories.append([])
                             st.session_state.chart_types.append("bar_chart")
 
+                            # -------------------------------------------
+                            # setup data for the map display 
+                            
                             grouping_gdf.title = grouping_object_request['request']
                             grouping_gdf.label = grouping_object_request['request']
                             grouping_gdf.id = str(uuid.uuid4())[:8]
@@ -795,6 +798,8 @@ with col2:
 
                             logger.info(f"Columns in gdf_intersect after subsetting: {gdf_intersect.columns}")
                             logger.info(f"Shape after subsetting: {gdf_intersect.shape}")
+
+                            logger.info(f"Columns in df after subsetting: {df.columns}")
                             
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
