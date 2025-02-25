@@ -780,9 +780,9 @@ with col2:
                             logger.info("================ check point 200 ================")
                             gdf_intersect = gpd.sjoin(tmp_gdf, grouping_gdf, how="inner", predicate="intersects")
                             logger.info("================ check point 300 ================")
-                            logger.info("gdf_intersect 1", gdf_intersect.shape)
+                            logger.info(f"gdf_intersect 1: {gdf_intersect.shape}")
                             gdf_intersect = gdf_intersect[tmp_gdf.columns]
-                            logger.info("gdf_intersect 2", gdf_intersect.shape)
+                            logger.info(f"gdf_intersect 1: {gdf_intersect.shape}")
 
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
