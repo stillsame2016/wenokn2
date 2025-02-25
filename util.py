@@ -774,3 +774,60 @@ def get_gdf_from_data_request(message, chat_container):
                     except Exception as e:
                         return None
                 return None
+
+
+def detect_4326_in_3857(gdf):
+    """
+    Detect if a geodataframe with CRS 3857 actually contains coordinates in 4326
+    
+    Args:
+        gdf: GeoPandas DataFrame to check
+        
+    Returns:
+        bool: True if likely contains 4326 coords, False otherwise
+    """
+    # Check if the declared CRS is 3857
+    if gdf.crs is None or '3857' not in str(gdf.crs):
+        print("GeoDataFrame CRS is not 3857")
+        return False
+        
+    # Extract a sample of coordinates for checking
+    x_coords = []
+    y_coords = []
+    
+    # Get coordinates from first 100 geometries or all if less than 100
+    sample_size = min(100, len(gdf))
+    for i in range(sample_size):
+        geom = gdf.geometry.iloc[i]
+        if hasattr(geom, 'geoms'):  # For multigeometries
+            for part in geom.geoms:
+                x, y = part.representative_point().x, part.representative_point().y
+                x_coords.append(x)
+                y_coords.append(y)
+        else:
+            x, y = geom.representative_point().x, geom.representative_point().y
+            x_coords.append(x)
+            y_coords.append(y)
+    
+    # Check coordinate ranges
+    # EPSG:4326 typically has values between -180 to 180 for longitude and -90 to 90 for latitude
+    # EPSG:3857 typically has values in millions
+    x_range = max(x_coords) - min(x_coords)
+    y_range = max(y_coords) - min(y_coords)
+    
+    # Typical WebMercator (3857) coords are measured in meters and in the millions
+    # If values are small, they're likely in degrees (4326)
+    is_likely_4326 = (abs(max(x_coords)) <= 180 and abs(min(x_coords)) <= 180 and 
+                      abs(max(y_coords)) <= 90 and abs(min(y_coords)) <= 90)
+    
+    if is_likely_4326:
+        print("DETECTED: Your geodataframe claims to be in EPSG:3857 but coordinates appear to be in EPSG:4326")
+        print(f"X range: {min(x_coords)} to {max(x_coords)}")
+        print(f"Y range: {min(y_coords)} to {max(y_coords)}")
+        print("To fix this issue, use: gdf = gdf.set_crs(epsg=4326, allow_override=True)")
+        if y_range > 90 or x_range > 360:
+            print("WARNING: While coordinates are in the range of EPSG:4326, some values exceed normal bounds")
+    else:
+        print("Coordinates appear to match the declared CRS:3857")
+        
+    return is_likely_4326
