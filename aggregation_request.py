@@ -221,6 +221,10 @@ if grouping_gdf.crs is None:
 if summarizing_object_gdf.crs is None:
     summarizing_object_gdf.set_crs(epsg=4326, inplace=True)
 
+# Make sure grouping_gdf and summarizing_object_gdf use the same CRS.
+if summarizing_object_gdf.crs != grouping_gdf.crs:
+    summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
+
 # Reproject counties and rivers to a USA-wide projected CRS (units: meters) because we want to show the river length in meters
 grouping_gdf = grouping_gdf.to_crs("EPSG:5070")  # Counties
 summarizing_object_gdf = summarizing_object_gdf.to_crs("EPSG:5070")  # Rivers
