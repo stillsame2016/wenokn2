@@ -785,10 +785,15 @@ with col2:
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
-                            
+
+                            logger.info(f"Columns in gdf_intersect before subsetting: {gdf_intersect.columns}")
+                            logger.info(f"Shape before subsetting: {gdf_intersect.shape}")
+
                             # Keep only the original columns from summarizing_object_gdf
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
-                            logger.info(f"gdf_intersect keep summarizing_object_gdf columns: {gdf_intersect.shape}")
+
+                            logger.info(f"Columns in gdf_intersect after subsetting: {gdf_intersect.columns}")
+                            logger.info(f"Shape after subsetting: {gdf_intersect.shape}")
                             
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
