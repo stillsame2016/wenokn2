@@ -775,7 +775,7 @@ with col2:
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
                             logger.info(f"Summarizing geometry: {summarizing_object_gdf[['geometry']]}")
                             
-                            logger.info(f"detect_4326_in_3857: {detect_4326_in_3857(summarizing_object_gdf}")
+                            logger.info(f"detect_4326_in_3857: {detect_4326_in_3857(summarizing_object_gdf)}")
                             # # Fix CRS if it doesn't match the geometry
                             # if summarizing_object_gdf.crs != "EPSG:4326":
                             #     # First, set the CRS correctly (if the actual geometry is in EPSG:4326)
