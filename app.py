@@ -771,6 +771,9 @@ with col2:
                             logger.info(f"Summarizing CRS: {summarizing_object_gdf.crs}")
                             logger.info(f"Grouping CRS: {grouping_gdf.crs}")
 
+                            logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
+                            logger.info(f"Grouping shape: {grouping_gdf.shape}")
+
                             logger.info(f"Invalid geometries in summarizing_object_gdf: {summarizing_object_gdf[~summarizing_object_gdf.is_valid]}")
                             logger.info(f"Invalid geometries in grouping_gdf: {grouping_gdf[~grouping_gdf.is_valid]}")
 
