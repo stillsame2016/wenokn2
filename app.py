@@ -743,6 +743,11 @@ with col2:
                             # resolve the aggregation request
                             logger.info(f"Process aggregation: {user_input}")
                             st.markdown(f"**Process aggregation:** {user_input}")
+
+                            if summarizing_object_gdf.crs is None:
+                                summarizing_object_gdf.set_crs(grouping_gdf.crs, inplace=True)  # Assign if missing
+                            elif summarizing_object_gdf.crs != grouping_gdf.crs:
+                                summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
                             
                             code_for_aggregation = strip_code(get_code_for_aggregation(llm, grouping_gdf, summarizing_object_gdf, user_input))
                             logger.info(code_for_aggregation)
