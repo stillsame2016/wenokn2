@@ -780,9 +780,6 @@ with col2:
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
-
-                                    summarizing_object_gdf.crs: {summarizing_object_gdf.crs}
-                                    grouping_gdf.crs: {grouping_gdf.crs}
                                     """
                             st.markdown(message)
                             st.session_state.chat.append({"role": "assistant", "content": message})
