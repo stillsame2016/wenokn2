@@ -627,6 +627,8 @@ with col2:
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
+                            count_start = len(st.session_state.datasets)
+                            
                             # get aggregation plan
                             aggregation_info = get_aggregation_plan(llm, user_input)
                             logger.info(json.dumps(aggregation_info, indent=4))
@@ -759,9 +761,13 @@ with col2:
                             st.session_state.wen_tables.append(df.copy())
                             st.session_state.table_chat_histories.append([])
                             st.session_state.chart_types.append("bar_chart")
+
+                            count_end = len(st.session_state.datasets)    
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
                                     found and displayed.
+
+                                    {count_start} to {count_end}
                                     """
                             st.markdown(message)
                             st.session_state.chat.append({"role": "assistant", "content": message})
