@@ -772,7 +772,19 @@ with col2:
                             #     summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
                             # gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             # gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
-                            gdf_intersect = summarizing_object_gdf
+
+                            if summarizing_object_gdf.crs is None:
+                                summarizing_object_gdf.set_crs(grouping_gdf.crs, inplace=True)  # Assign if missing
+                            elif summarizing_object_gdf.crs != grouping_gdf.crs:
+                                summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
+
+                            # Perform spatial join
+                            gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
+
+                            # Keep only the original columns from summarizing_object_gdf
+                            gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
+
+                            # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
                             gdf_intersect.label = summarizing_object_request['request']
                             gdf_intersect.id = str(uuid.uuid4())[:8]
