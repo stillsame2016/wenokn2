@@ -819,7 +819,13 @@ with col2:
                             gdf_intersect.label = summarizing_object_request['request']
                             gdf_intersect.id = str(uuid.uuid4())[:8]
                             gdf_intersect.time = time.time()
-                            st.session_state.requests.append(f"{code_for_summarizing_object}\n{summarizing_object_request['request']}\n{code_for_aggregation}")
+    
+                            final_code = f"""
+                                            {code_for_grouping_object}
+                                            {code_for_summarizing_object}
+                                            {code_for_aggregation}
+                                         """
+                            st.session_state.requests.append(f"{final_code}")
                             st.session_state.sparqls.append(code_for_summarizing_object)
                             st.session_state.datasets.append(gdf_intersect)
                             
