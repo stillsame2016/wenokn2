@@ -769,13 +769,15 @@ with col2:
                             st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
-                            summarizing_object_gdf.title = summarizing_object_request['request']
-                            summarizing_object_gdf.label = summarizing_object_request['request']
-                            summarizing_object_gdf.id = str(uuid.uuid4())[:8]
-                            summarizing_object_gdf.time = time.time()
+                            gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
+                            gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
+                            gdf_intersect.title = summarizing_object_request['request']
+                            gdf_intersect.label = summarizing_object_request['request']
+                            gdf_intersect.id = str(uuid.uuid4())[:8]
+                            gdf_intersect.time = time.time()
                             st.session_state.requests.append(summarizing_object_request['request'])
                             st.session_state.sparqls.append("")
-                            st.session_state.datasets.append(summarizing_object_gdf)
+                            st.session_state.datasets.append(gdf_intersect)
                             
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
