@@ -768,6 +768,16 @@ with col2:
                             st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
+                            logger.info(f"Summarizing CRS: {summarizing_object_gdf.crs}")
+                            logger.info(f"Grouping CRS: {grouping_gdf.crs}")
+
+                            logger.info(f"Invalid geometries in summarizing_object_gdf: {summarizing_object_gdf[~summarizing_object_gdf.is_valid]}")
+                            logger.info(f"Invalid geometries in grouping_gdf: {grouping_gdf[~grouping_gdf.is_valid]}")
+
+                            logger.info(f"Empty geometries in summarizing_object_gdf: {summarizing_object_gdf[summarizing_object_gdf.is_empty]}")
+                            logger.info(f"Empty geometries in grouping_gdf: {grouping_gdf[grouping_gdf.is_empty]}")
+
+                            
                             # Ensure both GeoDataFrames have the same CRS
                             if summarizing_object_gdf.crs != grouping_gdf.crs:
                                 summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
