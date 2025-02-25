@@ -748,7 +748,6 @@ with col2:
                             logger.info(code_for_aggregation)
                             st.markdown(f"**Executing the following code:**")
                             st.code(code_for_aggregation)
-                            time.sleep(30)
                             
                             globals_dict['grouping_gdf'] = grouping_gdf
                             globals_dict['summarizing_object_gdf'] = summarizing_object_gdf
