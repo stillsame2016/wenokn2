@@ -778,7 +778,7 @@ with col2:
                             grouping_gdf.id = str(uuid.uuid4())[:8]
                             grouping_gdf.time = time.time()
                             st.session_state.requests.append(grouping_object_request['request'])
-                            st.session_state.sparqls.append(code_for_grouping_object)
+                            st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
                             logger.info(f"Summarizing CRS: {summarizing_object_gdf.crs}")
@@ -819,7 +819,7 @@ with col2:
                             gdf_intersect.label = summarizing_object_request['request']
                             gdf_intersect.id = str(uuid.uuid4())[:8]
                             gdf_intersect.time = time.time()
-                            st.session_state.requests.append(summarizing_object_request['request'])
+                            st.session_state.requests.append(f"{code_for_summarizing_object}\n{summarizing_object_request['request']}\n{code_for_aggregation}")
                             st.session_state.sparqls.append(code_for_summarizing_object)
                             st.session_state.datasets.append(gdf_intersect)
                             
