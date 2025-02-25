@@ -768,6 +768,8 @@ with col2:
                             st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
+                            if summarizing_object_gdf.crs != grouping_gdf.crs:
+                                summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
                             gdf_intersect.title = summarizing_object_request['request']
