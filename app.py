@@ -784,9 +784,14 @@ with col2:
                             # Ensure both GeoDataFrames have the same CRS
                             if summarizing_object_gdf.crs != grouping_gdf.crs:
                                 summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
-                            
+
+                            logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
+                            logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
+
+                            has_intersections = summarizing_object_gdf.geometry.intersects(grouping_gdf.unary_union)
+                            logger.info(f"Number of intersecting geometries: {has_intersections.sum()}")
+
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
-                            logger.info(f"==== 100")
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
                             
@@ -797,10 +802,8 @@ with col2:
                             if gdf_intersect.empty:
                                 gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="overlaps")
                                 logger.info(f"After 'overlaps' filter: {gdf_intersect.shape}")
-
                             
                             # Keep only the original columns from summarizing_object_gdf
-                            logger.info(f"==== 100 {gdf_intersect.shape}")
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns].copy()
                             logger.info(f"gdf_intersect: {gdf_intersect.shape}")
                             
