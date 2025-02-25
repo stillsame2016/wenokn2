@@ -773,6 +773,8 @@ with col2:
 
                             logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
+
+                            logger.info(f"Summarizing geometries: {summarizing_object_gdf[['geometry']]}")
                             
                             # Ensure both GeoDataFrames have the same CRS
                             if summarizing_object_gdf.crs != "EPSG:4326":
