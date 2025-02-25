@@ -779,39 +779,37 @@ with col2:
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
                             logger.info(f"Summarizing geometry: {summarizing_object_gdf[['geometry']]}")
                             
-                            logger.info(f"detect_4326_in_3857: {detect_4326_in_3857(summarizing_object_gdf)}")
-                            # # Fix CRS if it doesn't match the geometry
-                            # if summarizing_object_gdf.crs != "EPSG:4326":
-                            #     # First, set the CRS correctly (if the actual geometry is in EPSG:4326)
-                            #     summarizing_object_gdf.set_crs("EPSG:4326", allow_override=True, inplace=True)
+                            if detect_4326_in_3857(summarizing_object_gdf) and summarizing_object_gdf.crs != "EPSG:4326":
+                                # First, set the CRS correctly (if the actual geometry is in EPSG:4326)
+                                summarizing_object_gdf.set_crs("EPSG:4326", allow_override=True, inplace=True)
 
-                            # logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
-                            # logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
+                            logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
+                            logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
 
-                            # # Perform a spatial join to keep only rows that intersect grouping_gdf
-                            # gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
-                            # logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
+                            # Perform a spatial join to keep only rows that intersect grouping_gdf
+                            gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
+                            logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
 
-                            # logger.info(f"Columns in gdf_intersect before subsetting: {gdf_intersect.columns}")
-                            # logger.info(f"Shape before subsetting: {gdf_intersect.shape}")
+                            logger.info(f"Columns in gdf_intersect before subsetting: {gdf_intersect.columns}")
+                            logger.info(f"Shape before subsetting: {gdf_intersect.shape}")
 
-                            # logger.info(f"Columns in summarizing_object_gdf before subsetting: {summarizing_object_gdf.columns}")
+                            logger.info(f"Columns in summarizing_object_gdf before subsetting: {summarizing_object_gdf.columns}")
 
-                            # # Keep only the original columns from summarizing_object_gdf
-                            # gdf_intersect = gdf_intersect[[col for col in gdf_intersect.columns if not col.endswith('_right')]]
-                            # gdf_intersect = gdf_intersect.drop(columns=['OBJECTID_left'], errors='ignore')
+                            # Keep only the original columns from summarizing_object_gdf
+                            gdf_intersect = gdf_intersect[[col for col in gdf_intersect.columns if not col.endswith('_right')]]
+                            gdf_intersect = gdf_intersect.drop(columns=['OBJECTID_left'], errors='ignore')
 
-                            # logger.info(f"Columns in gdf_intersect after subsetting: {gdf_intersect.columns}")
-                            # logger.info(f"Shape after subsetting: {gdf_intersect.shape}")
+                            logger.info(f"Columns in gdf_intersect after subsetting: {gdf_intersect.columns}")
+                            logger.info(f"Shape after subsetting: {gdf_intersect.shape}")
                             
-                            # # gdf_intersect = summarizing_object_gdf
-                            # gdf_intersect.title = summarizing_object_request['request']
-                            # gdf_intersect.label = summarizing_object_request['request']
-                            # gdf_intersect.id = str(uuid.uuid4())[:8]
-                            # gdf_intersect.time = time.time()
-                            # st.session_state.requests.append(summarizing_object_request['request'])
-                            # st.session_state.sparqls.append("")
-                            # st.session_state.datasets.append(gdf_intersect)
+                            # gdf_intersect = summarizing_object_gdf
+                            gdf_intersect.title = summarizing_object_request['request']
+                            gdf_intersect.label = summarizing_object_request['request']
+                            gdf_intersect.id = str(uuid.uuid4())[:8]
+                            gdf_intersect.time = time.time()
+                            st.session_state.requests.append(summarizing_object_request['request'])
+                            st.session_state.sparqls.append("")
+                            st.session_state.datasets.append(gdf_intersect)
                             
                             message = f"""
                                     Your request has been processed. {df.shape[0]} { "rows are" if df.shape[0] > 1 else "row is"}
