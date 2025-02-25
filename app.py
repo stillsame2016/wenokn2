@@ -773,9 +773,11 @@ with col2:
                                 summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
                             
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
+                            logger.info(f"==== 100")
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             
                             # Keep only the original columns from summarizing_object_gdf
+                            logger.info(f"==== 100 gdf_intersect.shape")
                             gdf_intersect = gdf_intersect[summarizing_object_gdf.columns].copy()
                             logger.info(f"gdf_intersect: {gdf_intersect.shape}")
                             
