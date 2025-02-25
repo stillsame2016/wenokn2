@@ -768,11 +768,13 @@ with col2:
                             st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
-                            # logger.info(f"Summarizing CRS: {summarizing_object_gdf.crs}")
-                            # logger.info(f"Grouping CRS: {grouping_gdf.crs}")
+                            logger.info(f"Summarizing CRS: {summarizing_object_gdf.crs}")
+                            logger.info(f"Grouping CRS: {grouping_gdf.crs}")
 
-                            # logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
-                            # logger.info(f"Grouping shape: {grouping_gdf.shape}")
+                            logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
+                            logger.info(f"Grouping shape: {grouping_gdf.shape}")
+                            logger.info(f"Summarizing geometry: {summarizing_object_gdf[['geometry']]}")
+                            
                             
                             # # Fix CRS if it doesn't match the geometry
                             # if summarizing_object_gdf.crs != "EPSG:4326":
