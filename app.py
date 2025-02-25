@@ -768,13 +768,15 @@ with col2:
                             st.session_state.sparqls.append("")
                             st.session_state.datasets.append(grouping_gdf)
 
-                            logger.info("================ check point ================")
+                            logger.info("================ check point 100 ================")
                             tmp_gdf = summarizing_object_gdf.copy()
                             if tmp_gdf.crs is None:
                                 tmp_gdf.set_crs(grouping_gdf.crs, inplace=True)  # Assign if missing
                             elif tmp.crs != grouping_gdf.crs:
                                 tmp_gdf = tmp_gdf.to_crs(grouping_gdf.crs)
+                            logger.info("================ check point 200 ================")
                             gdf_intersect = gpd.sjoin(tmp_gdf, grouping_gdf, how="inner", predicate="intersects")
+                            logger.info("================ check point 300 ================")
                             gdf_intersect = gdf_intersect[tmp_gdf.columns]
                             logger.info("gdf_intersect", gdf_intersect.shape)
 
