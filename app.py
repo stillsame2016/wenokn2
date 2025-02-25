@@ -785,6 +785,16 @@ with col2:
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
                             logger.info(f"==== 100")
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
+                            logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
+                            
+                            if gdf_intersect.empty:
+                                gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="within")
+                                logger.info(f"After 'within' filter: {gdf_intersect.shape}")
+                            
+                            if gdf_intersect.empty:
+                                gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="overlaps")
+                                logger.info(f"After 'overlaps' filter: {gdf_intersect.shape}")
+
                             
                             # Keep only the original columns from summarizing_object_gdf
                             logger.info(f"==== 100 {gdf_intersect.shape}")
