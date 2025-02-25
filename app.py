@@ -777,22 +777,16 @@ with col2:
 
                             logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
-                            logger.info(f"Summarizing geometry: {summarizing_object_gdf[['geometry']]}")
                             
                             if detect_4326_in_3857(summarizing_object_gdf) and summarizing_object_gdf.crs != "EPSG:4326":
                                 # First, set the CRS correctly (if the actual geometry is in EPSG:4326)
                                 summarizing_object_gdf.set_crs("EPSG:4326", allow_override=True, inplace=True)
-
-                            logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
-                            logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
 
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
 
                             logger.info(f"Columns in gdf_intersect before subsetting: {gdf_intersect.columns}")
-                            logger.info(f"Shape before subsetting: {gdf_intersect.shape}")
-
                             logger.info(f"Columns in summarizing_object_gdf before subsetting: {summarizing_object_gdf.columns}")
 
                             # Keep only the original columns from summarizing_object_gdf
