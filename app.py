@@ -782,7 +782,7 @@ with col2:
                             logger.info("================ check point 300 ================")
                             logger.info(f"gdf_intersect 1: {gdf_intersect.shape}")
                             gdf_intersect = gdf_intersect[tmp_gdf.columns]
-                            logger.info(f"gdf_intersect 1: {gdf_intersect.shape}")
+                            logger.info(f"gdf_intersect 2: {gdf_intersect.shape}")
 
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
