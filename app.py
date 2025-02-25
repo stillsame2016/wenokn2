@@ -798,9 +798,15 @@ with col2:
 
                             logger.info(f"Columns in gdf_intersect after subsetting: {gdf_intersect.columns}")
                             logger.info(f"Shape after subsetting: {gdf_intersect.shape}")
-
                             logger.info(f"Columns in df after subsetting: {df.columns}")
-                            
+
+                            # Exclude the geometry column from gdf columns
+                            gdf_intersect_columns = set(gdf_intersect.columns) - {'geometry'}
+                            common_columns = gdf_intersect_columns.intersection(set(df.columns))
+                            if len(list(common_columns)) == 1:
+                                columnA = list(common_columns)[0]
+                                gdf_intersect = gdf_intersect[gdf_intersect[columnA].isin(df[columnA])]
+
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
                             gdf_intersect.label = summarizing_object_request['request']
