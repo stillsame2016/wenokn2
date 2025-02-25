@@ -773,8 +773,6 @@ with col2:
 
                             logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
-
-                            logger.info(f"Summarizing geometries: {summarizing_object_gdf[['geometry']]}")
                             
                             # Fix CRS if it doesn't match the geometry
                             if summarizing_object_gdf.crs != "EPSG:4326":
@@ -788,17 +786,9 @@ with col2:
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
                             logger.info(f"After 'intersects' filter: {gdf_intersect.shape}")
                             
-                            if gdf_intersect.empty:
-                                gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="within")
-                                logger.info(f"After 'within' filter: {gdf_intersect.shape}")
-                            
-                            if gdf_intersect.empty:
-                                gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="overlaps")
-                                logger.info(f"After 'overlaps' filter: {gdf_intersect.shape}")
-                            
                             # Keep only the original columns from summarizing_object_gdf
-                            gdf_intersect = gdf_intersect[summarizing_object_gdf.columns].copy()
-                            logger.info(f"gdf_intersect: {gdf_intersect.shape}")
+                            gdf_intersect = gdf_intersect[summarizing_object_gdf.columns]
+                            logger.info(f"gdf_intersect keep summarizing_object_gdf columns: {gdf_intersect.shape}")
                             
                             # gdf_intersect = summarizing_object_gdf
                             gdf_intersect.title = summarizing_object_request['request']
