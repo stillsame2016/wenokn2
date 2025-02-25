@@ -776,9 +776,10 @@ with col2:
 
                             logger.info(f"Summarizing geometries: {summarizing_object_gdf[['geometry']]}")
                             
-                            # Ensure both GeoDataFrames have the same CRS
+                            # Fix CRS if it doesn't match the geometry
                             if summarizing_object_gdf.crs != "EPSG:4326":
-                                summarizing_object_gdf = summarizing_object_gdf.to_crs("EPSG:4326")
+                                # First, set the CRS correctly (if the actual geometry is in EPSG:4326)
+                                summarizing_object_gdf.set_crs("EPSG:4326", allow_override=True, inplace=True)
 
                             logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
                             logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
