@@ -773,23 +773,13 @@ with col2:
 
                             logger.info(f"Summarizing shape: {summarizing_object_gdf.shape}")
                             logger.info(f"Grouping shape: {grouping_gdf.shape}")
-
-                            logger.info(f"Invalid geometries in summarizing_object_gdf: {summarizing_object_gdf[~summarizing_object_gdf.is_valid]}")
-                            logger.info(f"Invalid geometries in grouping_gdf: {grouping_gdf[~grouping_gdf.is_valid]}")
-
-                            logger.info(f"Empty geometries in summarizing_object_gdf: {summarizing_object_gdf[summarizing_object_gdf.is_empty]}")
-                            logger.info(f"Empty geometries in grouping_gdf: {grouping_gdf[grouping_gdf.is_empty]}")
-
                             
                             # Ensure both GeoDataFrames have the same CRS
-                            if summarizing_object_gdf.crs != grouping_gdf.crs:
-                                summarizing_object_gdf = summarizing_object_gdf.to_crs(grouping_gdf.crs)
+                            if summarizing_object_gdf.crs != "EPSG:4326":
+                                summarizing_object_gdf = summarizing_object_gdf.to_crs("EPSG:4326")
 
                             logger.info(f"Bounding box (summarizing_object_gdf): {summarizing_object_gdf.total_bounds}")
                             logger.info(f"Bounding box (grouping_gdf): {grouping_gdf.total_bounds}")
-
-                            has_intersections = summarizing_object_gdf.geometry.intersects(grouping_gdf.unary_union)
-                            logger.info(f"Number of intersecting geometries: {has_intersections.sum()}")
 
                             # Perform a spatial join to keep only rows that intersect grouping_gdf
                             gdf_intersect = gpd.sjoin(summarizing_object_gdf, grouping_gdf, how="inner", predicate="intersects")
