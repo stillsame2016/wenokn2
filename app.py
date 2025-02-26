@@ -821,7 +821,7 @@ with col2:
                             gdf_intersect.time = time.time()
     
                             st.session_state.requests.append(user_input)
-                            st.session_state.sparqls.append(code_for_aggregation)
+                            st.session_state.sparqls.append("")
                             st.session_state.datasets.append(gdf_intersect)
                             
                             message = f"""
