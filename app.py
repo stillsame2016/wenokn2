@@ -451,6 +451,7 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
+            logger.info(f"get_question_route: {route}")
             # st.markdown(route)
             # time.sleep(30)
             if route['request_type'] == 'WEN-KEN database':
