@@ -541,7 +541,7 @@ with col2:
                             st.markdown(message)
                             st.session_state.chat.append({"role": "assistant", "content": message})
                             st.rerun()
-            elif route['request_type'] == 'US Energy Atlas':
+            elif route['request_type'] == 'US Energy Atlas' or route['request_type'] == 'Energy Atlas':
                 with st.chat_message("assistant"):
                     with st.spinner("Loading data ..."):
                         try:
