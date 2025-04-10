@@ -151,7 +151,12 @@ def get_question_route(llm, question):
             Find all basins that intersect with Ohio River. 
         Because this request tried to find some basins which are contained in Energy Atlas.
 
-        [ Example 13]
+        [ Example 13 ]
+        Return "Data Commons" for the following request:
+            Find the number of people employed in all counties the Scioto River flows through. 
+        Because this request tried to find the number of people employed which are contained in Data Commons.
+
+        [ Example 14]
         Return "Aggregation" for the following requests:
             Find the number of rivers flow through each county in Ohio.
             Find the number of dams in each county in Ohio.
