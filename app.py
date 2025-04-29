@@ -49,7 +49,7 @@ llm2 = ChatOpenAI(model="gpt-4.1", temperature=0, max_tokens=5000, api_key=OpenA
 st.set_page_config(layout="wide", page_title="WEN-OKN")
 
 # Set up the title
-st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
+# st.markdown("### &nbsp; WEN-OKN: Dive into Data, Never Easier")
 # st.markdown("### &nbsp; Dive into Data, Never Easier")
 
 # Get all query parameters
