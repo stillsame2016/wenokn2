@@ -7,15 +7,7 @@ from langchain_core.output_parsers import JsonOutputParser
 def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to "Report" or "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or "Aggregation" or "Other". 
-
-	IMPORTANT RULE (Always Applies First):
-	If the user's question includes the intent to "create a report" (regardless of subject), then always return:
-	{{
-	  "request_type": "Report",
-	  "explanation": "The user wants to create a report, regardless of the topic."
-	}}
-	This overrides all other rules.
+        user question to "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or "Aggregation" or "Other". 
 
         Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
@@ -103,18 +95,8 @@ def get_question_route(llm, question):
   	"create a report" overrides them.
 
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
-        'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Report' or 'Other' based on the question. Return a JSON with a single key 
-        'request_type' and a key 'explanation' for reasons. 
-
-	[ Example 0 ]
- 	Return "Report" for the following requests:
-            Create a report about Muskingum River.
-	Because this request tries to create a report about a river.
-
- 	[ Example 0.1 ]
-	Return "Report" for the following request:
-	    Create a report about all counties the Muskingum River flows through.
-	Even though this request mentions counties and rivers (normally WEN-KEN database), the intent is to "create a report", which takes precedence.
+        'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Other' based on the question. Return a JSON with a single key 
+        'request_type' and a key 'explanation' for reasons and a boolean field 'need_report' if the user's question includes the intent to "create a report. 
 	
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
