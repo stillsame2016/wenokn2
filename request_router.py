@@ -89,16 +89,7 @@ def get_question_route(llm, question):
 	 {{
 	  "request_type": "...",
 	  "explanation": "...",
-	  "create_report": true | false
 	}}
- 
-	Set "create_report": true if the question implies intent to generate, produce, or create a report, summary, or document. Look for phrases like:
-		"generate a report"
-		"create a summary"
-		"compile a report"
-		"produce findings"
-		"document the results"
-	Otherwise, set "create_report": false.
 	
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
@@ -179,15 +170,6 @@ def get_question_route(llm, question):
 	        Find all states where the total coal mine output exceeds 1 million tons.
             Find the river in Ohio that has the highest number of dams.
 	        Find the watershed that has the highest total coal mine.
-
-  	[ Example 15 ]
-        For the request "Please create a report about Muskingum River", return the following:
- 	   {{
-              "request_type" : "WEN-OKN database",
-              "explanation" : "The request is about the Muskingum River, which falls under the category of rivers in the USA, and this information is contained in the WEN-KEN database.",
-	      "create_report": true
-            }}
-
   
         Question to route: {question} 
         
