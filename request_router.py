@@ -7,8 +7,10 @@ from langchain_core.output_parsers import JsonOutputParser
 def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas. 
-        
+        user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
+
+	Use “Report” if the user is asking for creating a report on an entity listed below.
+ 
         Use the WEN-KEN database for questions on the following entities: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
           2. Counties: Geometric representations of counties across the USA.
@@ -84,8 +86,6 @@ def get_question_route(llm, question):
             5) Pre-/Post-Conditions: Filters applied before/after aggregation (e.g., counties in Ohio State, result thresholds).
         Please note that an aggregation request must use an aggregation function. It is not an aggregation request if no aggregation function is used.
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
-
-        Use “Report” if the user is asking for a report on an entity listed above.
  
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
