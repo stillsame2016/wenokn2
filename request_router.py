@@ -106,7 +106,12 @@ def get_question_route(llm, question):
  	Return "Report" for the following requests:
             Create a report about Muskingum River.
 	Because this request tries to create a report about a river.
- 
+
+ 	[ Example 0.1 ]
+	Return "Report" for the following request:
+	    Create a report about all counties the Muskingum River flows through.
+	Even though this request mentions counties and rivers (normally WEN-KEN database), the intent is to "create a report", which takes precedence.
+	
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
 
