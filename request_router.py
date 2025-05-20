@@ -86,8 +86,10 @@ def get_question_route(llm, question):
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
-        'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Other' based on the question. Return a JSON with a single key 
-        'request_type' and a key 'explanation' for reasons and a key field 'create_report' with true/false if the user question includes the intent to "create a report. 
+        'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Other' based on the question, return a JSON with the following:
+	    - a single key 'request_type' 
+            - a key 'explanation' for reasons 
+	    - a key field 'create_report' with true/false if the user question includes the intent to "create a report. 
 	
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
