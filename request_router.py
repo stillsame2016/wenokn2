@@ -85,7 +85,7 @@ def get_question_route(llm, question):
         Please note that an aggregation request must use an aggregation function. It is not an aggregation request if no aggregation function is used.
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 
-	Return a JSON with the following keys:
+	Return a JSON with the following required keys:
 	 {{
 	  "request_type": "...",
 	  "explanation": "...",
