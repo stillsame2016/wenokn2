@@ -9,12 +9,13 @@ def get_question_route(llm, question):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
         user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
 
-        Return the following JSON string if the user question is "Please create a report about Muskingum River":
-            {{
-              "request_type" : "Report",
-              "explanation" : "The user wants to create a report about Muskingum River"
-            }}
- 
+        If the user's question contains an intent to "create a report" (regardless of the subject), always return:
+		{{
+		  "request_type": "Report",
+		  "explanation": "The user wants to create a report, regardless of the topic."
+		}}
+	This rule takes precedence over all others.
+
         Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
           2. Counties: Geometric representations of counties across the USA.
