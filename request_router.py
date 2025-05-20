@@ -175,7 +175,7 @@ def get_question_route(llm, question):
 
 	[ Example 15 ]
  	Return "Report" for the following requests:
-            Create a report about Ohio river.
+            Create a report about Muskingum River.
   
         Question to route: {question} 
         
