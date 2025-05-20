@@ -7,14 +7,14 @@ from langchain_core.output_parsers import JsonOutputParser
 def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or ""Aggregation" or "Report" or "Other". 
+        user question to "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or "Aggregation" or "Other". 
 
 	IMPORTANT RULE (Always Applies First):
 	If the user's question includes the intent to "create a report" (regardless of subject), then always return:
-	{
+	{{
 	  "request_type": "Report",
 	  "explanation": "The user wants to create a report, regardless of the topic."
-	}
+	}}
 	This overrides all other rules.
 
         Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
@@ -102,6 +102,10 @@ def get_question_route(llm, question):
  	Even if the topic of the report is about entities normally in those categories (e.g., rivers, counties, power plants), the intent to 
   	"create a report" overrides them.
 
+        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
+        'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Report' or 'Other' based on the question. Return a JSON with a single key 
+        'request_type' and a key 'explanation' for reasons. 
+
 	[ Example 0 ]
  	Return "Report" for the following requests:
             Create a report about Muskingum River.
@@ -141,10 +145,6 @@ def get_question_route(llm, question):
         [ Example 6 ]
         Return "Other" for the following request:
             Please help search Kentucky Public Service Commission's website to find out how many power plants are in Kentucky
-        
-        Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
-        'WEN-KEN database use Energy Atlas' or 'Other' based on the question. Return a JSON with a single key 
-        'request_type' and a key 'explanation' for reasons. 
 
         [ Example 7 ]
         Return the following JSON string for the request "Could you please give me some example questions?":
