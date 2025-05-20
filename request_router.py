@@ -15,7 +15,7 @@ def get_question_route(llm, question):
               "explanation" : "The user wants to create a report about Muskingum River"
             }}
  
-        Use the WEN-KEN database for questions on the following entities: 
+        Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
           2. Counties: Geometric representations of counties across the USA.
           3. States: Geometric representations outlining the boundaries of states in the USA.
