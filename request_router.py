@@ -8,6 +8,8 @@ def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
         user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
+
+        Use “Report” if the user is asking for creating a report. 
  
         Use the WEN-KEN database for questions on the following entities: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
@@ -85,10 +87,7 @@ def get_question_route(llm, question):
         Please note that an aggregation request must use an aggregation function. It is not an aggregation request if no aggregation function is used.
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 
-	Use “Report” if the user is asking for creating a report on an entity that might be in the data resources list above. 
- 	It is important to distinguish whether the user is asking for an entity, or a report of an entity. 
-        For example, if the user is asking for Ohio river, then return “WEN-OKN database” to route the user to query the WEN-OKN database. 
-	If the user is asking for a report on Ohio river, it means that the user wants all data related to Ohio river. So return “Report”.
+	Use “Report” if the user is asking for creating a report on an entity. 
  
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
