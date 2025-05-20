@@ -9,7 +9,7 @@ def get_question_route(llm, question):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
         user question to "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or "Aggregation" or "Other". 
 
-        Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
+        Use the WEN-KEN database for questions on the following entities: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
           2. Counties: Geometric representations of counties across the USA.
           3. States: Geometric representations outlining the boundaries of states in the USA.
