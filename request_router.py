@@ -9,12 +9,13 @@ def get_question_route(llm, question):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
         user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
 
-        If the user's question contains an intent to "create a report" (regardless of the subject), always return:
-		{{
-		  "request_type": "Report",
-		  "explanation": "The user wants to create a report, regardless of the topic."
-		}}
-	This rule takes precedence over all others.
+	IMPORTANT RULE (Always Applies First):
+	If the user's question includes the intent to "create a report" (regardless of subject), then always return:
+	{
+	  "request_type": "Report",
+	  "explanation": "The user wants to create a report, regardless of the topic."
+	}
+	This overrides all other rules.
 
         Use the WEN-KEN database for questions on the following entities if the user doesn't ask for creating a report: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
