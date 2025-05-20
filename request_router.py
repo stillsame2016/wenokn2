@@ -9,8 +9,7 @@ def get_question_route(llm, question):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
         user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
 
-        Use “Report” if the question is to create a report about Something. For example, if the user question is
-	"Please create a report about Muskingum River", the return 
+        Return the following JSON string if the user question is "Please create a report about Muskingum River":
             {{
               "request_type" : "Report",
               "explanation" : "The user wants to create a report about Muskingum River"
