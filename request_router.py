@@ -87,7 +87,7 @@ def get_question_route(llm, question):
 
         Give a choice 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 
         'WEN-KEN database use Energy Atlas' or 'Aggregation' or 'Other' based on the question. Return a JSON with a single key 
-        'request_type' and a key 'explanation' for reasons and a key field 'report' with true/false if the user question includes the intent to "create a report. 
+        'request_type' and a key 'explanation' for reasons and a key field 'create_report' with true/false if the user question includes the intent to "create a report. 
 	
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
@@ -123,7 +123,8 @@ def get_question_route(llm, question):
         Return the following JSON string for the request "Could you please give me some example questions?":
             {{
               "request_type" : "Other",
-              "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'"
+              "explanation" : "Not in the scope of 'WEN-KEN database' or 'NPDES regulations' or 'Data Commons' or 'US Energy Atlas' or 'WEN-KEN database use Energy Atlas'",
+	      "create_report": false
             }}
 
         [ Example 8 ]
