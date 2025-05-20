@@ -84,7 +84,9 @@ def get_question_route(llm, question):
             5) Pre-/Post-Conditions: Filters applied before/after aggregation (e.g., counties in Ohio State, result thresholds).
         Please note that an aggregation request must use an aggregation function. It is not an aggregation request if no aggregation function is used.
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
-	
+
+        Use “Report” if the user is asking for a report on an entity listed above.
+ 
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
 
