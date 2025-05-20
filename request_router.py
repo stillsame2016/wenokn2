@@ -7,7 +7,7 @@ from langchain_core.output_parsers import JsonOutputParser
 def get_question_route(llm, question):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are an expert at routing a 
-        user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
+        user question to "WEN-KEN database" or "NPDES regulations" or "Data Commons" or "US Energy Atlas" or ""Aggregation" or "Report" or "Other". 
 
 	IMPORTANT RULE (Always Applies First):
 	If the user's question includes the intent to "create a report" (regardless of subject), then always return:
