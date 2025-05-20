@@ -10,7 +10,11 @@ def get_question_route(llm, question):
         user question to WEN-KEN database or NPDES regulations or Data Commons or US Energy Atlas or Report. 
 
         Use “Report” if the question is to create a report about Something. For example, if the user question is
-	"Create a report about Muskingum River", just use "Report".
+	"Please create a report about Muskingum River", the return 
+            {{
+              "request_type" : "Report",
+              "explanation" : "The user wants to create a report about Muskingum River"
+            }}
  
         Use the WEN-KEN database for questions on the following entities: 
           1. Locations: Information on buildings, power stations, and underground storage tanks in Ohio.
