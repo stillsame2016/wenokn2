@@ -88,6 +88,11 @@ def get_question_route(llm, question):
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 
 	Use “Report” if the user is asking for creating a report on an entity. 
+
+	[ Example 0 ]
+ 	Return "Report" for the following requests:
+            Create a report about Muskingum River.
+	Because this request tries to create a report about a river.
  
         [ Example 1 ]
         Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
@@ -171,10 +176,6 @@ def get_question_route(llm, question):
 	        Find all states where the total coal mine output exceeds 1 million tons.
             Find the river in Ohio that has the highest number of dams.
 	        Find the watershed that has the highest total coal mine.
-
-	[ Example 15 ]
- 	Return "Report" for the following requests:
-            Create a report about Muskingum River.
   
         Question to route: {question} 
         
