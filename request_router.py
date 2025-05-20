@@ -91,6 +91,15 @@ def get_question_route(llm, question):
         Please note that an aggregation request must use an aggregation function. It is not an aggregation request if no aggregation function is used.
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 
+	If the question asks to "create a report", always return:
+	{{
+	  "request_type": "Report",
+	  "explanation": "The user wants to create a report, regardless of the topic."
+	}}
+	This takes precedence over all other categories (WEN-KEN database, NPDES regulations, Data Commons, Energy Atlas, Aggregation, or Other). 
+ 	Even if the topic of the report is about entities normally in those categories (e.g., rivers, counties, power plants), the intent to 
+  	"create a report" overrides them.
+
 	[ Example 0 ]
  	Return "Report" for the following requests:
             Create a report about Muskingum River.
