@@ -179,6 +179,15 @@ def get_question_route(llm, question):
 	        Find all states where the total coal mine output exceeds 1 million tons.
             Find the river in Ohio that has the highest number of dams.
 	        Find the watershed that has the highest total coal mine.
+
+  	[ Example 15 ]
+        For the request "Please create a report about Muskingum River", return the following:
+ 	   {{
+              "request_type" : "WEN-OKN database",
+              "explanation" : "The request is about the Muskingum River, which falls under the category of rivers in the USA, and this information is contained in the WEN-KEN database.",
+	      "create_report": true
+            }}
+
   
         Question to route: {question} 
         
