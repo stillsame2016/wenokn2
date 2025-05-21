@@ -451,21 +451,27 @@ with col2:
         with chat_container:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
+
+            # get initial classification
             route = get_question_route(llm, user_input)
-            logger.info(f"***** get_question_route: ***** {route}")
+            logger.info(f"get_question_route: {route}")
+
+            # check whether it is a report request
             report_request = check_report_request(llm, user_input)
-            logger.info(f"***** report_request: ***** {report_request}")
+            logger.info(f"*report_request: {report_request}")
+            
             # st.markdown(route)
             # time.sleep(30)
             if report_request['create_report']:
                 report_plan = create_report_plan(llm, user_input)
-                logger.info(f"***** report_plan: ***** {report_plan}")
+                logger.info(f"report_plan: {report_plan}")
+                report_query_text = ""
                 for report_query in report_plan:
-                    st.chat_message("assistant").markdown(report_query)
-                    try:
-                        query_plan_text, message = execute_query(report_query, chat_container)
-                    except Exception as error:
-                        st.chat_message("assistant").markdown(f"{str(error)}")
+                    report_query_text = f"{report_query_text}\n{report_query}"                
+                try:
+                    query_plan_text, message = execute_query(report_query_text, chat_container)
+                except Exception as error:
+                    st.chat_message("assistant").markdown(f"{str(error)}")
                 st.rerun()
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
