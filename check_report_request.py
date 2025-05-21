@@ -113,14 +113,18 @@ def create_report_plan(llm, question):
             Find all earthquake events near the Muskingum River?
             Find all drought intersecting counties that the Muskingum River flows through.
             Find all flood events in counties that the Muskingum River flows through.
-            Find rainfall and snowfall in counties along the Muskingum River.
-            Find the flash flood counts and heavy rain events in counties along the Muskingum River.
-            Find insurance claims and total settlement amount related to flood events in counties along the Muskingum River.
+            Find rainfall in counties along the Muskingum River.
+            Find snowfall in counties along the Muskingum River.
+            Find the flash flood counts in counties along the Muskingum River.
+            Find the heavy rain events in counties along the Muskingum River.
+            Find insurance claims related to flood events in counties along the Muskingum River.
+            Find total settlement amount related to flood events in counties along the Muskingum River.
         4. Monitoring and Hydrology
             Find all stream gages on the Muskingum River. 
         5. Demographics and Socioeconomics
             Find the population (Count_Person) of counties the Muskingum River flows through.
-            Find the median income and employment count in counties along the Muskingum River.
+            Find the median income in counties along the Muskingum River.
+            Find the employment count in counties along the Muskingum River.
             Find the FEMA social vulnerability index for counties the Muskingum River passes through.
         6. Watersheds and Basins
             Find watershed(s) the Muskingum River belongs to.
