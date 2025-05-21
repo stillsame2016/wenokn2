@@ -458,8 +458,7 @@ with col2:
             # st.markdown(route)
             # time.sleep(30)
             if report_request['create_report']:
-                st.markdown("create a report")
-                time.sleep(30)
+                st.chat_message("assistant").markdown("Create a report")
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 # st.code(refined_request)
