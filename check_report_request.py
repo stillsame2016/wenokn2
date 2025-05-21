@@ -96,39 +96,44 @@ def create_report_plan(llm, question):
 
         Here are some sample queries and you can create more queries as need. Make sure each query only ask for one class of entities.
         1. Geographic and Basic Information
-            Find Muskingum River.
-            Find counties the Muskingum River flow through.
-            Find states the Muskingum River flow through.
+            Find the Muskingum River.
+            Find the counties the Muskingum River flows through.
+            Find the states the Muskingum River flows through.
+        
         2. Infrastructure and Facilities
             Find all dams on the Muskingum River.
             Find all hydro power plants along the Muskingum River.
             Find all coal power plants along the Muskingum River.
             Find all nuclear power plants along the Muskingum River.
-            Find all nuclear solar plants along the Muskingum River.
-            Find all nuclear wind plants along the Muskingum River.
+            Find all solar power plants along the Muskingum River.
+            Find all wind power plants along the Muskingum River.
             Find all hospitals located in counties the Muskingum River flows through.
-            Find all power stations and underground storage tanks in counties the Muskingum River flows through. 
-            (Don't try to find all buildings. The result could be too big)
+            Find all power stations and underground storage tanks in counties the Muskingum River flows through.
+            (Avoid querying all buildings — the result may be too large.)
+        
         3. Environmental and Natural Hazards
-            Find all earthquake events near the Muskingum River?
-            Find all drought intersecting counties that the Muskingum River flows through.
-            Find all flood events in counties that the Muskingum River flows through.
-            Find rainfall in counties along the Muskingum River.
-            Find snowfall in counties along the Muskingum River.
-            Find the flash flood counts in counties along the Muskingum River.
-            Find the heavy rain events in counties along the Muskingum River.
+            Find all earthquake events near the Muskingum River.
+            Find all drought zones intersecting counties the Muskingum River flows through.
+            Find all flood events in counties the Muskingum River flows through.
+            Find rainfall data for counties along the Muskingum River.
+            Find snowfall data for counties along the Muskingum River.
+            Find flash flood counts in counties along the Muskingum River.
+            Find heavy rain events in counties along the Muskingum River.
             Find insurance claims related to flood events in counties along the Muskingum River.
-            Find total settlement amount related to flood events in counties along the Muskingum River.
+            Find the total settlement amount related to flood events in counties along the Muskingum River.
+        
         4. Monitoring and Hydrology
-            Find all stream gages on the Muskingum River. 
+            Find all stream gages on the Muskingum River.
+        
         5. Demographics and Socioeconomics
             Find the population (Count_Person) of counties the Muskingum River flows through.
             Find the median income in counties along the Muskingum River.
             Find the employment count in counties along the Muskingum River.
-            Find the FEMA social vulnerability index for counties the Muskingum River passes through.
+            Find the FEMA social vulnerability index for counties the Muskingum River flows through.
+        
         6. Watersheds and Basins
-            Find watershed(s) the Muskingum River belongs to.
-            Find basins the Muskingum River is part of.
+            Find the watershed(s) the Muskingum River belongs to.
+            Find the basins the Muskingum River is part of.
 
         Please note that the following query is wrong: "Find all buildings, power stations, and underground storage tanks in Ross County, Ohio.",
         because it asks to return three classes of entities: building, power stations and underground storage tanks.
