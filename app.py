@@ -462,7 +462,10 @@ with col2:
                 logger.info(f"***** report_plan: ***** {report_plan}")
                 for report_query in report_plan:
                     st.chat_message("assistant").markdown(report_query)
-                    time.sleep(10)
+                    try:
+                        query_plan_text, message = execute_query(report_query, chat_container)
+                    except Exception as error:
+                        st.chat_message("assistant").markdown(f"{str(error)}")
                 st.rerun()
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
