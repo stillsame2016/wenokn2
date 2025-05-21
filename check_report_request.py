@@ -37,7 +37,6 @@ def create_report_plan(llm, question):
         Our information system has the following data:
 
         WEN-KEN database contains the following entities:
-        1. Locations: Information on power stations, and underground storage tanks in Ohio.
         2. Counties: Geometric representations of counties across the USA.
         3. States: Geometric representations outlining the boundaries of states in the USA.
         4. Earthquakes: Data pertaining to seismic events.
