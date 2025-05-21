@@ -107,6 +107,8 @@ def create_report_plan(llm, question):
             Find all nuclear solar plants along the Muskingum River.
             Find all nuclear wind plants along the Muskingum River.
             Find all hospitals located in counties the Muskingum River flows through.
+            Find all power stations and underground storage tanks in counties the Muskingum River flows through. 
+            (Don't try to find all buildings. The result could be too big)
         3. Environmental and Natural Hazards
             Find all earthquake events near the Muskingum River?
             Find all drought intersecting counties that the Muskingum River flows through.
