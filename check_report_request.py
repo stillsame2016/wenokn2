@@ -95,44 +95,34 @@ def create_report_plan(llm, question):
             [ "query 1", "query 2", ... ]
 
         Here are some sample queries and you can create more queries as need:
-            'Show Ross County in Ohio State.', 
-            'Show all counties in Kentucky State.', 
-            'Find all counties the Scioto River flows through.',
-            'Find all counties downstream of Ross County on the Scioto River.',  
-            'Find all counties both the Ohio River and the Muskingum River flow through.',  
-            'Find all counties downstream of the coal mine with the name Century Mine along Ohio River.',
-            'Find all neighboring counties of Guernsey County.',
-            'Find all adjacent states to the state of Ohio.',
-            'Show the Ohio River.', 
-            'Find all rivers that flow through Ross County.', 
-            'What rivers flow through Dane County in Wisconsin?', 
-            'Show all stream gauges on Muskingum River', 
-            'Show all stream gages in Ross county in Ohio',
-            'What stream gages are on the Yahara River in Madison, WI?',  
-            'Find all stream gages on the Yahara River, which are not in Madison, WI',
-            'Find all dams on the Ohio River.', 
-            'Find all dams in Kentucky State.',
-            'Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river',
-            'Show the populations for all counties in Ohio State.', 
-            'Find populations for all adjacent states to the state of Ohio.',
-            'Find the median individual income for Ross County and Scioto County.', 
-            'Find the number of people employed in all counties the Scioto River flows through.', 
-            "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
-            'Find all solar power plants in California.', 
-            'Find all coal mines along the Ohio River.', 
-            'Where are the coal-fired power plants in Kentucky?',
-            'Show natural gas power plants in Florida.',
-            'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
-            'Find the basin Lower Ohio-Salt',
-            'Find all basins through which the Scioto River flows.',
-            'Find all rivers that flow through the Roanoke basin.',
-            'Find all watersheds in the Kanawha basin.',  
-            'Find all watersheds feed into Muskingum River',
-            'Find all watersheds in Ross County in Ohio State',
-            'Find the watershed with the name Headwaters Black Fork Mohican River',
-            'Find all stream gages in the watershed with the name Meigs Creek',
-            'Find all stream gages in the watersheds feed into Scioto River',
-            'Find all rivers that flow through the watershed with the name Headwaters Auglaize River'      
+        1. Geographic and Basic Information
+            Find Muskingum River.
+            Find counties the Muskingum River flow through.
+            Find states does the Muskingum River intersect.
+        2. Infrastructure and Facilities
+            Find all dams on the Muskingum River.
+            Find all hydro power plants along the Muskingum River.
+            Find all coal power plants along the Muskingum River.
+            Find all nuclear power plants along the Muskingum River.
+            Find all nuclear solar plants along the Muskingum River.
+            Find all nuclear wind plants along the Muskingum River.
+            Find all hospitals located in counties the Muskingum River flows through.
+        3. Environmental and Natural Hazards
+            Find all earthquake events near the Muskingum River?
+            Find all drought intersecting counties that the Muskingum River flows through.
+            Find all flood events in counties that the Muskingum River flows through.
+            Find rainfall and snowfall in counties along the Muskingum River.
+            Find the flash flood counts and heavy rain events in counties along the Muskingum River.
+            Find insurance claims and total settlement amount related to flood events in counties along the Muskingum River.
+        4. Monitoring and Hydrology
+            Find all stream gages on the Muskingum River. 
+        5. Demographics and Socioeconomics
+            Find the population (Count_Person) of counties the Muskingum River flows through.
+            Find the median income and employment count in counties along the Muskingum River.
+            Find the FEMA social vulnerability index for counties the Muskingum River passes through.
+        6. Watersheds and Basins
+            Find watershed(s) the Muskingum River belongs to.
+            Find basins the Muskingum River is part of.
 
         User Request: {question} 
         
