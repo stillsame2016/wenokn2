@@ -94,7 +94,7 @@ def create_report_plan(llm, question):
         a JSON string in the following format:
             [ "query 1", "query 2", ... ]
 
-        Here are some sample queries and you can create more queries as need:
+        Here are some sample queries and you can create more queries as need. Make sure each query only ask for one class of entities.
         1. Geographic and Basic Information
             Find Muskingum River.
             Find counties the Muskingum River flow through.
