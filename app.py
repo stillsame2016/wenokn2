@@ -460,8 +460,9 @@ with col2:
             if report_request['create_report']:
                 report_plan = create_report_plan(llm, user_input)
                 logger.info(f"***** report_plan: ***** {report_plan}")
-                st.chat_message("assistant").markdown(json.dumps(report_plan, indent=4))
-                time.sleep(30)
+                for report_query in report_plan:
+                    st.chat_message("assistant").markdown(report_query)
+                    time.sleep(10)
                 st.rerun()
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
