@@ -94,6 +94,46 @@ def create_report_plan(llm, question):
         a JSON string in the following format:
             [ "query 1", "query 2", ... ]
 
+        Here are same sample queries:
+            'Show Ross County in Ohio State.', 
+            'Show all counties in Kentucky State.', 
+            'Find all counties the Scioto River flows through.',
+            'Find all counties downstream of Ross County on the Scioto River.',  
+            'Find all counties both the Ohio River and the Muskingum River flow through.',  
+            'Find all counties downstream of the coal mine with the name Century Mine along Ohio River.',
+            'Find all neighboring counties of Guernsey County.',
+            'Find all adjacent states to the state of Ohio.',
+            'Show the Ohio River.', 
+            'Find all rivers that flow through Ross County.', 
+            'What rivers flow through Dane County in Wisconsin?', 
+            'Show all stream gauges on Muskingum River', 
+            'Show all stream gages in Ross county in Ohio',
+            'What stream gages are on the Yahara River in Madison, WI?',  
+            'Find all stream gages on the Yahara River, which are not in Madison, WI',
+            'Find all dams on the Ohio River.', 
+            'Find all dams in Kentucky State.',
+            'Find all dams located upstream of the power station dpjc6wtthc32 along the Muskingum river',
+            'Show the populations for all counties in Ohio State.', 
+            'Find populations for all adjacent states to the state of Ohio.',
+            'Find the median individual income for Ross County and Scioto County.', 
+            'Find the number of people employed in all counties the Scioto River flows through.', 
+            "Show social vulnerability index of all counties downstream of coal mine with the name 'Century Mine' along Ohio River",
+            'Find all solar power plants in California.', 
+            'Find all coal mines along the Ohio River.', 
+            'Where are the coal-fired power plants in Kentucky?',
+            'Show natural gas power plants in Florida.',
+            'Load all wind power plants with total megawatt capacity greater than 100 in California.' ,
+            'Find the basin Lower Ohio-Salt',
+            'Find all basins through which the Scioto River flows.',
+            'Find all rivers that flow through the Roanoke basin.',
+            'Find all watersheds in the Kanawha basin.',  
+            'Find all watersheds feed into Muskingum River',
+            'Find all watersheds in Ross County in Ohio State',
+            'Find the watershed with the name Headwaters Black Fork Mohican River',
+            'Find all stream gages in the watershed with the name Meigs Creek',
+            'Find all stream gages in the watersheds feed into Scioto River',
+            'Find all rivers that flow through the watershed with the name Headwaters Auglaize River'      
+
         User Request: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
