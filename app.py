@@ -20,7 +20,7 @@ from aggregation_request import get_code_for_grouping_object, get_code_for_summa
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
-from check_report_request import check_report_request
+from check_report_request import check_report_request, create_report_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name, get_variables_for_dcid
 from energy_atlas import *
@@ -458,7 +458,9 @@ with col2:
             # st.markdown(route)
             # time.sleep(30)
             if report_request['create_report']:
-                st.chat_message("assistant").markdown("Create a report")
+                report_plan = create_report_plan(llm, user_input)
+                st.chat_message("assistant").markdown(json.dumps(report_plan, indent=4))
+                time.sleep(30)
                 st.rerun()
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
