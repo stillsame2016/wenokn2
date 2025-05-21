@@ -98,7 +98,7 @@ def create_report_plan(llm, question):
         1. Geographic and Basic Information
             Find Muskingum River.
             Find counties the Muskingum River flow through.
-            Find states does the Muskingum River intersect.
+            Find states the Muskingum River flow through.
         2. Infrastructure and Facilities
             Find all dams on the Muskingum River.
             Find all hydro power plants along the Muskingum River.
