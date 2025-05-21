@@ -453,7 +453,7 @@ with col2:
             st.session_state.chat.append({"role": "user", "content": user_input})
             route = get_question_route(llm, user_input)
             logger.info(f"***** get_question_route: ***** {route}")
-            report_request = check_report_request(lls, user_input)
+            report_request = check_report_request(llm, user_input)
             logger.info(f"***** report_request: ***** {report_request}")
             # st.markdown(route)
             # time.sleep(30)
