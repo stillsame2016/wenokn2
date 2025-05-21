@@ -457,7 +457,10 @@ with col2:
             logger.info(f"***** report_request: ***** {report_request}")
             # st.markdown(route)
             # time.sleep(30)
-            if route['request_type'] == 'WEN-KEN database':
+            if report_request['create_report']:
+                st.markdown("create a report")
+                time.sleep(30)
+            elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
                 # st.code(refined_request)
                 # time.sleep(10)
