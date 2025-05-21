@@ -126,6 +126,10 @@ def create_report_plan(llm, question):
             Find watershed(s) the Muskingum River belongs to.
             Find basins the Muskingum River is part of.
 
+        Make sure each query only ask for one class of entities. For example, the following query is wrong:
+        "Find all buildings, power stations, and underground storage tanks in Ross county, Ohio."
+        because it requires to return three classes of entities: building, power stations and underground storage tanks.
+
         User Request: {question} 
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
