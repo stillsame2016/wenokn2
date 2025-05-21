@@ -94,7 +94,7 @@ def create_report_plan(llm, question):
         a JSON string in the following format:
             [ "query 1", "query 2", ... ]
 
-        Here are same sample queries:
+        Here are some sample queries and you can create more queries as need:
             'Show Ross County in Ohio State.', 
             'Show all counties in Kentucky State.', 
             'Find all counties the Scioto River flows through.',
