@@ -93,6 +93,33 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         Use the following condition when trying to get a watershed by a given watershed name (e.g., Headwaters Scioto River):
             UPPER(NAME) = UPPER('Headwaters Scioto River')
         The reason for this is that there may be spaces in the name column of the ArcGIS Feature service.
+
+        [ Definition 6 ]
+        We have the following function to get a Census Block from latitude and longitude from an ArcGIS Feature Service as a GeoDataFrame:
+             load_census_block(latitude, longitude)
+        The returned GeoDataFrame has the following columns:
+                STATE:	2-digit FIPS code for the state (e.g., "06" = California).
+                COUNTY:	3-digit FIPS code for the county (e.g., "073" = San Diego County).
+                TRACT:	6-digit Census Tract code within the county (e.g., "008362").
+                BLKGRP:	1-digit Block Group number within the tract (e.g., "3").
+                BLOCK:	4-digit Census Block number (e.g., "3000").
+                SUFFIX:	Block suffix (usually "Null"; rarely used to distinguish overlapping blocks).
+                GEOID:	Full 15-digit identifier for the block: STATE + COUNTY + TRACT + BLOCK.
+                LWBLKTYP:	Block type code (e.g., "L" = large area block like parks or unpopulated land).
+                UR:	Urban/rural indicator: "U" = Urban, "R" = Rural.
+                AREAWATER:	Area of water in square meters.
+                AREALAND:	Area of land in square meters.
+                MTFCC:	Feature classification code (e.g., "G5040" = census block).
+                NAME:	Block name (e.g., "Block 3000").
+                BASENAME:	Base block number without the "Block" prefix (e.g., "3000").
+                LSADC:	Legal/statistical area description code: "BK" = Block.
+                FUNCSTAT:	Functional status: "S" = Statistical (used for census tabulation).
+                CENTLON:	Longitude of the polygon centroid.
+                CENTLAT:	Latitude of the polygon centroid.
+                INTPTLON:	Longitude of the internal point used for label placement.
+                INTPTLAT:	Latitude of the internal point.
+                HU100:	Number of housing units in the block (100% count from the 2020 Census).
+                POP100:	Population count in the block (100% count from the 2020 Census).
         
         [ Available Data ]
         The following are the variables with the data:
@@ -532,3 +559,21 @@ def load_basins_2(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd
     gdf = loader.load_features(where=where, bbox=bbox)
     return gdf
 
+def load_census_block(latitude, longitude):
+    url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/2/query"
+    params = {
+        "f": "geojson",
+        "geometry": f"{longitude},{latitude}",
+        "geometryType": "esriGeometryPoint",
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "*",
+        "returnGeometry": "true"
+    }
+
+    resp = requests.get(url, params=params)
+    resp.raise_for_status()
+    gdf = gpd.read_file(resp.text)
+    if gdf.empty:
+        raise ValueError("No census block found at the given location.")
+    return gdf
