@@ -571,6 +571,7 @@ with col2:
                             if exist_json and exist_json['existing']:
                                 message = f"Your request has been processed. The data for the request \"{user_input}\" already exists."
                             else:
+                                logger.info(f"processing the request for ArcGIS")
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
                                 # st.code(code)
