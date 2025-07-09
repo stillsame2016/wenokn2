@@ -9,6 +9,13 @@ import time
 from typing import Optional, List, Dict, Any, Union
 import logging
 
+import io
+import pyproj
+import json
+from shapely.geometry import Point
+from shapely.ops import transform
+
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -97,6 +104,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 6 ]
         We have the following function to get a Census Block from latitude and longitude from an ArcGIS Feature Service as a GeoDataFrame:
              load_census_block(latitude, longitude)
+  
+        and the following function loads all Census Blocks within a given radius (in miles) of the specified latitude/longitude as a GeoDataFrame of matching blocks.           
+             load_nearby_census_blocks(lat, lon, radius_miles=5)
+             
         The returned GeoDataFrame has the following columns:
                 STATE:	2-digit FIPS code for the state (e.g., "06" = California).
                 COUNTY:	3-digit FIPS code for the county (e.g., "073" = San Diego County).
@@ -577,3 +588,46 @@ def load_census_block(latitude, longitude):
     if gdf.empty:
         raise ValueError("No census block found at the given location.")
     return gdf
+
+def load_nearby_census_blocks(lat, lon, radius_miles=5):
+    # Convert miles to meters
+    radius_m = radius_miles * 1609.34
+    
+    # Project WGS84 to an equal-area projection for buffering
+    wgs84 = pyproj.CRS("EPSG:4326")
+    aeqd = pyproj.CRS(proj="aeqd", lat_0=lat, lon_0=lon, datum="WGS84")
+    project_to_aeqd = pyproj.Transformer.from_crs(wgs84, aeqd, always_xy=True).transform
+    project_to_wgs84 = pyproj.Transformer.from_crs(aeqd, wgs84, always_xy=True).transform
+    
+    # Create buffer in meters around point and project back to WGS84
+    point = Point(lon, lat)
+    buffer = transform(project_to_aeqd, point).buffer(radius_m)
+    buffer_wgs84 = transform(project_to_wgs84, buffer)
+
+    # Convert geometry to ESRI JSON
+    buffer_geojson = gpd.GeoSeries([buffer_wgs84]).__geo_interface__['features'][0]['geometry']
+
+    esri_geometry = {
+        "rings": buffer_geojson['coordinates'],
+        "spatialReference": {"wkid": 4326}
+    }
+
+    # Query the FeatureServer
+    url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/2/query"
+    params = {
+        "f": "geojson",
+        "geometry": json.dumps(esri_geometry),
+        "geometryType": "esriGeometryPolygon",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "*",
+        "inSR": "4326",
+        "outSR": "4326",
+        "returnGeometry": "true"
+    }
+
+    resp = requests.get(url, params=params)
+    resp.raise_for_status()
+    
+    return gpd.read_file(io.StringIO(resp.text))
+
+
