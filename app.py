@@ -426,7 +426,7 @@ with col2:
         'What is the longest river in each county of Ohio state?',
 
         ######### Cenuse Block ########
-        'Find the Census Block for the power station "dpq5d2851w52"',
+        'Find the Census Block for the power station dpq5d2851w52',
     ]
     st.markdown(
         """
