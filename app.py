@@ -424,6 +424,9 @@ with col2:
         'How many dams are in each county of Ohio?',
         'How many coal mines are in each basin in Ohio?',
         'What is the longest river in each county of Ohio state?',
+
+        ######### Cenuse Block ########
+        'Find the Census Block for the power station "dpq5d2851w52"',
     ]
     st.markdown(
         """
