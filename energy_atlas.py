@@ -318,17 +318,17 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.title = "All the basins in Ohio State"
 
         [ Example 9 ]
-        Find all census blocks within the 5 miles distance to the power station with the name 'dpq5d2851w52'
+        Find all census blocks within 5 miles distance to the power station dpq5d2851w52
 
-        Find out if one of the available variables is a geodataframe containing the power station with the name 'dpq5d2851w52'.
+        Find out if one of the available variables is a geodataframe containing the power station dpq5d2851w52.
 
-        If none of the available variables are geodataframes containing the power station with the name 'dpq5d2851w52', 
+        If none of the available variables are geodataframes containing the power station dpq5d2851w52, 
         then return the following code:
-            raise Exception("The data for the power station with the name 'dpq5d2851w52' is missing. Please load it first.")
+            raise Exception("The data for the power station dpq5d2851w52 is missing. Please load it first.")
 
-        If you found a variable which is a geodataframe containing the power station with the name 'dpq5d2851w52', 
+        If you found a variable which is a geodataframe containing the power station dpq5d2851w52, 
         then return the valid Python code in the following format:
-            gdf1 = <replace by the variable of the geodataframe for the power station with the name 'dpq5d2851w52' if you found one>
+            gdf1 = <replace by the variable of the geodataframe for the power station dpq5d2851w52 if you found one>
             gdf = load_nearby_census_blocks(gdf1.geometry.centroid.y.iloc[0], gdf1.geometry.centroid.x.iloc[0], 5)
             gdf.title = "All Census Blocks within 5 Miles Distance to the Power Station with ID 'dpq5d2851w52'"
 
