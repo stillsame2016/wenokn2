@@ -428,7 +428,7 @@ with col2:
 
         ######### Cenuse Block ########
         'Find the census block for the power station dpq5d2851w52',
-        'Find all census blocks within the 5 miles distance to the power station dpq07u6nxsp4',
+        'Find all census blocks within the 3 miles distance to the power station dpq07u6nxsp4',
     ]
     st.markdown(
         """
