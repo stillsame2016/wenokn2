@@ -105,9 +105,11 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         We have the following function to get a Census Block from latitude and longitude from an ArcGIS Feature Service as a GeoDataFrame:
              load_census_block(latitude, longitude)
   
-        We also have the following function to load all Census Blocks within a given distance (in miles) of the specified latitude/longitude as a GeoDataFrame.           
-             load_nearby_census_blocks(lat, lon, radius_miles=5)
-             
+        We also have the following function to load all Census Blocks within a distance to the specified latitude/longitude as a GeoDataFrame.           
+             load_nearby_census_blocks(latitude, longitude, radius_miles=5)
+        
+        Using load_nearby_census_blocks when the request tries to find all census blocks within a distance to some place. See the Example 9 below.
+
         The returned GeoDataFrame has the following columns:
                 STATE:	2-digit FIPS code for the state (e.g., "06" = California).
                 COUNTY:	3-digit FIPS code for the county (e.g., "073" = San Diego County).
