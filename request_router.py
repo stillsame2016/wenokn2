@@ -70,6 +70,7 @@ def get_question_route(llm, question):
             Watershed
             Basin
 	    Census Block
+            Census Tract
 
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
