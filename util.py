@@ -260,7 +260,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
 
         If index is found, return the following code A:
             gdf = st.session_state.datasets[index]
-            trait_dcid = [ f"geoId/{geoid}" for geoid in gdf['GEOID']]
+            trait_dcid = [ "geoId/"+geoid for geoid in gdf['GEOID']]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for the census tract for the power station dpq5d2851w52"
 
