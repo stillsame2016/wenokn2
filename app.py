@@ -431,7 +431,8 @@ with col2:
         ######### Cenuse Block ########
         'Find the census tract at the latitude 32.7157 and longitude -117.1611',
         'Find the census tract for the power station dpq5d2851w52',
-        'Find social vulnerability index of the census tract for the power station dpq5d2851w52',
+        'Find social vulnerability index of the census tract for the power station dnuzf75z9hdz',
+        'Find the population of the census tract for the power station dnvpdhth38pu',
         'Find all census blocks within the 3 miles distance to the power station dpq07u6nxsp4',
     ]
     st.markdown(
