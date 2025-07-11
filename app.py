@@ -580,6 +580,8 @@ with col2:
                                 logger.info(f"processing the request for ArcGIS")
                                 code = process_energy_atlas_request(llm, user_input, st.session_state.datasets)
                                 code = strip_code(code)
+                                logger.info(f"Code:\n {code}")
+                                
                                 # st.code(code)
                                 # time.sleep(10)
                                 exec(code)
