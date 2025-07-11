@@ -647,4 +647,22 @@ def load_nearby_census_blocks(lat, lon, radius_miles=5):
     
     return gpd.read_file(io.StringIO(resp.text))
 
+def load_census_tract(latitude, longitude):
+    url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/0/query"
+    params = {
+        "f": "geojson",
+        "geometry": f"{longitude},{latitude}",
+        "geometryType": "esriGeometryPoint",
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "*",
+        "returnGeometry": "true"
+    }
+
+    resp = requests.get(url, params=params)
+    resp.raise_for_status()
+    gdf = gpd.read_file(resp.text)
+    if gdf.empty:
+        raise ValueError("No census tract found at the given location.")
+    return gdf
 
