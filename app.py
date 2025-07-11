@@ -428,10 +428,9 @@ with col2:
         'What is the longest river in each county of Ohio state?',
 
         ######### Cenuse Block ########
-        'Find the census block for the power station dpq5d2851w52',
+        'Find the census tract for the power station dpq5d2851w52',
         'Find all census blocks within the 3 miles distance to the power station dpq07u6nxsp4',
         'Find the census tract at the latitude 32.7157 and longitude -117.1611',
-        'Find the census tract for the power station dpq5d2851w52'
     ]
     st.markdown(
         """
