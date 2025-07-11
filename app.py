@@ -275,7 +275,8 @@ def execute_query(user_input, chat_container):
                                 'load_watersheds': load_watersheds,
                                 'load_basins': load_basins,
                                 'load_census_block': load_census_block,
-                                'load_nearby_census_blocks': load_nearby_census_blocks
+                                'load_nearby_census_blocks': load_nearby_census_blocks,
+                                'load_census_tract': load_census_tract,
                             }
                             exec(code, globals_dict)
                             gdf = globals_dict['gdf']
