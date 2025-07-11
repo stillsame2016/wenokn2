@@ -248,7 +248,24 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
 
         Otherwise return the code B:
-            raise ValueError("Please all counties downstream of the coal mine with the name "Century Mine" along Ohio River")
+            raise ValueError("Please load all counties downstream of the coal mine with the name 'Century Mine' along Ohio River first")
+
+        Please note that only return code A or code B. Never combine the code A and code B together.
+
+        [ Example 6 ]
+        Find social vulnerability index of the census tract for the power station dpq5d2851w52.
+
+        Check each dataframe in the data repository listed above to find an index such that st.session_state.datasets[index] 
+        contains 'Find the census tract for the power station dpq5d2851w52'.  Never assume an index.
+
+        If index is found, return the following code A:
+            gdf = st.session_state.datasets[index]
+            trait_dcid = [ f"geoId/{geoid}" for geoid in gdf['GEOID']]
+            df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
+            df.title = "The Social Vulnerability for the census tract for the power station dpq5d2851w52"
+
+        Otherwise return the code B:
+            raise ValueError("Please load the census tract for the power station dpq5d2851w52 first")
 
         Please note that only return code A or code B. Never combine the code A and code B together.
                  
