@@ -133,6 +133,14 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                 INTPTLAT:	Latitude of the internal point.
                 HU100:	Number of housing units in the block (100% count from the 2020 Census).
                 POP100:	Population count in the block (100% count from the 2020 Census).
+
+        [ Definition 7 ]
+        We have the following function to get a Census Tract from latitude and longitude from an ArcGIS Feature Service as a GeoDataFrame:
+             load_census_tract(latitude, longitude)
+
+        The returned GeoDataFrame has the following columns:
+              'MTFCC', 'OID', 'GEOID', 'STATE', 'COUNTY', 'TRACT', 'BASENAME', 'NAME', 'LSADC', 
+              'FUNCSTAT', 'AREALAND', 'AREAWATER', 'CENTLAT', 'CENTLON', 'INTPTLAT', 'INTPTLON', 'OBJECTID'
         
         [ Available Data ]
         The following are the variables with the data:
