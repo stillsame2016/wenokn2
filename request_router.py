@@ -154,8 +154,9 @@ def get_question_route(llm, question):
         Because this request tried to find some basins which are contained in Energy Atlas.
 
         [ Example 13 ]
-        Return "Data Commons" for the following request:
+        Return "Data Commons" for the following requests:
             Find the number of people employed in all counties the Scioto River flows through. 
+	    Find social vulnerability index of the census tract for the power station dnuzf75z9hdz.
 
         [ Example 14]
         Return "Aggregation" for the following requests:
