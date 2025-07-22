@@ -71,7 +71,7 @@ def get_question_route(llm, question):
             Basin
 	    Census Block
             Census Tract
-	    Flooded Power Station on a Date
+	    Flooded Power Station
             
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
