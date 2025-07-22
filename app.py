@@ -165,6 +165,8 @@ def execute_query(user_input, chat_container):
                 with chat_container:
                     with st.chat_message("assistant"):                   
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
+                        st.sleep(10)
+                        
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
