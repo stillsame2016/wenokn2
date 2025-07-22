@@ -78,6 +78,8 @@ def get_question_route(llm, question):
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
+ 	Use "US Energy Atlas" for flooded power stations or the power stations that are flooded at a time
+
         All the rules above don't work, then conside use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
         An aggregation request may involve 5 core components:
             1) Grouping Objects: Entities to partition data by (e.g., counties, basins).
