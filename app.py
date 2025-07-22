@@ -161,12 +161,11 @@ def execute_query(user_input, chat_container):
             
             count_start = len(st.session_state.datasets)
             for i, query in enumerate(query_plan, 1):
-                logger.info(f"=====> Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
+                logger.info(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
                 with chat_container:
                     with st.chat_message("assistant"):                   
                         st.markdown(f"Processing the {ordinal(i)} query in the query plan: **{query['request']}**")
-                        time.sleep(10)
-                        
+                        # time.sleep(10)
                         if query["data_source"] == "WEN-OKN Database":
                             process_data_request(query["request"], chat_container)
                         elif query["data_source"] == "Data Commons":
@@ -257,8 +256,6 @@ def execute_query(user_input, chat_container):
                             # st.session_state.requests[-1] = query["request"]
                         
                         elif query["data_source"] == "Energy Atlas":
-                            logger.info("======> Energy Atlas")
-                            
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
                             logger.info(f"created code: {code}")
