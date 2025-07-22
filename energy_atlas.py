@@ -152,6 +152,11 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
            - List of FIPS codes
         If None, defaults to Ohio ("39") and Kentucky ("21")
 
+        The returned GeoDataFrame has the following columns:                                                                                                              
+            'fips': FIPS for tract,                                                                                                                                      
+            'feature-type': the constant 'power',                                                                                                                                     
+            'geometry': the tract polygon.    
+
         [ Available Data ]
         The following are the variables with the data:
             {variables}
