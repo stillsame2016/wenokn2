@@ -257,6 +257,8 @@ def execute_query(user_input, chat_container):
                             # st.session_state.requests[-1] = query["request"]
                         
                         elif query["data_source"] == "Energy Atlas":
+                            logger.info("======> Energy Atlas")
+                            
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
                             logger.info(f"created code: {code}")
