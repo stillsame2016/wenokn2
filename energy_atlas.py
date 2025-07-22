@@ -851,7 +851,7 @@ def fetch_flood_impacts(
     
     # Create GeoDataFrame
     gdf = gpd.GeoDataFrame(rows, crs="EPSG:4326")
-    gdf["Date"] = pd.to_datetime(date, format="%Y%m%d%H")
+    gdf["Date"] = date
     return gdf
 
 def load_flooded_power_stations(date: str, scope) -> gpd.GeoDataFrame:
