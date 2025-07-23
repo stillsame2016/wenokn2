@@ -373,12 +373,14 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         If you found a variable which is a geodataframe containing all power stations in Ohio that are flooded at 2 PM on July 1, 2025, 
         then return the valid Python code in the following format:
             gdf1 = <replace by the variable of the geodataframe for all power stations in Ohio that are flooded at 2 PM on July 1, 2025 if you found one>
+            # Get unique tract GEOIDs
+            unique_geoids = gdf1["GEOID"].dropna().unique()
             all_tracts = []
-            for geom in points_gdf.geometry:
-                if geom and not geom.is_empty:
-                    lon, lat = geom.x, geom.y
-                    tract_gdf = load_census_tract(lat, lon)
-                    all_tracts.append(tract_gdf)
+            for geoid in unique_geoids:
+                sample_point = gdf1[gdf1["GEOID"] == geoid].iloc[0].geometry
+                lat, lon = sample_point.y, sample_point.x
+                tract_gdf = load_census_tract(lat, lon)
+                all_tracts.append(tract_gdf)
             gdf = gpd.GeoDataFrame(pd.concat(all_tracts, ignore_index=True))
             gdf = gdf.drop_duplicates(subset="GEOID")  # or 'GEOID' if available
             gdf.crs = "EPSG:4326"
