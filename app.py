@@ -629,7 +629,8 @@ with col2:
                                                 this is a mistake.
                                                 """
                         except Exception as e:
-                            traceback.format_exc()
+                            error_stack = traceback.format_exc()
+                            logger.info(error_stack)
                             
                             # message = f"""
                             #            ERROR: {str(e)}
