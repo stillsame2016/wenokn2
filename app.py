@@ -586,7 +586,7 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            # st.code(exists_json)
+                            logger.info(f"exist_json:\n{exists_json}")
                             # time.sleep(10)    
                             
                             if exist_json and exist_json['existing']:
