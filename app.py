@@ -629,6 +629,8 @@ with col2:
                                                 this is a mistake.
                                                 """
                         except Exception as e:
+                            traceback.format_exc()
+                            
                             # message = f"""
                             #            ERROR: {str(e)}
                             #            """  
