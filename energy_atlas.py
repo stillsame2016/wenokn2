@@ -376,7 +376,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                     tract_gdf = load_census_tract(lat, lon)
                     all_tracts.append(tract_gdf)
             gdf = gpd.GeoDataFrame(pd.concat(all_tracts, ignore_index=True))
-            # gdf = gdf.drop_duplicates(subset="geometry")  # or 'GEOID' if available
+            gdf = gdf.drop_duplicates(subset="geometry")  # or 'GEOID' if available
             gdf.crs = "EPSG:4326"
             gdf.title = "the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025"
 
