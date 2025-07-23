@@ -380,6 +380,23 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.crs = "EPSG:4326"
             gdf.title = "the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025"
 
+        [ Example 11 ]
+        Find all power stations in Ohio that are flooded from 2 AM July 17, 2025 to 10 PM on July 18, 2025.
+
+        You can return the following code:
+            start = pd.to_datetime("2025-07-17 02:00")
+            end = pd.to_datetime("2025-07-18 22:00")
+            hours = pd.date_range(start, end, freq="H")
+            hour_strs = hours.strftime("%Y%m%d%H")
+
+            all_gdfs = []
+            for hour in hour_strs:
+                gdf_hour = load_flooded_power_stations(hour, scope="39")  
+                gdf_hour["Date"] = pd.to_datetime(hour, format="%Y%m%d%H")
+                all_gdfs.append(gdf_hour)
+            gdf = gpd.GeoDataFrame(pd.concat(all_gdfs, ignore_index=True), crs="EPSG:4326")
+            gdf.title = "All power stations in Ohio that are flooded from 2 AM July 17, 2025 to 10 PM on July 18, 2025"
+
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
