@@ -471,7 +471,8 @@ with col2:
         with chat_container:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
-
+            logger.info("="*50)
+            
             # get initial classification
             route = get_question_route(llm, user_input)
             logger.info(f"get_question_route: {route}")
