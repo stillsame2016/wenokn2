@@ -586,8 +586,8 @@ with col2:
                     with st.spinner("Loading data ..."):
                         try:
                             exist_json = spatial_dataset_exists(llm, user_input, st.session_state.datasets)
-                            st.code(exists_json)
-                            time.sleep(10)    
+                            # st.code(exists_json)
+                            # time.sleep(10)    
                             
                             if exist_json and exist_json['existing']:
                                 message = f"Your request has been processed. The data for the request \"{user_input}\" already exists."
