@@ -157,8 +157,6 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'feature-type': the constant 'power',                                                                                                                                     
             'geometry': the tract polygon.    
 
-        Note that the FIPS code of a tract is not a tract and it is only an attribute of a tract. 
-
         [ Available Data ]
         The following are the variables with the data:
             {variables}
