@@ -392,7 +392,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             all_gdfs = []
             for hour in hour_strs:
                 gdf_hour = load_flooded_power_stations(hour, scope="39")  
-                gdf_hour["Date"] = pd.to_datetime(hour, format="%Y%m%d%H")
+                gdf_hour["Date"] = hour
                 all_gdfs.append(gdf_hour)
             gdf = gpd.GeoDataFrame(pd.concat(all_gdfs, ignore_index=True), crs="EPSG:4326")
             gdf.title = "All power stations in Ohio that are flooded from 2 AM July 17, 2025 to 10 PM on July 18, 2025"
