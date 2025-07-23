@@ -78,7 +78,7 @@ def get_question_route(llm, question):
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
- 	Use "US Energy Atlas" for flooded power stations or the power stations that are flooded at a time
+ 	Use "US Energy Atlas" for flooded power stations or the power stations that are flooded at a time in some states or counties.
 
         All the rules above don't work, then conside use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
         An aggregation request may involve 5 core components:
@@ -155,6 +155,12 @@ def get_question_route(llm, question):
         Return "Energy Atlas" for the following request:
             Find all basins that intersect with Ohio River. 
         Because this request tried to find some basins which are contained in Energy Atlas.
+
+        [ Example 12 ]
+        Return "Energy Atlas" for the following request:
+            Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025.
+        Because this request tried to find some consus tracts which are contained in Energy Atlas, and all
+	power stations in Ohio that are flooded at 2 PM on July 1, 2025 are also contained in Energy Atlas.
 
         [ Example 13 ]
         Return "Data Commons" for the following requests:
