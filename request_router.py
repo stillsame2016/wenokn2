@@ -72,13 +72,14 @@ def get_question_route(llm, question):
 	    Census Block
             Census Tract
 	    Flooded Power Station
+            Flooded Building
             
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
- 	Use "US Energy Atlas" for flooded power stations or the power stations that are flooded at a time in some states or counties.
+ 	Use "US Energy Atlas" for flooded buildings or flooded power stations or the power stations that are flooded at a time in some states or counties.
 
         All the rules above don't work, then conside use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
         An aggregation request may involve 5 core components:
