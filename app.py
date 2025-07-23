@@ -590,6 +590,7 @@ with col2:
                             # time.sleep(10)    
                             
                             if exist_json and exist_json['existing']:
+                                logger.info(f"exist_json:\n{exists_json}")
                                 message = f"Your request has been processed. The data for the request \"{user_input}\" already exists."
                             else:
                                 logger.info(f"processing the request for ArcGIS")
