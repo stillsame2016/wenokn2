@@ -157,6 +157,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'feature-type': the constant 'power',                                                                                                                                     
             'geometry': the tract polygon.    
 
+        [ Definition 9 ]
+        We have the following function to get flooded buildings in some state or county FIPS codes at an hour as a GeoDataFrame:
+             load_flooded_buildings(date, scope)
+
         [ Available Data ]
         The following are the variables with the data:
             {variables}
@@ -896,6 +900,9 @@ def fetch_flood_impacts(
 
 def load_flooded_power_stations(date: str, scope) -> gpd.GeoDataFrame:
     return fetch_flood_impacts(date, fips="tract", feature_type="power", scope=scope) 
+
+def load_buildings(date: str, scope) -> gpd.GeoDataFrame:
+    return fetch_flood_impacts(date, fips="tract", feature_type="building", scope=scope) 
     
 
 
