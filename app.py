@@ -281,6 +281,7 @@ def execute_query(user_input, chat_container):
                                 'load_nearby_census_blocks': load_nearby_census_blocks,
                                 'load_census_tract': load_census_tract,
                                 'load_flooded_power_stations': load_flooded_power_stations,
+                                'load_flooded_buildings': load_flooded_buildings,
                                 'fetch_flood_impacts': fetch_flood_impacts,
                             }
                             exec(code, globals_dict)
