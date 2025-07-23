@@ -357,6 +357,29 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = load_nearby_census_blocks(gdf1.geometry.centroid.y.iloc[0], gdf1.geometry.centroid.x.iloc[0], 5)
             gdf.title = "All Census Blocks within 5 Miles Distance to the Power Station with ID 'dpq5d2851w52'"
 
+        [ Example 10 ]
+        Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025.
+
+        Find out if one of the available variables is a geodataframe containing all power stations in Ohio that are flooded at 2 PM on July 1, 2025.
+
+        If none of the available variables are geodataframes containing all power stations in Ohio that are flooded at 2 PM on July 1, 2025, 
+        then return the following code:
+            raise Exception("The data for all power stations in Ohio that are flooded at 2 PM on July 1, 2025 is missing. Please load it first.")        
+
+        If you found a variable which is a geodataframe containing all power stations in Ohio that are flooded at 2 PM on July 1, 2025, 
+        then return the valid Python code in the following format:
+            gdf1 = <replace by the variable of the geodataframe for all power stations in Ohio that are flooded at 2 PM on July 1, 2025 if you found one>
+            all_tracts = []
+            for geom in points_gdf.geometry:
+                if geom and not geom.is_empty:
+                    lon, lat = geom.x, geom.y
+                    tract_gdf = load_census_tract(lat, lon)
+                    all_tracts.append(tract_gdf)
+            gdf = gpd.GeoDataFrame(pd.concat(all_tracts, ignore_index=True))
+            gdf = gdf.drop_duplicates(subset="geometry")  # or 'GEOID' if available
+            gdf.crs = "EPSG:4326"
+            gdf.title = "the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025"
+
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
