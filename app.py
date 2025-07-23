@@ -440,8 +440,10 @@ with col2:
         'Find all census blocks within the 3 miles distance to the power station dpq07u6nxsp4',
 
         'Retrieve all power stations in Ohio that are flooded at 2 PM on July 1, 2025',
-        'Find all flooded power stations in Ohio from 2 PM to 6 PM on 2025-07-14',
+        'Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025', 
         'Find the populations of the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025',
+        
+        'Find all flooded power stations in Ohio from 2 PM to 6 PM on 2025-07-14',
         'Find social vulnerability index of the tracts of all power stations in Ohio that are flooded from 2 PM to 10 PM on July 12, 2025',
     ]
     st.markdown(
