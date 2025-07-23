@@ -443,8 +443,11 @@ with col2:
         'Retrieve all power stations in Ohio that are flooded at 2 PM on July 1, 2025',
         'Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025', 
         'Find the populations of the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025',
-        'Find all flooded power stations in Ohio from 6PM 2025-07-18 to 6AM 2025-07-19',
+        'Find all flooded power stations in Ohio from 6 PM 2025-07-18 to 6 AM 2025-07-19',
         'Find social vulnerability index of the tracts of all power stations in Ohio that are flooded from 2 PM to 10 PM on July 12, 2025',
+
+        'Retrieve all buildings in Ohio that are flooded at 2 PM on July 1, 2025',
+        'Find the tracts of all buildings in Ohio that are flooded at 2 PM on July 1, 2025',
     ]
     st.markdown(
         """
