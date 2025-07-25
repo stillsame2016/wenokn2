@@ -71,15 +71,15 @@ def get_question_route(llm, question):
             Basin
 	    Census Block
             Census Tract
-	    Flooded Power Station
-            Flooded Building
+	    Power Station at Risk of Flooding
+            Building at Risk of Flooding
             
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
 
         Note that use ""WEN-KEN database" for power stations and use "US Energy Atlas" for power plants.
 
- 	Use "US Energy Atlas" for flooded buildings or flooded power stations or the power stations that are flooded at a time in some states or counties.
+ 	Use "US Energy Atlas" for buildings or power stations at risk of flooding at a time in some states or counties.
 
         All the rules above don't work, then conside use "Aggregation" for questions related to aggregation requests, which compute summaries over grouped entities.
         An aggregation request may involve 5 core components:
@@ -159,9 +159,9 @@ def get_question_route(llm, question):
 
         [ Example 12 ]
         Return "Energy Atlas" for the following request:
-            Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025.
+            Find the tracts of power stations at risk of flooding in Ohio at 2 PM on July 1, 2025.
         Because this request tried to find some consus tracts which are contained in Energy Atlas, and all
-	power stations in Ohio that are flooded at 2 PM on July 1, 2025 are also contained in Energy Atlas.
+	power stations in Ohio that are risk of flooding at 2 PM on July 1, 2025 are also contained in Energy Atlas.
 
         [ Example 13 ]
         Return "Data Commons" for the following requests:
