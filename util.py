@@ -658,8 +658,8 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        the name "Scioto" and "All basins that Scioto River flows through" tries to find all basins that the
        Scioto River flows through".
 
-       Note: Please note that "Find the tracts of all power stations in Ohio that are flooded at 2 PM on July 1, 2025" is
-       NOT semantically equivalent to the processed request "Find all power stations in Ohio that are flooded at 2 PM on 
+       Note: Please note that "Find the tracts of all power stations in Ohio that are at risk of flooding  at 2 PM on July 1, 2025" is
+       NOT semantically equivalent to the processed request "Find all power stations in Ohio that are at risk of flooding at 2 PM on 
        July 1, 2025" because the first request tries to find some census tracts and the second request tried to
        find some flooded power stations.
        
