@@ -667,6 +667,11 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        flooding at 2 PM on July 1, 2025" is NOT semantically equivalent to the processed request "Find the tracts
        of all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025" because the first request
        tries to find the populations of some tracts and the second request tries to find some tracts.
+
+       In general, the following requests are not equivalent:
+            "Find power stations at risk of flooding", 
+            "Find tracts of ....", 
+            "Find populations of ..."
        
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
