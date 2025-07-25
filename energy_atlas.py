@@ -362,17 +362,18 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.title = "All Census Blocks within 5 Miles Distance to the Power Station with ID 'dpq5d2851w52'"
 
         [ Example 10 ]
-        Find the tracts of all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025.
+        Find the tracts of all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025.
 
-        Find out if one of the available variables is a geodataframe containing all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025.
+        Find out if one of the available variables is a geodataframe containing all power stations at risk of 
+        flooding in Ohio at 2 PM on July 1, 2025.
 
-        If none of the available variables are geodataframes containing all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025, 
-        then return the following code:
-            raise Exception("The data for all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025 is missing. Please load it first.")        
+        If none of the available variables are geodataframes containing all power stations at risk of flooding 
+        in Ohio at 2 PM on July 1, 2025, then return the following code:
+            raise Exception("The data for all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025 is missing. Please load it first.")        
 
-        If you found a variable which is a geodataframe containing all power stations in Ohio that are at risk of flooding  at 2 PM on July 1, 2025, 
+        If you found a variable which is a geodataframe containing all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025, 
         then return the valid Python code in the following format:
-            gdf1 = <replace by the variable of the geodataframe for all power stations in Ohio that are at risk of flooding  at 2 PM on July 1, 2025 if you found one>
+            gdf1 = <replace by the variable of the geodataframe for all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025 if you found one>
             # Get unique tract GEOIDs
             unique_geoids = gdf1["GEOID"].dropna().unique()
             all_tracts = []
@@ -384,10 +385,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gpd.GeoDataFrame(pd.concat(all_tracts, ignore_index=True))
             gdf = gdf.drop_duplicates(subset="GEOID")  # or 'GEOID' if available
             gdf.crs = "EPSG:4326"
-            gdf.title = "the tracts of all power stations in Ohio that are at risk of flooding  at 2 PM on July 1, 2025"
+            gdf.title = "the tracts of all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025"
 
         [ Example 11 ]
-        Find all power stations in Ohio that are at risk of flooding  from 2 AM July 17, 2025 to 10 PM on July 18, 2025.
+        Find all power stations at risk of flooding in Ohio from 2 AM July 17, 2025 to 10 PM on July 18, 2025.
 
         You can return the following code:
             start = pd.to_datetime("2025-07-17 02:00")
@@ -401,7 +402,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                 gdf_hour["Date"] = hour
                 all_gdfs.append(gdf_hour)
             gdf = gpd.GeoDataFrame(pd.concat(all_gdfs, ignore_index=True), crs="EPSG:4326")
-            gdf.title = "All power stations in Ohio that are at risk of flooding  from 2 AM July 17, 2025 to 10 PM on July 18, 2025"
+            gdf.title = "All power stations at risk of flooding in Ohio from 2 AM July 17, 2025 to 10 PM on July 18, 2025"
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
