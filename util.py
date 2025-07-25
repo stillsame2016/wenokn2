@@ -658,20 +658,21 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        the name "Scioto" and "All basins that Scioto River flows through" tries to find all basins that the
        Scioto River flows through".
 
-       Note: Please note that "Find the tracts of all power stations in Ohio that are at risk of flooding at
-       2 PM on July 1, 2025" is NOT semantically equivalent to the processed request "Find all power stations 
-       in Ohio that are at risk of flooding at 2 PM on July 1, 2025" because the first request tries to find 
+       Note: Please note that "Find the tracts of all power stations at risk of flooding in Ohio at 2 PM on 
+       July 1, 2025" is NOT semantically equivalent to the processed request "Find all power stations at risk 
+       of flooding in Ohio that at 2 PM on July 1, 2025" because the first request tries to find 
        some census tracts and the second request tries to find some power stations at risk of flooding.
 
-       Note: Please note that "Find the populations of the tracts of all buildings in Ohio that are at risk of 
-       flooding at 2 PM on July 1, 2025" is NOT semantically equivalent to the processed request "Find the tracts
-       of all power stations in Ohio that are at risk of flooding at 2 PM on July 1, 2025" because the first request
+       Note: Please note that "Find the populations of the tracts of all buildings at risk of flooding in Ohio 
+       at 2 PM on July 1, 2025" is NOT semantically equivalent to the processed request "Find the tracts
+       of all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025" because the first request
        tries to find the populations of some tracts and the second request tries to find some tracts.
 
-       In general, the following requests are not equivalent:
-            "Find power stations at risk of flooding", 
-            "Find tracts of ....", 
-            "Find populations of ..."
+       In general, the following requests are not sematically equivalent:
+            "Find the power stations .... ", 
+            "Find the tracts of ....", 
+            "Find the populations of ..."
+        because they request different objects.
        
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
