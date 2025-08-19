@@ -825,12 +825,17 @@ def fetch_flood_impacts(
                 "page": page,
                 "size": 1000  # Maximum page size
             }
-            
+
+            # Define headers with API key
+            headers = {
+                "x-api-key": "maj6OM1L77141VXiH7GMy1iLRWmFI88M5JVLMHn7"
+            }
+
             # Make request with retry logic
             response = None
             for attempt in range(max_retries):
                 try:
-                    response = requests.get(base_url, params=params, timeout=30)
+                    response = requests.get(base_url, params=params, headers=headers, timeout=30)
                     response.raise_for_status()
                     break
                 except requests.RequestException as e:
