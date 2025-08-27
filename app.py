@@ -711,7 +711,11 @@ with col2:
                                 "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
                                 "get_dcid_from_county_name": get_dcid_from_county_name,
                                 "get_dcid_from_state_name": get_dcid_from_state_name,
-                                "get_dcid_from_country_name": get_dcid_from_country_name
+                                "get_dcid_from_country_name": get_dcid_from_country_name,
+
+                                'load_coal_mines': load_coal_mines,
+                                'load_coal_power_plants': load_coal_power_plants,
+                                'load_wind_power_plants': load_wind_power_plants,
                             }
                             
                             # -------------------------------------------
