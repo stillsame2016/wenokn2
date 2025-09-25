@@ -161,6 +161,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         We have the following function to get buildings at risk of flooding in some state or county FIPS codes at an hour as a GeoDataFrame:
              load_flooded_buildings(date, scope)
 
+        [ Definition 10 ]
+        We have the following function to get all PFSA observations with the minimum values and the starting date as a GeoDataFrame
+             load_PFAS_observations(min_value=4, date="2020-01-01")
+
         [ Available Data ]
         The following are the variables with the data:
             {variables}
