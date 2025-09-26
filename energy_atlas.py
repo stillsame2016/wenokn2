@@ -16,6 +16,8 @@ import json
 from shapely.geometry import Point
 from shapely.ops import transform
 
+from shapely import wkt
+import sparql_dataframe
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -162,8 +164,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
              load_flooded_buildings(date, scope)
 
         [ Definition 10 ]
-        We have the following function to get all PFSA observations with the minimum values and the starting date as a GeoDataFrame
-             load_PFAS_observations(min_value=4, date="2020-01-01")
+        We have the following function to get all PFSA contamiation observations as a GeoDataFrame
+             load_PFAS_contamiation_observations()
 
         [ Available Data ]
         The following are the variables with the data:
@@ -916,6 +918,85 @@ def load_flooded_power_stations(date: str, scope) -> gpd.GeoDataFrame:
 def load_flooded_buildings(date: str, scope) -> gpd.GeoDataFrame:
     return fetch_flood_impacts(date, fips="tract", feature_type="building", scope=scope) 
     
+def load_PFAS_contamiation_observations() -> gpd.GeoDataFrame:
+    """
+    Fetch PFAS contaminant samples exceeding thresholds and return as GeoDataFrame.
+    """
+    endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
 
+    query = """
+PREFIX pfas: <http://sawgraph.spatialai.org/v1/pfas#>
+PREFIX coso: <http://sawgraph.spatialai.org/v1/contaminoso#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT
+  ?wkt
+  (SAMPLE(?obs) AS ?anyObs)
+  (SAMPLE(?substance) AS ?anySubstance)
+  (MAX(?date) AS ?anyDate)
+  (SAMPLE(?value) AS ?anyValue)
+  (SAMPLE(?unit) AS ?anyUnit)
+  (SAMPLE(?samplePoint) AS ?anySamplePoint)
+WHERE {
+  ?obs a pfas:PFAS-ContaminantObservation ;
+       a coso:SampleContaminantObservation ;
+       sosa:hasResult ?result ;
+       coso:observedAtSamplePoint ?samplePoint ;
+       coso:ofSubstance ?substance ;
+       coso:sampledTime ?date .
+
+  ?result qudt:quantityValue ?qv .
+  ?qv qudt:numericValue ?value ;
+      qudt:unit ?unit .
+
+  ?samplePoint geo:hasGeometry/geo:asWKT ?wkt .
+
+  FILTER(BOUND(?wkt) && STRLEN(STR(?wkt)) > 0) .
+  FILTER(?date >= "2000-01-01"^^xsd:date) .
+
+  VALUES (?substanceVal ?limitVal ?unitVal) {
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.SUM_PFOA_PFOS> 20 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFNA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFDA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFBS_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOSA> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFTEA_A> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
+  }
+
+  FILTER(?substance = ?substanceVal && ?value > ?limitVal && ?unit = ?unitVal)
+}
+GROUP BY ?wkt
+LIMIT 1000
+"""
+    df = sparql_dataframe.get(endpoint_url, query)
+
+    # Convert WKT to geometry
+    if "wkt" in df.columns:
+        df = df.dropna(subset=["wkt"]).copy()
+        df["geometry"] = df["wkt"].apply(wkt.loads)
+        df = df.drop(columns=["wkt"])
+    else:
+        df["geometry"] = None
+
+    # Optionally add medium
+    def get_medium(unit):
+        if unit == "http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G":
+            return "soil/tissue"
+        elif unit == "http://qudt.org/vocab/unitNanoGM-PER-L":
+            return "water"
+        else:
+            return "unknown"
+
+    df["medium"] = df["anyUnit"].apply(get_medium)
+    
+    gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+    return gdf    
 
 
