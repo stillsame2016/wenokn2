@@ -416,6 +416,23 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gpd.GeoDataFrame(pd.concat(all_gdfs, ignore_index=True), crs="EPSG:4326")
             gdf.title = "All power stations at risk of flooding in Ohio from 2 AM July 17, 2025 to 10 PM on July 18, 2025"
 
+        [ Example 12 ]
+        Find all public water systems in Ross county, Ohio.
+
+        Find out if one of the available variables is a geodataframe containing Ross county, Ohio.
+
+        If none of the available variables are geodataframes containing Ross county, Ohio:
+            raise Exception("The data for Ross county, Ohio is missing. Please load it first.")    
+
+        If you found a variable which is a geodataframe containing Ross county, Ohio, 
+        then return the valid Python code in the following format:
+
+            gdf1 = <replace by the variable of the geodataframe for Ross county, Ohio if you found one>
+            gdf2 = load_public_water_systems(state_name="ohio", limit=3000)
+            gdf1 = gdf1.to_crs(gdf2.crs)
+            gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="within")
+            gdf.title = "All public water systems in Ross county, Ohio"
+
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
