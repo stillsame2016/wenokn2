@@ -73,7 +73,7 @@ def get_question_route(llm, question):
             Census Tract
 	        Power Station at Risk of Flooding
             Building at Risk of Flooding
-            PFAS Observation
+            PFAS Contamination Observation
 			Public Water System
 			
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
