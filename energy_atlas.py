@@ -166,10 +166,12 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 10 ]
         We have the following function to get all PFSA contamiation observations as a GeoDataFrame:
              load_PFAS_contamiation_observations()
+        with the following columns: 'Obs', 'Substance', 'Date', 'Value', 'Unit', 'SamplePoint', 'geometry'.
 
         [ Definition 11 ]
         We have the following function to get all public water systems in a state as a GeoDataFrame:
              load_public_water_systems(state_name: str = "maine", limit: int = 2000)
+        with the following columns: 'pws', 'PwsName' and 'geometry'.  Note 'pws' contains ids.
 
         [ Available Data ]
         The following are the variables with the data:
