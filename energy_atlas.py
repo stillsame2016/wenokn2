@@ -429,7 +429,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
             gdf1 = <replace by the variable of the geodataframe for Ross county, Ohio if you found one>
             gdf2 = load_public_water_systems(state_name="ohio", limit=3000)
-            gdf1 = gdf1.to_crs(gdf2.crs)
+            gdf1 = gdf1.set_crs("EPSG:4326")   # if it's in lon/lat
+            gdf2 = gdf2.set_crs("EPSG:4326") 
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="within")
             gdf.title = "All public water systems in Ross county, Ohio"
 
