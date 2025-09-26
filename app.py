@@ -455,6 +455,8 @@ with col2:
         ########## PFAS Contamination Observation and Public Water System ##########
         'Find all public water systems in Maine containing PFAS contamination observations',
         'Find all public water systems in Ross county, Ohio',
+        'Show all PFAS contamiation observations',
+        'Show all public water systems in Maine',
     ]
     st.markdown(
         """
