@@ -934,12 +934,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT DISTINCT
   ?wkt
-  (SAMPLE(?obs) AS ?anyObs)
-  (SAMPLE(?substance) AS ?anySubstance)
-  (MAX(?date) AS ?anyDate)
-  (SAMPLE(?value) AS ?anyValue)
-  (SAMPLE(?unit) AS ?anyUnit)
-  (SAMPLE(?samplePoint) AS ?anySamplePoint)
+  (SAMPLE(?obs) AS ?Obs)
+  (SAMPLE(?substance) AS ?Substance)
+  (MAX(?date) AS ?Date)
+  (SAMPLE(?value) AS ?Value)
+  (SAMPLE(?unit) AS ?Unit)
+  (SAMPLE(?samplePoint) AS ?SamplePoint)
 WHERE {
   ?obs a pfas:PFAS-ContaminantObservation ;
        a coso:SampleContaminantObservation ;
@@ -994,7 +994,7 @@ LIMIT 1000
         else:
             return "unknown"
 
-    df["medium"] = df["anyUnit"].apply(get_medium)
+    df["medium"] = df["Unit"].apply(get_medium)
     
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
     return gdf    
