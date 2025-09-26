@@ -451,7 +451,10 @@ with col2:
         'Retrieve all buildings at risk of flooding in Ohio at 2 PM on July 1, 2025',
         'Find the tracts of all buildings at risk of flooding in Ohio at 2 PM on July 1, 2025',
         'Find the populations of the tracts of all buildings at risk of flooding in Ohio at 2 PM on July 1, 2025',
-        
+
+        ########## PFAS Contamination Observation and Public Water System ##########
+        'Find all public water systems in Maine containing PFAS contamination observations',
+        'Find all public water systems in Ross county, Ohio',
     ]
     st.markdown(
         """
