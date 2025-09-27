@@ -163,7 +163,7 @@ def get_question_route(llm, question):
         Return "Energy Atlas" for the following request:
             Find the tracts of power stations at risk of flooding in Ohio at 2 PM on July 1, 2025.
         Because this request tried to find some consus tracts which are contained in Energy Atlas, and all
-	power stations in Ohio that are risk of flooding at 2 PM on July 1, 2025 are also contained in Energy Atlas.
+	    power stations in Ohio that are risk of flooding at 2 PM on July 1, 2025 are also contained in Energy Atlas.
 
         [ Example 13 ]
         Return "Data Commons" for the following requests:
@@ -182,6 +182,11 @@ def get_question_route(llm, question):
 	        Find all states where the total coal mine output exceeds 1 million tons.
             Find the river in Ohio that has the highest number of dams.
 	        Find the watershed that has the highest total coal mine.
+
+        [ Example 15 ]
+        Return "Energy Atlas" for the following request:
+            Find PFSA contamination observations within 100 meters to Presumpscot River
+        Because this request tried to find PFSA contamination observations which are contained in Energy Atlas.
 		
         Question to route: {question} 
         
