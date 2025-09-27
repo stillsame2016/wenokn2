@@ -43,8 +43,9 @@ OpenAI_KEY = st.secrets["OpenAI_KEY"]
 llm = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY)
 llm2 = ChatGroq(temperature=0, model_name="llama-3.1-70b-versatile", api_key=Groq_KEY_2)
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
-llm2 = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
+# gpt-4o
+llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
+llm2 = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
