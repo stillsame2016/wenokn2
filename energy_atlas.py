@@ -434,6 +434,32 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gpd.sjoin(gdf2, gdf1, how="inner", predicate="within")
             gdf.title = "All public water systems in Ross county, Ohio"
 
+        [ Example 13 ]
+        Find PFSA contamination observations within 100 meters to Presumpscot River.
+
+        Find out if one of the available variables is a geodataframe containing Presumpscot River.
+
+        If none of the available variables are geodataframes containing Presumpscot River:
+            raise Exception("The data for Presumpscot River is missing. Please load it first.")    
+
+        If you found a variable which is a geodataframe containing Presumpscot River, 
+        then return the valid Python code in the following format:
+
+            gdf1 = <replace by the variable of the geodataframe for Presumpscot River if you found one>
+            gdf2 = load_PFAS_contamiation_observations()
+            gdf1 = gdf1.set_crs("EPSG:4326")  
+            gdf2 = gdf2.set_crs("EPSG:4326") 
+            gdf1 = gdf1.to_crs(gdf1.estimate_utm_crs())  # Presumpscot River
+            gdf2 = gdf2.to_crs(gdf1.crs)                 
+            joined = gpd.sjoin_nearest(
+                        gdf2, gdf1,
+                        max_distance=10,        # 10 meters
+                        distance_col="distance_to_river"
+            )
+            gdf = joined[gdf2.columns]
+            gdf.title = "PFAS contamination observations within 10 meters of Presumpscot River"
+
+
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
