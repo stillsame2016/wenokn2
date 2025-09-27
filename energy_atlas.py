@@ -457,6 +457,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                         distance_col="distance_to_river"
             )
             gdf = joined[gdf2.columns]
+            gdf = gdf.to_crs("EPSG:4326")
             gdf.title = "PFAS contamination observations within 10 meters of Presumpscot River"
 
 
