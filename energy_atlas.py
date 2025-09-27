@@ -456,7 +456,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
                         max_distance=10,        # 10 meters
                         distance_col="distance_to_river"
             )
-            gdf = joined[gdf2.columns]
+            cols_to_keep = gdf2_utm.columns.to_list() + ["distance_to_river"]
+            gdf = joined[cols_to_keep].copy()
             gdf = gdf.to_crs("EPSG:4326")
             gdf.title = "PFAS contamination observations within 10 meters of Presumpscot River"
 
