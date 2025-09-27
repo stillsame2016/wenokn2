@@ -457,8 +457,10 @@ with col2:
         ########## PFAS Contamination Observation and Public Water System ##########
         'Find all public water systems in Maine containing PFAS contamination observations',
         'Find all public water systems in Ross county, Ohio',
-        'Show all PFAS contamiation observations',
         'Show all public water systems in Ohio',
+        
+        'Show all PFAS contamiation observations',
+        'Find PFSA contamination observations within 20 meters to Presumpscot River',
     ]
     st.markdown(
         """
