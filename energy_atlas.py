@@ -469,7 +469,6 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
 
         If you found a variable which is a geodataframe containing Presumpscot River, 
         then return the valid Python code in the following format:
-
             gdf1 = <replace by the variable of the geodataframe for Presumpscot River if you found one>
             gdf2 = load_PFAS_contamiation_observations()
             gdf1 = gdf1.set_crs("EPSG:4326")  
@@ -489,10 +488,22 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
        [ Example 14 ]
        Find all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.
 
-       Find out if one of the available variables is a geodataframe containing PFAS contamination observations within 100 meters of the Presumpscot River.
+       Find out if one of available variable is a geodataframe containing the Presumpscot River and another of the available variables is a 
+       geodataframe containing PFAS contamination observations within 100 meters of the Presumpscot River.
 
-       If none of the available variables are geodataframes containing PFAS contamination observations within 100 meters of the Presumpscot Rive:
+       If none of the available variables are geodataframes containing Presumpscot River:
+            raise Exception("The data for Presumpscot River is missing. Please load it first.")   
+
+       If none of the available variables are geodataframes containing PFAS contamination observations within 100 meters of the Presumpscot River:
             raise Exception("The data for PFAS contamination observations within 100 meters of the Presumpscot River is missing. Please load it first.")   
+
+       If you found a variable which is a geodataframe containing Presumpscot River and another variable which is a geodataframe containing PFAS contamination observations within 100 meters of the Presumpscot River, 
+       then return the valid Python code in the following format:
+            gdf_river = <replace by the variable of the geodataframe for the Presumpscot River if you found one>
+            gdf_pfas = <replace by the variable of the geodataframe for PFAS contamination observations within 100 meters of the Presumpscot River if you found one>
+            gdf = downstream_tracts(gdf_river, gdf_pfas, flow_dir='south')
+            gdf = gdf.set_crs("EPSG:4326")
+            gdf.title = "all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river"
 
        [ Example 15 ]
        Find all public water systems in Maine containing PFAS contamination observations.
