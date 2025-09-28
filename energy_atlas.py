@@ -520,6 +520,49 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.drop_duplicates(subset='geometry')  # or 'pfas_id' if available
             gdf.title = "All PFSA contamination observations within public water systems in Maine"
         
+        [ Example 17 ]
+        Find all PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine.
+
+        You can return the following code:
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_frs = load_FRS_facilities(state="Maine", naics_name="Water Supply and Irrigation", limit=1000)
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf_frs = gdf_frs.set_crs("EPSG:4326")
+            gdf_frs_utm = gdf_frs.to_crs(gdf_frs.estimate_utm_crs())
+            gdf_pfas_utm = gdf_pfas.to_crs(gdf_frs_utm.crs)
+            max_distance_meters = 800
+            joined = gpd.sjoin_nearest(
+                gdf_pfas_utm, gdf_frs_utm,
+                max_distance=max_distance_meters,
+                distance_col="distance_to_frs"
+            )
+            gdf = joined[joined["distance_to_frs"] <= max_distance_meters].copy()
+            gdf = gdf[gdf_pfas.columns]
+            gdf = gdf.to_crs("EPSG:4326")
+            gdf = gdf.drop_duplicates(subset='geometry')  
+            gdf.title = "All PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine"
+
+        [ Example 18 ]
+        Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations.
+
+        You can return the following code:
+            gdf_frs = load_FRS_facilities(state="Maine", naics_name="Water Supply and Irrigation", limit=1000)
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_frs = gdf_frs.set_crs("EPSG:4326")
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf_frs_utm = gdf_frs.to_crs(gdf_frs.estimate_utm_crs())
+            gdf_pfas_utm = gdf_pfas.to_crs(gdf_frs_utm.crs)
+            max_distance_meters = 800
+            joined = gpd.sjoin_nearest(
+                gdf_frs_utm, gdf_pfas_utm, 
+                max_distance=max_distance_meters,
+                distance_col="distance_to_pfas"
+            )
+            gdf = joined[joined["distance_to_pfas"] <= max_distance_meters].copy()
+            gdf = gdf[gdf_frs.columns]
+            gdf = gdf.to_crs("EPSG:4326")
+            gdf = gdf.drop_duplicates(subset='geometry')  
+            gdf.title = "All FRS Water Supply and Irrigation Facilities in Maine within 800 meters from PFAS Contamination Observations"
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
