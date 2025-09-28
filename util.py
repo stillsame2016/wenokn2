@@ -638,45 +638,51 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
-        [ Available Data ]
-        The following are the variables with the data:
-            {variables}
-                        
-        [ Question ]
-        The following is the requested from the user:
-            {question}
+## Available Data
+The following are the variables with the data:
+{variables}
 
-       Checks whether the user's current request is semantically fully equivalent to the processed 
-       request of a geodataframe contained in a certain variable. Return a valid Python JSON string
-       with a boolean field 'existing' to indicate if it exists and a string field "reason" to give 
-       an explanation. Please return JSON only without any preamble or other explanation. 
+## Question
+The following is the requested from the user:
+{question}
 
-       Note: Please note that “Find San Diego County” is not equivalent to “Find Southern San Diego County”.
-       
-       Note: Please note that "Find Scioto River" is NOT semantically equivalent to the processed request 
-       "All basins that Scioto River flows through" because "Find Scioto River" tries to find a river with 
-       the name "Scioto" and "All basins that Scioto River flows through" tries to find all basins that the
-       Scioto River flows through".
+## Task
+Check whether the user's current request is **EXACTLY** semantically equivalent to the processed request of a geodataframe contained in a certain variable. 
 
-       Note: Please note that "Find the tracts of all power stations at risk of flooding in Ohio at 2 PM on 
-       July 1, 2025" is NOT semantically equivalent to the processed request "Find all power stations at risk 
-       of flooding in Ohio that at 2 PM on July 1, 2025" because the first request tries to find 
-       some census tracts and the second request tries to find some power stations at risk of flooding.
+**CRITICAL: Two requests are semantically equivalent ONLY if they:**
+1. Request the **exact same type of objects/entities**
+2. Apply the **exact same filters/conditions** 
+3. Have the **exact same scope and purpose**
 
-       Note: Please note that "Find the populations of the tracts of all buildings at risk of flooding in Ohio 
-       at 2 PM on July 1, 2025" is NOT semantically equivalent to the processed request "Find the tracts
-       of all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025" because the first request
-       tries to find the populations of some tracts and the second request tries to find some tracts.
+## Strict Equivalence Rules
 
-       Note: "Find all PFAS contamination observations ..." is NOT semantically equivalent to "Find all public 
-       water systems ..." One is to find PFAS contamination observations and another is to find public water systems.
+### Different Object Types = NOT Equivalent
+- "Find power stations" ≠ "Find tracts of power stations" ≠ "Find populations of tracts"
+- "Find PFAS observations" ≠ "Find water systems with PFAS" 
+- "Find rivers" ≠ "Find basins that rivers flow through"
 
-       In general, the following requests are not sematically equivalent:
-            "Find the power stations .... ", 
-            "Find the tracts of ....", 
-            "Find the populations of ..."
-        because they request different objects.
-       
+### Different Scope = NOT Equivalent  
+- "Find San Diego County" ≠ "Find Southern San Diego County"
+- "Find all X in region Y" ≠ "Find X meeting criteria Z in region Y"
+
+### Different Purpose = NOT Equivalent
+- "Find X" (location/identification) ≠ "Find all Y that X flows through" (relationship/analysis)
+
+### Examples of NON-Equivalent Pairs:
+1. "Find Scioto River" vs "All basins that Scioto River flows through" - Different purposes
+2. "Find tracts of power stations at risk" vs "Find power stations at risk" - Different object types  
+3. "Find PFAS observations in water systems" vs "Find water systems containing PFAS" - Different primary objects
+4. "Find populations of tracts" vs "Find tracts" - Different object types
+
+## Response Format
+Return a valid Python JSON string with:
+- `existing` (boolean): True ONLY if requests are **identically equivalent**
+- `reason` (string): Explain the comparison, highlighting any differences in object type, scope, or purpose
+
+**When in doubt, return False.** Semantic equivalence requires EXACT matching, not loose similarity.
+
+JSON only, no preamble.
+
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
