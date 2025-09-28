@@ -461,6 +461,7 @@ with col2:
         'Show all public water systems in Ohio',
         
         'Show all PFAS contamiation observations',
+        'Find all PFSA contamination observations within public water systems in Maine',
         'Find PFSA contamination observations within 20 meters to Presumpscot River',
         'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
     ]
