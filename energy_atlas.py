@@ -908,9 +908,14 @@ def get_tracts_for_river(river_gdf, max_segments=None):
     return combined.drop_duplicates(subset='GEOID')
 
 def downstream_tracts(river_gdf, point_gdf, flow_dir='south'):
-    if river_gdf.crs != "EPSG:4326":
+    if river_gdf.crs is None:
+        river_gdf = river_gdf.set_crs("EPSG:4326")
+    else:
         river_gdf = river_gdf.to_crs("EPSG:4326")
-    if point_gdf.crs != "EPSG:4326":
+    
+    if point_gdf.crs is None:
+        point_gdf = point_gdf.set_crs("EPSG:4326")
+    else:
         point_gdf = point_gdf.to_crs("EPSG:4326")
     
     results = []
