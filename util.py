@@ -668,9 +668,8 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
        of all power stations at risk of flooding in Ohio at 2 PM on July 1, 2025" because the first request
        tries to find the populations of some tracts and the second request tries to find some tracts.
 
-       Note: "Find all PFAS contamination observations" is NOT semantically equivalent to "Find all public 
-       water systems in Maine containing PFAS contamination observations." One is to find PFAS contamination observations
-       and another is to find public water systems.
+       Note: "Find all PFAS contamination observations ..." is NOT semantically equivalent to "Find all public 
+       water systems ..." One is to find PFAS contamination observations and another is to find public water systems.
 
        In general, the following requests are not sematically equivalent:
             "Find the power stations .... ", 
