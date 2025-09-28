@@ -637,6 +637,7 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
          
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
+
 ## Available Data
 The following are the variables with the data:
 {variables}
@@ -688,7 +689,15 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - **Different primary objects = NOT EQUIVALENT**
 
 ## Verification Steps:
-1. **Identify the primary object** in both requests (what comes after "Find all...")
+1. **Extract the primary object using this exact pattern:**
+   - In "Find all [PRIMARY OBJECT] within/from/in [SOMETHING ELSE]"
+   - The PRIMARY OBJECT is the first noun phrase after "Find all"
+   - Everything after "within/from/in" is a filter or condition
+   
+   **Examples:**
+   - "Find all **PFSA contamination observations** within 800 meters from facilities" → Primary: PFSA contamination observations
+   - "Find all **FRS water supply facilities** in Maine within 800 meters from observations" → Primary: FRS water supply facilities
+   
 2. **If primary objects differ** → Return False immediately 
 3. **Check spatial relationships** - "A within distance of B" vs "B within distance of A" are different queries
 4. **If primary objects match** → Check filters and scope for exact equivalence
@@ -712,7 +721,7 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
 ## Response Format
 Return JSON only:
 - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
-- `reason` (string): State the primary object of each request and whether they match
+- `reason` (string): **ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]." Then explain if they match**
 
 **Default to False unless absolutely certain of exact equivalence.**
 
