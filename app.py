@@ -468,6 +468,7 @@ with col2:
 
         'Find all FRS sewage treatment facilities in Ohio',
         'Find all FRS water supply and irrigation facilities in Maine',
+        'Find all FRS waste treatment and disposal facilities in Maine',
     ]
     st.markdown(
         """
