@@ -462,6 +462,7 @@ with col2:
         
         'Show all PFAS contamiation observations',
         'Find PFSA contamination observations within 20 meters to Presumpscot River',
+        'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
     ]
     st.markdown(
         """
