@@ -143,10 +143,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 7 ]
         We have the following function to get a Census Tract from latitude and longitude from an ArcGIS Feature Service as a GeoDataFrame:
              load_census_tract(latitude, longitude)
-
         The returned GeoDataFrame has the following columns:
               'MTFCC', 'OID', 'GEOID', 'STATE', 'COUNTY', 'TRACT', 'BASENAME', 'NAME', 'LSADC', 
               'FUNCSTAT', 'AREALAND', 'AREAWATER', 'CENTLAT', 'CENTLON', 'INTPTLAT', 'INTPTLON', 'OBJECTID'
+
+        We also have the following function to retrieve all Census Tracts located downstream of a river, starting from one or more specified 
+        points represented as a GeoDataFrame. The function returns the downstream tracts as a GeoDataFrame.
+              downstream_tracts(river_gdf, point_gdf, flow_dir='south')
 
         [ Definition 8 ]
         We have the following function to get power stations at risk of flooding in some state or county FIPS codes at an hour as a GeoDataFrame:
