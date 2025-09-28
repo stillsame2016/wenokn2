@@ -637,7 +637,6 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
          
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-
 ## Available Data
 The following are the variables with the data:
 {variables}
@@ -677,17 +676,38 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - "Find rivers" ≠ "Find basins that rivers flow through"
    - "Find buildings" ≠ "Find areas containing buildings"
 
-## Verification Steps:
-1. **Identify the primary object** in both requests (the main thing being sought)
-2. **If primary objects differ** → Return False
-3. **If primary objects match** → Check filters and scope for exact equivalence
-4. **If any doubt exists** → Return False
+4. **SPATIAL RELATIONSHIP DIRECTION IS CRITICAL:**
+   - "Find A within distance of B" ≠ "Find B within distance of A"
+   - **Primary object**: The thing being found (A vs B)
+   - **Spatial filter**: The reference object for distance
+   - These are NEVER equivalent even if the spatial relationship is symmetric
+   
+   **Examples:**
+   - "Find contamination observations within 800m of facilities" → Primary: observations
+   - "Find facilities within 800m of contamination observations" → Primary: facilities
+   - **Different primary objects = NOT EQUIVALENT**
 
-## Your Specific Error to Avoid:
-- "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
-- Primary object 1: **observations** 
-- Primary object 2: **water systems**
-- Different primary objects = NOT EQUIVALENT
+## Verification Steps:
+1. **Identify the primary object** in both requests (what comes after "Find all...")
+2. **If primary objects differ** → Return False immediately 
+3. **Check spatial relationships** - "A within distance of B" vs "B within distance of A" are different queries
+4. **If primary objects match** → Check filters and scope for exact equivalence
+5. **If any doubt exists** → Return False
+
+## Your Specific Errors to Avoid:
+
+1. **Content vs Container:**
+   - "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
+   - Primary object 1: **observations** 
+   - Primary object 2: **water systems**
+   - Different primary objects = NOT EQUIVALENT
+
+2. **Spatial Query Direction:**
+   - "Find PFSA observations within 800m of facilities" ≠ "Find facilities within 800m of PFSA observations"  
+   - Primary object 1: **PFSA observations**
+   - Primary object 2: **facilities**
+   - Different primary objects = NOT EQUIVALENT
+   - **The spatial relationship may be the same, but the queries ask for different things**
 
 ## Response Format
 Return JSON only:
