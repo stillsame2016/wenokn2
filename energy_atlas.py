@@ -475,6 +475,32 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
        If none of the available variables are geodataframes containing PFAS contamination observations within 100 meters of the Presumpscot Rive:
             raise Exception("The data for PFAS contamination observations within 100 meters of the Presumpscot River is missing. Please load it first.")   
 
+       [ Example 15 ]
+       Find all public water systems in Maine containing PFAS contamination observations.
+
+       You can return the following code:
+            gdf_pws = load_public_water_systems(state_name="maine", limit=2000)
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_pws = gdf_pws.set_crs("EPSG:4326")
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf = gpd.sjoin(gdf_pws, gdf_pfas, how="inner", predicate="intersects")
+            gdf = gdf[gdf_pws.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')  
+            gdf.title = "All public water systems in Maine containing PFAS contamination observations"
+
+        [ Example 16 ]
+        Find all PFSA contamination observations within public water systems in Maine .
+
+        You can return the following code:
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_pws = load_public_water_systems(state_name="maine", limit=2000)
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf_pws = gdf_pws.set_crs("EPSG:4326")
+            gdf = gpd.sjoin(gdf_pfas, gdf_pws, how="inner", predicate="intersects")
+            gdf = gdf[gdf_pfas.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')  # or 'pfas_id' if available
+            gdf.title = "All PFSA contamination observations within public water systems in Maine"
+        
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
