@@ -466,7 +466,7 @@ with col2:
         'Show all PFAS contamiation observations',
         'Find PFSA contamination observations within 20 meters to Presumpscot River',
 
-        'Find all FRS water supply and irrigation facilities in Ohio',
+        'Find all FRS sewage treatment facilities in Ohio',
         'Find all FRS water supply and irrigation facilities in Maine',
     ]
     st.markdown(
