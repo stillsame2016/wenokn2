@@ -75,7 +75,7 @@ def get_question_route(llm, question):
             Building at Risk of Flooding
             PFAS Contamination Observation
 			Public Water System
-			FRS Facility in Maine, Ohio or Illinois
+			Facility in Maine or Ohio or Illinois 
 			
         Use "WEN-KEN database use Energy Atlas" for the requests to find entities from WEN-KEN database but with
         somes join condition for the entities from WEN-KEN database and Energy Atlas.
