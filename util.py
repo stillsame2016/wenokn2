@@ -684,8 +684,8 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - These are NEVER equivalent even if the spatial relationship is symmetric
    
    **Examples:**
-   - "Find contamination observations within 800m of facilities" → Primary: observations
-   - "Find facilities within 800m of contamination observations" → Primary: facilities
+   - "Find PFAS contamination observations within 800m of facilities" → Primary: observations
+   - "Find FRS facilities within 800m of contamination observations" → Primary: facilities
    - **Different primary objects = NOT EQUIVALENT**
 
 ## Verification Steps:
