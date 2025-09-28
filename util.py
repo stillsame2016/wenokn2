@@ -647,41 +647,54 @@ The following is the requested from the user:
 {question}
 
 ## Task
-Check whether the user's current request is **EXACTLY** semantically equivalent to the processed request of a geodataframe contained in a certain variable. 
+Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed request of a geodataframe contained in a certain variable.
 
-**CRITICAL: Two requests are semantically equivalent ONLY if they:**
-1. Request the **exact same type of objects/entities**
-2. Apply the **exact same filters/conditions** 
-3. Have the **exact same scope and purpose**
+## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL
 
-## Strict Equivalence Rules
+**The PRIMARY OBJECT being requested must be EXACTLY the same.**
 
-### Different Object Types = NOT Equivalent
-- "Find power stations" ≠ "Find tracts of power stations" ≠ "Find populations of tracts"
-- "Find PFAS observations" ≠ "Find water systems with PFAS" 
-- "Find rivers" ≠ "Find basins that rivers flow through"
+### Primary Object Examples:
+- "Find **PFAS contamination observations**" → Primary object = PFAS observations
+- "Find **public water systems** containing PFAS" → Primary object = water systems  
+- "Find **power stations** at risk" → Primary object = power stations
+- "Find **tracts** of power stations" → Primary object = census tracts
+- "Find **populations** of tracts" → Primary object = population data
 
-### Different Scope = NOT Equivalent  
-- "Find San Diego County" ≠ "Find Southern San Diego County"
-- "Find all X in region Y" ≠ "Find X meeting criteria Z in region Y"
+**These are NEVER equivalent because they request fundamentally different entities.**
 
-### Different Purpose = NOT Equivalent
-- "Find X" (location/identification) ≠ "Find all Y that X flows through" (relationship/analysis)
+## AUTOMATIC NON-EQUIVALENCE Cases:
 
-### Examples of NON-Equivalent Pairs:
-1. "Find Scioto River" vs "All basins that Scioto River flows through" - Different purposes
-2. "Find tracts of power stations at risk" vs "Find power stations at risk" - Different object types  
-3. "Find PFAS observations in water systems" vs "Find water systems containing PFAS" - Different primary objects
-4. "Find populations of tracts" vs "Find tracts" - Different object types
+1. **Different Primary Nouns:**
+   - "observations" ≠ "systems" ≠ "stations" ≠ "tracts" ≠ "populations"
+   - If the main noun differs, return False immediately
+
+2. **Container vs. Contents:**
+   - "Find PFAS observations in water systems" ≠ "Find water systems with PFAS"
+   - "Find stations in counties" ≠ "Find counties with stations"
+   - One asks for the contents, the other for containers
+
+3. **Direct vs. Indirect Objects:**
+   - "Find rivers" ≠ "Find basins that rivers flow through"
+   - "Find buildings" ≠ "Find areas containing buildings"
+
+## Verification Steps:
+1. **Identify the primary object** in both requests (the main thing being sought)
+2. **If primary objects differ** → Return False
+3. **If primary objects match** → Check filters and scope for exact equivalence
+4. **If any doubt exists** → Return False
+
+## Your Specific Error to Avoid:
+- "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
+- Primary object 1: **observations** 
+- Primary object 2: **water systems**
+- Different primary objects = NOT EQUIVALENT
 
 ## Response Format
-Return a valid Python JSON string with:
-- `existing` (boolean): True ONLY if requests are **identically equivalent**
-- `reason` (string): Explain the comparison, highlighting any differences in object type, scope, or purpose
+Return JSON only:
+- `existing` (boolean): True ONLY if primary objects AND all conditions are identical
+- `reason` (string): State the primary object of each request and whether they match
 
-**When in doubt, return False.** Semantic equivalence requires EXACT matching, not loose similarity.
-
-JSON only, no preamble.
+**Default to False unless absolutely certain of exact equivalence.**
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
