@@ -13,8 +13,11 @@ import logging
 import io
 import pyproj
 import json
-from shapely.geometry import Point
+from shapely.geometry import Point, box, LineString, MultiLineString
 from shapely.ops import transform
+import shapely.geometry
+import shapely.ops
+import numpy as np
 
 from shapely import wkt
 import sparql_dataframe
@@ -793,6 +796,156 @@ def load_census_tract(latitude, longitude):
     if gdf.empty:
         raise ValueError("No census tract found at the given location.")
     return gdf
+
+def get_tracts_for_geometry(geometry, retries=3, buffer_distance=0.0001):
+    url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/0/query"
+    
+    # Handle buffering for lines to address precision/gap issues
+    if buffer_distance > 0 and isinstance(geometry, (LineString, MultiLineString)):
+        geometry = geometry.buffer(buffer_distance)
+    
+    if isinstance(geometry, Point):
+        geometry_type = "esriGeometryPoint"
+        geometry_param = {"x": geometry.x, "y": geometry.y}
+        if not (-125 <= geometry.x <= -66 and 24 <= geometry.y <= 49):
+            return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+    elif isinstance(geometry, (LineString, MultiLineString)):
+        geometry_type = "esriGeometryPolyline"
+        geometry = geometry.simplify(tolerance=0.0001, preserve_topology=True)
+        if isinstance(geometry, LineString):
+            coords = list(geometry.coords)
+            paths = [coords]
+        else:
+            coords = [coord for line in geometry.geoms for coord in line.coords]
+            paths = [list(line.coords) for line in geometry.geoms]
+        if not all(-125 <= lon <= -66 and 24 <= lat <= 49 and np.isfinite(lon) and np.isfinite(lat) for lon, lat in coords):
+            return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+        geometry_param = {"paths": paths}
+    elif isinstance(geometry, (shapely.geometry.Polygon, shapely.geometry.MultiPolygon)):
+        geometry_type = "esriGeometryPolygon"
+        def get_rings(geom):
+            if isinstance(geom, shapely.geometry.Polygon):
+                return [list(map(list, geom.exterior.coords))]
+            else:
+                rings = []
+                for p in geom.geoms:
+                    rings.append(list(map(list, p.exterior.coords)))
+                return rings
+        geometry_param = {"rings": get_rings(geometry)}
+    else:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+    
+    params = {
+        "f": "geojson",
+        "geometry": json.dumps(geometry_param),
+        "geometryType": geometry_type,
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "GEOID,STATE,COUNTY,TRACT,NAME",
+        "returnGeometry": "true"
+    }
+    
+    for attempt in range(retries):
+        try:
+            resp = requests.get(url, params=params, timeout=15)
+            resp.raise_for_status()
+            gdf = gpd.read_file(resp.text)
+            if gdf.empty:
+                return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+            gdf.crs = "EPSG:4326"
+            return gdf[['GEOID', 'STATE', 'COUNTY', 'TRACT', 'NAME', 'geometry']]
+        except:
+            if attempt < retries - 1:
+                time.sleep(2 * (attempt + 1))
+    return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+
+def get_tracts_for_river(river_gdf, max_segments=None):
+    if river_gdf.crs != "EPSG:4326":
+        river_gdf = river_gdf.to_crs("EPSG:4326")
+    
+    tract_list = []
+    
+    for _, row in river_gdf.iterrows():
+        geometry = row.geometry
+        if geometry.is_empty:
+            continue
+        if isinstance(geometry, MultiLineString):
+            lines = list(geometry.geoms)
+            if max_segments is not None:
+                lines = lines[:max_segments]
+            for sub_geom in lines:
+                tracts = get_tracts_for_geometry(sub_geom)
+                if not tracts.empty:
+                    tract_list.append(tracts)
+                time.sleep(0.2)
+        else:
+            tracts = get_tracts_for_geometry(geometry)
+            if not tracts.empty:
+                tract_list.append(tracts)
+            time.sleep(0.2)
+    
+    if not tract_list:
+        centroid = river_gdf.geometry.unary_union.centroid
+        tracts = load_census_tract(centroid.y, centroid.x)
+        if not tracts.empty:
+            tract_list.append(tracts)
+    
+    if not tract_list:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+    
+    combined = gpd.GeoDataFrame(pd.concat(tract_list, ignore_index=True), crs="EPSG:4326")
+    return combined.drop_duplicates(subset='GEOID')
+
+def downstream_tracts(river_gdf, point_gdf, flow_dir='south'):
+    if river_gdf.crs != "EPSG:4326":
+        river_gdf = river_gdf.to_crs("EPSG:4326")
+    if point_gdf.crs != "EPSG:4326":
+        point_gdf = point_gdf.to_crs("EPSG:4326")
+    
+    results = []
+    
+    for idx, row in point_gdf.iterrows():
+        pt = row.geometry
+        pt_lat = pt.y
+        pt_lon = pt.x
+        
+        # Combine all river geometries into a single LineString or MultiLineString
+        river_geom = river_gdf.geometry.unary_union
+        if isinstance(river_geom, MultiLineString):
+            # Merge MultiLineString into a single LineString if possible
+            river_geom = shapely.ops.linemerge(river_geom)
+        
+        if not isinstance(river_geom, LineString):
+            continue  # Skip if we can't get a single LineString
+        
+        # Project the point onto the river to find the closest point
+        projected_distance = river_geom.project(pt)
+        river_length = river_geom.length
+        
+        # Extract the downstream portion (from projected point to end)
+        # Assuming river is digitized upstream to downstream
+        downstream_geom = shapely.ops.substring(river_geom, projected_distance, river_length)
+        
+        if downstream_geom.is_empty or not downstream_geom.is_valid:
+            continue
+        
+        # Create a GeoDataFrame with the downstream geometry
+        river_downstream = gpd.GeoDataFrame(geometry=[downstream_geom], crs="EPSG:4326")
+        
+        # Get tracts for the downstream river segment
+        tracts = get_tracts_for_river(river_downstream)
+        if not tracts.empty:
+            tracts = tracts.copy()
+            tracts['source_point'] = idx
+            tracts['point_lat'] = pt_lat
+            tracts['point_lon'] = pt_lon
+            results.append(tracts)
+    
+    if results:
+        combined = gpd.GeoDataFrame(pd.concat(results, ignore_index=True), crs="EPSG:4326")
+        return combined.drop_duplicates(subset='GEOID')
+    return gpd.GeoDataFrame(geometry=[], crs="EPSG:4326")
+
 
 def fetch_flood_impacts(
     date: str,
