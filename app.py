@@ -465,7 +465,10 @@ with col2:
         'Show all public water systems in Ohio',
         'Show all PFAS contamiation observations',
         'Find PFSA contamination observations within 20 meters to Presumpscot River',
-           ]
+
+        'Find all water supply and irrigation facilities in Ohio',
+        'Find all water supply and irrigation facilities in Maine',
+    ]
     st.markdown(
         """
         <style>
