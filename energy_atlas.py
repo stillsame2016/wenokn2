@@ -467,6 +467,14 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.to_crs("EPSG:4326")
             gdf.title = "PFAS contamination observations within 10 meters of Presumpscot River"
 
+       [ Example 14 ]
+       Find all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.
+
+       Find out if one of the available variables is a geodataframe containing PFAS contamination observations within 100 meters of the Presumpscot River.
+
+       If none of the available variables are geodataframes containing PFAS contamination observations within 100 meters of the Presumpscot Rive:
+            raise Exception("The data for PFAS contamination observations within 100 meters of the Presumpscot River is missing. Please load it first.")   
+
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
