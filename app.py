@@ -460,7 +460,8 @@ with col2:
         'Find all PFSA contamination observations within public water systems in Maine',
         
         'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
-
+        'Find populations of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
+        
         'Find all public water systems in Ross county, Ohio',
         'Show all public water systems in Ohio',
         'Show all PFAS contamiation observations',
