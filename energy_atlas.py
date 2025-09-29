@@ -519,6 +519,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.drop_duplicates(subset='geometry')  
             gdf.title = "All public water systems in Maine containing PFAS contamination observations"
 
+        Please ensure that the returned gdf does not contain duplicate rows by using gdf = gdf.drop_duplicates(subset='geometry').
+
         [ Example 16 ]
         Find all PFSA contamination observations within public water systems in Maine .
 
@@ -531,6 +533,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf[gdf_pfas.columns]
             gdf = gdf.drop_duplicates(subset='geometry')  # or 'pfas_id' if available
             gdf.title = "All PFSA contamination observations within public water systems in Maine"
+
+        Please ensure that the returned gdf does not contain duplicate rows by using gdf = gdf.drop_duplicates(subset='geometry').
         
         [ Example 17 ]
         Find all PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine.
@@ -554,6 +558,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.drop_duplicates(subset='geometry')  
             gdf.title = "All PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine"
 
+        Please ensure that the returned gdf does not contain duplicate rows by using gdf = gdf.drop_duplicates(subset='geometry').
+
         [ Example 18 ]
         Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations.
 
@@ -576,6 +582,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.drop_duplicates(subset='geometry')  
             gdf.title = "All FRS Water Supply and Irrigation Facilities in Maine within 800 meters from PFAS Contamination Observations"
 
+        Please ensure that the returned gdf does not contain duplicate rows by using gdf = gdf.drop_duplicates(subset='geometry').
+        
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
         input_variables=["question", "variables"],
