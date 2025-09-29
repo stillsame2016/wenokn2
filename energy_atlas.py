@@ -1461,6 +1461,6 @@ LIMIT {limit}
 
     # Convert to GeoDataFrame
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
-
+    gdf = gdf.drop_duplicates(subset='geometry')  
     return gdf
 
