@@ -476,7 +476,7 @@ with col2:
 
         'Find FRS solid waste landfill facilities in Ohio',
         'Identify FRS solid waste landfill facilities within 1 km of Androscoggin river',
-        'Find the population of census tracts located downstream of FRS solid waste landfill facilities that are within 1 km of the Androscoggin River.'
+        'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river.'
     ]
     st.markdown(
         """
