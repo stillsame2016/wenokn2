@@ -475,7 +475,7 @@ with col2:
         'Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations',
 
         'Find FRS solid waste landfill facilities in Ohio',
-        'Identify FRS solid waste landfill facilities within 1 km of Androscoggin river'，
+        'Identify FRS solid waste landfill facilities within 1 km of Androscoggin river',
     ]
     st.markdown(
         """
