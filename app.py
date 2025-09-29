@@ -472,6 +472,8 @@ with col2:
         'Find all FRS waste treatment and disposal facilities in Illinois',
         'Find all PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine',
         'Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations',
+
+        'Find FRS solid waste landfill facilities in Ohio',
     ]
     st.markdown(
         """
