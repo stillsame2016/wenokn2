@@ -197,6 +197,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             Aerospace Product and Parts
             Drycleaning and Laundry Services
             Carpet and Upholstery Cleaning Services
+            Solid Waste Landfill
 
         [ Available Data ]
         The following are the variables with the data:
