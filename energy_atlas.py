@@ -1378,7 +1378,8 @@ ALLOWED_NAICS = [
     "Paint, Coating, and Adhesive Manufacturing",
     "Aerospace Product and Parts",
     "Drycleaning and Laundry Services",
-    "Carpet and Upholstery Cleaning Services"
+    "Carpet and Upholstery Cleaning Services",
+    "Solid Waste Landfill",
 ]
 
 def load_FRS_facilities(state: str, naics_name: str, limit: int = 1000) -> gpd.GeoDataFrame:
