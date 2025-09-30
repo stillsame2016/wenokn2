@@ -477,6 +477,9 @@ with col2:
         'Find FRS solid waste landfill facilities in Ohio',
         'Identify FRS solid waste landfill facilities within 1 km of Androscoggin river',
         'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river.'
+    
+        'Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025.',
+    
     ]
     st.markdown(
         """
