@@ -718,6 +718,11 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - Different primary objects = NOT EQUIVALENT
    - **The spatial relationship may be the same, but the queries ask for different things**
 
+## Example 1
+    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." - Primary: FRS Sewage Treatment facilities
+    - "Find PFAS contamination observations within 100 meters from FRS Sewage Treatment facilities in Maine." - Primary: PFAS contamination observations 
+    - They are not semantically equivalent.
+
 ## Response Format
 Return JSON only:
 - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
