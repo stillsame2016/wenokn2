@@ -588,6 +588,26 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf.title = "All FRS Water Supply and Irrigation Facilities in Maine within 800 meters from PFAS Contamination Observations"
 
         Please ensure that the returned gdf does not contain duplicate rows by using gdf = gdf.drop_duplicates(subset='geometry').
+
+        [ Example 19 ]
+        Find all census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities within 1 km of the river.
+
+        Find out if one of available variable is a geodataframe containing the Androscoggin River and another of the available variables is a 
+        geodataframe containing FRS solid waste landfill facilities within 1 km of the Androscoggin River.
+
+       If none of the available variables are geodataframes containing Androscoggin River:
+            raise Exception("The data for Androscoggin River is missing. Please load it first.")   
+
+       If none of the available variables are geodataframes containing FRS solid waste landfill facilities within 1 km of the Androscoggin River:
+            raise Exception("The data for FRS solid waste landfill facilities within 1 km of the Androscoggin River is missing. Please load it first.")   
+
+       If you found a variable which is a geodataframe containing Androscoggin River and another variable which is a geodataframe containing FRS solid waste landfill facilities within 1 km of the Androscoggin River, 
+       then return the valid Python code in the following format:
+            gdf_river = <replace by the variable of the geodataframe for the Androscoggin River if you found one>
+            gdf_frs = <replace by the variable of the geodataframe for FRS solid waste landfill facilities within 1 km of the Androscoggin River if you found one>
+            gdf = downstream_tracts(gdf_river, gdf_frs, flow_dir='south')
+            gdf = gdf.set_crs("EPSG:4326")
+            gdf.title = "all census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities within 1 km of the river"
         
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
