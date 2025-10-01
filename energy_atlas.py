@@ -614,7 +614,13 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Example 20 ]
         Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities.
 
-        Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025
+        You can return the following code:
+            gdf_frs = load_FRS_facilities(state="Ohio", naics_name="Sewage Treatment", limit=1000)
+            gdf_buildings = load_blooded_buildings("2025080114", "39")
+            # then code for calculating distance within 300 meters    
+
+        [ Example 21 ]
+        Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities
 
         You can return the following code:
             gdf_frs = load_FRS_facilities(state="Ohio", naics_name="Sewage Treatment", limit=1000)
