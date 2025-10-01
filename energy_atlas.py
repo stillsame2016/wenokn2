@@ -199,6 +199,12 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             Carpet and Upholstery Cleaning Services
             Solid Waste Landfill
 
+        [ Definition 13 ]
+        We have the following function to load all USDA ARS sites as a GeoDataFrame:
+            load_usda_ars_sites()
+        and the following function to load all USDA ARS sites with pesticides as a GeoDataFrame:
+            load_usda_ars_sites_with_pesticides()
+            
         [ Available Data ]
         The following are the variables with the data:
             {variables}
