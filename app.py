@@ -32,6 +32,20 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Custom CSS to hide the GitHub and Main Menu elements
+hide_github_icon = """
+<style>
+#GithubIcon {
+    visibility: hidden;
+}
+/* You may also need to hide the Main Menu for a full removal on some themes */
+#MainMenu {
+    visibility: hidden;
+}
+</style>
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
 # Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
