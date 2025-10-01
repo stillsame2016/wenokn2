@@ -647,116 +647,210 @@ The following is the requested from the user:
 {question}
 
 ## Task
-Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed request of a geodataframe contained in a certain variable.
+Check whether the user's current request is semantically equivalent to the processed request of a geodataframe contained in a certain variable.
 
-## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL and MEANING MUST BE IDENTICAL
+Two requests are semantically equivalent if they ask for the SAME PRIMARY OBJECT with the SAME CONDITIONS. If any parameter differs (date, time, distance, location, facility type, etc.), they are NOT equivalent.
 
-## Example 
-    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities 
-    - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
+## CRITICAL RULE: Identify the PRIMARY OBJECT
 
-**The PRIMARY OBJECT being requested must be EXACTLY the same.**
+The PRIMARY OBJECT is what the query is asking you to FIND/IDENTIFY/LOCATE.
 
-### Primary Object Examples:
-- "Find **PFAS contamination observations**" → Primary object = PFAS observations
-- "Find **public water systems** containing PFAS" → Primary object = water systems  
-- "Find **power stations** at risk" → Primary object = power stations
-- "Find **tracts** of power stations" → Primary object = census tracts
-- "Find **populations** of tracts" → Primary object = population data
-- "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025" → Primary object = FRS solid waste landfill facilities
+### How to Extract the Primary Object:
 
-**These are NEVER equivalent because they request fundamentally different entities.**
+Use this pattern: [ACTION VERB] all [PRIMARY OBJECT] [everything else is conditions/filters]
 
-## AUTOMATIC NON-EQUIVALENCE Cases:
+The PRIMARY OBJECT is the noun phrase that comes IMMEDIATELY after words like:
+- "Identify all ..."
+- "Find all ..."
+- "Locate all ..."
+- "Get all ..."
 
-1. **Different Primary Nouns:**
-   - "observations" ≠ "systems" ≠ "stations" ≠ "tracts" ≠ "populations"
-   - If the main noun differs, return False immediately
+STOP at the first word that indicates a condition:
+- "located"
+- "within"
+- "that"
+- "in" (when it means location)
+- "containing"
+- "with"
 
-2. **Container vs. Contents:**
-   - "Find PFAS observations in water systems" ≠ "Find water systems with PFAS"
-   - "Find stations in counties" ≠ "Find counties with stations"
-   - One asks for the contents, the other for containers
+### Examples of Primary Object Extraction:
 
-3. **Direct vs. Indirect Objects:**
-   - "Find rivers" ≠ "Find basins that rivers flow through"
-   - "Find buildings" ≠ "Find areas containing buildings"
+Request: "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings"
+Primary Object: "FRS solid waste landfill facilities"
+(Stop at "located" - everything after is a condition)
 
-4. **SPATIAL RELATIONSHIP DIRECTION IS CRITICAL:**
-   - "Find A within distance of B" ≠ "Find B within distance of A"
-   - **Primary object**: The thing being found (A vs B)
-   - **Spatial filter**: The reference object for distance
-   - These are NEVER equivalent even if the spatial relationship is symmetric
-   
-   **Examples:**
-   - "Find PFAS contamination observations within 800m of facilities" → Primary: observations
-   - "Find FRS facilities within 800m of contamination observations" → Primary: facilities
-   - **Different primary objects = NOT EQUIVALENT**
+Request: "Identify all buildings that were at risk of flooding"
+Primary Object: "buildings"
+(Stop at "that" - everything after is a condition)
 
-## Verification Steps:
-1. **Extract the primary object using this exact pattern:**
-   - In "Find all [PRIMARY OBJECT] within/from/in [SOMETHING ELSE]"
-   - The PRIMARY OBJECT is the first noun phrase after "Find all"
-   - Everything after "within/from/in" is a filter or condition
-   
-   **Examples:**
-   - "Find all **PFSA contamination observations** within 800 meters from facilities" → Primary: PFSA contamination observations
-   - "Find all **FRS water supply facilities** in Maine within 800 meters from observations" → Primary: FRS water supply facilities
-   
-2. **If primary objects differ** → Return False immediately 
-3. **Check spatial relationships** - "A within distance of B" vs "B within distance of A" are different queries
-4. **If primary objects match** → Check filters and scope for exact equivalence
-5. **If any doubt exists** → Return False
+Request: "Find all PFAS contamination observations within 800 meters from facilities"
+Primary Object: "PFAS contamination observations"
+(Stop at "within" - everything after is a condition)
 
-## Your Specific Errors to Avoid:
+Request: "Find all public water systems containing PFAS"
+Primary Object: "public water systems"
+(Stop at "containing" - everything after is a condition)
 
-1. **Content vs Container:**
-   - "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
-   - Primary object 1: **observations** 
-   - Primary object 2: **water systems**
-   - Different primary objects = NOT EQUIVALENT
+Request: "Locate power stations in Ohio"
+Primary Object: "power stations"
+(Stop at "in" - everything after is a condition)
 
-2. **Spatial Query Direction:**
-   - "Find PFSA observations within 800m of facilities" ≠ "Find facilities within 800m of PFSA observations"  
-   - Primary object 1: **PFSA observations**
-   - Primary object 2: **facilities**
-   - Different primary objects = NOT EQUIVALENT
-   - **The spatial relationship may be the same, but the queries ask for different things**
+## MANDATORY ANALYSIS STEPS
 
-## Example 1
-    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." - Primary: FRS Sewage Treatment facilities
-    - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." - Primary: PFAS contamination observations 
-    - They are not semantically equivalent.
+### STEP 1: Extract Primary Objects
 
-## Example 2
-    - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" - Primary: PFAS contamination observations 
-    - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" - Primary: FRS water supply and irrigation facilities  
-    - They are not semantically equivalent.
+For Request 1, extract: [PRIMARY OBJECT 1]
+For Request 2, extract: [PRIMARY OBJECT 2]
 
-## Example 3
-    - Find all public water systems in Maine containing PFAS contamination observations - Primary: public water systems
-    - Find all PFAS contamination observations within public water systems in Maine - Primary: PFAS contamination observations
-    - They are not semantically equivalent.
+### STEP 2: Compare Primary Objects
 
-## Example 4
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities
-    - They are not semantically equivalent because they are at different time and are from different facilities.
+Are they EXACTLY the same entity type?
+- If NO → Return {"existing": false} immediately
+- If YES → Continue to Step 3
 
-## Example 5
-    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities 
-    - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
+### STEP 3: Compare ALL Conditions
 
-Please think again. If two requests have different meaning, then they are not semantically equivalent
-    
+Check if EVERY parameter is identical:
+- Geographic location (state, county, city)
+- Temporal conditions (date, time)
+- Distance thresholds (meters, kilometers)
+- Facility types
+- Risk types
+- Any other attributes
+
+If even ONE parameter differs → Return {"existing": false}
+
+## Critical Examples
+
+### Example 1: DIFFERENT Primary Objects (NOT EQUIVALENT)
+
+Request 1: "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025"
+
+Request 2: "Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities"
+
+Analysis:
+- Request 1 primary object: "FRS solid waste landfill facilities" (stop at "located")
+- Request 2 primary object: "buildings" (stop at "that")
+- Primary objects match? NO
+- Result: {{"existing": false}}
+
+Reason: "Request 1 primary object: FRS solid waste landfill facilities. Request 2 primary object: buildings. Different primary objects mean these queries return completely different types of entities and are not equivalent."
+
+### Example 2: DIFFERENT Primary Objects (NOT EQUIVALENT)
+
+Request 1: "Find all PFAS contamination observations within 800 meters from FRS water supply facilities in Maine"
+
+Request 2: "Find all FRS water supply facilities in Maine within 800 meters from PFAS contamination observations"
+
+Analysis:
+- Request 1 primary object: "PFAS contamination observations" (stop at "within")
+- Request 2 primary object: "FRS water supply facilities" (stop at "in")
+- Primary objects match? NO
+- Result: {{"existing": false}}
+
+Reason: "Request 1 primary object: PFAS contamination observations. Request 2 primary object: FRS water supply facilities. These are different entity types and therefore not equivalent."
+
+### Example 3: SAME Primary Object but DIFFERENT Conditions (NOT EQUIVALENT)
+
+Request 1: "Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities"
+
+Request 2: "Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities"
+
+Analysis:
+- Request 1 primary object: "buildings" (stop at "that")
+- Request 2 primary object: "buildings" (stop at "that")
+- Primary objects match? YES
+- Check conditions:
+  * Date: July 1, 2025 vs August 1, 2025 → DIFFERENT
+  * Distance: 1000 meters vs 300 meters → DIFFERENT
+  * Facility type: solid waste landfill vs Sewage Treatment → DIFFERENT
+- Result: {{"existing": false}}
+
+Reason: "Request 1 primary object: buildings. Request 2 primary object: buildings. While primary objects match, the conditions differ: dates (July 1 vs August 1, 2025), distances (1000m vs 300m), and facility types (solid waste landfill vs sewage treatment)."
+
+### Example 4: DIFFERENT Primary Objects (NOT EQUIVALENT)
+
+Request 1: "Find all public water systems in Maine containing PFAS contamination observations"
+
+Request 2: "Find all PFAS contamination observations within public water systems in Maine"
+
+Analysis:
+- Request 1 primary object: "public water systems" (stop at "in")
+- Request 2 primary object: "PFAS contamination observations" (stop at "within")
+- Primary objects match? NO
+- Result: {"existing": false}
+
+Reason: "Request 1 primary object: public water systems. Request 2 primary object: PFAS contamination observations. Different primary objects return different entity types."
+
+### Example 5: EQUIVALENT (SAME Primary Object, SAME Conditions)
+
+Request 1: "Find all PFAS contamination observations within 800 meters from FRS water supply facilities in Maine"
+
+Request 2: "Identify all PFAS contamination observations in Maine within 800 meters of FRS water supply facilities"
+
+Analysis:
+- Request 1 primary object: "PFAS contamination observations" (stop at "within")
+- Request 2 primary object: "PFAS contamination observations" (stop at "in")
+- Primary objects match? YES
+- Check conditions:
+  * State: Maine → SAME
+  * Distance: 800 meters → SAME
+  * Facility type: FRS water supply facilities → SAME
+  * All conditions match? YES
+- Result: {{"existing": true}}
+
+Reason: "Request 1 primary object: PFAS contamination observations. Request 2 primary object: PFAS contamination observations. Primary objects match and all conditions (state, distance, facility type) are identical."
+
+## Common Mistakes to Avoid
+
+### Mistake 1: Confusing Nested Descriptions with Primary Objects
+
+WRONG: "Identify all FRS facilities located within 1,000 meters of buildings that were at risk of flooding"
+- Thinking primary object is "buildings at risk of flooding" ✗
+
+CORRECT:
+- Primary object is "FRS facilities" ✓
+- "buildings that were at risk of flooding" is a CONDITION/FILTER, not the primary object
+
+### Mistake 2: Thinking Reversed Spatial Queries are Equivalent
+
+"Find A within distance of B" ≠ "Find B within distance of A"
+
+Even if the spatial relationship is symmetric, these queries ask for different entity types.
+
+### Mistake 3: Ignoring Parameter Differences
+
+"Buildings at risk on July 1" ≠ "Buildings at risk on August 1"
+
+Same structure but different parameters = NOT EQUIVALENT
+
 ## Response Format
-Return JSON only:
-- `existing` (boolean): True ONLY if primary objects AND all conditions are identical
-- `reason` (string): **ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]." Then explain if they match**
 
-**Default to False unless absolutely certain of exact equivalence.**
+Return ONLY valid JSON:
+
+{{
+  "existing": true or false,
+  "reason": "Request 1 primary object: [X]. Request 2 primary object: [Y]. [Clear explanation]"
+}}
+
+### Rules for the "reason" field:
+1. ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]."
+2. If primary objects differ, explain they return different entity types
+3. If primary objects match but conditions differ, list which conditions differ
+4. If everything matches, confirm all conditions are identical
+5. Be concise and specific
+
+## Final Verification Checklist
+
+Before returning your answer:
+- [ ] Did I extract the primary object by stopping at the first condition word?
+- [ ] Did I compare primary objects first?
+- [ ] If primary objects differ, did I return false immediately?
+- [ ] If primary objects match, did I check EVERY condition?
+- [ ] Did I verify dates, times, distances, locations, and facility types?
+- [ ] Does my reason explicitly state both primary objects?
+
+When in doubt about whether requests are equivalent, return {{"existing": false}}.
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
