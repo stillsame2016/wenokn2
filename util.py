@@ -719,8 +719,13 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - **The spatial relationship may be the same, but the queries ask for different things**
 
 ## Example 1
-    - "Find FRS Sewage Treatment facilities within 200 meters from PFAS contamination observations in Maine." - Primary: FRS Sewage Treatment facilities
-    - "Find PFAS contamination observations within 200 meters from FRS Sewage Treatment facilities in Maine." - Primary: PFAS contamination observations 
+    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." - Primary: FRS Sewage Treatment facilities
+    - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." - Primary: PFAS contamination observations 
+    - They are not semantically equivalent.
+
+## Example 2
+    - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" - Primary: PFAS contamination observations 
+    - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" - Primary: FRS water supply and irrigation facilities  
     - They are not semantically equivalent.
 
 ## Response Format
