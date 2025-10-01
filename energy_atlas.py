@@ -1606,4 +1606,4 @@ WHERE {{
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
 
     return gdf
-<
+
