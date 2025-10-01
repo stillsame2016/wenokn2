@@ -733,6 +733,11 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - Find all PFAS contamination observations within public water systems in Maine - Primary: PFAS contamination observations
     - They are not semantically equivalent.
 
+## Example 4
+    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
+    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities
+    - They are not semantically equivalent because they are at different time and are from different facilities.
+    
 ## Response Format
 Return JSON only:
 - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
