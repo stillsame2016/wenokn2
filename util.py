@@ -664,6 +664,7 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
 - "Find **power stations** at risk" → Primary object = power stations
 - "Find **tracts** of power stations" → Primary object = census tracts
 - "Find **populations** of tracts" → Primary object = population data
+- "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025" → Primary object = FRS solid waste landfill facilities
 
 **These are NEVER equivalent because they request fundamentally different entities.**
 
