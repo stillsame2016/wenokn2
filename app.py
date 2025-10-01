@@ -287,7 +287,9 @@ def execute_query(user_input, chat_container):
                                 'fetch_flood_impacts': fetch_flood_impacts,
                                 'load_public_water_systems': load_public_water_systems,
                                 'load_PFAS_contamiation_observations': load_PFAS_contamiation_observations, 
-                                'load_FRS_facilities': load_FRS_facilities
+                                'load_FRS_facilities': load_FRS_facilities,
+                                'load_usda_ars_sites': load_usda_ars_sites,
+                                'load_usda_ars_sites_with_pesticides': load_usda_ars_sites_with_pesticides,
                             }
                             exec(code, globals_dict)
                             gdf = globals_dict['gdf']
