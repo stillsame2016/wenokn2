@@ -1565,7 +1565,7 @@ WHERE {{
         query = prefixes + query_body
         if state_literal:
             query += f'  FILTER(LCASE(STR(?state)) = LCASE("{state_literal}"))\n'
-        query += "}\nLIMIT " + str(_DEFAULT_LIMIT)
+        query += "}\nLIMIT " + str(100)
 
     # Run query and build GeoDataFrame
     try:
