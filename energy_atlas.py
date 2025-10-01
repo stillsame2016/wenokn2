@@ -491,6 +491,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf = gdf.to_crs("EPSG:4326")
             gdf.title = "PFAS contamination observations within 10 meters of Presumpscot River"
 
+       The request "Identify FRS solid waste landfill facilities within 1 km of Androscoggin river" should use the similar way to calcuate.
+
        [ Example 14 ]
        Find all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.
 
