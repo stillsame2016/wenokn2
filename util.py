@@ -728,6 +728,11 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" - Primary: FRS water supply and irrigation facilities  
     - They are not semantically equivalent.
 
+## Example 3
+    - Find all public water systems in Maine containing PFAS contamination observations - Primary: public water systems
+    - Find all PFAS contamination observations within public water systems in Maine - Primary: PFAS contamination observations
+    - They are not semantically equivalent.
+
 ## Response Format
 Return JSON only:
 - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
