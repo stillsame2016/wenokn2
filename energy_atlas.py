@@ -1543,7 +1543,7 @@ WHERE {{
              sockg:pesticideActiveIngredientType ?pesticideType ;
              sockg:totalPesticideAmount_kg_per_ha ?totalAmount .
 """
-        group_by = "}\nGROUP BY ?siteId ?city ?county ?state ?siteGeometry\nLIMIT " + str(_DEFAULT_LIMIT)
+        group_by = "}\nGROUP BY ?siteId ?city ?county ?state ?siteGeometry\nLIMIT " + str(1000)
         query = prefixes + query_body
         if state_literal:
             # append FILTER just before closing WHERE
