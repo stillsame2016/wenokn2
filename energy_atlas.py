@@ -1478,7 +1478,6 @@ LIMIT {limit}
     # gdf = gdf.drop_duplicates(subset='geometry')  
     return gdf
 
-
 def load_usda_ars_sites(limit=50):
     """
     Load all USDA ARS sites with geometry into a GeoDataFrame.
@@ -1504,7 +1503,7 @@ def load_usda_ars_sites(limit=50):
     LIMIT {limit}
     """
     ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
-    df = get(ENDPOINT, query)
+    df = sparql_dataframe.get(ENDPOINT, query)
     df["geometry"] = df["siteGeometry"].apply(wkt.loads)
     return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
 
@@ -1546,6 +1545,6 @@ def load_usda_ars_sites_with_pesticides(limit=50):
     LIMIT {limit}
     """
     ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
-    df = get(ENDPOINT, query)
+    df = sparql_dataframe.get(ENDPOINT, query)
     df["geometry"] = df["siteGeometry"].apply(wkt.loads)
     return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
