@@ -1472,3 +1472,74 @@ LIMIT {limit}
     # gdf = gdf.drop_duplicates(subset='geometry')  
     return gdf
 
+
+def load_usda_ars_sites(limit=50):
+    """
+    Load all USDA ARS sites with geometry into a GeoDataFrame.
+    """
+    query = f"""
+    PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
+    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT 
+           ?siteId ?city ?county ?state ?siteGeometry 
+    WHERE {{
+      ?site a sockg:Site ;
+            geo:hasGeometry/geo:asWKT ?siteGeometry ;
+            sockg:siteId ?siteId .
+
+      OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
+      OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
+      OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
+    }}
+    GROUP BY ?siteId ?city ?county ?state ?siteGeometry 
+    LIMIT {limit}
+    """
+    ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
+    df = get(ENDPOINT, query)
+    df["geometry"] = df["siteGeometry"].apply(wkt.loads)
+    return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+
+def load_usda_ars_sites_with_pesticides(limit=50):
+    """
+    Load USDA ARS sites with pesticide data into a GeoDataFrame.
+    Includes pesticide types, total pesticide amount, and average amount.
+    """
+    query = f"""
+    PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
+    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT 
+           ?siteId ?city ?county ?state ?siteGeometry 
+           (GROUP_CONCAT(DISTINCT ?pesticideType; separator=", ") AS ?pesticideTypes)
+           (SUM(?totalAmount) AS ?totalPesticideAmount)
+           (AVG(?totalAmount) AS ?avgPesticideAmount)
+    WHERE {{
+      ?site a sockg:Site ;
+            geo:hasGeometry/geo:asWKT ?siteGeometry ;
+            sockg:siteId ?siteId ;
+            sockg:hasField ?field .
+
+      OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
+      OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
+      OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
+
+      ?expUnit sockg:locatedInField ?field ;
+               sockg:hasAmendment ?amendment .
+      ?amendment sockg:hasPesticide ?pesticide .
+
+      ?pesticide a sockg:Pesticide ;
+                 sockg:pesticideActiveIngredientType ?pesticideType ;
+                 sockg:totalPesticideAmount_kg_per_ha ?totalAmount .
+    }}
+    GROUP BY ?siteId ?city ?county ?state ?siteGeometry 
+    LIMIT {limit}
+    """
+    ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
+    df = get(ENDPOINT, query)
+    df["geometry"] = df["siteGeometry"].apply(wkt.loads)
+    return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
