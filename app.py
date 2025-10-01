@@ -471,6 +471,9 @@ with col2:
         'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river',
         'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river',
 
+        'Find all ARS sites with pesticides in MN',
+        'Find public water systems in Minnesota which are intersected with ARS sites with pesticides',
+
         'Find all public water systems in Maine containing PFAS contamination observations',
         'Find all PFSA contamination observations within public water systems in Maine',
         'Find all public water systems in Ross county, Ohio'
