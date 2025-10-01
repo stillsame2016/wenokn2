@@ -649,7 +649,12 @@ The following is the requested from the user:
 ## Task
 Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed request of a geodataframe contained in a certain variable.
 
-## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL
+## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL and MEANING MUST BE IDENTICAL
+
+## Example 
+    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 
+    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities 
+    - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
 
 **The PRIMARY OBJECT being requested must be EXACTLY the same.**
 
@@ -739,9 +744,9 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - They are not semantically equivalent because they are at different time and are from different facilities.
 
 ## Example 5
-    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 - Primary: FRS solid waste landfill facilities
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities  - Primary: buildings
-    - They are not semantically equivalent
+    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 
+    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities 
+    - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
 
 Please think again. If two requests have different meaning, then they are not semantically equivalent
     
