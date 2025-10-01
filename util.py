@@ -742,6 +742,8 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 - Primary: FRS solid waste landfill facilities
     - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities  - Primary: buildings
     - They are not semantically equivalent
+
+Please think again. If two requests have different meaning, then they are not semantically equivalent
     
 ## Response Format
 Return JSON only:
