@@ -457,29 +457,36 @@ with col2:
         'Find the populations of the tracts of all buildings at risk of flooding in Ohio at 2 PM on July 1, 2025',
 
         ########## PFAS Contamination Observation and Public Water System ##########
-        'Find all public water systems in Maine containing PFAS contamination observations',
-        'Find all PFSA contamination observations within public water systems in Maine',
-        
-        'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
-        'Find populations of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river.',
-        
-        'Find all public water systems in Ross county, Ohio',
-        'Show all public water systems in Ohio',
-        'Show all PFAS contamiation observations',
-        'Find PFSA contamination observations within 20 meters to Presumpscot River',
 
-        'Find all FRS sewage treatment facilities in Ohio',
-        'Find all FRS water supply and irrigation facilities in Maine',
-        'Find all FRS waste treatment and disposal facilities in Illinois',
+        'Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine',
+        'Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine',
+        
         'Find all PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine',
         'Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations',
 
-        'Find FRS solid waste landfill facilities in Ohio',
+        'Find PFSA contamination observations within 100 meters to Presumpscot River',
+        'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river',
+        'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river',
+
+        'Find all public water systems in Maine containing PFAS contamination observations',
+        'Find all PFSA contamination observations within public water systems in Maine',
+        'Find all public water systems in Ross county, Ohio'
+        'Show all public water systems in Ohio'
+
+        'Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025',
+        'Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities',
+        'Identify all FRS Sewage Treatment facilities located within 300 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025',
+        'Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities',
+
+        'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river',
+        'Find populations of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river',
+
+        'Find all FRS waste treatment and disposal facilities in Illinois',
         'Identify FRS solid waste landfill facilities within 1 km of Androscoggin river',
-        'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river.',
-    
-        'Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025.',
-        'Identify all FRS Sewage Treatment facilities located within 300 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025.',
+        'Find FRS solid waste landfill facilities in Ohio',
+        'Find all FRS sewage treatment facilities in Ohio', 
+        'Find all FRS water supply and irrigation facilities in Maine',
+        'Show all PFAS contamiation observations',
     ]
     st.markdown(
         """
