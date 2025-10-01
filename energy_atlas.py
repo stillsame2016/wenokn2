@@ -200,11 +200,10 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             Solid Waste Landfill
 
         [ Definition 13 ]
-        We have the following function to load all USDA ARS sites as a GeoDataFrame:
-            load_usda_ars_sites()
-        and the following function to load all USDA ARS sites with pesticides as a GeoDataFrame:
-            load_usda_ars_sites_with_pesticides()
-            
+        We have the following function to load all USDA ARS sites (with or without pesticide) as a GeoDataFrame:
+            load_usda_ars_sites(state=None, pesticide=False)
+        where state should be two letters abbreviation of a state. It loads all sites when state=None.
+        
         [ Available Data ]
         The following are the variables with the data:
             {variables}
@@ -1478,73 +1477,133 @@ LIMIT {limit}
     # gdf = gdf.drop_duplicates(subset='geometry')  
     return gdf
 
-def load_usda_ars_sites(limit=50):
-    """
-    Load all USDA ARS sites with geometry into a GeoDataFrame.
-    """
-    query = f"""
-    PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
-    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+def _safe_wkt_to_geom(wkt_string):
+    try:
+        if wkt_string is None:
+            return None
+        # Some SPARQL clients return a dict / object; ensure string
+        if not isinstance(wkt_string, str):
+            wkt_string = str(wkt_string)
+        return wkt.loads(wkt_string)
+    except Exception:
+        return None
 
-    SELECT DISTINCT 
-           ?siteId ?city ?county ?state ?siteGeometry 
-    WHERE {{
-      ?site a sockg:Site ;
-            geo:hasGeometry/geo:asWKT ?siteGeometry ;
-            sockg:siteId ?siteId .
+def load_usda_ars_sites(state=None, pesticide=False):
+    """
+    Load USDA ARS sites from the sockg SPARQL endpoint into a GeoDataFrame.
 
-      OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
-      OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
-      OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
-    }}
-    GROUP BY ?siteId ?city ?county ?state ?siteGeometry 
-    LIMIT {limit}
+    Args:
+        state (str|None): optional two-letter US state abbreviation (e.g. 'PA' or 'pa').
+        pesticide (bool): if True include aggregated pesticide columns.
+
+    Returns:
+        geopandas.GeoDataFrame
     """
     ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
-    df = sparql_dataframe.get(ENDPOINT, query)
-    df["geometry"] = df["siteGeometry"].apply(wkt.loads)
-    return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+    # validate state
+    state_literal = None
+    if state is not None:
+        state = state.strip()
+        if len(state) != 2 or not state.isalpha():
+            raise ValueError("state must be a two-letter abbreviation (e.g. 'PA')")
+        state_literal = state.upper()
 
-def load_usda_ars_sites_with_pesticides(limit=50):
-    """
-    Load USDA ARS sites with pesticide data into a GeoDataFrame.
-    Includes pesticide types, total pesticide amount, and average amount.
-    """
-    query = f"""
-    PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
-    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    # Common prefixes
+    prefixes = """
+PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+"""
 
-    SELECT DISTINCT 
-           ?siteId ?city ?county ?state ?siteGeometry 
-           (GROUP_CONCAT(DISTINCT ?pesticideType; separator=", ") AS ?pesticideTypes)
-           (SUM(?totalAmount) AS ?totalPesticideAmount)
-           (AVG(?totalAmount) AS ?avgPesticideAmount)
-    WHERE {{
-      ?site a sockg:Site ;
-            geo:hasGeometry/geo:asWKT ?siteGeometry ;
-            sockg:siteId ?siteId ;
-            sockg:hasField ?field .
+    if pesticide:
+        query_body = f"""
+SELECT DISTINCT 
+       ?siteId ?city ?county ?state ?siteGeometry 
+       (GROUP_CONCAT(DISTINCT ?pesticideType; separator=", ") AS ?pesticideTypes)
+       (SUM(?totalAmount) AS ?totalPesticideAmount)
+       (AVG(?totalAmount) AS ?avgPesticideAmount)
+WHERE {{
+  # site and geometry
+  ?site a sockg:Site ;
+        geo:hasGeometry/geo:asWKT ?siteGeometry ;
+        sockg:siteId ?siteId ;
+        sockg:hasField ?field .
 
-      OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
-      OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
-      OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
+  OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
+  OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
+  OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
 
-      ?expUnit sockg:locatedInField ?field ;
-               sockg:hasAmendment ?amendment .
-      ?amendment sockg:hasPesticide ?pesticide .
+  # experimental units -> amendments -> pesticides
+  ?expUnit sockg:locatedInField ?field ;
+           sockg:hasAmendment ?amendment .
+  ?amendment sockg:hasPesticide ?pesticide .
 
-      ?pesticide a sockg:Pesticide ;
-                 sockg:pesticideActiveIngredientType ?pesticideType ;
-                 sockg:totalPesticideAmount_kg_per_ha ?totalAmount .
-    }}
-    GROUP BY ?siteId ?city ?county ?state ?siteGeometry 
-    LIMIT {limit}
-    """
-    ENDPOINT = "https://idir.uta.edu/sockg_graphdb_v2/repositories/sockg-legacy"
-    df = sparql_dataframe.get(ENDPOINT, query)
-    df["geometry"] = df["siteGeometry"].apply(wkt.loads)
-    return gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+  ?pesticide a sockg:Pesticide ;
+             sockg:pesticideActiveIngredientType ?pesticideType ;
+             sockg:totalPesticideAmount_kg_per_ha ?totalAmount .
+"""
+        group_by = "}\nGROUP BY ?siteId ?city ?county ?state ?siteGeometry\nLIMIT " + str(_DEFAULT_LIMIT)
+        query = prefixes + query_body
+        if state_literal:
+            # append FILTER just before closing WHERE
+            query += f'  FILTER(LCASE(STR(?state)) = LCASE("{state_literal}"))\n'
+        query += group_by
+
+    else:
+        query_body = f"""
+SELECT DISTINCT ?siteId ?city ?county ?state ?siteGeometry
+WHERE {{
+  ?site a sockg:Site ;
+        geo:hasGeometry/geo:asWKT ?siteGeometry ;
+        sockg:siteId ?siteId .
+
+  OPTIONAL {{ ?site sockg:locatedInCity/sockg:cityName ?city. }}
+  OPTIONAL {{ ?site sockg:locatedInCounty/sockg:countyName ?county. }}
+  OPTIONAL {{ ?site sockg:locatedInState/sockg:stateProvince ?state. }}
+"""
+        query = prefixes + query_body
+        if state_literal:
+            query += f'  FILTER(LCASE(STR(?state)) = LCASE("{state_literal}"))\n'
+        query += "}\nLIMIT " + str(_DEFAULT_LIMIT)
+
+    # Run query and build GeoDataFrame
+    try:
+        df = sparql_dataframe.get(ENDPOINT, query)
+    except Exception as e:
+        print(f"[load_usda_ars_sites] SPARQL query failed: {e}")
+        # return empty GeoDataFrame with expected columns
+        if pesticide:
+            cols = ["siteId", "city", "county", "state", "siteGeometry",
+                    "pesticideTypes", "totalPesticideAmount", "avgPesticideAmount", "geometry"]
+        else:
+            cols = ["siteId", "city", "county", "state", "siteGeometry", "geometry"]
+        return gpd.GeoDataFrame(columns=cols, geometry="geometry", crs="EPSG:4326")
+
+    # If the query returned nothing, return empty GeoDataFrame quickly
+    if df is None or df.empty:
+        if pesticide:
+            cols = ["siteId", "city", "county", "state", "siteGeometry",
+                    "pesticideTypes", "totalPesticideAmount", "avgPesticideAmount", "geometry"]
+        else:
+            cols = ["siteId", "city", "county", "state", "siteGeometry", "geometry"]
+        return gpd.GeoDataFrame(columns=cols, geometry="geometry", crs="EPSG:4326")
+
+    # Convert siteGeometry -> geometry column
+    if "siteGeometry" in df.columns:
+        df["geometry"] = df["siteGeometry"].apply(lambda v: _safe_wkt_to_geom(v))
+    else:
+        df["geometry"] = None
+
+    # Convert numeric pesticide columns to floats if present
+    if pesticide:
+        if "totalPesticideAmount" in df.columns:
+            df["totalPesticideAmount"] = pd.to_numeric(df["totalPesticideAmount"], errors="coerce")
+        if "avgPesticideAmount" in df.columns:
+            df["avgPesticideAmount"] = pd.to_numeric(df["avgPesticideAmount"], errors="coerce")
+
+    # Create GeoDataFrame, set CRS (assuming WGS84 lon/lat)
+    gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+
+    return gdf
+<
