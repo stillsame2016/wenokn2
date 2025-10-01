@@ -458,7 +458,7 @@ with col2:
 
         ########## PFAS Contamination Observation and Public Water System ##########
 
-        '=================================================',
+        '===== PFAS Contamination & Water Infrastructure ======',
         'Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine',
         'Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine',
         
