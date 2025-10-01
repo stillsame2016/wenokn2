@@ -458,14 +458,14 @@ with col2:
 
         ########## PFAS Contamination Observation and Public Water System ##########
 
-        '---------- PFAS & Water Infrastructure ----------',
+        '========== PFAS & Water Infrastructure ==========',
         'Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine',
         'Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine',
         
         'Find all PFSA contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine',
         'Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFSA contamination observations',
 
-        '---------- Upstream Contamination Analysis ----------',
+        '======= Upstream Contamination Analysis ========',
         'Find PFSA contamination observations within 100 meters to Presumpscot River',
         'Find social vulnerability index of all census tracts located downstream of the Presumpscot River from PFAS contamination observations within 100 meters of the river',
         'Find the population of census tracts located downstream of the Androscoggin River from FRS solid waste landfill facilities that are within 1 km of the river',
