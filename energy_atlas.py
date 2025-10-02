@@ -177,7 +177,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 11 ]
         We have the following function to get all public water systems in a state as a GeoDataFrame:
              load_public_water_systems(state_name: str = "maine", limit: int = 2000)
-        with the following columns: 'pws', 'PwsName' and 'geometry'.  Note 'pws' contains ids.
+        with the following columns: 'pws', 'PwsName' and 'geometry'.  Note 'pws' contains ids. Please note that state_name must be the full name of a state in USA.
 
         [ Definition 12 ]
         We have the following function to load all FRS facilities in a given sector and a state as a GeoDataFrame:
