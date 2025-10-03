@@ -702,9 +702,9 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
 
 ## Verification Steps:
 1. **Extract the primary object using this exact pattern:**
-   - In "Find all [PRIMARY OBJECT] within/from/in [SOMETHING ELSE]"
+   - In "Find all [PRIMARY OBJECT] within/from/in/of [SOMETHING ELSE]"
    - The PRIMARY OBJECT is the first noun phrase after "Find all"
-   - Everything after "within/from/in" is a filter or condition
+   - Everything after "within/from/in/of" is a filter or condition
    
    **Examples:**
    - "Find all **PFSA contamination observations** within 800 meters from facilities" → Primary: PFSA contamination observations
@@ -762,9 +762,6 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
     - None of the 4 requests above are not semantically equivalent.
 
-## Example 7
-    - Find military bases containing FRS Sewage Treatment facilities
-    - 
 
 Please think again. If two requests have different meaning, then they are not semantically equivalent
     
