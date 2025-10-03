@@ -211,7 +211,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             'geometry', 'OBJECTID', 'countryName', 'featureDescription', 'featureName', 'isCui', 'isFirrmaSite', 
             'isJointBase', 'mediaId', 'mirtaLocationsIdpk', 'sdsId', 'siteName', 'siteOperationalStatus', 'siteReportingComponent', 
             'stateNameCode', 'Shape__Area', 'Shape__Length'
-        Note that stateNameCode contains two letters abbreviations of states. 
+        Note that stateNameCode contains two letters abbreviations of states. Please always include the condition countryName='usa' to
+        get military bases because we only want to study military bases in USA.
         
         [ Available Data ]
         The following are the variables with the data:
