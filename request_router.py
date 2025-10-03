@@ -77,6 +77,7 @@ def get_question_route(llm, question):
 			Public Water System
 			USDA ARS site
 			USDA ARS site with pesticide
+			Military Base
 			FRS Facility in Maine or Ohio or Illinois (including 
 				Waste Treatment and Disposal
 				Converted Paper Manufacturing
