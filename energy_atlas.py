@@ -203,6 +203,15 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         We have the following function to load all USDA ARS sites (with or without pesticide) as a GeoDataFrame:
             load_usda_ars_sites(state=None, pesticide=False)
         where state should be two letters abbreviation of a state. It loads all sites when state=None.
+
+        [ Definition 14 ]
+        We have the following function to load Military Bases in USA from an ArcGIS Feature service as a GeoDataFrame:
+            load_military_bases(where: str = "countryName='usa'", bbox: Optional[List[float]] = None)
+        The parameter "where" is a condition and "bbox" is a bounding box. The returned GeoDataFrame returns the following columns:
+            'geometry', 'OBJECTID', 'countryName', 'featureDescription', 'featureName', 'isCui', 'isFirrmaSite', 
+            'isJointBase', 'mediaId', 'mirtaLocationsIdpk', 'sdsId', 'siteName', 'siteOperationalStatus', 'siteReportingComponent', 
+            'stateNameCode', 'Shape__Area', 'Shape__Length'
+        Note that stateNameCode contains two letters abbreviations of states. 
         
         [ Available Data ]
         The following are the variables with the data:
@@ -1644,4 +1653,21 @@ WHERE {{
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
 
     return gdf
+
+
+def load_military_bases(where: str = "1=1", bbox: Optional[List[float]] = None) -> gpd.GeoDataFrame:
+    """Load watershed boundary dataset using concurrent fetching."""
+    url = "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Military_Bases/FeatureServer/0"
+    
+    loader = ArcGISFeatureLoader(
+        url=url,
+        batch_size=100,
+        max_workers=4,
+        max_retries=3
+    )
+    
+    gdf = loader.load_features(where=where, bbox=bbox)
+    gdf.title = "All Basins"
+    return gdf
+
 
