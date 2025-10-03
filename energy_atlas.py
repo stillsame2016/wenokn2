@@ -636,6 +636,32 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf_frs = load_FRS_facilities(state="Ohio", naics_name="Sewage Treatment", limit=1000)
             gdf_buildings = load_blooded_buildings("2025080114", "39")
             # then code for calculating distance within 300 meters    
+
+        [ Example 22 ]
+        Find military bases in Maine containing PFAS contamination observations.
+
+        You can return the following code:
+            gdf_military = load_military_bases("countryName='usa' AND stateNameCode='ME'")
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_military = gdf_military.set_crs("EPSG:4326")
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf = gpd.sjoin(gdf_military, gdf_pfas, how="inner", predicate="intersects")
+            gdf = gdf[gdf_military.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')
+            gdf.title = "Military bases in Maine containing PFAS contamination observations"
+
+        [ Example 21 ]
+        Find PFAS contamination observations in military bases in Maine.
+
+        You can return the following code:
+            gdf_pfas = load_PFAS_contamiation_observations()
+            gdf_military = load_military_bases("countryName='usa' AND stateNameCode='ME'")
+            gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
+            gdf_military = gdf_military.set_crs("EPSG:4326")
+            gdf = gpd.sjoin(gdf_pfas, gdf_military, how="inner", predicate="intersects")
+            gdf = gdf[gdf_pfas.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')
+            gdf.title = "PFAS contamination observations in military bases in Maine"
             
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """,
