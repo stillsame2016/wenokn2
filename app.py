@@ -458,7 +458,6 @@ with col2:
         'Find the populations of the tracts of all buildings at risk of flooding in Ohio at 2 PM on July 1, 2025',
 
         ########## PFAS Contamination Observation and Public Water System ##########
-
         '================================================',
         'Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine',
         'Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine',
@@ -492,6 +491,13 @@ with col2:
         'Find all FRS sewage treatment facilities in Ohio', 
         'Find all FRS water supply and irrigation facilities in Maine',
         'Show all PFAS contamiation observations',
+
+        ########## Military Bases ##########
+        '================================================',
+        'Find military bases in Maine containing FRS Sewage Treatment facilities',
+        'Find FRS Sewage Treatment facilities within military bases in Maine',
+        'Find military bases in Maine containing PFAS contamination observations',
+        'Find PFAS contamination observations in military bases in Maine.',
     ]
     st.markdown(
         """
