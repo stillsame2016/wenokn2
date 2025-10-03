@@ -647,6 +647,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf_pfas = gdf_pfas.set_crs("EPSG:4326")
             gdf = gpd.sjoin(gdf_military, gdf_pfas, how="inner", predicate="intersects")
             gdf = gdf[gdf_military.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')  
             gdf.title = "Military bases in Maine containing PFAS contamination observations"
 
         [ Example 21 ]
@@ -659,6 +660,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             gdf_military = gdf_military.set_crs("EPSG:4326")
             gdf = gpd.sjoin(gdf_pfas, gdf_military, how="inner", predicate="within")
             gdf = gdf[gdf_pfas.columns]
+            gdf = gdf.drop_duplicates(subset='geometry')  
             gdf.title = "PFAS contamination observations in military bases in Maine"
             
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
