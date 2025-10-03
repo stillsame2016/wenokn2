@@ -731,13 +731,13 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
    - **The spatial relationship may be the same, but the queries ask for different things**
 
 ## Example 1
-    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." - Primary: FRS Sewage Treatment facilities
-    - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." - Primary: PFAS contamination observations 
+    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." → Primary: FRS Sewage Treatment facilities
+    - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." → Primary: PFAS contamination observations 
     - They are not semantically equivalent.
 
 ## Example 2
-    - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" - Primary: PFAS contamination observations 
-    - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" - Primary: FRS water supply and irrigation facilities  
+    - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" → Primary: PFAS contamination observations 
+    - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" → Primary: FRS water supply and irrigation facilities  
     - They are not semantically equivalent.
 
 ## Example 3
@@ -754,6 +754,11 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 
     - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities 
     - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
+
+## Example 6
+    - Find military bases in Maine containing PFAS contamination observations. → Primary: military bases 
+    - Find PFAS contamination observations in military bases in Maine.  → Primary: PFAS contamination observations 
+    - They are not semantically equivalent.
 
 Please think again. If two requests have different meaning, then they are not semantically equivalent
     
