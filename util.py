@@ -756,9 +756,15 @@ Check whether the user's current request is **WORD-FOR-WORD** semantically equiv
     - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
 
 ## Example 6
-    - Find military bases in Maine containing PFAS contamination observations. → Primary: military bases 
-    - Find PFAS contamination observations in military bases in Maine.  → Primary: PFAS contamination observations 
-    - They are not semantically equivalent.
+    - Find military bases in Maine containing PFAS contamination observations. → Primary: military bases in Maine, also need to have PFAS contamination observations
+    - Find PFAS contamination observations in military bases in Maine.  → Primary: PFAS contamination observations, also need to be inside military bases in Maine.
+    - Find military bases in Maine containing FRS Sewage Treatment facilities → Primary: military bases in Maine, also need to have FRS Sewage Treatment facilities
+    - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
+    - None of the 4 requests above are not semantically equivalent.
+
+## Example 7
+    - Find military bases containing FRS Sewage Treatment facilities
+    - 
 
 Please think again. If two requests have different meaning, then they are not semantically equivalent
     
