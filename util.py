@@ -649,6 +649,11 @@ The following is the requested from the user:
 ## Task
 Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed request of a geodataframe contained in a certain variable.
 
+## Example
+   -  Find all military bases containing PFAS contamination observations in Maine
+   -  Find all contamination observations in military bases in Maine
+   -  The two requests are not semantically equivalent. The first request tries to find military bases with some conditions; the second request tries to find contamination observations with some conditions
+   
 ## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL and MEANING MUST BE IDENTICAL
 
 ## Example 
