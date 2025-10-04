@@ -657,7 +657,6 @@ request of a geodataframe contained in a certain variable.
    - The two requests are not semantically equivalent. The first request tries to find military bases 
      with some conditions; the second request tries to find contamination observations with some conditions
 
-
 ## REQUIRED EXTRACTION & COMPARISON (MUST FOLLOW THESE STEPS)
 You **must** perform these steps for the new user request and for each processed request listed in {variables}:
 
@@ -815,7 +814,7 @@ Return JSON only:
         - Find PFAS contamination observations in military bases in Maine. → Primary: PFAS contamination observations, also need to be inside military bases in Maine.
         - Find military bases in Maine containing FRS Sewage Treatment facilities → Primary: military bases in Maine, also need to have FRS Sewage Treatment facilities
         - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
-        - None of the 4 requests above are not semantically equivalent.
+        - All of these 4 requests above are not semantically equivalent.
 
 Please think again before you return. If two requests have different meaning, then they are not semantically equivalent.
    
