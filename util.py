@@ -639,111 +639,130 @@ def spatial_dataset_exists(llm, request, spatial_datasets):
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> 
 
 ## Available Data
+
 The following are the variables with the data:
 {variables}
+
 ## Question
 The following is the requested from the user:
 {question}
+
 ## Task
-Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed request of a geodataframe contained in a certain variable.
+Check whether the user's current request is **WORD-FOR-WORD** semantically equivalent to the processed 
+request of a geodataframe contained in a certain variable.
+
 ## Example : for the following cases and return {{ 'existing': False }}
    - request 1: Find all military bases containing PFAS contamination observations in Maine
    - request 2: Find all contamination observations in military bases in Maine
-   - The two requests are not semantically equivalent. The first request tries to find military bases with some conditions; the second request tries to find contamination observations with some conditions
+   - The two requests are not semantically equivalent. The first request tries to find military bases 
+     with some conditions; the second request tries to find contamination observations with some conditions
   
 ## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL and MEANING MUST BE IDENTICAL
+
 ## Example
     - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025
     - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
     - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
-**The PRIMARY OBJECT being requested must be EXACTLY the same.**
+    **The PRIMARY OBJECT being requested must be EXACTLY the same.**
+
 ### Primary Object Examples:
-- "Find **PFAS contamination observations**" → Primary object = PFAS observations
-- "Find **public water systems** containing PFAS" → Primary object = water systems
-- "Find **power stations** at risk" → Primary object = power stations
-- "Find **tracts** of power stations" → Primary object = census tracts
-- "Find **populations** of tracts" → Primary object = population data
-- "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025" → Primary object = FRS solid waste landfill facilities
-**These are NEVER equivalent because they request fundamentally different entities.**
+    - "Find **PFAS contamination observations**" → Primary object = PFAS observations
+    - "Find **public water systems** containing PFAS" → Primary object = water systems
+    - "Find **power stations** at risk" → Primary object = power stations
+    - "Find **tracts** of power stations" → Primary object = census tracts
+    - "Find **populations** of tracts" → Primary object = population data
+    - "Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025" → Primary object = FRS solid waste landfill facilities
+    **These are NEVER equivalent because they request fundamentally different entities.**
+
 ## AUTOMATIC NON-EQUIVALENCE Cases:
-1. **Different Primary Nouns:**
-   - "observations" ≠ "systems" ≠ "stations" ≠ "tracts" ≠ "populations"
-   - If the main noun differs, return False immediately
-2. **Container vs. Contents:**
-   - "Find PFAS observations in water systems" ≠ "Find water systems with PFAS"
-   - "Find stations in counties" ≠ "Find counties with stations"
-   - One asks for the contents, the other for containers
-3. **Direct vs. Indirect Objects:**
-   - "Find rivers" ≠ "Find basins that rivers flow through"
-   - "Find buildings" ≠ "Find areas containing buildings"
-4. **SPATIAL RELATIONSHIP DIRECTION IS CRITICAL:**
-   - "Find A within distance of B" ≠ "Find B within distance of A"
-   - **Primary object**: The thing being found (A vs B)
-   - **Spatial filter**: The reference object for distance
-   - These are NEVER equivalent even if the spatial relationship is symmetric
+    1. **Different Primary Nouns:**
+       - "observations" ≠ "systems" ≠ "stations" ≠ "tracts" ≠ "populations"
+       - If the main noun differs, return False immediately
+       
+    2. **Container vs. Contents:**
+       - "Find PFAS observations in water systems" ≠ "Find water systems with PFAS"
+       - "Find stations in counties" ≠ "Find counties with stations"
+       - One asks for the contents, the other for containers
+       
+    3. **Direct vs. Indirect Objects:**
+       - "Find rivers" ≠ "Find basins that rivers flow through"
+       - "Find buildings" ≠ "Find areas containing buildings"
+       
+    4. **SPATIAL RELATIONSHIP DIRECTION IS CRITICAL:**
+       - "Find A within distance of B" ≠ "Find B within distance of A"
+       - **Primary object**: The thing being found (A vs B)
+       - **Spatial filter**: The reference object for distance
+       - These are NEVER equivalent even if the spatial relationship is symmetric
   
    **Examples:**
    - "Find PFAS contamination observations within 800m of facilities" → Primary: observations
    - "Find FRS facilities within 800m of contamination observations" → Primary: facilities
    - **Different primary objects = NOT EQUIVALENT**
+   
 ## Verification Steps:
-1. **Extract the primary object using this exact pattern:**
-   - In "Find all [PRIMARY OBJECT] within/from/in/of [SOMETHING ELSE]"
-   - The PRIMARY OBJECT is the first noun phrase after "Find all"
-   - Everything after "within/from/in/of" is a filter or condition
-  
-   **Examples:**
-   - "Find all **PFSA contamination observations** within 800 meters from facilities" → Primary: PFSA contamination observations
-   - "Find all **FRS water supply facilities** in Maine within 800 meters from observations" → Primary: FRS water supply facilities
-  
-2. **If primary objects differ** → Return False immediately
-3. **Check spatial relationships** - "A within distance of B" vs "B within distance of A" are different queries
-4. **If primary objects match** → Check filters and scope for exact equivalence
-5. **If any doubt exists** → Return False
+    1. **Extract the primary object using this exact pattern:**
+       - In "Find all [PRIMARY OBJECT] within/from/in/of [SOMETHING ELSE]"
+       - The PRIMARY OBJECT is the first noun phrase after "Find all"
+       - Everything after "within/from/in/of" is a filter or condition
+      
+       **Examples:**
+       - "Find all **PFSA contamination observations** within 800 meters from facilities" → Primary: PFSA contamination observations
+       - "Find all **FRS water supply facilities** in Maine within 800 meters from observations" → Primary: FRS water supply facilities
+      
+    2. **If primary objects differ** → Return False immediately
+    
+    3. **Check spatial relationships** - "A within distance of B" vs "B within distance of A" are different queries
+    
+    4. **If primary objects match** → Check filters and scope for exact equivalence
+    
+    5. **If any doubt exists** → Return False
+    
 ## Your Specific Errors to Avoid:
-1. **Content vs Container:**
-   - "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
-   - Primary object 1: **observations**
-   - Primary object 2: **water systems**
-   - Different primary objects = NOT EQUIVALENT
-2. **Spatial Query Direction:**
-   - "Find PFSA observations within 800m of facilities" ≠ "Find facilities within 800m of PFSA observations"
-   - Primary object 1: **PFSA observations**
-   - Primary object 2: **facilities**
-   - Different primary objects = NOT EQUIVALENT
-   - **The spatial relationship may be the same, but the queries ask for different things**
-## Example 1
-    - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." → Primary: FRS Sewage Treatment facilities
-    - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." → Primary: PFAS contamination observations
-    - They are not semantically equivalent.
-## Example 2
-    - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" → Primary: PFAS contamination observations
-    - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" → Primary: FRS water supply and irrigation facilities
-    - They are not semantically equivalent.
-## Example 3
-    - Find all public water systems in Maine containing PFAS contamination observations - Primary: public water systems
-    - Find all PFAS contamination observations within public water systems in Maine - Primary: PFAS contamination observations
-    - They are not semantically equivalent.
-## Example 4
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities
-    - They are not semantically equivalent because they are at different time and are from different facilities.
-## Example 5
-    - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025
-    - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
-    - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
-## Example 6
-    - Find military bases in Maine containing PFAS contamination observations. → Primary: military bases in Maine, also need to have PFAS contamination observations
-    - Find PFAS contamination observations in military bases in Maine. → Primary: PFAS contamination observations, also need to be inside military bases in Maine.
-    - Find military bases in Maine containing FRS Sewage Treatment facilities → Primary: military bases in Maine, also need to have FRS Sewage Treatment facilities
-    - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
-    - None of the 4 requests above are not semantically equivalent.
+    1. **Content vs Container:**
+       - "PFAS contamination observations within water systems" ≠ "public water systems containing PFAS"
+       - Primary object 1: **observations**
+       - Primary object 2: **water systems**
+       - Different primary objects = NOT EQUIVALENT
+    2. **Spatial Query Direction:**
+       - "Find PFSA observations within 800m of facilities" ≠ "Find facilities within 800m of PFSA observations"
+       - Primary object 1: **PFSA observations**
+       - Primary object 2: **facilities**
+       - Different primary objects = NOT EQUIVALENT
+       - **The spatial relationship may be the same, but the queries ask for different things**
+    ## Example 1
+        - "Find FRS Sewage Treatment facilities within 100 meters from PFAS contamination observations in Maine." → Primary: FRS Sewage Treatment facilities
+        - "Find PFAS contamination observations within 500 meters from FRS Sewage Treatment facilities in Maine." → Primary: PFAS contamination observations
+        - They are not semantically equivalent.
+    ## Example 2
+        - "Find all PFAS contamination observations within 800 meters from FRS water supply and irrigation facilities in Maine" → Primary: PFAS contamination observations
+        - "Find all FRS water supply and irrigation facilities in Maine within 800 meters from PFAS contamination observations" → Primary: FRS water supply and irrigation facilities
+        - They are not semantically equivalent.
+    ## Example 3
+        - Find all public water systems in Maine containing PFAS contamination observations - Primary: public water systems
+        - Find all PFAS contamination observations within public water systems in Maine - Primary: PFAS contamination observations
+        - They are not semantically equivalent.
+    ## Example 4
+        - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
+        - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on August 1, 2025 within 300 meters from FRS Sewage Treatment facilities
+        - They are not semantically equivalent because they are at different time and are from different facilities and with different distance.
+    ## Example 5
+        - Identify all FRS solid waste landfill facilities located within 1,000 meters of buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025
+        - Identify all buildings that were at risk of flooding in Ohio at 2:00 PM on July 1, 2025 within 1000 meters from FRS solid waste landfill facilities
+        - They are not semantically equivalent because the first request asks to find FRS solid waste landfill facilities and the second asks to find buildings.
+    ## Example 6
+        - Find military bases in Maine containing PFAS contamination observations. → Primary: military bases in Maine, also need to have PFAS contamination observations
+        - Find PFAS contamination observations in military bases in Maine. → Primary: PFAS contamination observations, also need to be inside military bases in Maine.
+        - Find military bases in Maine containing FRS Sewage Treatment facilities → Primary: military bases in Maine, also need to have FRS Sewage Treatment facilities
+        - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
+        - None of the 4 requests above are not semantically equivalent.
+
 Please think again before you return. If two requests have different meaning, then they are not semantically equivalent.
    
 ## Response Format
 Return JSON only:
-- `existing` (boolean): True ONLY if primary objects AND all conditions are identical
-- `reason` (string): **ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]." Then explain if they match**
+    - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
+    - `reason` (string): **ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]." Then explain if they match**
+
 **Default to False unless absolutely certain of exact equivalence.**
 
         <|eot_id|><|start_header_id|>assistant<|end_header_id|>
