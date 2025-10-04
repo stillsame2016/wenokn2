@@ -656,6 +656,67 @@ request of a geodataframe contained in a certain variable.
    - request 2: Find all contamination observations in military bases in Maine
    - The two requests are not semantically equivalent. The first request tries to find military bases 
      with some conditions; the second request tries to find contamination observations with some conditions
+
+
+## REQUIRED EXTRACTION & COMPARISON (MUST FOLLOW THESE STEPS)
+You **must** perform these steps for the new user request and for each processed request listed in {variables}:
+
+1. **Extract Primary Target (PT)**:
+   - Use the exact pattern when present: look for verbs like "Find", "Identify", "Return" (case-insensitive) followed by "all" or nothing, then capture the first noun phrase immediately after (e.g., "Find all **PFAS contamination observations**" → PT = PFAS contamination observations).
+   - If the exact pattern isn't present, pick the main noun phrase that denotes *what the query is trying to return* (the entity being requested).
+
+2. **Extract Reference Object (RO)**:
+   - Identify the object used in a spatial, containment, or proximity filter — phrases introduced by prepositions like "within", "within X meters", "within X meters from", "within X meters of", "in", "inside", "containing", "near", "at risk of", "from".
+   - If multiple filters exist, list them all in the same structure (distance, location, time, reference object(s)).
+
+3. **Extract filter values explicitly**:
+   - Distance (numeric + unit), Date and Time (exact timestamp), Location scope (state/county/etc.), and any other filters (e.g., "at risk of flooding").
+   - These filter values must match exactly (string-equal after normalizing whitespace and case) for equivalence.
+
+4. **Determine Directionality**:
+   - If one request is "Find **A** within N of **B**" and the other is "Find **B** within N of **A**", **this is NOT equivalent** — even if A and B are the same words.
+   - Direction matters: PT is the returned entity; RO is the filter/reference entity. If PT in request1 == RO in request2 (i.e., roles swapped) → NOT EQUIVALENT.
+
+5. **Equivalence decision**:
+   - Return `existing: True` **ONLY IF**:
+     - PT (request) == PT (processed) exactly (after minor normalization: strip, single-space, lowercase).
+     - RO roles are the same (reference object in both requests refers to the same entity and has same role).
+     - All filter values (distance, units, date, time, location scope, other qualifiers) are identical.
+   - **Otherwise** return `existing: False`.
+
+6. **On any ambiguity or partial match** → return `existing: False`.
+
+## MANDATORY OUTPUT STRUCTURE & REASONING
+- You **must** return JSON only with keys `existing` (boolean) and `reason` (string).
+- The `reason` string **must** begin EXACTLY with:
+  `Request 1 primary object: [X]. Request 2 primary object: [Y].`
+  where [X] is the processed-request primary object being compared and [Y] is the current-user-request primary object (swap order as needed for each comparison).
+- After that first sentence, explicitly state:
+  - the **Reference Object** for each request,
+  - the **Direction** (e.g., "PT within RO" or "RO within PT"),
+  - whether distance/time/location filters match exactly,
+  - and a final concise conclusion: why the result is True or False.
+
+## PARSING GUIDANCE (useful patterns)
+- Treat these prepositions as starting reference clauses: "within", "within X meters", "within X meters from", "within X m of", "in", "inside", "containing", "near", "from", "at risk of".
+- Normalize numbers (e.g., "1,000" == "1000") and units ("meters", "m") when comparing distances — but require numeric equivalence.
+- Dates/times must match exactly (e.g., "July 1, 2025 at 2:00 PM" ≠ "August 1, 2025 at 2:00 PM").
+
+## CRITICAL REMINDERS / EXAMPLES
+- "Find **A** within 1000m of **B**" **≠** "Find **B** within 1000m of **A**" (roles swapped → Not equivalent).
+- "Find buildings in Maine containing PFAS observations" **≠** "Find PFAS observations in buildings in Maine" (contents vs container → Not equivalent).
+- If two requests differ in date, time, distance, or facility type → Not equivalent.
+
+## DEFAULT
+If you cannot be **absolutely certain** that PT, RO, and all filters are identical, return `existing: False`. Be conservative.
+
+## Response Format
+Return JSON only:
+- `existing` (boolean): True ONLY if primary objects AND all conditions are identical
+- `reason` (string): MUST start with: "The current request '[X]' is same as the Request '[Y]'" Then explain PT, RO, direction, filter comparisons, and final decision.
+
+
+
   
 ## CRITICAL RULE: PRIMARY OBJECT MUST BE IDENTICAL and MEANING MUST BE IDENTICAL
 
@@ -761,7 +822,7 @@ Please think again before you return. If two requests have different meaning, th
 ## Response Format
 Return JSON only:
     - `existing` (boolean): True ONLY if primary objects AND all conditions are identical
-    - `reason` (string): **ALWAYS start by stating: "Request 1 primary object: [X]. Request 2 primary object: [Y]." Then explain if they match**
+    - `reason` (string): MUST start with: "The current request '[X]' is same as the Request '[Y]'" Then explain PT, RO, direction, filter comparisons, and final decision.
 
 **Default to False unless absolutely certain of exact equivalence.**
 
