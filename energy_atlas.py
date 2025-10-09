@@ -1252,6 +1252,11 @@ def fetch_flood_impacts(
                     response = requests.get(base_url, params=params, headers=headers, timeout=30)
                     if response.status_code == 404:
                         print(f"No data available for {date} (404 Not Found). Skipping.")
+                        return gpd.GeoDataFrame(
+                            columns=["fips", "feature-type", "geometry"],
+                            geometry="geometry",
+                            crs="EPSG:4326"
+                        )
                     response.raise_for_status()
                     break
                 except requests.RequestException as e:
