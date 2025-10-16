@@ -1459,39 +1459,67 @@ GROUP BY ?wkt
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
     return gdf    
 
-def load_public_water_systems(state_name: str = "maine", limit: int = 1000) -> gpd.GeoDataFrame:
-    endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
+def load_public_water_systems(state_name: str = "maine", limit: int = 3000) -> gpd.GeoDataFrame:
+#     endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
+    
+#     query = f"""
+# PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+# PREFIX schema: <https://schema.org/>
+# PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+# PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+# PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+# PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+
+# SELECT ?pws (SAMPLE(?pwsName) AS ?PwsName) (SAMPLE(?pwsGeometry) AS ?anyPwsGeometry)
+# FROM <https://frink.renci.org/kg/geoconnex>
+# FROM <https://frink.renci.org/kg/s2/13-13>
+# FROM <https://frink.renci.org/kg/spatialkg>
+# WHERE {{
+#     ?pws schema:name ?pwsName ;
+#          geo:hasGeometry/geo:asWKT ?pwsGeometry.
+#     FILTER(STRSTARTS(STR(?pws), "https://geoconnex.us/ref/pws/"))
+
+#     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+#            geo:hasGeometry/geo:asWKT ?stateGeom ;
+#            rdfs:label ?stateLabel .
+#     FILTER(CONTAINS(LCASE(?stateLabel), "{state_name.lower()}"))
+
+#     FILTER (geof:sfIntersects(?pwsGeometry, ?stateGeom))
+# }}
+# GROUP BY ?pws
+# LIMIT {limit}
+# """
+
+    endpoint_url = "https://frink.apps.renci.org/federation/sparql"
     
     query = f"""
-PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
-PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
 
-SELECT ?pws (SAMPLE(?pwsName) AS ?PwsName) (SAMPLE(?pwsGeometry) AS ?anyPwsGeometry)
-FROM <https://frink.renci.org/kg/geoconnex>
-FROM <https://frink.renci.org/kg/s2/13-13>
-FROM <https://frink.renci.org/kg/spatialkg>
-WHERE {{
+SELECT DISTINCT ?pws (SAMPLE(?pwsName) AS ?PwsName) (SAMPLE(?pwsGeometry) AS ?anyPwsGeometry)
+WHERE {
     ?pws schema:name ?pwsName ;
          geo:hasGeometry/geo:asWKT ?pwsGeometry.
-    FILTER(STRSTARTS(STR(?pws), "https://geoconnex.us/ref/pws/"))
-
+    FILTER(STRSTARTS(STR(?pws), "https://geoconnex.us/ref/pws/")) .
+  
     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
            geo:hasGeometry/geo:asWKT ?stateGeom ;
            rdfs:label ?stateLabel .
-    FILTER(CONTAINS(LCASE(?stateLabel), "{state_name.lower()}"))
-
-    FILTER (geof:sfIntersects(?pwsGeometry, ?stateGeom))
-}}
+    FILTER(CONTAINS(LCASE(?stateLabel), "{state_name.lower()}")) 
+    FILTER (geof:sfIntersects(?pwsGeometry, ?stateGeom)) 
+ 
+}
 GROUP BY ?pws
 LIMIT {limit}
 """
-
+    
     # Fetch data
     df = sparql_dataframe.get(endpoint_url, query)
 
