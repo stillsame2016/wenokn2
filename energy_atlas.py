@@ -1337,93 +1337,40 @@ def load_PFAS_contamiation_observations() -> gpd.GeoDataFrame:
     """
     Fetch PFAS contaminant samples exceeding thresholds and return as GeoDataFrame.
     """
-    endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
+#     endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
 
-    query = """
-PREFIX pfas: <http://sawgraph.spatialai.org/v1/pfas#>
-PREFIX coso: <http://sawgraph.spatialai.org/v1/contaminoso#>
-PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX qudt: <http://qudt.org/schema/qudt/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-
-SELECT DISTINCT
-  ?wkt
-  (SAMPLE(?obs) AS ?Obs)
-  (SAMPLE(?substance) AS ?Substance)
-  (MAX(?date) AS ?Date)
-  (SAMPLE(?value) AS ?Value)
-  (SAMPLE(?unit) AS ?Unit)
-  (SAMPLE(?samplePoint) AS ?SamplePoint)
-WHERE {
-  ?obs a pfas:PFAS-ContaminantObservation ;
-       a coso:SampleContaminantObservation ;
-       sosa:hasResult ?result ;
-       coso:observedAtSamplePoint ?samplePoint ;
-       coso:ofSubstance ?substance ;
-       coso:sampledTime ?date .
-
-  ?result qudt:quantityValue ?qv .
-  ?qv qudt:numericValue ?value ;
-      qudt:unit ?unit .
-
-  ?samplePoint geo:hasGeometry/geo:asWKT ?wkt .
-
-  FILTER(BOUND(?wkt) && STRLEN(STR(?wkt)) > 0) .
-  FILTER(?date >= "2000-01-01"^^xsd:date) .
-
-  VALUES (?substanceVal ?limitVal ?unitVal) {
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.SUM_PFOA_PFOS> 20 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFNA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFDA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFBS_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOSA> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFTEA_A> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
-    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
-  }
-
-  FILTER(?substance = ?substanceVal && ?value > ?limitVal && ?unit = ?unitVal)
-}
-GROUP BY ?wkt
-LIMIT 1000
-"""
-
-#     endpoint_url = "https://frink.apps.renci.org/federation/sparql"
 #     query = """
-# PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-# PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# PREFIX pfas: <http://sawgraph.spatialai.org/v1/pfas#>
+# PREFIX coso: <http://sawgraph.spatialai.org/v1/contaminoso#>
+# PREFIX sosa: <http://www.w3.org/ns/sosa/>
 # PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-# PREFIX coso: <http://w3id.org/coso/v1/contaminoso#>
-# PREFIX qudt: <http://qudt.org/schema/qudt#>
+# PREFIX qudt: <http://qudt.org/schema/qudt/>
+# PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-# SELECT ?samplePoint ?wkt
-#        (GROUP_CONCAT(
-#            CONCAT(
-#                STRAFTER(STR(?substance), "#parameter."), 
-#                "=", 
-#                STR(?result_value),
-#                " ",
-#                STRAFTER(STR(?unit), "/unit/"),   
-#                " ",
-#                STR(?obsDate)
-#            ); 
-#            separator="; "
-#        ) AS ?pfasResults)
+# SELECT DISTINCT
+#   ?wkt
+#   (SAMPLE(?obs) AS ?Obs)
+#   (SAMPLE(?substance) AS ?Substance)
+#   (MAX(?date) AS ?Date)
+#   (SAMPLE(?value) AS ?Value)
+#   (SAMPLE(?unit) AS ?Unit)
+#   (SAMPLE(?samplePoint) AS ?SamplePoint)
 # WHERE {
-#   ?observation rdf:type coso:ContaminantObservation ;
-#                coso:observedAtSamplePoint ?samplePoint ;
-#                coso:ofSubstance ?substance ;
-#                coso:hasResult ?result ;
-#                coso:observedTime ?obsDate .
+#   ?obs a pfas:PFAS-ContaminantObservation ;
+#        a coso:SampleContaminantObservation ;
+#        sosa:hasResult ?result ;
+#        coso:observedAtSamplePoint ?samplePoint ;
+#        coso:ofSubstance ?substance ;
+#        coso:sampledTime ?date .
 
-#   ?samplePoint rdf:type coso:SamplePoint ;
-#       geo:hasGeometry/geo:asWKT ?wkt .
+#   ?result qudt:quantityValue ?qv .
+#   ?qv qudt:numericValue ?value ;
+#       qudt:unit ?unit .
 
-#   ?result coso:measurementValue ?result_value ;
-#           coso:measurementUnit ?unit .
+#   ?samplePoint geo:hasGeometry/geo:asWKT ?wkt .
+
+#   FILTER(BOUND(?wkt) && STRLEN(STR(?wkt)) > 0) .
+#   FILTER(?date >= "2000-01-01"^^xsd:date) .
 
 #   VALUES (?substanceVal ?limitVal ?unitVal) {
 #     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
@@ -1434,15 +1381,59 @@ LIMIT 1000
 #     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFBS_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
 #     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOSA> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
 #     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFTEA_A> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
-#     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 70 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
-#     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 70 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+#     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
+#     (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 70 <http://qudt.org/vocab/unitNanoGM-PER-L>)
 #   }
 
-#   FILTER(?substance = ?substanceVal && ?unit = ?unitVal && ?result_value > ?limitVal)
+#   FILTER(?substance = ?substanceVal && ?value > ?limitVal && ?unit = ?unitVal)
 # }
-# GROUP BY ?samplePoint ?wkt
+# GROUP BY ?wkt
 # LIMIT 1000
 # """
+
+    endpoint_url = "https://frink.apps.renci.org/federation/sparql"
+    query = """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX coso: <http://w3id.org/coso/v1/contaminoso#>
+PREFIX qudt: <http://qudt.org/schema/qudt#>
+
+SELECT ?wkt
+       (SAMPLE(?observation) AS ?Obs)
+       (SAMPLE(?substance) AS ?Substance)
+       (MAX(?obsDate) AS ?Date)
+       (SAMPLE(?result_value) AS ?Value)
+       (SAMPLE(?unit) AS ?Unit)
+       (SAMPLE(?samplePoint) AS ?SamplePoint)
+WHERE {
+  ?observation rdf:type coso:ContaminantObservation ;
+               coso:observedAtSamplePoint ?samplePoint ;
+               coso:ofSubstance ?substance ;
+               coso:hasResult ?result ;
+               coso:observedTime ?obsDate .
+
+  ?samplePoint rdf:type coso:SamplePoint ;
+               geo:hasGeometry/geo:asWKT ?wkt .
+
+  ?result coso:measurementValue ?result_value ;
+          coso:measurementUnit ?unit .
+
+   VALUES (?substanceVal ?limitVal ?unitVal) {
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS_A> 4 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 4 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFNA_A> 10 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFHXA_A> 10 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFBS_A> 10 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFTEA_A> 10 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 4 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA> 4 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+  }
+
+  FILTER(?substance = ?substanceVal && ?unit = ?unitVal && ?result_value > ?limitVal)
+}
+GROUP BY ?wkt
+"""
     
     df = sparql_dataframe.get(endpoint_url, query)
 
