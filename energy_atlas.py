@@ -1442,7 +1442,7 @@ LIMIT 1000
 # }
 # GROUP BY ?samplePoint ?wkt
 # LIMIT 1000
-"""
+# """
     
     df = sparql_dataframe.get(endpoint_url, query)
 
