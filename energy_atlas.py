@@ -1504,7 +1504,7 @@ PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX sockg: <https://idir.uta.edu/sockg-ontology/docs/>
 
 SELECT DISTINCT ?pws (SAMPLE(?pwsName) AS ?PwsName) (SAMPLE(?pwsGeometry) AS ?anyPwsGeometry)
-WHERE {
+WHERE {{
     ?pws schema:name ?pwsName ;
          geo:hasGeometry/geo:asWKT ?pwsGeometry.
     FILTER(STRSTARTS(STR(?pws), "https://geoconnex.us/ref/pws/")) .
@@ -1514,8 +1514,7 @@ WHERE {
            rdfs:label ?stateLabel .
     FILTER(CONTAINS(LCASE(?stateLabel), "{state_name.lower()}")) 
     FILTER (geof:sfIntersects(?pwsGeometry, ?stateGeom)) 
- 
-}
+}}
 GROUP BY ?pws
 LIMIT {limit}
 """
