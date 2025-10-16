@@ -1390,6 +1390,60 @@ WHERE {
 GROUP BY ?wkt
 LIMIT 1000
 """
+
+    endpoint_url = "https://frink.apps.renci.org/federation/sparql"
+    query = """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX coso: <http://w3id.org/coso/v1/contaminoso#>
+PREFIX qudt: <http://qudt.org/schema/qudt#>
+
+SELECT ?samplePoint ?wkt
+       (GROUP_CONCAT(
+           CONCAT(
+               STRAFTER(STR(?substance), "#parameter."), 
+               "=", 
+               STR(?result_value),
+               " ",
+               STRAFTER(STR(?unit), "/unit/"),   
+               " ",
+               STR(?obsDate)
+           ); 
+           separator="; "
+       ) AS ?pfasResults)
+WHERE {
+  ?observation rdf:type coso:ContaminantObservation ;
+               coso:observedAtSamplePoint ?samplePoint ;
+               coso:ofSubstance ?substance ;
+               coso:hasResult ?result ;
+               coso:observedTime ?obsDate .
+
+  ?samplePoint rdf:type coso:SamplePoint ;
+      geo:hasGeometry/geo:asWKT ?wkt .
+
+  ?result coso:measurementValue ?result_value ;
+          coso:measurementUnit ?unit .
+
+  VALUES (?substanceVal ?limitVal ?unitVal) {
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 10 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.SUM_PFOA_PFOS> 20 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFNA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFDA_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFBS_A> 5 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOSA> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFTEA_A> 1 <http://sawgraph.spatialai.org/v1/me-egad#unit.NG-G>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOS> 70 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+    (<http://sawgraph.spatialai.org/v1/me-egad#parameter.PFOA_A> 70 <http://qudt.org/vocab/unit/NanoGM-PER-L>)
+  }
+
+  FILTER(?substance = ?substanceVal && ?unit = ?unitVal && ?result_value > ?limitVal)
+}
+GROUP BY ?samplePoint ?wkt
+LIMIT 1000
+"""
+    
     df = sparql_dataframe.get(endpoint_url, query)
 
     # Convert WKT to geometry
