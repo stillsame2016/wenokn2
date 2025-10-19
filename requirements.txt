@@ -5,6 +5,7 @@ geopandas
 google-generativeai
 sparql_dataframe
 langchain
+langchain-core
 langchain_groq
 langchain-openai
 groq
