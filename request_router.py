@@ -109,7 +109,10 @@ def get_question_route(llm, question):
 	For example, "find all counties Scioto River flows through" is not an aggregation request because it doesn't use any aggregation function.
 	
         [ Example 1 ]
-        Return 'WEN-KEN database' for following request: Find all neighboring states of Ohio State.
+        Return 'WEN-KEN database' for following requests: 
+		    Find all neighboring states of Ohio State.
+			Find all counties both the Ohio River and the Muskingum River flow through.
+		Because counties and rivers are contained in WEN-KEN database.
 
         [ Example 2 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
