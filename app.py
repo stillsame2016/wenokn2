@@ -534,7 +534,7 @@ with col2:
             history = ""
             for message in st.session_state.chat:
                 history += f"{st.chat_message(message['role'])}: {st.markdown(message['content'])}\n"
-            history += "current user: {user_input}"
+            history += "user: {user_input}"
             user_input = resolve_follow_up(llm, history)
             logger.info("resolved follow up: {user_input}")
             
