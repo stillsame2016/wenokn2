@@ -221,6 +221,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         If you find such index, return the following code A:
             # Note that following index must be replaced by an integer you find. 
             gdf = st.session_state.datasets[ insert index you find here ]
+            # Please don't append "County" to the county name from gdf 
             scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
