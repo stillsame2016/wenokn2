@@ -23,5 +23,5 @@ and return the converted question only without any explaination.
         input_variables=["history"],
     )
 
-    resolve_chain =  prompt | llm | StrOutputParser()
-    return resolve_chain.invoke({"history": history})
+  resolve_chain =  prompt | llm | StrOutputParser()
+  return resolve_chain.invoke({"history": history})
