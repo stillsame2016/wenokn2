@@ -536,7 +536,7 @@ with col2:
                 history += f"{st.chat_message(message['role'])}: {st.markdown(message['content'])}\n"
             history += "user: {user_input}"
             user_input = resolve_follow_up(llm, history)
-            logger.info("resolved follow up: {user_input}")
+            logger.info(f"resolved follow up: {user_input}")
             
             # get initial classification
             route = get_question_route(llm, user_input)
