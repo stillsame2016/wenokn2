@@ -534,10 +534,9 @@ with col2:
             history = ""
             for message in st.session_state.chat:
                 history += f"{message['role']}: {message['content']}\n"
-            history += f"user: {user_input}"
             logger.info(f"history: {history}")
-            # user_input = resolve_follow_up(llm, history)
-            # logger.info(f"resolved follow up: {user_input}")
+            user_input = resolve_follow_up(llm, history)
+            logger.info(f"resolved follow up: {user_input}")
             
             # get initial classification
             route = get_question_route(llm, user_input)
