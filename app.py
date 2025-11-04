@@ -543,9 +543,10 @@ with col2:
             logger.info(f"get_question_route: {route}")
 
             # check whether it is a report request
+            report_request = {'create_report': False}
             # report_request = check_report_request(llm, user_input)
             # logger.info(f"*report_request: {report_request}")
-            report_request['create_report'] = False
+            
             
             # st.markdown(route)
             # time.sleep(30)
