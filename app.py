@@ -20,6 +20,7 @@ from aggregation_request import get_code_for_grouping_object, get_code_for_summa
 from refine_request import get_refined_question
 from request_router import get_question_route
 from request_plan import get_request_plan
+from resolve_follow_up import resolve_follow_up
 from check_report_request import check_report_request, create_report_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name, get_variables_for_dcid
@@ -534,8 +535,8 @@ with col2:
             for message in st.session_state.chat:
                 history += f"{st.chat_message(message['role'])}: {st.markdown(message['content'])}\n"
             history += "current user: {user_input}"
-            user_input = resolve_follow_up_question(llm, history)
-            logger.info("resolved follow up question: {user_input}")
+            user_input = resolve_follow_up(llm, history)
+            logger.info("resolved follow up: {user_input}")
             
             # get initial classification
             route = get_question_route(llm, user_input)
