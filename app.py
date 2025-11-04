@@ -528,6 +528,14 @@ with col2:
             st.chat_message("user").markdown(user_input)
             st.session_state.chat.append({"role": "user", "content": user_input})
             logger.info("="*50)
+
+            # Process follow up question
+            history = ""
+            for message in st.session_state.chat:
+                history += f"{st.chat_message(message['role'])}: {st.markdown(message['content'])}\n"
+            history += "current user: {user_input}"
+            user_input = resolve_follow_up_question(llm, history)
+            logger.info("resolved follow up question: {user_input}")
             
             # get initial classification
             route = get_question_route(llm, user_input)
