@@ -834,7 +834,8 @@ class ArcGISFeatureLoader:
 
 
 def load_coal_mines(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/CoalMines_US_EIA/FeatureServer/247"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Surface_and_Underground_Coal_Mines_in_the_US/FeatureServer/0"
     wkid = "3857"
     return load_features(self_url, where, wkid)
 
