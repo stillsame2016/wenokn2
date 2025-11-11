@@ -264,6 +264,10 @@ def execute_query(user_input, chat_container):
                             logger.info(f"created code for Energy Atlas:\n{code}")
                             logger.info("====> what happened 100")
                             logger.info(f"RAW CODE REPR:\n{repr(code)}")
+                            logger.info(f"CODE LENGTH: {len(code)} chars, {len(code.splitlines())} lines")
+                            logger.info(f"CODE LINES:")
+                            for i, line in enumerate(code.splitlines(), 1):
+                                logger.info(f"  Line {i}: {repr(line)}")
 
                             try:
                                 compile(code, "<string>", "exec")
