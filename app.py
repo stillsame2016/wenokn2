@@ -262,70 +262,57 @@ def execute_query(user_input, chat_container):
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
                             logger.info(f"created code for Energy Atlas:\n{code}")
-                            logger.info("====> what happened 100")
                             logger.info(f"RAW CODE REPR:\n{repr(code)}")
-                            logger.info(f"CODE LENGTH: {len(code)} chars, {len(code.splitlines())} lines")
-                            logger.info(f"CODE LINES:")
-                            for i, line in enumerate(code.splitlines(), 1):
-                                logger.info(f"  Line {i}: {repr(line)}")
-
-                            logger.info("====> About to compile")
-                            try:
-                                compile(code, "<string>", "exec")
-                                logger.info("====> Compilation successful!")
-                            except SyntaxError as e:
-                                logger.error("====> COMPILE FAILED")
-                                logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
-                                logger.error(f"Text: {e.text!r}")
-                                logger.error(f"Full error: {e}")
-                                raise e
-                            logger.info("====> Building globals_dict")
-                            try:
-                                globals_dict = {
-                                    'st': st,
-                                    'gpd': gpd,
-                                    'pd': pd,
-                                    'load_coal_mines': load_coal_mines,
-                                    'load_coal_power_plants': load_coal_power_plants,
-                                    'load_wind_power_plants': load_wind_power_plants,
-                                    'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
-                                    'load_battery_storage_plants': load_battery_storage_plants,
-                                    'load_geothermal_power_plants': load_geothermal_power_plants,
-                                    'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
-                                    'load_natural_gas_power_plants': load_natural_gas_power_plants,
-                                    'load_nuclear_power_plants': load_nuclear_power_plants,
-                                    'load_petroleum_power_plants': load_petroleum_power_plants,
-                                    'load_solar_power_plants': load_solar_power_plants,
-                                    'load_biodiesel_power_plants': load_biodiesel_power_plants,
-                                    'load_watersheds': load_watersheds,
-                                    'load_basins': load_basins,
-                                    'load_census_block': load_census_block,
-                                    'load_nearby_census_blocks': load_nearby_census_blocks,
-                                    'load_census_tract': load_census_tract,
-                                    'downstream_tracts': downstream_tracts,
-                                    'load_flooded_power_stations': load_flooded_power_stations,
-                                    'load_flooded_buildings': load_flooded_buildings,
-                                    'fetch_flood_impacts': fetch_flood_impacts,
-                                    'load_public_water_systems': load_public_water_systems,
-                                    'load_PFAS_contamiation_observations': load_PFAS_contamiation_observations, 
-                                    'load_FRS_facilities': load_FRS_facilities,
-                                    'load_usda_ars_sites': load_usda_ars_sites,
-                                }
-                                logger.info("====> globals_dict built successfully")
-                            except Exception as e:
-                                logger.error(f"====> Failed to build globals_dict: {e}")
-                                logger.error(traceback.format_exc())
-                                raise e
-
-                            # exec(code, globals_dict)
-                            logger.info("====> what happened 200")
-                            try:
-                                logger.info("=====> run code")
-                                exec(code, globals_dict)
-                                logger.info("=====> running code complete")
-                            except Exception as e:
-                                error_stack = traceback.format_exc()
-                                logger.info(error_stack)
+                            
+                            # try:
+                            #     compile(code, "<string>", "exec")
+                            #     logger.info("====> Compilation successful!")
+                            # except SyntaxError as e:
+                            #     logger.error("====> COMPILE FAILED")
+                            #     logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
+                            #     logger.error(f"Text: {e.text!r}")
+                            #     logger.error(f"Full error: {e}")
+                            #     raise e
+                           
+                            globals_dict = {
+                                'st': st,
+                                'gpd': gpd,
+                                'pd': pd,
+                                'load_coal_mines': load_coal_mines,
+                                'load_coal_power_plants': load_coal_power_plants,
+                                'load_wind_power_plants': load_wind_power_plants,
+                                'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
+                                'load_battery_storage_plants': load_battery_storage_plants,
+                                'load_geothermal_power_plants': load_geothermal_power_plants,
+                                'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
+                                'load_natural_gas_power_plants': load_natural_gas_power_plants,
+                                'load_nuclear_power_plants': load_nuclear_power_plants,
+                                'load_petroleum_power_plants': load_petroleum_power_plants,
+                                'load_solar_power_plants': load_solar_power_plants,
+                                'load_biodiesel_power_plants': load_biodiesel_power_plants,
+                                'load_watersheds': load_watersheds,
+                                'load_basins': load_basins,
+                                'load_census_block': load_census_block,
+                                'load_nearby_census_blocks': load_nearby_census_blocks,
+                                'load_census_tract': load_census_tract,
+                                'downstream_tracts': downstream_tracts,
+                                'load_flooded_power_stations': load_flooded_power_stations,
+                                'load_flooded_buildings': load_flooded_buildings,
+                                'fetch_flood_impacts': fetch_flood_impacts,
+                                'load_public_water_systems': load_public_water_systems,
+                                'load_PFAS_contamiation_observations': load_PFAS_contamiation_observations, 
+                                'load_FRS_facilities': load_FRS_facilities,
+                                'load_usda_ars_sites': load_usda_ars_sites,
+                            }
+                            logger.info("====> globals_dict built successfully")     
+                            exec(code, globals_dict)
+                            # try:
+                            #     logger.info("=====> run code")
+                            #     exec(code, globals_dict)
+                            #     logger.info("=====> running code complete")
+                            # except Exception as e:
+                            #     error_stack = traceback.format_exc()
+                            #     logger.info(error_stack)
                             
                             gdf = globals_dict['gdf']
                             logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
