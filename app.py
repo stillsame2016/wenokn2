@@ -404,7 +404,7 @@ with col2:
         'Find all counties the Scioto River flows through.',
         'Find all counties downstream of Ross County on the Scioto River.',  
         'Find all counties both the Ohio River and the Muskingum River flow through.',  
-        'Find all counties downstream of the coal mine with the name "River View Mine" along Ohio River.',
+        'Find all counties downstream of the coal mine with the name River View Mine along Ohio River.',
         'Find all neighboring counties of Guernsey County.',
         'Find all adjacent states to the state of Ohio.',
 
@@ -429,7 +429,7 @@ with col2:
         'Find populations for all adjacent states to the state of Ohio.',
         'Find the median individual income for Ross County and Scioto County.', 
         'Find the number of people employed in all counties the Scioto River flows through.', 
-        'Show social vulnerability index of all counties downstream of coal mine with the name "River View Mine" along Ohio River',
+        'Show social vulnerability index of all counties downstream of coal mine with the name River View Mine along Ohio River',
 
         ######## Energy Atlas ########
         'Find all solar power plants in California.', 
