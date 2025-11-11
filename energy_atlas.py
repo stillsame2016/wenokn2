@@ -837,8 +837,10 @@ def load_coal_mines(where):
     return load_features(self_url, where, wkid)
 
 def load_coal_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Coal_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Coal_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Coal'" if where else "PrimSource='Coal'"
     return load_features(self_url, where, wkid)
 
 def load_wind_power_plants(where):
