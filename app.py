@@ -263,6 +263,7 @@ def execute_query(user_input, chat_container):
                             code = strip_code(code)
                             logger.info(f"created code for Energy Atlas:\n{code}")
                             logger.info("====> what happened 100")
+                            logger.info(f"RAW CODE REPR:\n{repr(code)}")
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
