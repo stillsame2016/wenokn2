@@ -851,48 +851,66 @@ def load_wind_power_plants(where):
     return load_features(self_url, where, wkid)
 
 def load_renewable_diesel_fuel_and_other_biofuel_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Renewable_Diesel_and_Other_Biofuels/FeatureServer/245"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Renewable_Diesel_and_Other_Biofuels/FeatureServer/245"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Biomass'" if where else "PrimSource='Biomass'"
     return load_features(self_url, where, wkid)
 
 def load_battery_storage_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Battery_Storage_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Battery_Storage_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Battery'" if where else "PrimSource='Battery'"
     return load_features(self_url, where, wkid)
 
 def load_geothermal_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Geothermal_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Geothermal_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Geothermal'" if where else "PrimSource='Geothermal'"
     return load_features(self_url, where, wkid)
 
 def load_hydro_pumped_storage_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Hydro_Pumped_Storage_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Hydro_Pumped_Storage_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Pumped storage'" if where else "PrimSource='Pumped storage'"
     return load_features(self_url, where, wkid)    
 
 def load_natural_gas_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Natural_Gas_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Natural_Gas_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Natural gas'" if where else "PrimSource='Natural gas'"
     return load_features(self_url, where, wkid)   
 
 def load_nuclear_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Nuclear_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Nuclear_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Nuclear'" if where else "PrimSource='Nuclear'"
     return load_features(self_url, where, wkid)  
 
 def load_petroleum_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Petroleum_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Petroleum_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Petroleum'" if where else "PrimSource='Petroleum'"
     return load_features(self_url, where, wkid)  
 
 def load_solar_power_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Solar_Power_Plants/FeatureServer/0"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Solar_Power_Plants/FeatureServer/0"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Solar'" if where else "PrimSource='Solar'"
     return load_features(self_url, where, wkid)  
 
 def load_biodiesel_plants(where):
-    self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Biodiesel_Plants_US_EIA/FeatureServer/113"
+    # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Biodiesel_Plants_US_EIA/FeatureServer/113"
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
+    where = f"{where} AND PrimSource='Biomass'" if where else "PrimSource='Biomass'"
     return load_features(self_url, where, wkid)  
 
 def load_watersheds(where, bbox):
