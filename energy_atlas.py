@@ -48,7 +48,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
         geothermal power plants/hydro pumped storage power plants/natural gas power plants/nuclear power plants/
-        petroleum power plants/solar power plants from an ArcGIS Feature Service as a GeoDataFrame:
+        petroleum power plants/solar power plants/Hydroelectric power plants from an ArcGIS Feature Service as a GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
             load_battery_storage_plants(where_condition)
@@ -58,6 +58,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             load_nuclear_power_plants(where_condition)
             load_petroleum_power_plants(where_condition)
             load_solar_power_plants(where_condition)
+            load_hydroelectric_plants(where_condition)
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
