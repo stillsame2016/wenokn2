@@ -262,6 +262,7 @@ def execute_query(user_input, chat_container):
                             code = process_energy_atlas_request(llm, query["request"], st.session_state.datasets)
                             code = strip_code(code)
                             logger.info(f"created code for Energy Atlas:\n{code}")
+                            logger.info("====> what happened 100")
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
@@ -293,7 +294,7 @@ def execute_query(user_input, chat_container):
                                 'load_usda_ars_sites': load_usda_ars_sites,
                             }
                             # exec(code, globals_dict)
-                            logger.info("====> what happened")
+                            logger.info("====> what happened 200")
                             try:
                                 logger.info("=====> run code")
                                 exec(code, globals_dict)
