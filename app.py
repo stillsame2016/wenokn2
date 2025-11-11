@@ -220,7 +220,7 @@ def execute_query(user_input, chat_container):
                                 'load_nuclear_power_plants': load_nuclear_power_plants,
                                 'load_petroleum_power_plants': load_petroleum_power_plants,
                                 'load_solar_power_plants': load_solar_power_plants,
-                                'load_biodiesel_plants': load_biodiesel_plants
+                                'load_biodiesel_power_plants': load_biodiesel_power_plants
                             }
                             exec(code, globals_dict)
                             # try:
