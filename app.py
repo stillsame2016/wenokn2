@@ -185,7 +185,7 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_state_name": get_dcid_from_state_name,
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
-
+                            logger.info("====> Build global_dict successfully")
                             exec(code, globals_dict)    
                             df = globals_dict['df']    
                             df.id = user_input
