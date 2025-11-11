@@ -279,37 +279,44 @@ def execute_query(user_input, chat_container):
                                 logger.error(f"Text: {e.text!r}")
                                 logger.error(f"Full error: {e}")
                                 raise e
-                                
-                            globals_dict = {
-                                'st': st,
-                                'gpd': gpd,
-                                'pd': pd,
-                                'load_coal_mines': load_coal_mines,
-                                'load_coal_power_plants': load_coal_power_plants,
-                                'load_wind_power_plants': load_wind_power_plants,
-                                'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
-                                'load_battery_storage_plants': load_battery_storage_plants,
-                                'load_geothermal_power_plants': load_geothermal_power_plants,
-                                'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
-                                'load_natural_gas_power_plants': load_natural_gas_power_plants,
-                                'load_nuclear_power_plants': load_nuclear_power_plants,
-                                'load_petroleum_power_plants': load_petroleum_power_plants,
-                                'load_solar_power_plants': load_solar_power_plants,
-                                'load_biodiesel_plants': load_biodiesel_plants,
-                                'load_watersheds': load_watersheds,
-                                'load_basins': load_basins,
-                                'load_census_block': load_census_block,
-                                'load_nearby_census_blocks': load_nearby_census_blocks,
-                                'load_census_tract': load_census_tract,
-                                'downstream_tracts': downstream_tracts,
-                                'load_flooded_power_stations': load_flooded_power_stations,
-                                'load_flooded_buildings': load_flooded_buildings,
-                                'fetch_flood_impacts': fetch_flood_impacts,
-                                'load_public_water_systems': load_public_water_systems,
-                                'load_PFAS_contamiation_observations': load_PFAS_contamiation_observations, 
-                                'load_FRS_facilities': load_FRS_facilities,
-                                'load_usda_ars_sites': load_usda_ars_sites,
-                            }
+                            logger.info("====> Building globals_dict")
+                            try:
+                                globals_dict = {
+                                    'st': st,
+                                    'gpd': gpd,
+                                    'pd': pd,
+                                    'load_coal_mines': load_coal_mines,
+                                    'load_coal_power_plants': load_coal_power_plants,
+                                    'load_wind_power_plants': load_wind_power_plants,
+                                    'load_renewable_diesel_fuel_and_other_biofuel_plants': load_renewable_diesel_fuel_and_other_biofuel_plants,
+                                    'load_battery_storage_plants': load_battery_storage_plants,
+                                    'load_geothermal_power_plants': load_geothermal_power_plants,
+                                    'load_hydro_pumped_storage_power_plants': load_hydro_pumped_storage_power_plants,
+                                    'load_natural_gas_power_plants': load_natural_gas_power_plants,
+                                    'load_nuclear_power_plants': load_nuclear_power_plants,
+                                    'load_petroleum_power_plants': load_petroleum_power_plants,
+                                    'load_solar_power_plants': load_solar_power_plants,
+                                    'load_biodiesel_plants': load_biodiesel_plants,
+                                    'load_watersheds': load_watersheds,
+                                    'load_basins': load_basins,
+                                    'load_census_block': load_census_block,
+                                    'load_nearby_census_blocks': load_nearby_census_blocks,
+                                    'load_census_tract': load_census_tract,
+                                    'downstream_tracts': downstream_tracts,
+                                    'load_flooded_power_stations': load_flooded_power_stations,
+                                    'load_flooded_buildings': load_flooded_buildings,
+                                    'fetch_flood_impacts': fetch_flood_impacts,
+                                    'load_public_water_systems': load_public_water_systems,
+                                    'load_PFAS_contamiation_observations': load_PFAS_contamiation_observations, 
+                                    'load_FRS_facilities': load_FRS_facilities,
+                                    'load_usda_ars_sites': load_usda_ars_sites,
+                                }
+                                logger.info("====> globals_dict built successfully")
+                            except Exception as e:
+                                logger.error(f"====> Failed to build globals_dict: {e}")
+                                logger.error(traceback.format_exc())
+                                raise e
+
                             # exec(code, globals_dict)
                             logger.info("====> what happened 200")
                             try:
