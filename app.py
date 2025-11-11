@@ -269,10 +269,15 @@ def execute_query(user_input, chat_container):
                             for i, line in enumerate(code.splitlines(), 1):
                                 logger.info(f"  Line {i}: {repr(line)}")
 
+                            logger.info("====> About to compile")
                             try:
                                 compile(code, "<string>", "exec")
+                                logger.info("====> Compilation successful!")
                             except SyntaxError as e:
-                                logger.error(f"Syntax error at line {e.lineno}, text={e.text!r}")
+                                logger.error("====> COMPILE FAILED")
+                                logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
+                                logger.error(f"Text: {e.text!r}")
+                                logger.error(f"Full error: {e}")
                                 raise e
                                 
                             globals_dict = {
