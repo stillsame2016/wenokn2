@@ -293,6 +293,7 @@ def execute_query(user_input, chat_container):
                                 'load_usda_ars_sites': load_usda_ars_sites,
                             }
                             # exec(code, globals_dict)
+                            logger.info("====> what happened")
                             try:
                                 logger.info("=====> run code")
                                 exec(code, globals_dict)
