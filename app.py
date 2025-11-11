@@ -521,6 +521,13 @@ with col2:
         'Find FRS Sewage Treatment facilities within military bases in Maine',
         'Find military bases in Maine containing PFAS contamination observations',
         'Find PFAS contamination observations in military bases in Maine.',
+
+        ########## History ##########
+        '================================================',
+        'Find Ohio River',
+        'Find the coal mine \'River View Mine\'',
+        'Find all downstream counties of this river from this coal mine',
+        'Find the social vulnerability index of these counties',
     ]
     st.markdown(
         """
