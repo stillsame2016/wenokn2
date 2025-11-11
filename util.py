@@ -155,7 +155,8 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             get_dcid_from_county_name(county_name) 
             get_dcid_from_country_name(country_name)
         To call get_dcid_from_county_name, the county name must be in the format "San Diego County". 
-        Don't miss "County" in the name. 
+        But county_name may already contain "County". You can use in the following way: 
+            get_dcid_from_county_name(county_name if county_name.endswith('County') else county_name + ' County') 
         
         Data Commons has the following statistical variables available for a particular place:
             {dc_variables}
