@@ -264,6 +264,13 @@ def execute_query(user_input, chat_container):
                             logger.info(f"created code for Energy Atlas:\n{code}")
                             logger.info("====> what happened 100")
                             logger.info(f"RAW CODE REPR:\n{repr(code)}")
+
+                            try:
+                                compile(code, "<string>", "exec")
+                            except SyntaxError as e:
+                                logger.error(f"Syntax error at line {e.lineno}, text={e.text!r}")
+                                raise e
+                                
                             globals_dict = {
                                 'st': st,
                                 'gpd': gpd,
