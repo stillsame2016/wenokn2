@@ -48,7 +48,7 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
         [ Definition 2 ] 
         We have the following functions to get coal power plants/wind power plants/battery storage plants/
         geothermal power plants/hydro pumped storage power plants/natural gas power plants/nuclear power plants/
-        petroleum power plants/solar power plants/Hydroelectric power plants from an ArcGIS Feature Service as a GeoDataFrame:
+        petroleum power plants/solar power plants/Hydroelectric power plants/All power plants from an ArcGIS Feature Service as a GeoDataFrame:
             load_coal_power_plants(where_condition)
             load_wind_power_plants(where_condition)
             load_battery_storage_plants(where_condition)
@@ -58,7 +58,8 @@ def process_energy_atlas_request(llm, user_input, spatial_datasets):
             load_nuclear_power_plants(where_condition)
             load_petroleum_power_plants(where_condition)
             load_solar_power_plants(where_condition)
-            load_hydroelectric_plants(where_condition)
+            load_hydroelectric_power_plants(where_condition)
+            load_all_power_plants(where_condition)
         
         The returned GeoDataFrame has the following columns:
             'geometry', 'OBJECTID', 'Plant_Code', 'Plant_Name', 'Utility_ID', 'Utility_Name', 'sector_name', 
@@ -907,17 +908,22 @@ def load_solar_power_plants(where):
     where = f"{where} AND PrimSource='Solar'" if where else "PrimSource='Solar'"
     return load_features(self_url, where, wkid)  
 
-def load_biodiesel_plants(where):
+def load_biodiesel_power_plants(where):
     # self_url = "https://services7.arcgis.com/FGr1D95XCGALKXqM/ArcGIS/rest/services/Biodiesel_Plants_US_EIA/FeatureServer/113"
     self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
     where = f"{where} AND PrimSource='Biomass'" if where else "PrimSource='Biomass'"
     return load_features(self_url, where, wkid)  
 
-def load_hydroelectric_plants(where):
+def load_hydroelectric_power_plants(where):
     self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
     wkid = "3857"
     where = f"{where} AND PrimSource='Hydroelectric'" if where else "PrimSource='Hydroelectric'"
+    return load_features(self_url, where, wkid)  
+
+def load_all_power_plants(where):
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
+    wkid = "3857"
     return load_features(self_url, where, wkid)  
 
 def load_watersheds(where, bbox):
