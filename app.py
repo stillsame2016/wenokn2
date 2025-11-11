@@ -294,12 +294,12 @@ def execute_query(user_input, chat_container):
                             }
                             # exec(code, globals_dict)
                             try:
+                                logger.info("=====> run code")
                                 exec(code, globals_dict)
+                                logger.info("=====> running code complete")
                             except Exception as e:
-                                st.code(code)
                                 error_stack = traceback.format_exc()
-                                st.code(error_stack)
-                                time.sleep(20)
+                                logger.info(error_stack)
                             
                             gdf = globals_dict['gdf']
                             logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
