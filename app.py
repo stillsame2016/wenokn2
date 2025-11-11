@@ -190,6 +190,7 @@ def execute_query(user_input, chat_container):
                             # time.sleep(10)
                             globals_dict = {
                                 'st': st,
+                                'pd': pd,
                                 "get_variables_for_dcid": get_variables_for_dcid,
                                 "get_time_series_dataframe_for_dcid": get_time_series_dataframe_for_dcid,
                                 "get_dcid_from_county_name": get_dcid_from_county_name,
