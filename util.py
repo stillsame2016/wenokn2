@@ -601,20 +601,20 @@ def strip_code(code):
         code = code[start_index:end_index].strip()
     return code
 
-def strip_code(code: str) -> str:
-    # Remove Markdown code fences, even if malformed
-    code = re.sub(r"^```(?:python)?\s*", "", code.strip(), flags=re.IGNORECASE)
-    code = re.sub(r"\s*```$", "", code.strip())
-    code = code.strip()
+# def strip_code(code: str) -> str:
+#     # Remove Markdown code fences, even if malformed
+#     code = re.sub(r"^```(?:python)?\s*", "", code.strip(), flags=re.IGNORECASE)
+#     code = re.sub(r"\s*```$", "", code.strip())
+#     code = code.strip()
 
-    # Normalize smart quotes
-    code = code.replace("‘", "'").replace("’", "'").replace("“", '"').replace("”", '"')
+#     # Normalize smart quotes
+#     code = code.replace("‘", "'").replace("’", "'").replace("“", '"').replace("”", '"')
 
-    # Ensure newline between statements if missing
-    if not code.endswith("\n"):
-        code += "\n"
+#     # Ensure newline between statements if missing
+#     if not code.endswith("\n"):
+#         code += "\n"
 
-    return code
+#     return code
 
 def strip_json(code):
     if code.startswith("```json"):
