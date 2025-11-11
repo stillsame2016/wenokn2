@@ -292,7 +292,15 @@ def execute_query(user_input, chat_container):
                                 'load_FRS_facilities': load_FRS_facilities,
                                 'load_usda_ars_sites': load_usda_ars_sites,
                             }
-                            exec(code, globals_dict)
+                            # exec(code, globals_dict)
+                            try:
+                                exec(code, globals_dict)
+                            except Exception as e:
+                                st.code(code)
+                                error_stack = traceback.format_exc()
+                                st.code(error_stack)
+                                time.sleep(20)
+                            
                             gdf = globals_dict['gdf']
                             logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
                             logger.info(f"fetched geodataframe: {gdf.shape}")
