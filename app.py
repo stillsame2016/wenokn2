@@ -175,6 +175,17 @@ def execute_query(user_input, chat_container):
                             code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                             code = strip_code(code)
                             logger.info(f"Code:\n {code}")
+
+                            try:
+                                compile(code, "<string>", "exec")
+                                logger.info("====> Compilation successful!")
+                            except SyntaxError as e:
+                                logger.error("====> COMPILE FAILED")
+                                logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
+                                logger.error(f"Text: {e.text!r}")
+                                logger.error(f"Full error: {e}")
+                                raise e
+                            
                             # st.code(code)
                             # time.sleep(10)
                             globals_dict = {
@@ -186,7 +197,15 @@ def execute_query(user_input, chat_container):
                                 "get_dcid_from_country_name": get_dcid_from_country_name
                             }
                             logger.info("====> Build global_dict successfully")
-                            exec(code, globals_dict)    
+                            # exec(code, globals_dict)    
+                            try:
+                                logger.info("=====> run code")
+                                exec(code, globals_dict)
+                                logger.info("=====> running code complete")
+                            except Exception as e:
+                                error_stack = traceback.format_exc()
+                                logger.info(error_stack)
+                            
                             df = globals_dict['df']    
                             df.id = user_input
                             st.session_state.wen_datasets.append(df)
