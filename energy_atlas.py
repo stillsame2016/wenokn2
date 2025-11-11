@@ -913,6 +913,12 @@ def load_biodiesel_plants(where):
     where = f"{where} AND PrimSource='Biomass'" if where else "PrimSource='Biomass'"
     return load_features(self_url, where, wkid)  
 
+def load_hydroelectric_plants(where):
+    self_url = "https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/Power_Plants_in_the_US/FeatureServer/0"
+    wkid = "3857"
+    where = f"{where} AND PrimSource='Hydroelectric'" if where else "PrimSource='Hydroelectric'"
+    return load_features(self_url, where, wkid)  
+
 def load_watersheds(where, bbox):
     self_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Watershed_Boundary_Dataset_HUC_10s/FeatureServer/0"
     wkid = "3857"
