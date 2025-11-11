@@ -296,7 +296,7 @@ def execute_query(user_input, chat_container):
                                     'load_nuclear_power_plants': load_nuclear_power_plants,
                                     'load_petroleum_power_plants': load_petroleum_power_plants,
                                     'load_solar_power_plants': load_solar_power_plants,
-                                    'load_biodiesel_plants': load_biodiesel_plants,
+                                    'load_biodiesel_power_plants': load_biodiesel_power_plants,
                                     'load_watersheds': load_watersheds,
                                     'load_basins': load_basins,
                                     'load_census_block': load_census_block,
