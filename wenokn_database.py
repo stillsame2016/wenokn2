@@ -104,8 +104,8 @@ LIMIT 1
 
 #-----------------------------------------------------
 def load_state_by_name(state_name) -> gpd.GeoDataFrame:
-    if state_name and state_name.lower().endswith("state"):
-        state_name = state_name[:-5]
+    if state_name and state_name.lower().endswith(" state"):
+        state_name = state_name[:-6]
         
     query = f"""
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -136,8 +136,8 @@ LIMIT 1
 
 #-----------------------------------------------------
 def load_counties_in_state(state_name) -> gpd.GeoDataFrame:
-    if state_name and state_name.lower().endswith("state"):
-        state_name = state_name[:-5]
+    if state_name and state_name.lower().endswith(" state"):
+        state_name = state_name[:-6]
         
     query = f"""
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -197,8 +197,8 @@ LIMIT 100
 
 #-----------------------------------------------------
 def load_neighboring_states(state_name) -> gpd.GeoDataFrame:     
-    if state_name and state_name.lower().endswith("state"):
-        state_name = state_name[:-5]
+    if state_name and state_name.lower().endswith(" state"):
+        state_name = state_name[:-6]
         
     query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
