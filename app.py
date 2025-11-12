@@ -632,6 +632,7 @@ with col2:
                                     'load_river_by_name': load_river_by_name,
                                     'load_county_by_name': load_county_by_name,
                                     'load_state_by_name': load_state_by_name,
+                                    'load_counties_in_state': load_counties_in_state,
                                 }
                                 exec(code, globals_dict)
                                 gdf = globals_dict['gdf']
