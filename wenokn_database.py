@@ -87,6 +87,9 @@ If the user's question is to look up a river by name, return the following code:
     gdf = load_river_by_name(river_name)
     gdf.title = river_name
 
+Otherwise return the following code:
+    raise ValueError("Don't know how to process the request")
+
 [ Question ]
 The following is the question from the user:
 {question}
