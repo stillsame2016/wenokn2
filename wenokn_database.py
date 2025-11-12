@@ -153,6 +153,7 @@ WHERE {{
 }}
 LIMIT 200
 """
+    logger.info(query)
     return get_gdf_from_sparql(query)
     
 
