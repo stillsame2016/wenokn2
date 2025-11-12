@@ -102,8 +102,8 @@ LIMIT 1
 
 #-----------------------------------------------------
 def load_state_by_name(state_name) -> gpd.GeoDataFrame:
-    if state and state.lower().endswith("state"):
-        state = state[:-5]
+    if state_name and state_name.lower().endswith("state"):
+        state_name = state_name[:-5]
         
     query = f"""
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
