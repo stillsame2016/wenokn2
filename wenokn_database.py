@@ -195,6 +195,45 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 
+#-----------------------------------------------------
+def load_neighboring_states(state_name) -> gpd.GeoDataFrame:     
+    if state_name and state_name.lower().endswith("state"):
+        state_name = state_name[:-5]
+        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+
+SELECT DISTINCT ?neighborStateName ?neighborStateGeometry
+WHERE {{
+  ?neighborState rdf:type kwg-ont:AdministrativeRegion_1 ;
+                  rdfs:label ?neighborStateName ;
+                  geo:hasGeometry/geo:asWKT ?neighborStateGeometry .
+  FILTER(STRSTARTS(STR(?neighborState), STR(kwgr:)))  # cleaner URI prefix check
+
+  FILTER EXISTS {{
+    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+                    rdfs:label ?stateName ;
+                    kwg-ont:sfOverlaps ?s2cell .
+    FILTER(STRSTARTS(STR(?state), STR(kwgr:)))
+    FILTER(CONTAINS(LCASE(?stateName), LCASE("{state_name}")))
+
+    # Shared S2 cell constraint
+    ?neighborState kwg-ont:sfOverlaps ?s2cell .
+    ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
+
+    FILTER(?neighborState != ?state)
+  }}
+}}
+LIMIT 100
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -226,6 +265,12 @@ return the following code:
     county_name = "Ross county"
     gdf = load_neighboring_counties(county_name)  
     gdf.title = "All neighboring counties of Ross county"
+
+If the user's question is to find all neighboring states of a state (for example, Find all neighboring states of Ohio state), 
+return the following code:
+    state_name = "Ohio State"
+    gdf = load_neighboring_states(state_name)  
+    gdf.title = "All neighboring states of Ohio State"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
