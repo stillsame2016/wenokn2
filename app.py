@@ -622,6 +622,13 @@ with col2:
                         # st.code(exist_json)
                         # time.sleep(10)
                         if not exist_json['existing']:
+                            
+                            try:
+                                code = process_wenokn_request(llm, user_input, chat_container)
+                            except Exception as e:  
+                                error_stack = traceback.format_exc()
+                                logger.info(error_stack)
+                                
                             process_data_request(request, chat_container)
                         else:
                             existed_requests.append(request)
