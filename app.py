@@ -629,7 +629,8 @@ with col2:
                                 logger.info(f"WENOKN CODE:\n{code}")
                                 code = strip_code(code)
                                 globals_dict = {   
-                                    'load_river_by_name': load_river_by_name
+                                    'load_river_by_name': load_river_by_name,
+                                    'load_county_by_name': load_county_by_name,
                                 }
                                 exec(code, globals_dict)
                                 gdf = globals_dict['gdf']
