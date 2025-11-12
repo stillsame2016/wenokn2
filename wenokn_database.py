@@ -319,6 +319,12 @@ return the following code:
     gdf = load_neighboring_states(state_name)  
     gdf.title = "All neighboring states of Ohio State"
 
+If the user's question is to find all rivers flows through a county (for example, Find all rivers in Ross county), 
+return the following code:
+    county_name = "Ross county"
+    gdf = load_rivers_in_county(county_name)  
+    gdf.title = "All rivers in Ross county"
+
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
 
