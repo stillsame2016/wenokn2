@@ -635,6 +635,19 @@ with col2:
                                 gdf = globals_dict['gdf']
                                 logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
                                 logger.info(f"fetched geodataframe: {gdf.shape}")
+                                if gdf.shape[0] > 0:
+                                    gdf.label = gdf.title
+                                    gdf.id = str(uuid.uuid4())[:8]
+                                    gdf.time = time.time()
+                                    st.session_state.requests.append(user_input)
+                                    st.session_state.sparqls.append("")
+                                    st.session_state.datasets.append(gdf)
+                                    st.session_state.rerun = True
+                                    message = f"""
+                                                Your request has been processed. {gdf.shape[0]} 
+                                                { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                loaded on the map.
+                                                """
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
