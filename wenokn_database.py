@@ -383,26 +383,36 @@ LIMIT 200
     return get_gdf_from_sparql(query)
 
 
+#-----------------------------------------------------
 def load_counties_rivers_flow_through_all(river_names: list[str]) -> gpd.GeoDataFrame:
     """
-    Return counties that all given rivers flow through (intersection of coverage).
+    Return counties that all given rivers flow through (intersection of coverage),
+    using subqueries to avoid QLever planner crashes.
     """
-    # Generate SPARQL pattern for each river
-    river_patterns = ""
-    for i, river in enumerate(river_names):
-        river_var = f"?riverGeometry{i}"
-        river_patterns += f"""
-  ?river{i} a hyf:HY_FlowPath ;
-             a hyf:HY_WaterBody ;
-             a schema:Place ;
-             schema:name ?riverName{i} ;
-             geo:hasGeometry/geo:asWKT {river_var} .
-  FILTER(LCASE(?riverName{i}) = LCASE("{river}")) .
-"""
 
-    # Generate intersection filters for all rivers
-    intersection_filters = " ".join(
-        [f"FILTER(geof:sfIntersects(?countyGeometry, ?riverGeometry{i})) ." for i in range(len(river_names))]
+    subqueries = []
+    vars_decl = []
+
+    for i, river in enumerate(river_names):
+        river_geom_var = f"?riverGeometry{i}"
+        vars_decl.append(river_geom_var)
+        subqueries.append(f"""
+  {{
+    SELECT DISTINCT {river_geom_var}
+    WHERE {{
+      ?river{i} a hyf:HY_FlowPath ;
+                a hyf:HY_WaterBody ;
+                a schema:Place ;
+                schema:name ?riverName{i} ;
+                geo:hasGeometry/geo:asWKT {river_geom_var} .
+      FILTER(LCASE(?riverName{i}) = LCASE("{river}")) .
+    }}
+  }}
+""")
+
+    # Build intersection filters
+    intersection_filters = "\n  ".join(
+        [f"FILTER(geof:sfIntersects(?countyGeometry, {var})) ." for var in vars_decl]
     )
 
     query = f"""
@@ -417,7 +427,8 @@ PREFIX schema: <https://schema.org/>
 
 SELECT DISTINCT ?countyName ?countyGeometry
 WHERE {{
-{river_patterns}
+{subqueries[0]}
+{subqueries[1] if len(subqueries) > 1 else ''}
 
   ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
           rdfs:label ?countyName ;
@@ -430,6 +441,7 @@ LIMIT 2000
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
+
 
 
 def process_wenokn_request(llm, user_input, chat_container):
