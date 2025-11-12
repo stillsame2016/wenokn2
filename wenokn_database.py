@@ -29,7 +29,7 @@ import geopandas as gpd
 import sparql_dataframe
 
 def get_gdf_from_sparql(query):
-    endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
+    endpoint_url = "https://frink.apps.renci.org/federation/sparql"
     df = sparql_dataframe.get(endpoint_url, query)
 
     if df.empty:
