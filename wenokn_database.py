@@ -207,27 +207,39 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 
-SELECT DISTINCT ?neighborStateName ?neighborStateGeometry
-WHERE {{
-  ?neighborState rdf:type kwg-ont:AdministrativeRegion_1 ;
-                  rdfs:label ?neighborStateName ;
-                  geo:hasGeometry/geo:asWKT ?neighborStateGeometry .
-  FILTER(STRSTARTS(STR(?neighborState), STR(kwgr:)))  # cleaner URI prefix check
+SELECT DISTINCT ?neighborState ?neighborStateName
+WHERE {
+  # -- Step 1: compute the longest label length for each state --
+  {
+    SELECT ?neighborState (MAX(STRLEN(STR(?label))) AS ?maxLen)
+    WHERE {
+      ?neighborState rdf:type kwg-ont:AdministrativeRegion_1 ;
+                     rdfs:label ?label .
+      FILTER(STRSTARTS(STR(?neighborState), STR(kwgr:)))
+    }
+    GROUP BY ?neighborState
+  }
 
-  FILTER EXISTS {{
+  # -- Step 2: rejoin to get the actual label with that max length --
+  ?neighborState rdfs:label ?neighborStateName ;
+                 geo:hasGeometry/geo:asWKT ?neighborStateGeometry .
+  FILTER(STRLEN(STR(?neighborStateName)) = ?maxLen)
+
+  # -- Step 3: check adjacency via shared S2 cells --
+  FILTER EXISTS {
     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
-                    rdfs:label ?stateName ;
-                    kwg-ont:sfOverlaps ?s2cell .
+           rdfs:label ?stateLabel ;
+           kwg-ont:sfOverlaps ?s2cell .
     FILTER(STRSTARTS(STR(?state), STR(kwgr:)))
-    FILTER(CONTAINS(LCASE(?stateName), LCASE("{state_name}")))
+    FILTER(CONTAINS(LCASE(?stateLabel), LCASE("{state_name}")))
 
-    # Shared S2 cell constraint
     ?neighborState kwg-ont:sfOverlaps ?s2cell .
     ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
 
     FILTER(?neighborState != ?state)
-  }}
-}}
+  }
+}
+ORDER BY ?neighborStateName
 LIMIT 100
 """
     logger.info(query)
