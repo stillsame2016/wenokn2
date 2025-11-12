@@ -49,7 +49,7 @@ OpenAI_KEY = st.secrets["OpenAI_KEY"]
 # llm2 = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 
 llm = ChatOpenAI(
-    model="qwen/qwen3-235b-a22b",  # Or "qwen/qwen3-8b:free" for free tier, "qwen/qwen3-235b-a22b" for advanced
+    model="qwen/qwen3-8b:free",  # Or "qwen/qwen3-8b:free" for free tier, "qwen/qwen3-235b-a22b" for advanced
     temperature=0,
     max_tokens=5000,
     api_key="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",  # Your OpenRouter key
