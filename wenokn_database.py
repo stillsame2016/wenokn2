@@ -78,6 +78,26 @@ LIMIT 1
     return get_gdf_from_sparql(query)
 
 
+def load_county_by_name(county_name) -> gpd.GeoDataFrame:
+    query = f"""
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?countyName ?countyGeometry
+WHERE {{
+  ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+  BIND(LCASE("{county_name}") AS ?inputCounty)
+  FILTER(STRSTARTS(LCASE(STR(?countyName)), ?inputCounty))
+}}
+LIMIT 1
+"""
+    return get_gdf_from_sparql(query)
+
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -86,6 +106,10 @@ Your task is to return valid Python code based on the user's question.
 If the user's question is to look up a river by name, return the following code:
     gdf = load_river_by_name(river_name)
     gdf.title = river_name
+
+If the user's question is to look up a county by name, return the following code:
+    gdf = load_county_by_name(county_name)
+    gdf.title = county_name
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
