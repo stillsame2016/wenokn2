@@ -208,17 +208,17 @@ PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 
 SELECT DISTINCT ?neighborState ?neighborStateName
-WHERE {
+WHERE {{
   # -- Step 1: compute the longest label length for each state --
-  {
+  {{
     SELECT ?neighborState (MAX(STRLEN(STR(?label))) AS ?maxLen)
-    WHERE {
+    WHERE {{
       ?neighborState rdf:type kwg-ont:AdministrativeRegion_1 ;
                      rdfs:label ?label .
       FILTER(STRSTARTS(STR(?neighborState), STR(kwgr:)))
-    }
+    }}
     GROUP BY ?neighborState
-  }
+  }}
 
   # -- Step 2: rejoin to get the actual label with that max length --
   ?neighborState rdfs:label ?neighborStateName ;
@@ -226,7 +226,7 @@ WHERE {
   FILTER(STRLEN(STR(?neighborStateName)) = ?maxLen)
 
   # -- Step 3: check adjacency via shared S2 cells --
-  FILTER EXISTS {
+  FILTER EXISTS {{
     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
            rdfs:label ?stateLabel ;
            kwg-ont:sfOverlaps ?s2cell .
@@ -237,8 +237,8 @@ WHERE {
     ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
 
     FILTER(?neighborState != ?state)
-  }
-}
+  }}
+}}
 ORDER BY ?neighborStateName
 LIMIT 100
 """
