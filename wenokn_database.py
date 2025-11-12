@@ -57,6 +57,7 @@ def get_gdf_from_sparql(query):
     return gdf
 
 
+#-----------------------------------------------------
 def load_river_by_name(river_name) -> gpd.GeoDataFrame:
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
@@ -78,6 +79,7 @@ LIMIT 1
     return get_gdf_from_sparql(query)
 
 
+#-----------------------------------------------------
 def load_county_by_name(county_name) -> gpd.GeoDataFrame:
     query = f"""
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -98,6 +100,30 @@ LIMIT 1
     return get_gdf_from_sparql(query)
 
 
+#-----------------------------------------------------
+def load_state_by_name(state_name) -> gpd.GeoDataFrame:
+    if state and state.lower().endswith("state"):
+        state = state[:-5]
+        
+    query = f"""
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?stateName ?stateGeometry
+WHERE {{
+  ?state rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1> ;
+          rdfs:label ?stateName ;
+          geo:hasGeometry/geo:asWKT ?stateGeometry .
+  FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+  BIND(LCASE("{state_name}") AS ?inputState)
+  FILTER(STRSTARTS(LCASE(STR(?stateName)), ?inputState))
+}}
+LIMIT 1
+"""
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -112,6 +138,11 @@ If the user's question is to look up a county by name, return the following code
     county_name = ...
     gdf = load_county_by_name(county_name)  
     gdf.title = county_name
+
+If the user's question is to look up a state by name, return the following code:
+    state_name = ...
+    gdf = load_state_by_name(state_name)  
+    gdf.title = state_name
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
