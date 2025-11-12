@@ -373,7 +373,8 @@ WHERE {{
           rdfs:label ?stateName ;
           geo:hasGeometry/geo:asWKT ?stateGeometry .
   FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
-  
+  FILTER(strlen(?stateName) > 2)
+
   FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry))
 }}
 LIMIT 200
