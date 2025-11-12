@@ -347,6 +347,41 @@ LIMIT 200
     return get_gdf_from_sparql(query)
     
 
+#-----------------------------------------------------
+def load_states_river_flows_through(river_name) -> gpd.GeoDataFrame:    
+        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?stateName ?stateGeometry 
+WHERE {{
+  ?river a hyf:HY_FlowPath ;
+         a hyf:HY_WaterBody ;
+         a schema:Place ;
+         schema:name ?riverName ;
+         geo:hasGeometry/geo:asWKT ?riverGeometry .
+  FILTER(LCASE(?riverName) = LCASE("{river_name}")) .
+  
+  ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+          rdfs:label ?stateName ;
+          geo:hasGeometry/geo:asWKT ?stateGeometry .
+  FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+  
+  FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry))
+}}
+LIMIT 200
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -403,6 +438,12 @@ return the following code:
     river_name = "Ohio River"
     gdf = load_counties_river_flows_through(river_name)  
     gdf.title = "All counties Ohio River flows through"
+
+If the user's question is to find all states a river flows through (for example, Find all states Ohio River flows through), 
+return the following code:
+    river_name = "Ohio River"
+    gdf = load_states_river_flows_through(river_name)  
+    gdf.title = "All states Ohio River flows through"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
