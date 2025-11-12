@@ -297,7 +297,7 @@ PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
 
 SELECT DISTINCT ?riverName ?riverGeometry
-WHERE {
+WHERE {{
   ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
          rdfs:label ?stateName ;
          geo:hasGeometry/geo:asWKT ?stateGeometry .
@@ -312,7 +312,7 @@ WHERE {
 
   FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry))
   FILTER(BOUND(?riverName) && STRLEN(LCASE(STR(?riverName))) > 0)
-}
+}}
 LIMIT 2000
 """
     logger.info(query)
