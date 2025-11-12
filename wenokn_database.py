@@ -26,17 +26,30 @@ logger = logging.getLogger(__name__)
 
 def get_gdf_from_sparql(query):
     endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
-    # Fetch data
     df = sparql_dataframe.get(endpoint_url, query)
 
+    if df.empty:
+        return gpd.GeoDataFrame(columns=["geometry"], crs="EPSG:4326")
+
+    # Try to find a column that contains WKT values
+    wkt_col = None
+    for col in df.columns:
+        if df[col].astype(str).str.startswith(("POINT", "LINESTRING", "POLYGON")).any():
+            wkt_col = col
+            break
+
+    if wkt_col is None:
+        raise ValueError("No WKT geometry column found in SPARQL result.")
+
+    # Drop rows with missing WKT
+    df = df.dropna(subset=[wkt_col]).copy()
+
     # Convert WKT to geometry
-    df = df.dropna(subset=["facilityWKT"]).copy()
-    df["geometry"] = df["facilityWKT"].apply(wkt.loads)
-    df = df.drop(columns=["facilityWKT"])
+    df["geometry"] = df[wkt_col].apply(wkt.loads)
+    df = df.drop(columns=[wkt_col])
 
     # Convert to GeoDataFrame
     gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
-    # gdf = gdf.drop_duplicates(subset='geometry')  
     return gdf
 
 
