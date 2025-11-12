@@ -247,6 +247,40 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 
+#-----------------------------------------------------
+def load_rivers_in_county(county_name) -> gpd.GeoDataFrame:        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?riverName ?riverGeometry
+WHERE {{
+    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+                    rdfs:label ?countyName ;
+                    geo:hasGeometry/geo:asWKT ?countyGeometry.
+    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+    FILTER(STRSTARTS(LCASE(?countyName), LCASE("{county_name}")))
+
+  ?river a hyf:HY_FlowPath ;
+         a hyf:HY_WaterBody ;
+         a schema:Place ;
+         schema:name ?riverName ;
+         geo:hasGeometry/geo:asWKT ?riverGeometry .
+   
+   FILTER(geof:sfIntersects(?riverGeometry, ?countyGeometry)) .
+}}
+LIMIT 300
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
