@@ -25,6 +25,7 @@ from check_report_request import check_report_request, create_report_plan
 from dataframe_table import render_interface_for_table
 from data_commons import get_time_series_dataframe_for_dcid, get_dcid_from_county_name,  get_dcid_from_state_name, get_dcid_from_country_name, get_variables_for_dcid
 from energy_atlas import *
+from wenoken_database import *
 from wenokn_use_energy_atlas import process_wenokn_use_energy_atlas
 
 from streamlit.components.v1 import html
