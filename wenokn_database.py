@@ -279,6 +279,43 @@ LIMIT 300
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
+
+
+#-----------------------------------------------------
+def load_rivers_in_state(state_name) -> gpd.GeoDataFrame:    
+    if state_name and state_name.lower().endswith(" state"):
+        state_name = state_name[:-6]
+        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?riverName ?riverGeometry
+WHERE {{
+    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+                    rdfs:label ?stateName ;
+                    geo:hasGeometry/geo:asWKT ?stateGeometry.
+    FILTER(STRSTARTS(STR(?state), STR(kwgr:)))
+    FILTER(STRSTARTS(LCASE(?stateName), LCASE("{state_name}")))
+
+  ?river a hyf:HY_FlowPath ;
+         a hyf:HY_WaterBody ;
+         a schema:Place ;
+         schema:name ?riverName ;
+         geo:hasGeometry/geo:asWKT ?riverGeometry .
+   
+   FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry)) .
+}}
+LIMIT 1000
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
     
 
 def process_wenokn_request(llm, user_input, chat_container):
@@ -324,6 +361,12 @@ return the following code:
     county_name = "Ross county"
     gdf = load_rivers_in_county(county_name)  
     gdf.title = "All rivers in Ross county"
+
+If the user's question is to find all rivers flows through a state (for example, Find all rivers in Ohio state), 
+return the following code:
+    state_name = "Ohio State"
+    gdf = load_rivers_in_state(state_name)  
+    gdf.title = "All rivers in Ohio State"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
