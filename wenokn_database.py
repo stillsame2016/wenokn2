@@ -148,7 +148,7 @@ WHERE {{
           rdfs:label ?countyName ;
           geo:hasGeometry/geo:asWKT ?countyGeometry .
   FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
-  BIND(LCASE({state_name}) AS ?inputState)
+  BIND(LCASE("{state_name}") AS ?inputState)
   FILTER(STRENDS(LCASE(STR(?countyName)), ?inputState))
 }}
 LIMIT 200
