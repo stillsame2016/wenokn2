@@ -312,6 +312,41 @@ LIMIT 2000
     return get_gdf_from_sparql(query)
     
 
+#-----------------------------------------------------
+def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
+        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?countyName ?countyGeometry 
+WHERE {{
+  ?river a hyf:HY_FlowPath ;
+         a hyf:HY_WaterBody ;
+         a schema:Place ;
+         schema:name ?riverName ;
+         geo:hasGeometry/geo:asWKT ?riverGeometry .
+  FILTER(LCASE(?riverName) = LCASE("{river_name}")) .
+  
+  ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+  
+  FILTER(geof:sfIntersects(?riverGeometry, ?countyGeometry))
+}}
+LIMIT 200
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -362,6 +397,12 @@ return the following code:
     state_name = "Ohio State"
     gdf = load_rivers_in_state(state_name)  
     gdf.title = "All rivers in Ohio State"
+
+If the user's question is to find all counties a river flows through (for example, Find all counties Ohio River flows through), 
+return the following code:
+    river_name = "Ohio River"
+    gdf = load_counties_river_flows_through(river_name)  
+    gdf.title = "All counties Ohio River flows through"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
