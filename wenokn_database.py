@@ -24,6 +24,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+from shapely import wkt
+import geopandas as gpd
+import sparql_dataframe
+
 def get_gdf_from_sparql(query):
     endpoint_url = "https://frink.apps.renci.org/qlever-geo/sparql"
     df = sparql_dataframe.get(endpoint_url, query)
@@ -31,25 +35,25 @@ def get_gdf_from_sparql(query):
     if df.empty:
         return gpd.GeoDataFrame(columns=["geometry"], crs="EPSG:4326")
 
-    # Try to find a column that contains WKT values
+    # Identify the WKT column automatically
     wkt_col = None
     for col in df.columns:
-        if df[col].astype(str).str.startswith(("POINT", "LINESTRING", "POLYGON")).any():
+        if df[col].astype(str).str.startswith(("POINT", "LINESTRING", "POLYGON", "MULTIPOLYGON")).any():
             wkt_col = col
             break
 
     if wkt_col is None:
         raise ValueError("No WKT geometry column found in SPARQL result.")
 
-    # Drop rows with missing WKT
+    # Drop missing geometries
     df = df.dropna(subset=[wkt_col]).copy()
 
-    # Convert WKT to geometry
-    df["geometry"] = df[wkt_col].apply(wkt.loads)
-    df = df.drop(columns=[wkt_col])
+    # Convert WKT to shapely geometries (keep same column name)
+    df[wkt_col] = df[wkt_col].apply(wkt.loads)
 
-    # Convert to GeoDataFrame
-    gdf = gpd.GeoDataFrame(df, geometry="geometry", crs="EPSG:4326")
+    # Create GeoDataFrame using that same column name as geometry
+    gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
+
     return gdf
 
 
