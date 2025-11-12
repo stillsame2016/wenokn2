@@ -331,6 +331,7 @@ If the user's question is to look up a state by name, return the following code:
     state_name = ...
     gdf = load_state_by_name(state_name)  
     gdf.title = state_name
+Please make sure the state name is a valid and fix possible typos.
 
 If the user's question is to find all counties in a state (for example, Find all counties in California), 
 return the following code:
