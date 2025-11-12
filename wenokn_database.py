@@ -118,8 +118,40 @@ WHERE {{
   FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
   BIND(LCASE("{state_name}") AS ?inputState)
   FILTER(STRSTARTS(LCASE(STR(?stateName)), ?inputState))
+
+  ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+
+  FILTER (geof:sfIntersects(?countyGeometry, ?stateGeometry)) . 
+
 }}
 LIMIT 1
+"""
+    return get_gdf_from_sparql(query)
+    
+
+#-----------------------------------------------------
+def load_counties_in_state(state_name) -> gpd.GeoDataFrame:
+    if state_name and state_name.lower().endswith("state"):
+        state_name = state_name[:-5]
+        
+    query = f"""
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?countyName ?countyGeometry
+WHERE {{
+  ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+  BIND(LCASE({state_name}) AS ?inputState)
+  FILTER(STRENDS(LCASE(STR(?countyName)), ?inputState))
+}}
+LIMIT 200
 """
     return get_gdf_from_sparql(query)
     
