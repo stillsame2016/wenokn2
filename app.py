@@ -627,6 +627,14 @@ with col2:
                             try:
                                 code = process_wenokn_request(llm, user_input, chat_container)
                                 logger.info(f"WENOKN CODE:\n{code}")
+                                code = strip_code(code)
+                                globals_dict = {   
+                                    'load_river_by_name': load_river_by_name
+                                }
+                                exec(code, globals_dict)
+                                gdf = globals_dict['gdf']
+                                logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
+                                logger.info(f"fetched geodataframe: {gdf.shape}")
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
