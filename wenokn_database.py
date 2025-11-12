@@ -207,9 +207,9 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 
-SELECT DISTINCT ?neighborState ?neighborStateName
+SELECT DISTINCT ?neighborStateName ?neighborStateGeometry
 WHERE {{
-  # -- Step 1: compute the longest label length for each state --
+  # --- Step 1: Compute the longest label for each state ---
   {{
     SELECT ?neighborState (MAX(STRLEN(STR(?label))) AS ?maxLen)
     WHERE {{
@@ -220,13 +220,14 @@ WHERE {{
     GROUP BY ?neighborState
   }}
 
-  # -- Step 2: rejoin to get the actual label with that max length --
-  ?neighborState rdfs:label ?neighborStateName ;
+  # --- Step 2: Join to get the full label and geometry ---
+  ?neighborState rdf:type kwg-ont:AdministrativeRegion_1 ;
+                 rdfs:label ?neighborStateName ;
                  geo:hasGeometry/geo:asWKT ?neighborStateGeometry .
   FILTER(STRLEN(STR(?neighborStateName)) = ?maxLen)
 
-  # -- Step 3: check adjacency via shared S2 cells --
-  FILTER EXISTS {{
+  # --- Step 3: Check adjacency via shared S2 cells ---
+  FILTER EXISTS {
     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
            rdfs:label ?stateLabel ;
            kwg-ont:sfOverlaps ?s2cell .
