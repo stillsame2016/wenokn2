@@ -177,15 +177,15 @@ def execute_query(user_input, chat_container):
                             code = strip_code(code)
                             logger.info(f"Code:\n {code}")
 
-                            try:
-                                compile(code, "<string>", "exec")
-                                logger.info("====> Compilation successful!")
-                            except SyntaxError as e:
-                                logger.error("====> COMPILE FAILED")
-                                logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
-                                logger.error(f"Text: {e.text!r}")
-                                logger.error(f"Full error: {e}")
-                                raise e
+                            # try:
+                            #     compile(code, "<string>", "exec")
+                            #     logger.info("====> Compilation successful!")
+                            # except SyntaxError as e:
+                            #     logger.error("====> COMPILE FAILED")
+                            #     logger.error(f"Syntax error at line {e.lineno}, offset={e.offset}")
+                            #     logger.error(f"Text: {e.text!r}")
+                            #     logger.error(f"Full error: {e}")
+                            #     raise e
                             
                             # st.code(code)
                             # time.sleep(10)
@@ -626,6 +626,7 @@ with col2:
                             
                             try:
                                 code = process_wenokn_request(llm, user_input, chat_container)
+                                logger.info(f"WENOKN CODE:\n{code}")
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
