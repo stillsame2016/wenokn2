@@ -104,11 +104,13 @@ def process_wenokn_request(llm, user_input, chat_container):
 Your task is to return valid Python code based on the user's question.
 
 If the user's question is to look up a river by name, return the following code:
-    gdf = load_river_by_name(river_name)
+    river_name = ...
+    gdf = load_river_by_name(river_name)   
     gdf.title = river_name
 
 If the user's question is to look up a county by name, return the following code:
-    gdf = load_county_by_name(county_name)
+    county_name = ...
+    gdf = load_county_by_name(county_name)  
     gdf.title = county_name
 
 Otherwise return the following code:
