@@ -227,7 +227,7 @@ WHERE {{
   FILTER(STRLEN(STR(?neighborStateName)) = ?maxLen)
 
   # --- Step 3: Check adjacency via shared S2 cells ---
-  FILTER EXISTS {
+  FILTER EXISTS {{
     ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
            rdfs:label ?stateLabel ;
            kwg-ont:sfOverlaps ?s2cell .
