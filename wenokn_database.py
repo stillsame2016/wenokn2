@@ -40,25 +40,26 @@ def get_gdf_from_sparql(query):
     return gdf
 
 
-def load_river_by_name(river_name)-> gpd.GeoDataFrame:
+def load_river_by_name(river_name) -> gpd.GeoDataFrame:
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 SELECT DISTINCT ?riverName ?riverGeometry 
-WHERE {
+WHERE {{
   ?river a hyf:HY_FlowPath ;
          a hyf:HY_WaterBody ;
          a schema:Place ;
          schema:name ?riverName ;
          geo:hasGeometry/geo:asWKT ?riverGeometry .
-  FILTER(LCASE(?riverName) = LCASE({river_name})) .
-}
+  FILTER(LCASE(?riverName) = LCASE("{river_name}")) .
+}}
 ORDER BY DESC(STRLEN(?riverGeometry))
 LIMIT 1
-"""    
+"""
     return get_gdf_from_sparql(query)
+
 
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
