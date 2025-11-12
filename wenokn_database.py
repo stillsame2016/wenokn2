@@ -157,6 +157,42 @@ LIMIT 200
     return get_gdf_from_sparql(query)
     
 
+#-----------------------------------------------------
+def load_neighboring_counties(county_name) -> gpd.GeoDataFrame:        
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+
+SELECT DISTINCT ?neighborCountyName ?neighborCountyGeometry
+WHERE {{
+  ?neighborCounty rdf:type kwg-ont:AdministrativeRegion_2 ;
+                  rdfs:label ?neighborCountyName ;
+                  geo:hasGeometry/geo:asWKT ?neighborCountyGeometry .
+  FILTER(STRSTARTS(STR(?neighborCounty), STR(kwgr:)))  # cleaner URI prefix check
+
+  FILTER EXISTS {{
+    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+                    rdfs:label ?countyName ;
+                    kwg-ont:sfOverlaps ?s2cell .
+    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+    FILTER(CONTAINS(LCASE(?countyName), LCASE("{county_name}")))
+
+    # Shared S2 cell constraint
+    ?neighborCounty kwg-ont:sfOverlaps ?s2cell .
+    ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
+
+    FILTER(?neighborCounty != ?county)
+  }}
+}}
+LIMIT 100
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
+
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -182,6 +218,12 @@ return the following code:
     state_name = "California"
     gdf = load_counties_in_state(state_name)  
     gdf.title = "All counties in California"
+
+If the user's question is to find all neighboring counties of a county (for example, Find all neighboring counties of Ross county), 
+return the following code:
+    county_name = "Ross county"
+    gdf = load_neighboring_counties(county_name)  
+    gdf.title = "All neighboring counties of Ross county"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
