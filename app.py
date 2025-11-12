@@ -651,8 +651,7 @@ with col2:
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
-                                
-                            process_data_request(request, chat_container)
+                                process_data_request(request, chat_container)
                         else:
                             existed_requests.append(request)
                             with st.chat_message("assistant"):
