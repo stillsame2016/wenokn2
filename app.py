@@ -41,8 +41,8 @@ OpenAI_KEY = st.secrets["OpenAI_KEY"]
 # llm = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY)
 # llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
 
-llm = ChatGroq(temperature=0, model_name="gpt-oss-120b", api_key=Groq_KEY)
-llm2 = ChatGroq(temperature=0, model_name="gpt-oss-120b", api_key=Groq_KEY_2)
+llm = ChatGroq(temperature=0, model_name="openai/gpt-oss-120b", api_key=Groq_KEY)
+llm2 = ChatGroq(temperature=0, model_name="openai/gpt-oss-120b", api_key=Groq_KEY_2)
 
 # gpt-4o
 # llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
