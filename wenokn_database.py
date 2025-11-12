@@ -120,14 +120,6 @@ WHERE {{
   FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
   BIND(LCASE("{state_name}") AS ?inputState)
   FILTER(STRSTARTS(LCASE(STR(?stateName)), ?inputState))
-
-  ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
-          rdfs:label ?countyName ;
-          geo:hasGeometry/geo:asWKT ?countyGeometry .
-  FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
-
-  FILTER (geof:sfIntersects(?countyGeometry, ?stateGeometry)) . 
-
 }}
 LIMIT 1
 """
