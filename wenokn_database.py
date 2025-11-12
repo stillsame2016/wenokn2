@@ -176,6 +176,11 @@ If the user's question is to look up a state by name, return the following code:
     gdf = load_state_by_name(state_name)  
     gdf.title = state_name
 
+If the user's question is to look up all counties in a state by the state name, return the following code:
+    state_name = ...
+    gdf = load_counties_in_state(state_name)  
+    gdf.title = "All counties in <state_name>"
+
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
 
