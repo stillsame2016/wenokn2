@@ -381,7 +381,56 @@ LIMIT 200
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
-    
+
+
+def load_counties_rivers_flow_through_all(river_names: list[str]) -> gpd.GeoDataFrame:
+    """
+    Return counties that all given rivers flow through (intersection of coverage).
+    """
+    # Generate SPARQL pattern for each river
+    river_patterns = ""
+    for i, river in enumerate(river_names):
+        river_var = f"?riverGeometry{i}"
+        river_patterns += f"""
+  ?river{i} a hyf:HY_FlowPath ;
+             a hyf:HY_WaterBody ;
+             a schema:Place ;
+             schema:name ?riverName{i} ;
+             geo:hasGeometry/geo:asWKT {river_var} .
+  FILTER(LCASE(?riverName{i}) = LCASE("{river}")) .
+"""
+
+    # Generate intersection filters for all rivers
+    intersection_filters = " ".join(
+        [f"FILTER(geof:sfIntersects(?countyGeometry, ?riverGeometry{i})) ." for i in range(len(river_names))]
+    )
+
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?countyName ?countyGeometry
+WHERE {{
+{river_patterns}
+
+  ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), STR(kwgr:))) .
+
+  {intersection_filters}
+}}
+LIMIT 2000
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+
 
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
@@ -445,6 +494,12 @@ return the following code:
     river_name = "Ohio River"
     gdf = load_states_river_flows_through(river_name)  
     gdf.title = "All states Ohio River flows through"
+
+If the user's question is to find all counties multiple rivers flow through (for example, Find all counties Ohio River and Muskingum River flow through), 
+return the following code:
+    river_names = [ "Ohio River", "Muskingum River" ]
+    gdf = load_counties_rivers_flow_through_all(river_names)  
+    gdf.title = "All ounties Ohio River and Muskingum River flow through"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
