@@ -595,7 +595,6 @@ with col2:
             # report_request = check_report_request(llm, user_input)
             # logger.info(f"*report_request: {report_request}")
             
-            
             # st.markdown(route)
             # time.sleep(30)
             if report_request['create_report']:
