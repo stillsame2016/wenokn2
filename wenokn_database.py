@@ -178,7 +178,7 @@ WHERE {{
                     rdfs:label ?countyName ;
                     kwg-ont:sfOverlaps ?s2cell .
     FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
-    FILTER(CONTAINS(LCASE(?countyName), LCASE("{county_name}")))
+    FILTER(STRSTARTS(LCASE(?countyName), LCASE("{county_name}")))
 
     # Shared S2 cell constraint
     ?neighborCounty kwg-ont:sfOverlaps ?s2cell .
