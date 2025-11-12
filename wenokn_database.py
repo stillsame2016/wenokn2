@@ -297,22 +297,23 @@ PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
 
 SELECT DISTINCT ?riverName ?riverGeometry
-WHERE {{
-    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
-                    rdfs:label ?stateName ;
-                    geo:hasGeometry/geo:asWKT ?stateGeometry.
-    FILTER(STRSTARTS(STR(?state), STR(kwgr:)))
-    FILTER(STRSTARTS(LCASE(?stateName), LCASE("{state_name}")))
+WHERE {
+  ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+         rdfs:label ?stateName ;
+         geo:hasGeometry/geo:asWKT ?stateGeometry .
+  FILTER(STRSTARTS(STR(?state), STR(kwgr:)))
+  FILTER(STRSTARTS(LCASE(?stateName), LCASE("{state_name}")))
 
   ?river a hyf:HY_FlowPath ;
          a hyf:HY_WaterBody ;
          a schema:Place ;
          schema:name ?riverName ;
          geo:hasGeometry/geo:asWKT ?riverGeometry .
-   
-   FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry)) .
-}}
-LIMIT 1000
+
+  FILTER(geof:sfIntersects(?riverGeometry, ?stateGeometry))
+  FILTER(BOUND(?riverName) && STRLEN(LCASE(STR(?riverName))) > 0)
+}
+LIMIT 2000
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
