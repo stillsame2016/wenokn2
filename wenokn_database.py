@@ -49,10 +49,12 @@ def get_gdf_from_sparql(query):
     df = df.dropna(subset=[wkt_col]).copy()
 
     # Convert WKT to shapely geometries (keep same column name)
-    df[wkt_col] = df[wkt_col].apply(wkt.loads)
+    # df[wkt_col] = df[wkt_col].apply(wkt.loads)
+    df['geometry'] = df[wkt_col].apply(wkt.loads)
 
     # Create GeoDataFrame using that same column name as geometry
-    gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
+    # gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
+    gdf = gpd.GeoDataFrame(df, geometry='geometry', crs="EPSG:4326")
 
     return gdf
 
