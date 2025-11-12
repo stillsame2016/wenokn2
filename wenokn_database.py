@@ -511,7 +511,7 @@ If the user's question is to find all counties multiple rivers flow through (for
 return the following code:
     river_names = [ "Ohio River", "Muskingum River" ]
     gdf = load_counties_rivers_flow_through_all(river_names)  
-    gdf.title = "All ounties Ohio River and Muskingum River flow through"
+    gdf.title = "All counties Ohio River and Muskingum River flow through"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
