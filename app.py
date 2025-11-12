@@ -625,34 +625,36 @@ with col2:
                         if not exist_json['existing']:
                             
                             try:
-                                code = process_wenokn_request(llm, user_input, chat_container)
-                                logger.info(f"WENOKN CODE:\n{code}")
-                                code = strip_code(code)
-                                globals_dict = {   
-                                    'load_river_by_name': load_river_by_name,
-                                    'load_county_by_name': load_county_by_name,
-                                    'load_state_by_name': load_state_by_name,
-                                    'load_counties_in_state': load_counties_in_state,
-                                    'load_neighboring_counties': load_neighboring_counties,
-                                    'load_neighboring_states': load_neighboring_states,
-                                }
-                                exec(code, globals_dict)
-                                gdf = globals_dict['gdf']
-                                logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
-                                logger.info(f"fetched geodataframe: {gdf.shape}")
-                                if gdf.shape[0] > 0:
-                                    gdf.label = gdf.title
-                                    gdf.id = str(uuid.uuid4())[:8]
-                                    gdf.time = time.time()
-                                    st.session_state.requests.append(user_input)
-                                    st.session_state.sparqls.append("")
-                                    st.session_state.datasets.append(gdf)
-                                    st.session_state.rerun = True
-                                    message = f"""
-                                                Your request has been processed. {gdf.shape[0]} 
-                                                { "items are" if gdf.shape[0] > 1 else "item is"}
-                                                loaded on the map.
-                                                """
+                                with st.chat_message("assistant"):
+                                    with st.spinner("Loading data ..."):
+                                        code = process_wenokn_request(llm, user_input, chat_container)
+                                        logger.info(f"WENOKN CODE:\n{code}")
+                                        code = strip_code(code)
+                                        globals_dict = {   
+                                            'load_river_by_name': load_river_by_name,
+                                            'load_county_by_name': load_county_by_name,
+                                            'load_state_by_name': load_state_by_name,
+                                            'load_counties_in_state': load_counties_in_state,
+                                            'load_neighboring_counties': load_neighboring_counties,
+                                            'load_neighboring_states': load_neighboring_states,
+                                        }
+                                        exec(code, globals_dict)
+                                        gdf = globals_dict['gdf']
+                                        logger.info(f"fetched geodataframe columns: {gdf.columns.to_list()}")
+                                        logger.info(f"fetched geodataframe: {gdf.shape}")
+                                        if gdf.shape[0] > 0:
+                                            gdf.label = gdf.title
+                                            gdf.id = str(uuid.uuid4())[:8]
+                                            gdf.time = time.time()
+                                            st.session_state.requests.append(user_input)
+                                            st.session_state.sparqls.append("")
+                                            st.session_state.datasets.append(gdf)
+                                            st.session_state.rerun = True
+                                            message = f"""
+                                                        Your request has been processed. {gdf.shape[0]} 
+                                                        { "items are" if gdf.shape[0] > 1 else "item is"}
+                                                        loaded on the map.
+                                                        """
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
