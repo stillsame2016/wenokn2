@@ -549,6 +549,35 @@ counties of the Scioto River from the Ross County, you can return the following 
     gdf = counties_gdf[counties_gdf.intersects(downstream_segment)]
     gdf.title = f"find all downstream counties of the Scioto River from the Ross County"
 
+If the user's question requires multiple steps (for example, 
+    "Find all rivers that pass the counties Scioto River passes" 
+    or 
+    "Find all rivers that pass all downstream counties of the Scioto River from Ross County"), 
+you must compose previously defined functions to solve it.
+
+Example pattern:
+    1. Identify the required base entities (river_name, county_name, state_name, etc.)
+    2. Call the appropriate load_* functions to get intermediate GeoDataFrames.
+    3. Perform necessary spatial operations (intersection, union, filtering).
+    4. Construct the final GeoDataFrame and set a meaningful title.
+    5. Do not print anything.
+
+For example: "Find all rivers that pass the counties Scioto River passes"
+Return code like:
+    river_name = "Scioto River"
+    counties_gdf = load_counties_river_flows_through(river_name)
+
+    river_sets = []
+    for _, row in counties_gdf.iterrows():
+        rivers = load_rivers_in_county(row["NAME"])
+        river_sets.append(rivers)
+
+    import geopandas as gpd
+    gdf = gpd.GeoDataFrame( 
+        pd.concat(river_sets, ignore_index=True)
+    ).drop_duplicates(subset=["NAME"])
+    gdf.title = "All rivers that pass the counties Scioto River passes"
+
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
 
