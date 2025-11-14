@@ -48,6 +48,12 @@ def get_request_plan(llm, question):
                     Original Question: "Find all dams located upstream of power station dpjc6wtthc32 along the Muskingum River."
                     Atomic Request:
                         "Find all dams located upstream of power station dpjc6wtthc32 along the Muskingum River."
+
+                    Example 7:
+                    Original Question: "Find all rivers pass the counties Scioto River passes"
+                    Atomic Request:
+                        "Find all rivers pass the counties Scioto River passes"
+                    Because this request wants to find the rivers satisfying some conditions. 
                     
                     Task
                     Divide the user's question into atomic requests based on the entity types 
