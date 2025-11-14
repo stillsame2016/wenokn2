@@ -324,7 +324,7 @@ def load_dams_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
             name = name[:-6].strip()
         cleaned_states.append(name.lower())
 
-    values_block = "\n        ".join(f'("{s}")' for s in cleaned_states)
+    values_block = "\n        ".join(f'"{s}"' for s in cleaned_states)
 
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
