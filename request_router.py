@@ -113,6 +113,7 @@ def get_question_route(llm, question):
 		    Find all neighboring states of Ohio State.
 			Find all counties both the Ohio River and the Muskingum River flow through.
 			Find all rivers passes the counties Scioto River passes
+			Find all downstream counties of the Scioto River from Ross County
 		Because counties and rivers are contained in WEN-KEN database.
 
         [ Example 2 ]
