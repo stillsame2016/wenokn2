@@ -541,6 +541,7 @@ counties of the Scioto River from the Ross County, you can return the following 
         raise ValueError("Unexpected intersection geometry")
     entry_point = extract_downstream_point(intersection_geom, river_geom)
     distance_on_river = river_geom.project(entry_point)
+    from shapely.ops import substring
     downstream_segment = substring(river_geom, distance_on_river, river_geom.length)
     counties_gdf = load_counties_river_flows_through(river_name)
     gdf = counties_gdf[counties_gdf.intersects(downstream_segment)]
