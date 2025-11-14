@@ -620,8 +620,7 @@ with col2:
                     existed_requests = []
                     for request in plan['requests']:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
-                        # st.code(exist_json)
-                        # time.sleep(10)
+                        logger.info(f"check dataset existence: {exist_json}")
                         if not exist_json['existing']:
                             
                             try:
