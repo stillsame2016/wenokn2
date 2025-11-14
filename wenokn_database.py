@@ -315,7 +315,6 @@ LIMIT 2000
 
 #-----------------------------------------------------
 def load_dams_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
-    # Normalize input state names
     cleaned_states = []
     for name in state_names:
         if not name:
@@ -323,41 +322,39 @@ def load_dams_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
         name = name.strip()
         if name.lower().endswith(" state"):
             name = name[:-6].strip()
-        cleaned_states.append(name)
+        cleaned_states.append(name.lower())
 
-    # Build VALUES block
-    values_block = "\n".join(f'("{state}")' for state in cleaned_states)
+    values_block = "\n        ".join(f'("{s}")' for s in cleaned_states)
 
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
-PREFIX geo: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT ?stateName ?damName ?damGeometry
+SELECT ?damName ?damGeometry
 WHERE {{
-    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url> ;
          schema:name ?damName ;
          geo:hasGeometry/geo:asWKT ?damGeometry .
     FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
 
-    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+    ?state rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1> ;
            rdfs:label ?stateName ;
            geo:hasGeometry/geo:asWKT ?stateGeometry .
     FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
 
-    VALUES (?inputState) {{
+    VALUES ?inputState {{
         {values_block}
     }}
-    FILTER(LCASE(STR(?stateName)) = LCASE(?inputState))
+    FILTER(STRSTARTS(LCASE(STR(?stateName)), LCASE(?inputState)))
 
     FILTER(geof:sfContains(?stateGeometry, ?damGeometry))
 }}
 """
-
     logger.info(query)
     return get_gdf_from_sparql(query)
 
