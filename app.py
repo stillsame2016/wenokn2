@@ -614,7 +614,7 @@ with col2:
                 logger.info(f"refined request: {refined_request}")
                 if refined_request['is_request_data']:
                     # plan = get_request_plan(llm, refined_request['request'])
-                    plan = { 'request': [refined_request['request']] }
+                    plan = { 'requests': [refined_request['request']] }
                     count_start = len(st.session_state.datasets)
                     logger.info(f"old request plan: {json.dumps(plan, indent=4)}")
                     existed_requests = []
