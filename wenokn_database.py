@@ -360,6 +360,55 @@ WHERE {{
 
 
 #-----------------------------------------------------
+def load_dams_in_counties(county_names: list[str]) -> gpd.GeoDataFrame:
+    """
+    Build a SPARQL query to find all dams inside the given counties.
+    County names are used exactly as provided, without cleaning.
+    """
+    if not county_names:
+        raise ValueError("county_names list cannot be empty.")
+
+    # Build the VALUES clause
+    values_rows = "\n".join(f'("{name}")' for name in county_names)
+    values_clause = f"VALUES (?inputCounty) {{\n{values_rows}\n}}"
+
+    # Full SPARQL query
+    query = f"""
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?damName ?damGeometry ?countyName
+WHERE {{
+    # Dams from NID
+    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+         schema:name ?damName ;
+         geo:hasGeometry/geo:asWKT ?damGeometry .
+    FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
+
+    # Counties
+    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+            rdfs:label ?countyName ;
+            geo:hasGeometry/geo:asWKT ?countyGeometry .
+    FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+
+    # Inject county names exactly as provided
+    {values_clause}
+
+    FILTER(STR(?countyName) = ?inputCounty)
+
+    # Spatial containment
+    FILTER(geof:sfContains(?countyGeometry, ?damGeometry))
+}}
+"""
+    return query
+
+
+#-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
         
     query = f"""
@@ -628,6 +677,13 @@ return the following code:
     state_names = [ "Ohio State" ]
     gdf = load_dams_in_states(state_names)  
     gdf.title = "All dams in the Ohio State"
+
+If the user's question is to find all dams in some counties (for example, Find all dams in the Ross County), 
+return the following code:
+    county_names = [ "Ross county" ]
+    gdf = load_dams_in_counties(county_names)  
+    gdf.title = "All dams in the Ross County"
+
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
