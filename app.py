@@ -781,6 +781,8 @@ with col2:
                                                     { "items are" if gdf.shape[0] > 1 else "item is"}
                                                     loaded on the map.
                                                     """
+                                        st.session_state.requests.append(message)
+                                        st.rerun()
                                 else:
                                     message = f"""
                                                 Your request has been processed. Nothing was found.
