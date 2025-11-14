@@ -662,7 +662,12 @@ with col2:
                                                         """
                                             logger.info(f"message: {message}")
                                         else:
-                                            message = "No data has been found"
+                                            message = f"""
+                                                Your request has been processed. Nothing was found.
+                                                Please refine your request and try again if you think
+                                                this is a mistake.
+                                                """
+                                        st.rerun()
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
@@ -781,8 +786,6 @@ with col2:
                                                     { "items are" if gdf.shape[0] > 1 else "item is"}
                                                     loaded on the map.
                                                     """
-                                        st.session_state.requests.append(message)
-                                        st.rerun()
                                 else:
                                     message = f"""
                                                 Your request has been processed. Nothing was found.
