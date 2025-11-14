@@ -311,7 +311,56 @@ LIMIT 2000
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
-    
+
+
+#-----------------------------------------------------
+def load_dams_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
+    # Normalize input state names
+    cleaned_states = []
+    for name in state_names:
+        if not name:
+            continue
+        name = name.strip()
+        if name.lower().endswith(" state"):
+            name = name[:-6].strip()
+        cleaned_states.append(name)
+
+    # Build VALUES block
+    values_block = "\n".join(f'("{state}")' for state in cleaned_states)
+
+    query = f"""
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?stateName ?damName ?damGeometry
+WHERE {{
+    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+         schema:name ?damName ;
+         geo:hasGeometry/geo:asWKT ?damGeometry .
+    FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
+
+    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+           rdfs:label ?stateName ;
+           geo:hasGeometry/geo:asWKT ?stateGeometry .
+    FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+
+    VALUES (?inputState) {{
+        {values_block}
+    }}
+    FILTER(LCASE(STR(?stateName)) = LCASE(?inputState))
+
+    FILTER(geof:sfContains(?stateGeometry, ?damGeometry))
+}}
+"""
+
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+
 
 #-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
@@ -444,7 +493,6 @@ LIMIT 2000
     return get_gdf_from_sparql(query)
 
 
-
 def process_wenokn_request(llm, user_input, chat_container):
     prompt = PromptTemplate(
         template="""
@@ -515,7 +563,7 @@ return the following code:
     gdf.title = "All counties Ohio River and Muskingum River flow through"
 
 If the user's question is to find all downstream counties of a river from a county (for example, find all downstream 
-counties of the Scioto River from the Ross County, you can return the following code:
+counties of the Scioto River from the Ross County), you can return the following code:
     river_name = "Scioto River"
     county_name = "Ross County"
     river_gdf = load_river_by_name(river_name)
@@ -577,6 +625,12 @@ Return code like:
         pd.concat(river_sets, ignore_index=True)
     ).drop_duplicates(subset=["riverName"])
     gdf.title = "All rivers that pass the counties Scioto River passes"
+
+If the user's question is to find all dams in some states (for example, Find all dams in the Ohio State), 
+return the following code:
+    state_names = [ "Ohio State" ]
+    gdf = load_dams_in_states(state_names)  
+    gdf.title = "All dams in the Ohio State"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
