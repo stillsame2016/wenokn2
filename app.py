@@ -667,7 +667,7 @@ with col2:
                                                 Please refine your request and try again if you think
                                                 this is a mistake.
                                                 """
-                                        st.session_state.chat.append({"role": "assistant", "content": message)
+                                        st.session_state.chat.append({"role": "assistant", "content": message})
                                         st.rerun()    
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
