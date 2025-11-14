@@ -569,13 +569,13 @@ Return code like:
 
     river_sets = []
     for _, row in counties_gdf.iterrows():
-        rivers = load_rivers_in_county(row["NAME"])
+        rivers = load_rivers_in_county(row["countyName"])
         river_sets.append(rivers)
 
     import geopandas as gpd
     gdf = gpd.GeoDataFrame( 
         pd.concat(river_sets, ignore_index=True)
-    ).drop_duplicates(subset=["NAME"])
+    ).drop_duplicates(subset=["riverName"])
     gdf.title = "All rivers that pass the counties Scioto River passes"
 
 Otherwise return the following code:
