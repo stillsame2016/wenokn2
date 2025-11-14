@@ -360,19 +360,19 @@ WHERE {{
 
 
 #-----------------------------------------------------
-def load_dams_in_counties(county_names: list[str]) -> gpd.GeoDataFrame:
+def load_dams_in_counties(county_names):
     """
     Build a SPARQL query to find all dams inside the given counties.
     County names are used exactly as provided, without cleaning.
+    Matching behavior follows the working query: case-insensitive STRSTARTS().
     """
     if not county_names:
-        raise ValueError("county_names list cannot be empty.")
+        raise ValueError("county_names cannot be empty.")
 
-    # Build the VALUES clause
+    # Build VALUES list, preserving exact user input
     values_rows = "\n".join(f'("{name}")' for name in county_names)
     values_clause = f"VALUES (?inputCounty) {{\n{values_rows}\n}}"
 
-    # Full SPARQL query
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
@@ -384,24 +384,25 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT ?damName ?damGeometry ?countyName
 WHERE {{
-    # Dams from NID
+    # Dams
     ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
          schema:name ?damName ;
          geo:hasGeometry/geo:asWKT ?damGeometry .
     FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
 
-    # Counties
-    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+    # Counties (AdministrativeRegion_2)
+    ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
             rdfs:label ?countyName ;
             geo:hasGeometry/geo:asWKT ?countyGeometry .
     FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
 
-    # Inject county names exactly as provided
+    # User-provided counties
     {values_clause}
 
-    FILTER(STR(?countyName) = ?inputCounty)
+    # Match behavior identical to your working query
+    FILTER(STRSTARTS(LCASE(STR(?countyName)), LCASE(?inputCounty)))
 
-    # Spatial containment
+    # Spatial containment: county contains dam
     FILTER(geof:sfContains(?countyGeometry, ?damGeometry))
 }}
 """
