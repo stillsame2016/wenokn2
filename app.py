@@ -660,6 +660,12 @@ with col2:
                                                         { "items are" if gdf.shape[0] > 1 else "item is"}
                                                         loaded on the map.
                                                         """
+                                            st.session_state.requests.append(message)
+                                        else:
+                                            error_info = f"""No data has been loaded for your request. Please refine your request and try it again."""
+                                            st.markdown(error_info)
+                                            st.session_state.chat.append({"role": "assistant", "content": error_info})
+                                            st.rerun()
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
