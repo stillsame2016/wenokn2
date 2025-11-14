@@ -112,6 +112,7 @@ def get_question_route(llm, question):
         Return 'WEN-KEN database' for following requests: 
 		    Find all neighboring states of Ohio State.
 			Find all counties both the Ohio River and the Muskingum River flow through.
+			Find all rivers passes the counties Scioto River passes
 		Because counties and rivers are contained in WEN-KEN database.
 
         [ Example 2 ]
@@ -158,7 +159,7 @@ def get_question_route(llm, question):
         Because this request tried to find dams which are contained in the WEN-KEN database.
 
         [ Example 9 ]
-        Return 'WEN-KEN database' for following request: 
+        Return 'WEN-KEN database' for following requests: 
             Find the Ohio State 
         Because this request tries to find a state which is contained in the WEN-KEN database.
 
@@ -190,16 +191,16 @@ def get_question_route(llm, question):
 
         [ Example 14]
         Return "Aggregation" for the following requests:
-            Find the number of rivers flow through each county in Ohio.
-            Find the number of dams in each county in Ohio.
-            Find the total number of coal mines in each basin. 
-            Find the total power generation capacity of gas power plants in each county in Ohio.
-            Find the longest river in county of Ohio.
-            Find the county with the the highest number of hospitals in Ohio .
-	        Find all counties with more than 5 hospitals in Ohio .
-	        Find all states where the total coal mine output exceeds 1 million tons.
-            Find the river in Ohio that has the highest number of dams.
-	        Find the watershed that has the highest total coal mine.
+            Find the number of rivers flow through each county in Ohio. (use COUNT and group by county)
+            Find the number of dams in each county in Ohio.  (use COUNT and group by county)
+            Find the total number of coal mines in each basin. (use COUNT and group by basin)
+            Find the total power generation capacity of gas power plants in each county in Ohio. ((use SUM and group by county)
+            Find the longest river in county of Ohio. (use MAX and group by county)
+            Find the county with the the highest number of hospitals in Ohio .  (use MAX)
+	        Find all counties with more than 5 hospitals in Ohio . (use COUNT and group by county)
+	        Find all states where the total coal mine output exceeds 1 million tons. (use SUM and group by state)
+            Find the river in Ohio that has the highest number of dams. (use MAX adn COUNT and group by river)
+	        Find the watershed that has the highest total coal mine. (use MAX and COUNT and group by watershed)
 
         [ Example 15 ]
         Return "Energy Atlas" for the following request:
