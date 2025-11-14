@@ -690,10 +690,9 @@ If the user's question is to find all dams on a river (for example, Find all dam
 return the following code:
     river_name = "Scioto River"
     river_gdf = load_river_by_name(river_name)
-    counties_gdf = load_counties_river_flows_through(river_name)
-    county_full_names = counties_gdf["countyName"].tolist()
-    county_names_only = [name.split(",")[0] for name in county_full_names]
-    candid_dams_gdf = load_dams_in_counties(county_names_only)
+    states_gdf = load_states_river_flows_through(river_name)
+    state_full_names = counties_gdf["stateName"].tolist()
+    candid_dams_gdf = load_dams_in_states(state_full_names)
     river_buffer = river_gdf.geometry.buffer(0.01)
     gdf = candid_dams_gdf[candid_dams_gdf.geometry.intersects(river_buffer.unary_union)]
     gdf.title = f"all dams on the Scioto River"
