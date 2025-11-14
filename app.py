@@ -660,6 +660,9 @@ with col2:
                                                         { "items are" if gdf.shape[0] > 1 else "item is"}
                                                         loaded on the map.
                                                         """
+                                            logger.info(f"message: {message}")
+                                        else:
+                                            message = "No data has been found"
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
