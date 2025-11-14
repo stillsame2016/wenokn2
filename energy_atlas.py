@@ -1330,10 +1330,10 @@ def fetch_flood_impacts(
     return gdf
 
 
-def load_flooded_power_stations(date: str, scope) -> gpd.GeoDataFrame:
+def load_flooded_power_stations(date: str, scope='39') -> gpd.GeoDataFrame:
     return fetch_flood_impacts(date, fips="tract", feature_type="power", scope=scope) 
 
-def load_flooded_buildings(date: str, scope) -> gpd.GeoDataFrame:
+def load_flooded_buildings(date: str, scope='39') -> gpd.GeoDataFrame:
     return fetch_flood_impacts(date, fips="tract", feature_type="building", scope=scope) 
     
 def load_PFAS_contamiation_observations() -> gpd.GeoDataFrame:
