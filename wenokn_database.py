@@ -691,7 +691,7 @@ return the following code:
     river_name = "Scioto River"
     river_gdf = load_river_by_name(river_name)
     counties_gdf = load_counties_river_flows_through(river_name)
-    candid_dams_gdf = load_dams_in_counties(counties_gdf["countyName"])
+    candid_dams_gdf = load_dams_in_counties(counties_gdf["countyName"].tolist())
     river_buffer = river_gdf.geometry.buffer(0.01)
     gdf = candid_dams_gdf[candid_dams_gdf.geometry.intersects(river_buffer.unary_union)]
     gdf.title = f"all dams on the Scioto River"
