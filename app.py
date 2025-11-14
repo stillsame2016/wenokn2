@@ -660,15 +660,6 @@ with col2:
                                                         { "items are" if gdf.shape[0] > 1 else "item is"}
                                                         loaded on the map.
                                                         """
-                                            logger.info(f"message: {message}")
-                                        else:
-                                            message = f"""
-                                                Your request has been processed. Nothing was found.
-                                                Please refine your request and try again if you think
-                                                this is a mistake.
-                                                """
-                                        st.session_state.chat.append({"role": "assistant", "content": message})
-                                        st.rerun()    
                             except Exception as e:  
                                 error_stack = traceback.format_exc()
                                 logger.info(error_stack)
