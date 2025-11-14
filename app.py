@@ -611,12 +611,11 @@ with col2:
                 st.rerun()
             elif route['request_type'] == 'WEN-KEN database':
                 refined_request = get_refined_question(llm, user_input)
-                # st.code(refined_request)
-                # time.sleep(10)
+                logger.info(f"refined request: {refined_request}")
                 if refined_request['is_request_data']:
                     plan = get_request_plan(llm, refined_request['request'])
                     count_start = len(st.session_state.datasets)
-                    # st.code(json.dumps(plan, indent=4))
+                    logger.info(f"old request plan: {json.dumps(plan, indent=4)}")
                     existed_requests = []
                     for request in plan['requests']:
                         exist_json = spatial_dataset_exists(llm, request, st.session_state.datasets)
