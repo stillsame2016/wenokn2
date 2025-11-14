@@ -523,6 +523,8 @@ counties of the Scioto River from the Ross County, you can return the following 
     river_geom = river_gdf.geometry.iloc[0]
     county_geom = county_gdf.geometry.iloc[0]
     intersection_geom = river_geom.intersection(county_geom)
+    if intersection_geom.is_empty:
+        raise ValueError(f"The Scioto river does not pass through the Ross county.")
     from shapely.geometry import Point, LineString, MultiLineString
     def extract_downstream_point(intersection, river_line):
         if isinstance(intersection, Point):
