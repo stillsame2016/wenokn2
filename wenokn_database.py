@@ -9,10 +9,10 @@ import io
 import pyproj
 import json
 from shapely.geometry import Point, box, LineString, MultiLineString
-from shapely.ops import transform
-from shapely.ops import substring
+from shapely.ops import transform, substring
 import shapely.geometry
 import shapely.ops
+from shapely.geometry import Point, LineString, MultiLineString
 import numpy as np
 import concurrent.futures
 import time
@@ -520,16 +520,30 @@ counties of the Scioto River from the Ross County, you can return the following 
     county_name = "Ross County"
     river_gdf = load_river_by_name(river_name)
     county_gdf = load_county_by_name(county_name)
-    river_in_county = river_gdf.clip(county_gdf)
-    intersection_point = river_gdf.intersection(river_in_county).unary_union
-    distance_on_river = river_gdf.project(intersection_point)
-    downstream_river_gdf = river_gdf.copy()
-    downstream_river_gdf["geometry"] = downstream_river_gdf.geometry.apply(
-        lambda line: substring(line, distance_on_river, line.length)
-    )
+    river_geom = river_gdf.geometry.iloc[0]
+    county_geom = county_gdf.geometry.iloc[0]
+    intersection_geom = river_geom.intersection(county_geom)
+    def extract_downstream_point(intersection, river_line):
+        if isinstance(intersection, Point):
+            return intersection
+        if isinstance(intersection, LineString):
+            candidates = [Point(intersection.coords[0]), Point(intersection.coords[-1])]
+            downstream_end = Point(river_line.coords[-1])
+            return min(candidates, key=lambda p: p.distance(downstream_end))
+        if isinstance(intersection, MultiLineString):
+            downstream_end = Point(river_line.coords[-1])
+            endpoints = []
+            for seg in intersection.geoms:
+                endpoints.append(Point(seg.coords[0]))
+                endpoints.append(Point(seg.coords[-1]))
+            return min(endpoints, key=lambda p: p.distance(downstream_end))
+        raise ValueError("Unexpected intersection geometry")
+    entry_point = extract_downstream_point(intersection_geom, river_geom)
+    distance_on_river = river_geom.project(entry_point)
+    downstream_segment = substring(river_geom, distance_on_river, river_geom.length)
     counties_gdf = load_counties_river_flows_through(river_name)
-    gdf = counties_gdf[counties_gdf.intersects(downstream_river_gdf.unary_union)]
-    gdf.title = f"All downstream counties of the Scioto River from the Ross County"
+    gdf = counties_gdf[counties_gdf.intersects(downstream_segment)]
+    gdf.title = f"find all downstream counties of the Scioto River from the Ross County"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
