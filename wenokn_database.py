@@ -518,37 +518,18 @@ If the user's question is to find all downstream counties of a river from a coun
 counties of the Scioto River from the Ross County, you can return the following code:
     river_name = "Scioto River"
     county_name = "Ross County"
-    
-    # load river geometry
     river_gdf = load_river_by_name(river_name)
-    
-    # load county geometry
     county_gdf = load_county_by_name(county_name)
-    
-    # find the part of the river inside the county
     river_in_county = river_gdf.clip(county_gdf)
-    
-    # find the downstream direction:
-    # assume load_river_by_name returns a LineString or MultiLineString 
-    # ordered from upstream → downstream    
-    # compute the position of the intersection on the river line
     intersection_point = river_gdf.intersection(river_in_county).unary_union
-    
-    # measure the distance along the river geometry
     distance_on_river = river_gdf.project(intersection_point)
-    
-    # compute downstream segment (from intersection point to end)
     downstream_river_gdf = river_gdf.copy()
     downstream_river_gdf["geometry"] = downstream_river_gdf.geometry.apply(
         lambda line: substring(line, distance_on_river, line.length)
     )
-    
-    # load all counties the river flows through
     counties_gdf = load_counties_river_flows_through(river_name)
-    
-    # find which of those intersect the downstream segment
     gdf = counties_gdf[counties_gdf.intersects(downstream_river_gdf.unary_union)]
-    gdf.title = f"All downstream counties of {river_name} from {county_name}"
+    gdf.title = f"All downstream counties of the Scioto River from the Ross County"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
