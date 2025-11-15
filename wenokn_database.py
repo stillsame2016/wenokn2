@@ -766,17 +766,15 @@ For example: "Find all rivers that pass the counties Scioto River passes"
 Return code like:
     river_name = "Scioto River"
     counties_gdf = load_counties_river_flows_through(river_name)
-
-    river_sets = []
-    for _, row in counties_gdf.iterrows():
-        rivers = load_rivers_in_county(row["countyName"])
-        river_sets.append(rivers)
-
+    county_names = counties_gdf["countyName"].tolist()
+    rivers_gdf = load_rivers_in_counties(county_names)
     import geopandas as gpd
-    gdf = gpd.GeoDataFrame( 
-        pd.concat(river_sets, ignore_index=True)
-    ).drop_duplicates(subset=["riverName"])
+    import pandas as pd
+    gdf = gpd.GeoDataFrame(
+        rivers_gdf.drop_duplicates(subset=["riverName"])
+    )
     gdf.title = "All rivers that pass the counties Scioto River passes"
+
 
 If the user's question is to find all dams in some states (for example, Find all dams in the Ohio State), 
 return the following code:
