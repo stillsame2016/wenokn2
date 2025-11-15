@@ -193,9 +193,9 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 #-----------------------------------------------------
-def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
+def load_neighboring_counties(county_names) -> gpd.GeoDataFrame:
     """
-    Load neighboring counties for one or more counties.
+    Load neighboring counties for one or more counties using a fast SPARQL query.
 
     Parameters:
     -----------
@@ -211,11 +211,8 @@ def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
     if isinstance(county_names, str):
         county_names = [county_names]
 
-    # Lowercase for SPARQL comparison
-    county_names_lc = [name.lower() for name in county_names]
-
-    # Build VALUES clause
-    values_clause = " ".join(f'"{name}"' for name in county_names_lc)
+    # Build OR clause for multiple counties
+    filters = " || ".join(f'CONTAINS(LCASE(?county0Name), LCASE("{name}"))' for name in county_names)
 
     query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -229,7 +226,7 @@ WHERE {{
   ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
           rdfs:label ?countyName ;
           geo:hasGeometry/geo:asWKT ?countyGeometry .
-  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))  # cleaner URI prefix check
 
   FILTER EXISTS {{
     ?county0 rdf:type kwg-ont:AdministrativeRegion_2 ;
@@ -237,9 +234,8 @@ WHERE {{
              kwg-ont:sfOverlaps ?s2cell .
     FILTER(STRSTARTS(STR(?county0), STR(kwgr:)))
 
-    # Match multiple input counties
-    VALUES ?inputCounty {{ {values_clause} }}
-    FILTER(STRSTARTS(LCASE(?county0Name), ?inputCounty))
+    # Match multiple counties (fast OR instead of VALUES)
+    FILTER({filters})
 
     # Shared S2 cell constraint
     ?county kwg-ont:sfOverlaps ?s2cell .
@@ -251,8 +247,6 @@ WHERE {{
 LIMIT 100
 """
     logger.info("SPARQL query for neighboring counties:\n%s", query)
-
-    # Fetch GeoDataFrame from SPARQL
     gdf = get_gdf_from_sparql(query)
     return gdf
 
