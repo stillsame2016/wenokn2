@@ -193,25 +193,29 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 #-----------------------------------------------------
-def load_neighboring_counties(county_names: list) -> gpd.GeoDataFrame:
+def load_neighboring_counties(county_names) -> gpd.GeoDataFrame:
     """
     Load neighboring counties for one or more counties.
 
     Parameters:
     -----------
-    county_names : list of str
-        List of county names (e.g., ["Ross county", "Franklin county"])
+    county_names : str or list of str
+        County name or list of county names (e.g., "Ross county" or ["Ross county", "Franklin county"])
 
     Returns:
     --------
     geopandas.GeoDataFrame
         GeoDataFrame of all neighboring counties
     """
-    # Normalize county names for SPARQL (lowercase)
-    county_names = [name.lower() for name in county_names]
+    # Ensure county_names is a list
+    if isinstance(county_names, str):
+        county_names = [county_names]
 
-    # Build VALUES clause for SPARQL
-    values_clause = " ".join(f'"{name}"' for name in county_names)
+    # Lowercase for SPARQL comparison
+    county_names_lc = [name.lower() for name in county_names]
+
+    # Build VALUES clause
+    values_clause = " ".join(f'"{name}"' for name in county_names_lc)
 
     query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -234,7 +238,7 @@ WHERE {{
     FILTER(STRSTARTS(STR(?county0), STR(kwgr:)))
 
     # Match multiple input counties
-    VALUES ?inputCounty {values_clause}
+    VALUES ?inputCounty {{ {values_clause} }}
     FILTER(STRSTARTS(LCASE(?county0Name), ?inputCounty))
 
     # Shared S2 cell constraint
@@ -246,8 +250,11 @@ WHERE {{
 }}
 LIMIT 100
 """
-    logger.info(query)
-    return get_gdf_from_sparql(query)
+    logger.info("SPARQL query for neighboring counties:\n%s", query)
+
+    # Fetch GeoDataFrame from SPARQL
+    gdf = get_gdf_from_sparql(query)
+    return gdf
 
 
 #-----------------------------------------------------
