@@ -337,15 +337,19 @@ LIMIT 300
     return get_gdf_from_sparql(query)
 
 #-----------------------------------------------------
-def load_rivers_in_counties(county_names) -> gpd.GeoDataFrame:
-    # Build OR filter for multiple counties
-    name_filters = " || ".join(
-        [f'STRSTARTS(LCASE(?countyName), LCASE("{name}"))' for name in county_names]
-    )
+def load_rivers_in_counties(county_names, batch_size=20):
+    all_results = []
 
-    query = f"""
+    for i in range(0, len(county_names), batch_size):
+        batch = county_names[i:i + batch_size]
+
+        values_clause = "\n".join(
+            f'"{name}"' for name in batch
+        )
+
+        query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdfs: <http://www.w2.org/2000/01/rdf-schema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
@@ -355,14 +359,16 @@ PREFIX schema: <https://schema.org/>
 
 SELECT DISTINCT ?riverName ?riverGeometry
 WHERE {{
+    VALUES ?targetCountyName {{
+        {values_clause}
+    }}
+
     ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
             rdfs:label ?countyName ;
             geo:hasGeometry/geo:asWKT ?countyGeometry .
-    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
 
-    FILTER (
-        {name_filters}
-    )
+    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+    FILTER(STRSTARTS(LCASE(?countyName), LCASE(?targetCountyName)))
 
     ?river a hyf:HY_FlowPath ;
            a hyf:HY_WaterBody ;
@@ -370,13 +376,22 @@ WHERE {{
            schema:name ?riverName ;
            geo:hasGeometry/geo:asWKT ?riverGeometry .
 
-    FILTER(geof:sfIntersects(?riverGeometry, ?countyGeometry)) .
+    FILTER(geof:sfIntersects(?riverGeometry, ?countyGeometry))
 }}
-LIMIT 300
 """
+        df = get_gdf_from_sparql(query)
+        all_results.append(df)
 
-    logger.info(query)
-    return get_gdf_from_sparql(query)
+    import pandas as pd
+    import geopandas as gpd
+
+    if not all_results:
+        return gpd.GeoDataFrame()
+
+    return gpd.GeoDataFrame(
+        pd.concat(all_results, ignore_index=True)
+    )
+
     
 
 #-----------------------------------------------------
