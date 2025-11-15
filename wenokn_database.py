@@ -687,7 +687,7 @@ return the following code:
 If the user's question is to find all rivers flows through some counties (for example, Find all rivers in Ross county), 
 return the following code:
     county_names = [ "Ross county" ]
-    gdf = load_rivers_in_county(county_names)  
+    gdf = load_rivers_in_counties(county_names)  
     gdf.title = "All rivers in Ross county"
 
 If the user's question is to find all rivers flows through a state (for example, Find all rivers in Ohio state), 
