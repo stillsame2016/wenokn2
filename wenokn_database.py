@@ -677,10 +677,11 @@ If the user's question is to look up a river by name, return the following code:
     gdf = load_river_by_name(river_name)   
     gdf.title = river_name
 
-If the user's question is to look up a county by name, return the following code:
-    county_name = ...
+If the user's question is to look up a county by name (for example, find the Ross County), return the following code:
+    county_name = "Ross County"
     gdf = load_county_by_name(county_name)  
-    gdf.title = county_name
+    gdf.title = "Ross County"
+Note that county_name must use the format like "Ross County" (a county name only) or "Ross County, Ohio" (a county name with a state name)
 
 If the user's question is to look up a state by name, return the following code:
     state_name = ...
