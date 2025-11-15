@@ -833,7 +833,12 @@ Return JSON only:
         - Find military bases in Maine containing FRS Sewage Treatment facilities → Primary: military bases in Maine, also need to have FRS Sewage Treatment facilities
         - Find FRS Sewage Treatment facilities within military bases in Maine → Primary: FRS Sewage Treatment facilities, also need to be inside military bases in Maine.
         - All of these 4 requests above are not semantically equivalent.
-
+     ## Example 7
+        - Find Washington County in Oregon
+        - Find Washington County
+        - Find Washington County in Maine
+        - All of these 3 requests above are not semantically equivalent. There are more than 30 counties in USA with the name 'Washington'
+        
 Please think again before you return. If two requests have different meaning, then they are not semantically equivalent.
    
 ## Response Format
