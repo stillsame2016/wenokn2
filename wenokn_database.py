@@ -198,8 +198,14 @@ def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
     if isinstance(county_names, str):
         county_names = [county_names]
 
-    # Build OR clause for multiple counties
-    filters = " || ".join(f'STRSTARTS(LCASE(?county0Name), LCASE("{name}"))' for name in county_names)
+    # Normalize for safe comparison later
+    county_names_lower = [name.lower() for name in county_names]
+
+    # Build OR clause
+    filters = " || ".join(
+        f'STRSTARTS(LCASE(?county0Name), LCASE("{name}"))'
+        for name in county_names
+    )
 
     query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -213,7 +219,7 @@ WHERE {{
   ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
           rdfs:label ?countyName ;
           geo:hasGeometry/geo:asWKT ?countyGeometry .
-  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))  # cleaner URI prefix check
+  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
 
   FILTER EXISTS {{
     ?county0 rdf:type kwg-ont:AdministrativeRegion_2 ;
@@ -221,10 +227,8 @@ WHERE {{
              kwg-ont:sfOverlaps ?s2cell .
     FILTER(STRSTARTS(STR(?county0), STR(kwgr:)))
 
-    # Match multiple counties (fast OR instead of VALUES)
     FILTER({filters})
 
-    # Shared S2 cell constraint
     ?county kwg-ont:sfOverlaps ?s2cell .
     ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
 
@@ -235,6 +239,12 @@ LIMIT 100
 """
     logger.info("SPARQL query for neighboring counties:\n%s", query)
     gdf = get_gdf_from_sparql(query)
+
+    # --- FIX: remove any counties originally in county_names ---
+    gdf = gdf[
+        ~gdf["countyName"].str.lower().isin(county_names_lower)
+    ].reset_index(drop=True)
+
     return gdf
 
 
