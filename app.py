@@ -646,6 +646,7 @@ with col2:
                                             'load_counties_rivers_flow_through_all': load_counties_rivers_flow_through_all,
                                             'load_dams_in_states': load_dams_in_states,
                                             'load_dams_in_counties': load_dams_in_counties,
+                                            'load_dam_by_name': load_dam_by_name,
                                         }
                                         exec(code, globals_dict)
                                         gdf = globals_dict['gdf']
