@@ -193,7 +193,7 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 #-----------------------------------------------------
-def load_neighboring_counties(county_names) -> gpd.GeoDataFrame:
+def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
     """
     Load neighboring counties for one or more counties using a fast SPARQL query.
 
