@@ -194,19 +194,6 @@ LIMIT 100
     
 #-----------------------------------------------------
 def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
-    """
-    Load neighboring counties for one or more counties using a fast SPARQL query.
-
-    Parameters:
-    -----------
-    county_names : str or list of str
-        County name or list of county names (e.g., "Ross county" or ["Ross county", "Franklin county"])
-
-    Returns:
-    --------
-    geopandas.GeoDataFrame
-        GeoDataFrame of all neighboring counties
-    """
     # Ensure county_names is a list
     if isinstance(county_names, str):
         county_names = [county_names]
