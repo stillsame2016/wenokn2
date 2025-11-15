@@ -508,6 +508,33 @@ WHERE {{
     logger.info(query)
     return get_gdf_from_sparql(query)
 
+#-----------------------------------------------------
+def load_dam_by_name(dam_name: str) -> gpd.GeoDataFrame:
+    
+    query = f"""
+PREFIX aschema: <https://schema.ld.admin.ch/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?damName ?damGeometry ?damDescription
+WHERE {{  
+    ?dam a schema:Place;
+         schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+         schema:name ?damName ;
+         schema:description ?damDescription;
+         geo:hasGeometry/geo:asWKT ?damGeometry.
+    FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/")) 
+    FILTER(STRSTARTS(LCASE(STR(?damName)), LCASE("{dam_name}")))
+}}
+LIMIT 1
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
 
 #-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
@@ -791,7 +818,6 @@ Return code like:
     gdf.title = "All rivers that pass the counties Scioto River passes"
 
 
-
 If the user's question is to find all dams in some states (for example, Find all dams in the Ohio State), 
 return the following code:
     state_names = [ "Ohio State" ]
@@ -814,6 +840,12 @@ return the following code:
     river_buffer = river_gdf.geometry.buffer(0.01)
     gdf = candid_dams_gdf[candid_dams_gdf.geometry.intersects(river_buffer.unary_union)]
     gdf.title = f"all dams on the Scioto River"
+
+If the user's question is to find a dam by name (for example, Find the dam with the name "Parker Millpond Dam"), 
+return the following code:
+    dam_name = "Parker Millpond Dam"
+    gdf = load_dam_by_name(dam_name)
+    gdf.title = "The dam with the name 'Parker Millpond Dam'"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
