@@ -192,6 +192,63 @@ LIMIT 100
     logger.info(query)
     return get_gdf_from_sparql(query)
     
+#-----------------------------------------------------
+def load_neighboring_counties(county_names: list) -> gpd.GeoDataFrame:
+    """
+    Load neighboring counties for one or more counties.
+
+    Parameters:
+    -----------
+    county_names : list of str
+        List of county names (e.g., ["Ross county", "Franklin county"])
+
+    Returns:
+    --------
+    geopandas.GeoDataFrame
+        GeoDataFrame of all neighboring counties
+    """
+    # Normalize county names for SPARQL (lowercase)
+    county_names = [name.lower() for name in county_names]
+
+    # Build VALUES clause for SPARQL
+    values_clause = " ".join(f'"{name}"' for name in county_names)
+
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+
+SELECT DISTINCT ?countyName ?countyGeometry
+WHERE {{
+  ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+
+  FILTER EXISTS {{
+    ?county0 rdf:type kwg-ont:AdministrativeRegion_2 ;
+             rdfs:label ?county0Name ;
+             kwg-ont:sfOverlaps ?s2cell .
+    FILTER(STRSTARTS(STR(?county0), STR(kwgr:)))
+
+    # Match multiple input counties
+    VALUES ?inputCounty {values_clause}
+    FILTER(STRSTARTS(LCASE(?county0Name), ?inputCounty))
+
+    # Shared S2 cell constraint
+    ?county kwg-ont:sfOverlaps ?s2cell .
+    ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
+
+    FILTER(?county != ?county0)
+  }}
+}}
+LIMIT 100
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+
 
 #-----------------------------------------------------
 def load_neighboring_states(state_name) -> gpd.GeoDataFrame:     
@@ -572,10 +629,10 @@ return the following code:
     gdf = load_counties_in_state(state_name)  
     gdf.title = "All counties in California"
 
-If the user's question is to find all neighboring counties of a county (for example, Find all neighboring counties of Ross county), 
+If the user's question is to find all neighboring counties of some counties (for example, Find all neighboring counties of Ross county), 
 return the following code:
-    county_name = "Ross county"
-    gdf = load_neighboring_counties(county_name)  
+    county_names = [ "Ross county" ]
+    gdf = load_neighboring_counties(county_names)  
     gdf.title = "All neighboring counties of Ross county"
 
 If the user's question is to find all neighboring states of a state (for example, Find all neighboring states of Ohio state), 
