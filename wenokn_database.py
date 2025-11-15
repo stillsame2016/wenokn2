@@ -212,7 +212,7 @@ def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
         county_names = [county_names]
 
     # Build OR clause for multiple counties
-    filters = " || ".join(f'CONTAINS(LCASE(?county0Name), LCASE("{name}"))' for name in county_names)
+    filters = " || ".join(f'STRSTARTS(LCASE(?county0Name), LCASE("{name}"))' for name in county_names)
 
     query = f"""
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
