@@ -715,8 +715,7 @@ with col2:
                 else:
                     code = process_data_commons_request(llm, user_input, st.session_state.datasets)
                     code = strip_code(code)
-                    # st.code(f"Init Code: \n {code}")
-                    # time.sleep(10)
+                    logger.info(f"Data Commons Code: \n {code}")
                     with st.chat_message("assistant"):
                         with st.spinner("Loading data ..."):
                             message = "We are not able to process your request. Please refine your request and try it again."
