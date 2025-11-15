@@ -28,6 +28,15 @@ History: "user: Find Scioto River\nassistant: The request has been processed.\nu
 - Look backward: The user mentioned "Scioto River"
 - Replace: "Find all counties this river flows through" → "Find all counties Scioto River flows through"
 
+[ Example ]
+History: "ser: Find Washington County in Oregon\nassistant: Your request has been processed.\nuser: Find Washington County"
+- Last question: "Find Washington County"
+- No references/pronouns in the last question
+- Return "Find Washington County"
+Note: The first question is finding a county with the nams 'Washington' in Oregon. 
+The current question is finding all counties with the name 'Washington'. 
+The two questions doesn't have any relations.
+
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>
 """,
         input_variables=["history"],
