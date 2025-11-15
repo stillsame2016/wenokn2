@@ -337,7 +337,6 @@ LIMIT 300
     return get_gdf_from_sparql(query)
 
 #-----------------------------------------------------
-
 def load_rivers_in_counties(county_names) -> gpd.GeoDataFrame:
     # Build OR filter for multiple counties
     name_filters = " || ".join(
@@ -685,10 +684,10 @@ return the following code:
     gdf = load_neighboring_states(state_name)  
     gdf.title = "All neighboring states of Ohio State"
 
-If the user's question is to find all rivers flows through a county (for example, Find all rivers in Ross county), 
+If the user's question is to find all rivers flows through some counties (for example, Find all rivers in Ross county), 
 return the following code:
-    county_name = "Ross county"
-    gdf = load_rivers_in_county(county_name)  
+    county_names = [ "Ross county" ]
+    gdf = load_rivers_in_county(county_names)  
     gdf.title = "All rivers in Ross county"
 
 If the user's question is to find all rivers flows through a state (for example, Find all rivers in Ohio state), 
