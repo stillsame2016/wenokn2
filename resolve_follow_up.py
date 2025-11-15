@@ -29,7 +29,7 @@ History: "user: Find Scioto River\nassistant: The request has been processed.\nu
 - Replace: "Find all counties this river flows through" → "Find all counties Scioto River flows through"
 
 [ Example ]
-History: "ser: Find Washington County in Oregon\nassistant: Your request has been processed.\nuser: Find Washington County"
+History: "user: Find Washington County in Oregon\nassistant: Your request has been processed.\nuser: Find Washington County"
 - Last question: "Find Washington County"
 - No references/pronouns in the last question
 - Return "Find Washington County"
