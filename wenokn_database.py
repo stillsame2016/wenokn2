@@ -102,7 +102,7 @@ WHERE {{
   BIND(LCASE("{county_name}") AS ?inputCounty)
   FILTER(STRSTARTS(LCASE(STR(?countyName)), ?inputCounty))
 }}
-LIMIT 1
+LIMIT 40
 """
     return get_gdf_from_sparql(query)
 
