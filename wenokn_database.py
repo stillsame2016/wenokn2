@@ -166,8 +166,7 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 
-SELECT DISTINCT (?neighborCountyName AS ?countyName)
-                (?neighborCountyGeometry as ?countyGeometry)
+SELECT DISTINCT ?neighborCountyName ?neighborCountyGeometry
 WHERE {{
   ?neighborCounty rdf:type kwg-ont:AdministrativeRegion_2 ;
                   rdfs:label ?neighborCountyName ;
