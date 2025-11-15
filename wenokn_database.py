@@ -168,23 +168,23 @@ PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
 
 SELECT DISTINCT ?neighborCountyName ?neighborCountyGeometry
 WHERE {{
-  ?neighborCounty rdf:type kwg-ont:AdministrativeRegion_2 ;
-                  rdfs:label ?neighborCountyName ;
-                  geo:hasGeometry/geo:asWKT ?neighborCountyGeometry .
-  FILTER(STRSTARTS(STR(?neighborCounty), STR(kwgr:)))  # cleaner URI prefix check
+  ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+          rdfs:label ?countyName ;
+          geo:hasGeometry/geo:asWKT ?countyGeometry .
+  FILTER(STRSTARTS(STR(?county), STR(kwgr:)))  # cleaner URI prefix check
 
   FILTER EXISTS {{
-    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
-                    rdfs:label ?countyName ;
+    ?county0 rdf:type kwg-ont:AdministrativeRegion_2 ;
+                    rdfs:label ?county0Name ;
                     kwg-ont:sfOverlaps ?s2cell .
-    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
-    FILTER(STRSTARTS(LCASE(?countyName), LCASE("{county_name}")))
+    FILTER(STRSTARTS(STR(?county0), STR(kwgr:)))
+    FILTER(STRSTARTS(LCASE(?county0Name), LCASE("{county_name}")))
 
     # Shared S2 cell constraint
-    ?neighborCounty kwg-ont:sfOverlaps ?s2cell .
+    ?county kwg-ont:sfOverlaps ?s2cell .
     ?s2cell rdf:type kwg-ont:S2Cell_Level13 .
 
-    FILTER(?neighborCounty != ?county)
+    FILTER(?county != ?county0)
   }}
 }}
 LIMIT 100
