@@ -193,7 +193,7 @@ LIMIT 100
     return get_gdf_from_sparql(query)
     
 #-----------------------------------------------------
-def load_neighboring_counties(county_names) -> gpd.GeoDataFrame:
+def load_neighboring_counties_from_names(county_names) -> gpd.GeoDataFrame:
     """
     Load neighboring counties for one or more counties.
 
@@ -639,7 +639,7 @@ return the following code:
 If the user's question is to find all neighboring counties of some counties (for example, Find all neighboring counties of Ross county), 
 return the following code:
     county_names = [ "Ross county" ]
-    gdf = load_neighboring_counties(county_names)  
+    gdf = load_neighboring_counties_from_names(county_names)  
     gdf.title = "All neighboring counties of Ross county"
 
 If the user's question is to find all neighboring states of a state (for example, Find all neighboring states of Ohio state), 
