@@ -639,6 +639,7 @@ with col2:
                                             'load_neighboring_counties_from_names': load_neighboring_counties_from_names,
                                             'load_neighboring_states': load_neighboring_states,
                                             'load_rivers_in_county': load_rivers_in_county,
+                                            'load_rivers_in_counties': load_rivers_in_counties,
                                             'load_rivers_in_state': load_rivers_in_state,
                                             'load_counties_river_flows_through': load_counties_river_flows_through,
                                             'load_states_river_flows_through': load_states_river_flows_through,
