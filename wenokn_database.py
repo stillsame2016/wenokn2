@@ -763,15 +763,36 @@ Example pattern:
 For example: "Find all rivers that pass the counties Scioto River passes"
 Return code like:
     river_name = "Scioto River"
+    
     counties_gdf = load_counties_river_flows_through(river_name)
     county_names = counties_gdf["countyName"].tolist()
-    rivers_gdf = load_rivers_in_counties(county_names)
+    
+    # Batch counties to avoid oversized SPARQL queries
+    def batch_list(items, batch_size=20):
+        for i in range(0, len(items), batch_size):
+            yield items[i:i + batch_size]
+    
     import geopandas as gpd
     import pandas as pd
-    gdf = gpd.GeoDataFrame(
-        rivers_gdf.drop_duplicates(subset=["riverName"])
-    )
+    river_sets = []
+    for county_batch in batch_list(county_names, batch_size=20):
+        try:
+            batch_rivers = load_rivers_in_counties(county_batch)
+            if batch_rivers is not None and len(batch_rivers) > 0:
+                river_sets.append(batch_rivers)
+        except Exception as e:
+            print("Batch failed:", county_batch, e)
+    
+    # Merge and deduplicate
+    if river_sets:
+        rivers_gdf = pd.concat(river_sets, ignore_index=True)
+        gdf = gpd.GeoDataFrame(
+            rivers_gdf.drop_duplicates(subset=["riverName"])
+        )
+    else:
+        gdf = gpd.GeoDataFrame(columns=["riverName", "geometry"])
     gdf.title = "All rivers that pass the counties Scioto River passes"
+
 
 
 If the user's question is to find all dams in some states (for example, Find all dams in the Ohio State), 
