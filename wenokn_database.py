@@ -57,6 +57,10 @@ def get_gdf_from_sparql(query):
     # gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
     gdf = gpd.GeoDataFrame(df, geometry='geometry', crs="EPSG:4326")
 
+    if "countyName" in gdf.columns:
+        gdf["countyName"] = gdf["countyName"].apply(
+            lambda x: x.split(",")[0].strip() if isinstance(x, str) else x
+        )
     return gdf
 
 
