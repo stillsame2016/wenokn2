@@ -336,6 +336,49 @@ LIMIT 300
     logger.info(query)
     return get_gdf_from_sparql(query)
 
+#-----------------------------------------------------
+
+def load_rivers_in_counties(county_names) -> gpd.GeoDataFrame:
+    # Build OR filter for multiple counties
+    name_filters = " || ".join(
+        [f'STRSTARTS(LCASE(?countyName), LCASE("{name}"))' for name in county_names]
+    )
+
+    query = f"""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX kwgr: <http://stko-kwg.geog.ucsb.edu/lod/resource/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+
+SELECT DISTINCT ?riverName ?riverGeometry
+WHERE {{
+    ?county rdf:type kwg-ont:AdministrativeRegion_2 ;
+            rdfs:label ?countyName ;
+            geo:hasGeometry/geo:asWKT ?countyGeometry .
+    FILTER(STRSTARTS(STR(?county), STR(kwgr:)))
+
+    FILTER (
+        {name_filters}
+    )
+
+    ?river a hyf:HY_FlowPath ;
+           a hyf:HY_WaterBody ;
+           a schema:Place ;
+           schema:name ?riverName ;
+           geo:hasGeometry/geo:asWKT ?riverGeometry .
+
+    FILTER(geof:sfIntersects(?riverGeometry, ?countyGeometry)) .
+}}
+LIMIT 300
+"""
+
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+    
 
 #-----------------------------------------------------
 def load_rivers_in_state(state_name) -> gpd.GeoDataFrame:    
