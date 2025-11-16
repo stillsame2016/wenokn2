@@ -583,6 +583,56 @@ LIMIT 1
     logger.info(query)
     return get_gdf_from_sparql(query)
 
+
+#-----------------------------------------------------
+def load_gages_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
+    cleaned_states = []
+    for name in state_names:
+        if not name:
+            continue
+        name = name.strip()
+        if name.lower().endswith(" state"):
+            name = name[:-6].strip()
+        cleaned_states.append(name.lower())
+
+    values_block = "\n        ".join(f'"{s}"' for s in cleaned_states)
+
+    query = f"""
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?gagesName ?gagesGeometry
+WHERE {{
+    ?gages rdf:type hyf:HY_HydroLocation;
+           rdf:type hyf:HY_HydrometricFeature;
+           schema:provider <https://waterdata.usgs.gov>;
+           schema:name ?gagesName;
+           schema:description ?gagesDescription;
+           geo:hasGeometry/geo:asWKT ?gagesGeometry.  
+    FILTER(STRSTARTS(STR(?gages), "https://geoconnex.us/ref/gages/"))
+
+    ?state rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1> ;
+           rdfs:label ?stateName ;
+           geo:hasGeometry/geo:asWKT ?stateGeometry .
+    FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+
+    VALUES ?inputState {{
+        {values_block}
+    }}
+    FILTER(STRSTARTS(LCASE(STR(?stateName)), LCASE(?inputState)))
+
+    FILTER(geof:sfContains(?stateGeometry, ?gagesGeometry))
+}}
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+
+
 #-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
         
@@ -894,6 +944,12 @@ return the following code:
     dam_name = "Parker Millpond Dam"
     gdf = load_dam_by_name(dam_name)
     gdf.title = "The dam with the name 'Parker Millpond Dam'"
+
+If the user's question is to find all gagess in some states (for example, Find all gages in the Ohio State), 
+return the following code:
+    state_names = [ "Ohio State" ]
+    gdf = load_gages_in_states(state_names)  
+    gdf.title = "All geges in the Ohio State"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
