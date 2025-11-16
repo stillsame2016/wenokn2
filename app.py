@@ -631,6 +631,7 @@ with col2:
                                         code = strip_code(code)
                                         globals_dict = {   
                                             'pd': pd,
+                                            'logger': logger,
                                             'load_river_by_name': load_river_by_name,
                                             'load_county_by_name': load_county_by_name,
                                             'load_state_by_name': load_state_by_name,
