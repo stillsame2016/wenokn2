@@ -649,6 +649,56 @@ WHERE {{
 
 
 #-----------------------------------------------------
+def load_gages_in_counties(county_names):
+    """
+    Build a SPARQL query to find all gages inside the given counties.
+    Optimized by filtering counties first, then doing spatial operations.
+    """
+    if not county_names:
+        raise ValueError("county_names cannot be empty.")
+    
+    values_rows = "\n".join(f'("{name}")' for name in county_names)
+    values_clause = f"VALUES (?inputCounty) {{\n{values_rows}\n}}"
+    
+    query = f"""
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?gagesName ?gagesGeometry ?countyName
+WHERE {{
+    # User-provided counties - FILTER EARLY
+    {values_clause}
+    
+    # Counties (AdministrativeRegion_2) - FILTERED BY NAME FIRST
+    ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
+            rdfs:label ?countyName ;
+            geo:hasGeometry/geo:asWKT ?countyGeometry .
+    FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+    FILTER(STRSTARTS(LCASE(STR(?countyName)), LCASE(?inputCounty)))
+    
+    # Gages - ONLY AFTER COUNTIES ARE FILTERED
+    ?gages rdf:type hyf:HY_HydroLocation;
+           rdf:type hyf:HY_HydrometricFeature;
+           schema:provider <https://waterdata.usgs.gov>;
+           schema:name ?gagesName;
+           schema:description ?gagesDescription;
+           geo:hasGeometry/geo:asWKT ?gagesGeometry.  
+    FILTER(STRSTARTS(STR(?gages), "https://geoconnex.us/ref/gages/"))
+    
+    # Spatial containment - LAST, on reduced dataset
+    FILTER(geof:sfContains(?countyGeometry, ?gagesGeometry))
+}}
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
+
+
+#-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
         
     query = f"""
@@ -965,6 +1015,12 @@ return the following code:
     state_names = [ "Ohio State" ]
     gdf = load_gages_in_states(state_names)  
     gdf.title = "All geges in the Ohio State"
+
+If the user's question is to find all gages in some counties (for example, Find all gages in the Ross County), 
+return the following code:
+    county_names = [ "Ross county" ]
+    gdf = load_gages_in_counties(county_names)  
+    gdf.title = "All gages in the Ross County"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
