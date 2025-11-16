@@ -1055,6 +1055,17 @@ return the following code:
     gdf = load_gages_by_name(gages_name)
     gdf.title = "Find the gages with the name 'Paint Creek near Bourneville OH'"
 
+If the user's question is to find all gages on a river (for example, Find all gages on the Scioto River), 
+return the following code:
+    river_name = "Scioto River"
+    river_gdf = load_river_by_name(river_name)
+    states_gdf = load_states_river_flows_through(river_name)
+    state_full_names = counties_gdf["stateName"].tolist()
+    candid_gages_gdf = load_gages_in_states(state_full_names)
+    river_buffer = river_gdf.geometry.buffer(0.01)
+    gdf = candid_gages_gdf[candid_dams_gdf.geometry.intersects(river_buffer.unary_union)]
+    gdf.title = f"all gages on the Scioto River"
+
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
 
