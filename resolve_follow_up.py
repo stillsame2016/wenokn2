@@ -48,7 +48,7 @@ from langchain_core.output_parsers import StrOutputParser
 import re
 
 def resolve_follow_up(llm, history):
-    # Extract last user question
+    # Programmatic check first
     lines = history.strip().split('\n')
     last_question = None
     for line in reversed(lines):
@@ -59,30 +59,65 @@ def resolve_follow_up(llm, history):
     if not last_question:
         return history
     
-    # Programmatically check for reference words
-    reference_words = r'\b(this|that|it|its|they|them|their|these|those|the same|such)\b'
+    # Check for reference words
+    reference_words = r'\b(this|that|it|its|they|them|their|these|those)\b'
     has_reference = bool(re.search(reference_words, last_question, re.IGNORECASE))
     
-    # If no references found, return unchanged
     if not has_reference:
         return last_question
     
-    # Only invoke LLM if references detected
     prompt = PromptTemplate(
         template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-Rewrite the LAST user question by replacing references/pronouns with entities from earlier in the conversation.
+You are a reference resolver. Rewrite the LAST user question by resolving pronouns.
 
 Conversation history:
 {history}
 
-Rules:
-- Find what "this", "that", "it", "they", etc. refer to in the conversation
-- Replace them with the actual entity names
-- Return ONLY the rewritten question
+CRITICAL RULES:
+1. Each "user:" question produces a result (even if not shown)
+2. When resolving "this/that/these/those", look at the IMMEDIATELY PREVIOUS user question to see what it asked for
+3. The reference points to THE RESULT of that previous question, not to earlier entities
+4. Chain the resolutions: if the previous question also had references, resolve those too
+5. Do NOT add entities that aren't part of the reference chain
+
+STEP BY STEP:
+Step 1: Identify the last user question
+Step 2: Find ALL pronouns/references in it
+Step 3: For EACH reference:
+   - Look at the IMMEDIATELY PREVIOUS user question
+   - What did that question ask for? That's what the reference points to
+   - If that question ALSO had references, recursively resolve them
+Step 4: Replace the reference with the resolved phrase
+Step 5: Return ONLY the final rewritten question
+
+Example:
+History:
+user: Find the Scioto River
+assistant: Processed.
+user: Find the Ross county  
+assistant: Processed.
+user: Find all downstream counties of this river from this county
+assistant: Processed.
+user: Find populations of these counties
+assistant: Processed.
+user: Find all rivers that pass these counties
+
+Analysis:
+- Last question: "Find all rivers that pass these counties"
+- Reference: "these counties"
+- Previous question asked for: "populations of these counties"
+- But "populations" is just an attribute, the entities are still "these counties"
+- So look at what "these counties" referred to: "downstream counties of this river from this county"
+- Resolve "this river" → "Scioto River"
+- Resolve "this county" → "Ross county"
+- Final: "Find all rivers that pass the downstream counties of Scioto River from Ross county"
+
+IMPORTANT: Don't include entities mentioned earlier unless they're part of the reference resolution chain.
 
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>
 """,
         input_variables=["history"],
     )
+    
     resolve_chain = prompt | llm | StrOutputParser()
     return resolve_chain.invoke({"history": history})
