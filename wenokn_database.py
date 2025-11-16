@@ -1100,31 +1100,39 @@ return the following code:
     states_gdf = load_states_river_flows_through(river_name)
     state_full_names = states_gdf["stateName"].tolist()
     
-    all_gages = []
+    # Pre-compute river buffer once for reuse
+    river_buffer = river_gdf.geometry.buffer(0.01).unary_union
+    
+    # Process states one at a time to minimize memory usage
+    matching_gages = []
     for state in state_full_names:
         try:
+            # Load gages for this state
             gages_gdf = load_gages_in_states([state])
             if gages_gdf.empty:
-                continue          
-
-            # Check if WKT can be parsed
-            for idx, geom in enumerate(gages_gdf['geometry']):
-                try:
-                    _ = geom  # Already converted by get_gdf_from_sparql
-                except Exception as e:
-                    logger.info("Bad geometry", state, idx, str(e))
-                    
-            all_gages.append(gages_gdf)
+                continue
+            
+            # Filter to only gages within buffer distance of the river
+            state_river_gages = gages_gdf[gages_gdf.geometry.within(river_buffer)]
+            
+            # Only keep matching gages
+            if not state_river_gages.empty:
+                matching_gages.append(state_river_gages)
+            
+            # Free memory from this state's full gage list
+            del gages_gdf
+            
         except Exception as e:
-            logger.info("Errors", state, str(e))
+            logger.warning(f"Error processing {state}: {str(e)}")
     
-    # Combine all valid gages
-    if all_gages:
-        candid_gages_gdf = gpd.GeoDataFrame(pd.concat(all_gages, ignore_index=True), crs="EPSG:4326")
-        river_buffer = river_gdf.geometry.buffer(0.01)
-        gdf = candid_gages_gdf[candid_gages_gdf.geometry.intersects(river_buffer.unary_union)]
-        gdf.title = f"all gages on the Ohio River"
-
+    # Combine only the filtered results
+    if matching_gages:
+        gdf = gpd.GeoDataFrame(pd.concat(matching_gages, ignore_index=True), crs="EPSG:4326")
+        gdf.title = f"All gages on the {river_name}"
+    else:
+        gdf = gpd.GeoDataFrame(columns=["geometry"], crs="EPSG:4326")
+        gdf.title = f"All gages on the {river_name}"
+        
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
 
