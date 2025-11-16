@@ -669,7 +669,7 @@ PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT ?gagesName ?gagesGeometry ?countyName
+SELECT ?gagesName ?gagesGeometry
 WHERE {{
     # User-provided counties - FILTER EARLY
     {values_clause}
