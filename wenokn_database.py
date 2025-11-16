@@ -619,25 +619,26 @@ PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT ?gagesName ?gagesGeometry
+SELECT DISTINCT ?gagesName ?gagesGeometry
 WHERE {{
     # User-provided states - FILTER EARLY
     {values_clause}
     
     # States (AdministrativeRegion_1) - FILTERED BY NAME FIRST
-    ?state rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1> ;
+    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
            rdfs:label ?stateName ;
-           geo:hasGeometry/geo:asWKT ?stateGeometry .
+           geo:hasGeometry ?stateGeoNode .
+    ?stateGeoNode geo:asWKT ?stateGeometry .
     FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
     FILTER(STRSTARTS(LCASE(STR(?stateName)), LCASE(?inputState)))
     
     # Gages - ONLY AFTER STATES ARE FILTERED
-    ?gages rdf:type hyf:HY_HydroLocation;
-           rdf:type hyf:HY_HydrometricFeature;
-           schema:provider <https://waterdata.usgs.gov>;
-           schema:name ?gagesName;
-           schema:description ?gagesDescription;
-           geo:hasGeometry/geo:asWKT ?gagesGeometry.  
+    ?gages rdf:type hyf:HY_HydroLocation ;
+           rdf:type hyf:HY_HydrometricFeature ;
+           schema:provider <https://waterdata.usgs.gov> ;
+           schema:name ?gagesName ;
+           geo:hasGeometry ?gagesGeoNode .
+    ?gagesGeoNode geo:asWKT ?gagesGeometry .
     FILTER(STRSTARTS(STR(?gages), "https://geoconnex.us/ref/gages/"))
     
     # Spatial containment - LAST, on reduced dataset
