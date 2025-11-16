@@ -1055,16 +1055,36 @@ return the following code:
     gdf = load_gages_by_name(gages_name)
     gdf.title = "Find the gages with the name 'Paint Creek near Bourneville OH'"
 
-If the user's question is to find all gages on a river (for example, Find all gages on the Scioto River), 
+If the user's question is to find all gages on a river (for example, Find all gages on the Ohio River), 
 return the following code:
-    river_name = "Scioto River"
+    river_name = "Ohio River"
     river_gdf = load_river_by_name(river_name)
     states_gdf = load_states_river_flows_through(river_name)
-    state_full_names = counties_gdf["stateName"].tolist()
-    candid_gages_gdf = load_gages_in_states(state_full_names)
-    river_buffer = river_gdf.geometry.buffer(0.01)
-    gdf = candid_gages_gdf[candid_dams_gdf.geometry.intersects(river_buffer.unary_union)]
-    gdf.title = f"all gages on the Scioto River"
+    state_full_names = states_gdf["stateName"].tolist()
+    
+    all_gages = []
+    
+    for state in state_full_names:
+        try:
+            gages_gdf = load_gages_in_states([state])
+            if gages_gdf.empty:
+                continue
+            
+            for idx, geom in enumerate(gages_gdf['geometry']):
+                try:
+                    _ = geom  # Already converted by get_gdf_from_sparql
+                except Exception as e:
+                    print(idx, e)
+            
+            all_gages.append(gages_gdf)
+        except Exception as e:
+            print(e)
+    
+    if all_gages:
+        candid_gages_gdf = gpd.GeoDataFrame(pd.concat(all_gages, ignore_index=True), crs="EPSG:4326")
+        river_buffer = river_gdf.geometry.buffer(0.01)
+        gdf = candid_gages_gdf[candid_gages_gdf.geometry.intersects(river_buffer.unary_union)]
+        gdf.title = f"all gages on the Ohio River"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
