@@ -1123,15 +1123,15 @@ return the following code:
             del gages_gdf
             
         except Exception as e:
-            logger.warning(f"Error processing {state}: {str(e)}")
+            logger.warning(str(e))
     
     # Combine only the filtered results
     if matching_gages:
         gdf = gpd.GeoDataFrame(pd.concat(matching_gages, ignore_index=True), crs="EPSG:4326")
-        gdf.title = f"All gages on the {river_name}"
+        gdf.title = f"All gages on the Ohio River"
     else:
         gdf = gpd.GeoDataFrame(columns=["geometry"], crs="EPSG:4326")
-        gdf.title = f"All gages on the {river_name}"
+        gdf.title = f"All gages on the Ohio River"
         
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
