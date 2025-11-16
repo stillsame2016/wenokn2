@@ -29,7 +29,45 @@ from shapely import wkt
 import geopandas as gpd
 import sparql_dataframe
 
+# def get_gdf_from_sparql(query):
+#     endpoint_url = "https://frink.apps.renci.org/federation/sparql"
+#     df = sparql_dataframe.get(endpoint_url, query)
+
+#     if df.empty:
+#         return gpd.GeoDataFrame(columns=["geometry"], crs="EPSG:4326")
+
+#     # Identify the WKT column automatically
+#     wkt_col = None
+#     for col in df.columns:
+#         if df[col].astype(str).str.startswith(("POINT", "LINESTRING", "POLYGON", "MULTIPOLYGON")).any():
+#             wkt_col = col
+#             break
+
+#     if wkt_col is None:
+#         raise ValueError("No WKT geometry column found in SPARQL result.")
+
+#     # Drop missing geometries
+#     df = df.dropna(subset=[wkt_col]).copy()
+
+#     # Convert WKT to shapely geometries (keep same column name)
+#     # df[wkt_col] = df[wkt_col].apply(wkt.loads)
+#     df['geometry'] = df[wkt_col].apply(wkt.loads)
+
+#     # Create GeoDataFrame using that same column name as geometry
+#     # gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
+#     gdf = gpd.GeoDataFrame(df, geometry='geometry', crs="EPSG:4326")
+
+#     # if "countyName" in gdf.columns:
+#     #     gdf["countyName"] = gdf["countyName"].apply(
+#     #         lambda x: x.split(",")[0].strip() if isinstance(x, str) else x
+#     #     )
+#     return gdf
+
 def get_gdf_from_sparql(query):
+    """
+    Execute a SPARQL query and convert the result to a GeoDataFrame.
+    Automatically detects WKT geometry columns.
+    """
     endpoint_url = "https://frink.apps.renci.org/federation/sparql"
     df = sparql_dataframe.get(endpoint_url, query)
 
@@ -39,9 +77,16 @@ def get_gdf_from_sparql(query):
     # Identify the WKT column automatically
     wkt_col = None
     for col in df.columns:
-        if df[col].astype(str).str.startswith(("POINT", "LINESTRING", "POLYGON", "MULTIPOLYGON")).any():
-            wkt_col = col
-            break
+        # Check if the column name suggests it's a geometry column
+        col_lower = col.lower()
+        if 'geometry' in col_lower or 'geom' in col_lower or 'wkt' in col_lower:
+            # Verify it actually contains WKT by checking if MOST values start with valid WKT types
+            sample = df[col].dropna().astype(str)
+            if len(sample) > 0:
+                valid_wkt = sample.str.match(r'^(POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON|GEOMETRYCOLLECTION)\s*\(')
+                if valid_wkt.sum() / len(sample) > 0.5:  # More than 50% are valid WKT
+                    wkt_col = col
+                    break
 
     if wkt_col is None:
         raise ValueError("No WKT geometry column found in SPARQL result.")
@@ -49,20 +94,13 @@ def get_gdf_from_sparql(query):
     # Drop missing geometries
     df = df.dropna(subset=[wkt_col]).copy()
 
-    # Convert WKT to shapely geometries (keep same column name)
-    # df[wkt_col] = df[wkt_col].apply(wkt.loads)
+    # Convert WKT to shapely geometries
     df['geometry'] = df[wkt_col].apply(wkt.loads)
 
-    # Create GeoDataFrame using that same column name as geometry
-    # gdf = gpd.GeoDataFrame(df, geometry=wkt_col, crs="EPSG:4326")
+    # Create GeoDataFrame
     gdf = gpd.GeoDataFrame(df, geometry='geometry', crs="EPSG:4326")
 
-    # if "countyName" in gdf.columns:
-    #     gdf["countyName"] = gdf["countyName"].apply(
-    #         lambda x: x.split(",")[0].strip() if isinstance(x, str) else x
-    #     )
     return gdf
-
 
 #-----------------------------------------------------
 def load_river_by_name(river_name) -> gpd.GeoDataFrame:
