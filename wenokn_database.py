@@ -697,6 +697,34 @@ WHERE {{
     logger.info(query)
     return get_gdf_from_sparql(query)
 
+#-----------------------------------------------------
+def load_gages_by_name(gages_name: str) -> gpd.GeoDataFrame:
+    
+    query = f"""
+PREFIX aschema: <https://schema.ld.admin.ch/>
+PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?gagesName ?gagesGeometry ?gagesDescription
+WHERE {{  
+    ?gages rdf:type hyf:HY_HydroLocation;
+           rdf:type hyf:HY_HydrometricFeature;
+           schema:provider <https://waterdata.usgs.gov>;
+           schema:name ?gagesName;
+           schema:description ?gagesDescription;
+           geo:hasGeometry/geo:asWKT ?gagesGeometry.  
+    FILTER(STRSTARTS(STR(?gages), "https://geoconnex.us/ref/gages/"))
+    FILTER(STRSTARTS(LCASE(STR(?gagesName)), LCASE("{gages_name}")))
+}}
+LIMIT 1
+"""
+    logger.info(query)
+    return get_gdf_from_sparql(query)
 
 #-----------------------------------------------------
 def load_counties_river_flows_through(river_name) -> gpd.GeoDataFrame:    
@@ -1021,6 +1049,12 @@ return the following code:
     county_names = [ "Ross county" ]
     gdf = load_gages_in_counties(county_names)  
     gdf.title = "All gages in the Ross County"
+
+If the user's question is to find a gages by name (for example, Find the gages with the name "Paint Creek near Bourneville OH"), 
+return the following code:
+    gages_name = "Paint Creek near Bourneville OH"
+    gdf = load_gages_by_name(gages_name)
+    gdf.title = "Find the gages with the name 'Paint Creek near Bourneville OH'"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
