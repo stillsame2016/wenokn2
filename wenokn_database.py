@@ -592,7 +592,7 @@ def load_gages_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
     """
     if not state_names:
         raise ValueError("state_names cannot be empty.")
-    
+
     # Clean state names
     cleaned_states = []
     for name in state_names:
@@ -602,14 +602,14 @@ def load_gages_in_states(state_names: list[str]) -> gpd.GeoDataFrame:
         if name.lower().endswith(" state"):
             name = name[:-6].strip()
         cleaned_states.append(name.lower())
-    
+
     if not cleaned_states:
         raise ValueError("No valid state names after cleaning.")
-    
+
     # Build VALUES clause with proper formatting
     values_rows = "\n".join(f'("{s}")' for s in cleaned_states)
     values_clause = f"VALUES (?inputState) {{\n{values_rows}\n}}"
-    
+
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
@@ -618,29 +618,27 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-SELECT DISTINCT ?gagesName ?gagesGeometry
+SELECT ?gagesName ?gagesGeometry
 WHERE {{
     # User-provided states - FILTER EARLY
     {values_clause}
-    
+
     # States (AdministrativeRegion_1) - FILTERED BY NAME FIRST
-    ?state rdf:type kwg-ont:AdministrativeRegion_1 ;
+    ?state rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_1> ;
            rdfs:label ?stateName ;
-           geo:hasGeometry ?stateGeoNode .
-    ?stateGeoNode geo:asWKT ?stateGeometry .
+           geo:hasGeometry/geo:asWKT ?stateGeometry .
     FILTER(STRSTARTS(STR(?state), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
     FILTER(STRSTARTS(LCASE(STR(?stateName)), LCASE(?inputState)))
-    
+
     # Gages - ONLY AFTER STATES ARE FILTERED
-    ?gages rdf:type hyf:HY_HydroLocation ;
-           rdf:type hyf:HY_HydrometricFeature ;
-           schema:provider <https://waterdata.usgs.gov> ;
-           schema:name ?gagesName ;
-           geo:hasGeometry ?gagesGeoNode .
-    ?gagesGeoNode geo:asWKT ?gagesGeometry .
+    ?gages rdf:type hyf:HY_HydroLocation;
+           rdf:type hyf:HY_HydrometricFeature;
+           schema:provider <https://waterdata.usgs.gov>;
+           schema:name ?gagesName;
+           schema:description ?gagesDescription;
+           geo:hasGeometry/geo:asWKT ?gagesGeometry.  
     FILTER(STRSTARTS(STR(?gages), "https://geoconnex.us/ref/gages/"))
-    
+
     # Spatial containment - LAST, on reduced dataset
     FILTER(geof:sfContains(?stateGeometry, ?gagesGeometry))
 }}
