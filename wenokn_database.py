@@ -1067,10 +1067,18 @@ return the following code:
         try:
             gages_gdf = load_gages_in_states([state])
             if gages_gdf.empty:
-                continue            
+                continue          
+
+            # Check if WKT can be parsed
+            for idx, geom in enumerate(gages_gdf['geometry']):
+                try:
+                    _ = geom  # Already converted by get_gdf_from_sparql
+                except Exception as e:
+                    logger.info("Bad geometry", state, idx, str(e))
+                    
             all_gages.append(gages_gdf)
         except Exception as e:
-            logger.info("Errors", state, e)
+            logger.info("Errors", state, str(e))
     
     # Combine all valid gages
     if all_gages:
