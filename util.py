@@ -838,6 +838,10 @@ Return JSON only:
         - Find Washington County
         - Find Washington County in Maine
         - All of these 3 requests above are not semantically equivalent. There are more than 30 counties in USA with the name 'Washington'
+      ## Example 8
+        - Find all gages on the Cumberland River
+        - Find the Cumberland River
+        - The two requests above are not semantically equivalent because one tries to fine gages and another tries to find a river.
         
 Please think again before you return. If two requests have different meaning, then they are not semantically equivalent.
    
