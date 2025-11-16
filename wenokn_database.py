@@ -1101,7 +1101,7 @@ return the following code:
     state_full_names = states_gdf["stateName"].tolist()
     
     # Pre-compute river buffer once for reuse
-    river_buffer = river_gdf.geometry.buffer(0.01).unary_union
+    river_buffer = river_gdf.geometry.buffer(0.005).unary_union
     
     # Process states one at a time to minimize memory usage
     matching_gages = []
