@@ -1065,10 +1065,8 @@ return the following code:
     all_gages = []
     for state in state_full_names:
         try:
-            print(f"Loading gages in {state}...")
             gages_gdf = load_gages_in_states([state])
             if gages_gdf.empty:
-                print(f"No gages found in {state}")
                 continue
             
             # Check if WKT can be parsed
@@ -1076,18 +1074,18 @@ return the following code:
             #     try:
             #         _ = geom  # Already converted by get_gdf_from_sparql
             #     except Exception as e:
-            #         print(f"Bad geometry in {state} at row {idx}: {e}")
+            #         print(f"Bad geometry", state, idx, e")
             
             all_gages.append(gages_gdf)
         except Exception as e:
-            print(f"Error loading gages for {state}: {e}")
+            print("Errors", state, e)
     
     # Combine all valid gages
     if all_gages:
         candid_gages_gdf = gpd.GeoDataFrame(pd.concat(all_gages, ignore_index=True), crs="EPSG:4326")
         river_buffer = river_gdf.geometry.buffer(0.01)
         gdf = candid_gages_gdf[candid_gages_gdf.geometry.intersects(river_buffer.unary_union)]
-        gdf.title = f"all gages on the {river_name}"
+        gdf.title = f"all gages on the Ohio River"
 
 Otherwise return the following code:
     raise ValueError("Don't know how to process the request")
