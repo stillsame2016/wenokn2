@@ -459,19 +459,67 @@ WHERE {{
 
 
 #-----------------------------------------------------
+# def load_dams_in_counties(county_names):
+#     """
+#     Build a SPARQL query to find all dams inside the given counties.
+#     County names are used exactly as provided, without cleaning.
+#     Matching behavior follows the working query: case-insensitive STRSTARTS().
+#     """
+#     if not county_names:
+#         raise ValueError("county_names cannot be empty.")
+
+#     # Build VALUES list, preserving exact user input
+#     values_rows = "\n".join(f'("{name}")' for name in county_names)
+#     values_clause = f"VALUES (?inputCounty) {{\n{values_rows}\n}}"
+
+#     query = f"""
+# PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
+# PREFIX schema: <https://schema.org/>
+# PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+# PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+# PREFIX kwg-ont: <http://stko-kwg.geog.ucsb.edu/lod/ontology/>
+# PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# SELECT ?damName ?damGeometry ?countyName
+# WHERE {{
+#     # Dams
+#     ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+#          schema:name ?damName ;
+#          geo:hasGeometry/geo:asWKT ?damGeometry .
+#     FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
+
+#     # Counties (AdministrativeRegion_2)
+#     ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
+#             rdfs:label ?countyName ;
+#             geo:hasGeometry/geo:asWKT ?countyGeometry .
+#     FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
+
+#     # User-provided counties
+#     {values_clause}
+
+#     # Match behavior identical to your working query
+#     FILTER(STRSTARTS(LCASE(STR(?countyName)), LCASE(?inputCounty)))
+
+#     # Spatial containment: county contains dam
+#     FILTER(geof:sfContains(?countyGeometry, ?damGeometry))
+# }}
+# """
+#     logger.info(query)
+#     return get_gdf_from_sparql(query)
+
+
 def load_dams_in_counties(county_names):
     """
     Build a SPARQL query to find all dams inside the given counties.
-    County names are used exactly as provided, without cleaning.
-    Matching behavior follows the working query: case-insensitive STRSTARTS().
+    Optimized by filtering counties first, then doing spatial operations.
     """
     if not county_names:
         raise ValueError("county_names cannot be empty.")
-
-    # Build VALUES list, preserving exact user input
+    
     values_rows = "\n".join(f'("{name}")' for name in county_names)
     values_clause = f"VALUES (?inputCounty) {{\n{values_rows}\n}}"
-
+    
     query = f"""
 PREFIX hyf: <https://www.opengis.net/def/schema/hy_features/hyf/>
 PREFIX schema: <https://schema.org/>
@@ -483,30 +531,29 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT ?damName ?damGeometry ?countyName
 WHERE {{
-    # Dams
-    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
-         schema:name ?damName ;
-         geo:hasGeometry/geo:asWKT ?damGeometry .
-    FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
-
-    # Counties (AdministrativeRegion_2)
+    # User-provided counties - FILTER EARLY
+    {values_clause}
+    
+    # Counties (AdministrativeRegion_2) - FILTERED BY NAME FIRST
     ?county rdf:type <http://stko-kwg.geog.ucsb.edu/lod/ontology/AdministrativeRegion_2> ;
             rdfs:label ?countyName ;
             geo:hasGeometry/geo:asWKT ?countyGeometry .
     FILTER(STRSTARTS(STR(?county), "http://stko-kwg.geog.ucsb.edu/lod/resource/"))
-
-    # User-provided counties
-    {values_clause}
-
-    # Match behavior identical to your working query
     FILTER(STRSTARTS(LCASE(STR(?countyName)), LCASE(?inputCounty)))
-
-    # Spatial containment: county contains dam
+    
+    # Dams - ONLY AFTER COUNTIES ARE FILTERED
+    ?dam schema:provider "https://nid.usace.army.mil"^^<https://schema.org/url>;
+         schema:name ?damName ;
+         geo:hasGeometry/geo:asWKT ?damGeometry .
+    FILTER(STRSTARTS(STR(?dam), "https://geoconnex.us/ref/dams/"))
+    
+    # Spatial containment - LAST, on reduced dataset
     FILTER(geof:sfContains(?countyGeometry, ?damGeometry))
 }}
 """
     logger.info(query)
     return get_gdf_from_sparql(query)
+
 
 #-----------------------------------------------------
 def load_dam_by_name(dam_name: str) -> gpd.GeoDataFrame:
