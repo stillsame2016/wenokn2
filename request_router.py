@@ -112,9 +112,10 @@ def get_question_route(llm, question):
         Return 'WEN-KEN database' for following requests: 
 		    Find all neighboring states of Ohio State.
 			Find all counties both the Ohio River and the Muskingum River flow through.
-			Find all rivers passes the counties Scioto River passes
-			Find all downstream counties of the Scioto River from Ross County
-		Because counties and rivers are contained in WEN-KEN database.
+			Find all rivers passes the counties Scioto River passes.
+			Find all downstream counties of the Scioto River from Ross County.
+			Find all dams in all counties that the Ohio River passes.
+		Because counties, rivers and dams are contained in WEN-KEN database.
 
         [ Example 2 ]
         Return "WEN-KEN database use Energy Atlas" for the following request: 
