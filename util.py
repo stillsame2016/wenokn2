@@ -154,9 +154,11 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             get_dcid_from_state_name(state_name)
             get_dcid_from_county_name(county_name) 
             get_dcid_from_country_name(country_name)
-        To call get_dcid_from_county_name, the county name must be in the format "San Diego County". 
-        But county_name may already contain "County". You can use in the following way: 
+        To call get_dcid_from_county_name, the county name must be in the format 'Ross County' or 'Ross' or 'Ross County, Ohio' or 'Ross, Ohio'.
+        But a county_name may already contain "County", please avoid using double 'County'. For example,  you can use in the following way: 
             get_dcid_from_county_name(county_name if county_name.endswith('County') else county_name + ' County') 
+        Some names are used by multiple counties, such as Washington County or Union County. In such cases, to specify a particular county, 
+        the state name must be added, for example, “Washington County, Ohio.”
         
         Data Commons has the following statistical variables available for a particular place:
             {dc_variables}
@@ -246,7 +248,34 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
             # Please look at each dataframe in the data repository to determine which index should be used. 
             # You can't assume an index
             gdf = st.session_state.datasets[index]
-            counties_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['Name']]
+
+            # Detect county column (could be "name" or "Name")
+            if "Name" in gdf.columns:
+                county_col = "Name"
+            elif "name" in gdf.columns:
+                county_col = "name"
+            else:
+                raise ValueError("No county name column found in gdf.")
+            
+            # Detect state column (optional: could be "state" or "State")
+            state_col = None
+            if "State" in gdf.columns:
+                state_col = "State"
+            elif "state" in gdf.columns:
+                state_col = "state"
+            
+            # Build disambiguated names
+            if state_col:
+                # Use "County, State" when state is available
+                county_full_names = [
+                    f"{{row[county_col]}}, {{row[state_col]}}"
+                    for _, row in gdf.iterrows()
+                ]
+            else:
+                # Fall back to county only
+                county_full_names = gdf[county_col].tolist()
+
+            counties_dcid = [get_dcid_from_county_name(name) for name in county_full_names]
             df = get_time_series_dataframe_for_dcid(counties_dcid, "FemaSocialVulnerability_NaturalHazardImpact")  
             df.title = "The Social Vulnerability for All Counties Downstream of the Coal Mine with the Name \"Century Mine\" along Ohio River"
 
