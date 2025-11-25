@@ -157,7 +157,7 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         To call get_dcid_from_county_name, the county name must be in the format 'Ross County' or 'Ross' or 'Ross County, Ohio' or 'Ross, Ohio'.
         But a county_name may already contain "County", please avoid using double 'County'. For example,  you can use in the following way: 
             get_dcid_from_county_name(county_name if county_name.endswith('County') else county_name + ' County') 
-        Some names are used by multiple counties, such as Washington County or Union County. In such cases, to specify a particular county, 
+        Sometimes a name can be used by multiple counties, such as Washington County or Union County. In such cases, to specify a particular county, 
         the state name must be added, for example, “Washington County, Ohio.”
         
         Data Commons has the following statistical variables available for a particular place:
