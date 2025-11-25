@@ -209,7 +209,6 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
                      
         [Example 3]
         Find the populations of Ross county and Scioto county
-        
             ross_scioto_dcid = [ get_dcid_from_county_name('Ross County'), get_dcid_from_county_name('Scioto County') ]
             df = get_time_series_dataframe_for_dcid(ross_scioto_dcid, "Count_Person")
             df.title = "The Populations for the Ross county and Scioto county in Ohio"
@@ -224,9 +223,34 @@ def process_data_commons_request(llm, user_input, spatial_datasets):
         If you find such index, return the following code A:
             # Note that following index must be replaced by an integer you find. 
             gdf = st.session_state.datasets[ insert index you find here ]
-            # Please don't replace the following code by scioto_river_dcid = [ get_dcid_from_county_name(county_name + " County") for county_name in gdf['Name']]
-            # all county names in gdf['name'] may already contains 'County'
-            scioto_river_dcid = [ get_dcid_from_county_name(county_name) for county_name in gdf['name']]
+
+            # Detect county column (could be "name" or "Name")
+            if "Name" in gdf.columns:
+                county_col = "Name"
+            elif "name" in gdf.columns:
+                county_col = "name"
+            else:
+                raise ValueError("No county name column found in gdf.")
+            
+            # Detect state column (optional: could be "state" or "State")
+            state_col = None
+            if "State" in gdf.columns:
+                state_col = "State"
+            elif "state" in gdf.columns:
+                state_col = "state"
+            
+            # Build disambiguated names
+            if state_col:
+                # Use "County, State" when state is available
+                county_full_names = [
+                    f"{{row[county_col]}}, {{row[state_col]}}"
+                    for _, row in gdf.iterrows()
+                ]
+            else:
+                # Fall back to county only
+                county_full_names = gdf[county_col].tolist()
+
+            scioto_river_dcid = [get_dcid_from_county_name(name) for name in county_full_names]
             df = get_time_series_dataframe_for_dcid(scioto_river_dcid, "Count_Person")  
             df.title = "The Populations for All Counties where Scioto River Flows Through"
        
