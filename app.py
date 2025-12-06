@@ -50,15 +50,15 @@ NRP_KEY = st.secrets["NRP_KEY"]
 llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 llm2 = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 
-llm = ChatOpenAI(model="glm-4.6",
-                base_url="https://ellm.nrp-nautilus.io/v1",
-                api_key=NRP_KEY,
-                temperature=0)
+# llm = ChatOpenAI(model="glm-4.6",
+#                 base_url="https://ellm.nrp-nautilus.io/v1",
+#                 api_key=NRP_KEY,
+#                 temperature=0)
 
-llm2 = ChatOpenAI(model="glm-4.6",
-                 base_url="https://ellm.nrp-nautilus.io/v1",
-                 api_key=NRP_KEY,
-                 temperature=0)
+# llm2 = ChatOpenAI(model="glm-4.6",
+#                  base_url="https://ellm.nrp-nautilus.io/v1",
+#                  api_key=NRP_KEY,
+#                  temperature=0)
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
