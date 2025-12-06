@@ -38,6 +38,7 @@ logger = logging.getLogger(__name__)
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
 OpenAI_KEY = st.secrets["OpenAI_KEY"]
+NRP_KEY = st.secrets["NRP_KEY"]
 
 # llm = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY)
 # llm2 = ChatGroq(temperature=0, model_name="llama3-70b-8192", api_key=Groq_KEY_2)
@@ -48,6 +49,16 @@ OpenAI_KEY = st.secrets["OpenAI_KEY"]
 # gpt-4o
 llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
 llm2 = ChatOpenAI(model="gpt-4.1-mini", temperature=0, max_tokens=5000, api_key=OpenAI_KEY)
+
+llm = ChatOpenAI(model="glm-4.6",
+                base_url="https://ellm.nrp-nautilus.io/v1",
+                api_key=NRP_KEY,
+                temperature=0)
+
+llm2 = ChatOpenAI(model="glm-4.6",
+                 base_url="https://ellm.nrp-nautilus.io/v1",
+                 api_key=NRP_KEY,
+                 temperature=0)
 
 # Set the wide layout of the web page
 st.set_page_config(layout="wide", page_title="WEN-OKN")
