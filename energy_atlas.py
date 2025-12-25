@@ -1620,6 +1620,8 @@ WHERE {{
 GROUP BY ?facility ?facilityName ?facilityWKT ?countyName ?stateName ?industryCode ?frsId ?triId ?rcraId ?airId ?npdesId
 LIMIT {limit}
 """    
+    logger.info(query)
+
     # Fetch data
     df = sparql_dataframe.get(endpoint_url, query)
 
