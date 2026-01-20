@@ -1,18 +1,10 @@
 import streamlit as st
 
-# Define the destination URL
-new_app_url = "https://deep-wenokn.streamlit.app"
+NEW_APP_URL = "https://deep-wenokn.streamlit.app"
 
-# Display a message to the user in case the redirect takes a moment
-st.title("Redirecting...")
-st.write(f"This app is deprecated. Moving you to the new version at {new_app_url}")
-
-# Inject JavaScript to perform the redirect
-st.components.v1.html(
+st.markdown(
     f"""
-    <script>
-        window.parent.location.href = "{new_app_url}";
-    </script>
+    <meta http-equiv="refresh" content="0; url={NEW_APP_URL}">
     """,
-    height=0,
+    unsafe_allow_html=True,
 )
