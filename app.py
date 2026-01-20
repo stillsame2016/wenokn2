@@ -35,24 +35,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 ###############################################
-# Define the destination URL
-new_app_url = "https://deep-wenokn.streamlit.app"
+import streamlit as st
 
-# Display a message to the user in case the redirect takes a moment
-st.title("Redirecting...")
-st.write(f"This app is deprecated. Moving you to the new version at {new_app_url}")
+new_url = "https://deep-wenokn.streamlit.app/"
 
-# Inject JavaScript to perform the redirect
-st.components.v1.html(
-    f"""
-    <script>
-        window.parent.location.href = "{new_app_url}";
-    </script>
-    """,
-    height=0,
+st.markdown(
+    f'<meta http-equiv="refresh" content="0;url={new_url}">',
+    unsafe_allow_html=True
 )
 
-return
 ##############################################
 
 
