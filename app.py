@@ -34,6 +34,26 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+###############################################
+# Define the destination URL
+new_app_url = "https://deep-wenokn.streamlit.app"
+
+# Display a message to the user in case the redirect takes a moment
+st.title("Redirecting...")
+st.write(f"This app is deprecated. Moving you to the new version at {new_app_url}")
+
+# Inject JavaScript to perform the redirect
+st.components.v1.html(
+    f"""
+    <script>
+        window.parent.location.href = "{new_app_url}";
+    </script>
+    """,
+    height=0,
+)
+##############################################
+
+
 # Setup LLM
 Groq_KEY = st.secrets["Groq_KEY"]
 Groq_KEY_2 = st.secrets["Groq_KEY_2"]
